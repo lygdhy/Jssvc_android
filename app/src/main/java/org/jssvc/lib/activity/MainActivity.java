@@ -1,9 +1,14 @@
-package org.jssvc.lib;
+package org.jssvc.lib.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import org.jssvc.lib.R;
+import org.jssvc.lib.base.BaseActivity;
+
+/**
+ * APP主程序
+ */
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
