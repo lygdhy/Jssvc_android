@@ -5,4 +5,8 @@ package org.jssvc.lib.utils;
  */
 
 public class HttpUtils {
+
+    public String httpRequest() {
+        return "";
+    }
 }

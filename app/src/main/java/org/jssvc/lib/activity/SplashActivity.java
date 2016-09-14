@@ -18,7 +18,7 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
 
         Handler handler = new Handler();
-        handler.postDelayed(new splashhandler(), 3000);//静态启动页
+        handler.postDelayed(new splashhandler(), 500);//静态启动页
     }
 
     class splashhandler implements Runnable {
