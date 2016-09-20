@@ -1,14 +1,14 @@
 package org.jssvc.lib.base;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 /**
  * Activity 基类
  */
-public class BaseActivity extends Activity {
+public class BaseActivity extends AppCompatActivity {
     public Context context;
     private Toast toast = null;//全局Toast
 
@@ -17,6 +17,8 @@ public class BaseActivity extends Activity {
         super.onCreate(savedInstanceState);
         context = this;
 
+        // 修改StatusBar颜色
+//        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(context, R.color.colorAccent), 30);
     }
 
     /**
@@ -31,36 +33,4 @@ public class BaseActivity extends Activity {
         toast.show();
     }
 
-//    /**
-//     * 网络GET请求
-//     *
-//     * @param url 目标地址
-//     * @param map 参数列表
-//     * @return
-//     */
-//    public String httpGetRequest(String url, Map parms) {
-//        String result = "";
-//        GetBuilder builder = OkHttpUtils.get();
-//        builder.url(url);
-//        // 添加参数
-//        Iterator iter = parms.entrySet().iterator();
-//        while (iter.hasNext()) {
-//            Map.Entry entry = (Map.Entry) iter.next();
-//            builder.addParams(entry.getKey().toString(), entry.getValue().toString());
-//        }
-//        // 执行操作
-//        builder.build().execute(new StringCallback() {
-//            @Override
-//            public void onError(Call call, Exception e, int id) {
-//                e.printStackTrace();
-//                Log.d("onError", e.getMessage());
-//            }
-//
-//            @Override
-//            public void onResponse(String response, int id) {
-//                result = response;
-//            }
-//        });
-//        return result;
-//    }
 }
