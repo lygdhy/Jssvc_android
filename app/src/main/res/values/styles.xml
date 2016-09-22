@@ -79,6 +79,14 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="tv_formal">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/ui_text_body</item>
+    </style>
+
     <!-- 菜单Item_分割线 -->
     <style name="Item_split_horizontal">
         <item name="android:layout_width">match_parent</item>

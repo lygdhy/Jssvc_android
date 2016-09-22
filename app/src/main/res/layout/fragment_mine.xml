@@ -201,10 +201,15 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tvSetting"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="_fragment"
-                android:textColor="@color/colorAccent" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:padding="16dp"
+                android:text="设置"
+                android:textColor="@color/ui_text_title"
+                android:textSize="14sp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
