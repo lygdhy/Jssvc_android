@@ -1,26 +1,26 @@
 package org.jssvc.lib.fragment;
 
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import org.jssvc.lib.R;
+import org.jssvc.lib.base.BaseFragment;
 
 /**
  * 个人中心
  */
-public class MineFragment extends Fragment {
+public class MineFragment extends BaseFragment {
 
     public static MineFragment newInstance() {
         return new MineFragment();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_mine, container, false);
+    protected int getContentViewId() {
+        return R.layout.fragment_mine;
+    }
+
+    @Override
+    protected void initView() {
+
     }
 
 }

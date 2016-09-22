@@ -3,6 +3,7 @@ package org.jssvc.lib.activity;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
@@ -19,6 +20,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import qiu.niorgai.StatusBarCompat;
 
 /**
  * APP主程序
@@ -40,23 +42,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-//        String url = "http://api.51toc.net/advertisement_list.php";
-//        OkHttpUtils.get().url(url)
-//                .addParams("type", "2")
-//                .build()
-//                .execute(new StringCallback() {
-//                    @Override
-//                    public void onError(Call call, Exception e, int id) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onResponse(String response, int id) {
-//                        textView.setText(response);
-//                    }
-//                });
-
-
         tabLayout.setupWithViewPager(viewpager);
         fragments.add(HomeFragment.newInstance());
         fragments.add(NewsFragment.newInstance());
@@ -75,7 +60,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 tabView.setOnClickListener(this);
             }
         }
+        viewpager.addOnPageChangeListener(new OnMyPageChangeListener());
         viewpager.setCurrentItem(pos_cur);
+        setStatusBar(pos_cur);
     }
 
     @Override
@@ -84,5 +71,32 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (position != pos_cur) {
             pos_cur = position;
         }
+        setStatusBar(position);
+    }
+
+    // 滑动监听
+    private class OnMyPageChangeListener implements ViewPager.OnPageChangeListener {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            setStatusBar(position);
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    }
+
+    // 根据当前的fragment标签设置StatusBar
+    public void setStatusBar(int pos) {
+        if (pos == 0)
+            StatusBarCompat.translucentStatusBar(this, false);
+        else
+            StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(context, R.color.colorPrimaryDark));
     }
 }

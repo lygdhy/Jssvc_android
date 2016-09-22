@@ -1,8 +1,16 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ui_content">
+    android:background="@color/ui_content"
+    android:orientation="vertical">
+
+    <RelativeLayout style="@style/ActionBar_Whole_Style_1">
+
+        <TextView
+            style="@style/ActionBar_Title_Style_1"
+            android:text="直击" />
+
+    </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
@@ -10,4 +18,4 @@
         android:text="blank_fragment"
         android:textColor="@color/colorAccent" />
 
-</FrameLayout>
+</LinearLayout>
