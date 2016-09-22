@@ -1,21 +1,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ui_content"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout style="@style/ActionBar_Whole_Style_1">
 
         <TextView
+            android:id="@+id/tvTitle"
             style="@style/ActionBar_Title_Style_1"
             android:text="探索" />
 
     </RelativeLayout>
 
-    <TextView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="fragment"
-        android:textColor="@color/colorAccent" />
+        android:layout_height="match_parent">
+
+        <WebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

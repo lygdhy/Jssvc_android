@@ -2,6 +2,7 @@ package org.jssvc.lib.base;
 
 import android.app.Application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
@@ -24,6 +25,9 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         appContext = this;
+
+        // 初始化Fresco
+        Fresco.initialize(this);
 
         // 初始化OkHttpClient
         ClearableCookieJar cookieJar1 = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(getApplicationContext()));
