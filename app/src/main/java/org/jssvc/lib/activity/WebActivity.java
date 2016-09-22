@@ -1,6 +1,6 @@
-package org.jssvc.lib.fragment;
+package org.jssvc.lib.activity;
 
-
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
@@ -10,35 +10,44 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import org.jssvc.lib.R;
-import org.jssvc.lib.base.BaseFragment;
+import org.jssvc.lib.base.BaseActivity;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
- * 探索&发现
+ * 通用web页面
  */
-public class FindFragment extends BaseFragment {
+public class WebActivity extends BaseActivity {
 
-    @BindView(R.id.webView)
-    WebView webView;
+    @BindView(R.id.tvBack)
+    TextView tvBack;
     @BindView(R.id.tvTitle)
     TextView tvTitle;
+    @BindView(R.id.webView)
+    WebView webView;
     @BindView(R.id.swipeContainer)
     SwipeRefreshLayout swipeContainer;
 
-    String url = "http://www.hydong.me/test.html";
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_web);
+        ButterKnife.bind(this);
 
-    public static FindFragment newInstance() {
-        return new FindFragment();
+        String url = getIntent().getStringExtra("url");
+        String title = getIntent().getStringExtra("title");
+        tvTitle.setText(title + "");
+        loadWeb(url);
     }
 
-    @Override
-    protected int getContentViewId() {
-        return R.layout.fragment_find;
+    @OnClick(R.id.tvBack)
+    public void onClick() {
+        finish();
     }
 
-    @Override
-    protected void initView() {
+    private void loadWeb(String url) {
         // 刷新页面
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -67,13 +76,6 @@ public class FindFragment extends BaseFragment {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
-            }
-        });
-        // 设置标题
-        webView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public void onReceivedTitle(WebView view, String title) {
-                tvTitle.setText(title);
             }
         });
         // 禁止系统的复制粘贴
