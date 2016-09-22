@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,11 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="360dp">
 
-        <ImageView
+        <com.bigkoo.convenientbanner.ConvenientBanner
+            android:id="@+id/convenientBanner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/bg_addemo2" />
+            app:canLoop="true" />
 
         <LinearLayout
             android:layout_width="match_parent"

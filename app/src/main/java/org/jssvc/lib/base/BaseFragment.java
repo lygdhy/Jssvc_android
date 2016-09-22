@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -16,6 +17,8 @@ import butterknife.Unbinder;
  */
 
 public abstract class BaseFragment extends Fragment {
+
+    private Toast toast = null;//全局Toast
 
     private Unbinder unbinder;
 
@@ -38,5 +41,17 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();//解绑
+    }
+
+    /**
+     * 全局Toast
+     */
+    protected void showToast(String msg) {
+        if (toast == null) {
+            toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+        } else {
+            toast.setText(msg);
+        }
+        toast.show();
     }
 }

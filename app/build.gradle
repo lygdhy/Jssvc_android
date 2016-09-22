@@ -38,4 +38,6 @@ dependencies {
     compile 'com.android.support:design:24.2.0'
     // 图片fresco
     compile 'com.facebook.fresco:fresco:0.13.0'
+    // 轮播广告
+    compile 'com.bigkoo:convenientbanner:2.0.5'
 }
