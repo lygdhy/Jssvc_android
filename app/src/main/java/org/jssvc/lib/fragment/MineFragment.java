@@ -1,6 +1,7 @@
 package org.jssvc.lib.fragment;
 
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.jssvc.lib.R;
+import org.jssvc.lib.activity.AboutActivity;
 import org.jssvc.lib.base.BaseFragment;
 
 import butterknife.BindView;
@@ -68,6 +70,7 @@ public class MineFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.totalLayout:
                 // 借阅历史
+                startActivity(new Intent(context, AboutActivity.class));
                 break;
             case R.id.readingLayout:
                 // 当前借阅
