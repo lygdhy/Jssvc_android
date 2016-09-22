@@ -5,11 +5,23 @@
     android:background="@color/ui_content"
     android:orientation="vertical">
 
-    <ImageView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="360dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bg_addemo" />
+        android:layout_height="360dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_addemo2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            android:layout_margin="15dp"
+            android:background="#22000000"></LinearLayout>
+    </FrameLayout>
 
     <ScrollView
         android:layout_width="match_parent"
