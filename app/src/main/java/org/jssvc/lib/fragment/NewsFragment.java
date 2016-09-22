@@ -1,26 +1,26 @@
 package org.jssvc.lib.fragment;
 
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import org.jssvc.lib.R;
+import org.jssvc.lib.base.BaseFragment;
 
 /**
  * 新闻
  */
-public class NewsFragment extends Fragment {
+public class NewsFragment extends BaseFragment {
 
     public static NewsFragment newInstance() {
         return new NewsFragment();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_news, container, false);
+    protected int getContentViewId() {
+        return R.layout.fragment_news;
+    }
+
+    @Override
+    protected void initView() {
+
     }
 
 }
