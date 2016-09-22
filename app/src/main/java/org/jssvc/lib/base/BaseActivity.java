@@ -3,7 +3,10 @@ package org.jssvc.lib.base;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.widget.Toast;
+
+import org.jssvc.lib.utils.SwipeWindowHelper;
 
 /**
  * Activity 基类
@@ -11,6 +14,8 @@ import android.widget.Toast;
 public class BaseActivity extends AppCompatActivity {
     public Context context;
     private Toast toast = null;//全局Toast
+
+    private SwipeWindowHelper mSwipeWindowHelper;// 滑动关闭
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,27 @@ public class BaseActivity extends AppCompatActivity {
             toast.setText(msg);
         }
         toast.show();
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (!supportSlideBack()) {
+            return super.dispatchTouchEvent(ev);
+        }
+
+        if (mSwipeWindowHelper == null) {
+            mSwipeWindowHelper = new SwipeWindowHelper(getWindow());
+        }
+        return mSwipeWindowHelper.processTouchEvent(ev) || super.dispatchTouchEvent(ev);
+    }
+
+    /**
+     * 是否支持滑动返回
+     *
+     * @return
+     */
+    protected boolean supportSlideBack() {
+        return true;
     }
 
 }

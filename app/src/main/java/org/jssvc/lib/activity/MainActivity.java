@@ -99,4 +99,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         else
             StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(context, R.color.colorPrimaryDark));
     }
+
+    /**
+     * 是否支持滑动返回
+     *
+     * @return
+     */
+    protected boolean supportSlideBack() {
+        return false;
+    }
 }

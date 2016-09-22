@@ -22,7 +22,7 @@ public class SplashActivity extends BaseActivity {
         StatusBarCompat.translucentStatusBar(this, false);
 
         Handler handler = new Handler();
-        handler.postDelayed(new splashhandler(), 1000);//静态启动页
+        handler.postDelayed(new splashhandler(), 500);//静态启动页
     }
 
     class splashhandler implements Runnable {
@@ -31,4 +31,14 @@ public class SplashActivity extends BaseActivity {
             finish();
         }
     }
+
+    /**
+     * 是否支持滑动返回
+     *
+     * @return
+     */
+    protected boolean supportSlideBack() {
+        return false;
+    }
+
 }

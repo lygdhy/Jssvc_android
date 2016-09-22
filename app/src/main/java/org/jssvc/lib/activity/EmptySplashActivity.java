@@ -24,4 +24,13 @@ public class EmptySplashActivity extends BaseActivity {
         startActivity(new Intent(getApplicationContext(), SplashActivity.class));
         finish();
     }
+
+    /**
+     * 是否支持滑动返回
+     *
+     * @return
+     */
+    protected boolean supportSlideBack() {
+        return false;
+    }
 }

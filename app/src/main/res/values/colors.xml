@@ -4,7 +4,16 @@
     <color name="colorPrimaryDark">#303135</color>
     <color name="colorAccent">#009551</color>
 
+    <color name="ui_split">#efefef</color>
     <color name="ui_content">#f4f4f4</color>
-    
+    <color name="ui_text_title">#313131</color>
+    <color name="ui_text_body">#313131</color>
+    <color name="ui_text_tip">#777777</color>
+
     <color name="white">#ffffff</color>
+
+    <color name="google_yellow">#fabc05</color>
+    <color name="google_blue">#4385f5</color>
+    <color name="google_red">#ea4235</color>
+    <color name="google_green">#34a853</color>
 </resources>
