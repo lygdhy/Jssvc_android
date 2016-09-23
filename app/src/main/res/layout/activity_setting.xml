@@ -20,6 +20,7 @@
         android:id="@+id/tvMsg"
         style="@style/tv_formal"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@color/white"
         android:padding="16dp"
@@ -29,6 +30,7 @@
         android:id="@+id/tvFeedback"
         style="@style/tv_formal"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@color/white"
         android:padding="16dp"
@@ -38,6 +40,7 @@
         android:id="@+id/tvVersion"
         style="@style/tv_formal"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:padding="16dp"
         android:text="版本检查" />
@@ -46,6 +49,7 @@
         android:id="@+id/tvAbout"
         style="@style/tv_formal"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:padding="16dp"
         android:text="关于" />

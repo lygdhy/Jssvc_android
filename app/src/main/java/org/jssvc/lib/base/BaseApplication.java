@@ -32,7 +32,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         appContext = this;
 
-        //
+        // 滑动返回
         registerActivityLifecycleCallbacks(mActivityLifecycleHelper = new ActivityLifecycleHelper());
 
         // 初始化Fresco
@@ -46,7 +46,6 @@ public class BaseApplication extends Application {
                 .cookieJar(cookieJar1)
                 //其他配置
                 .build();
-
         OkHttpUtils.initClient(okHttpClient);
     }
 
