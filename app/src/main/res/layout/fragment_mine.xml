@@ -201,6 +201,17 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tvReadBack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:padding="16dp"
+                android:text="读书心得"
+                android:textColor="@color/ui_text_title"
+                android:textSize="14sp" />
+
+            <TextView
                 android:id="@+id/tvSetting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
