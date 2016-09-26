@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.jssvc.lib.R;
-import org.jssvc.lib.activity.AboutActivity;
 import org.jssvc.lib.activity.SettingActivity;
 import org.jssvc.lib.base.BaseFragment;
 
@@ -43,6 +42,8 @@ public class MineFragment extends BaseFragment {
     TextView tvDebt;
     @BindView(R.id.debtLayout)
     LinearLayout debtLayout;
+    @BindView(R.id.tvReadBack)
+    TextView tvReadBack;
     @BindView(R.id.tvSetting)
     TextView tvSetting;
 
@@ -68,7 +69,7 @@ public class MineFragment extends BaseFragment {
         simpleDraweeView.setImageURI("http://v1.qzone.cc/avatar/201408/22/21/52/53f74b13786e4125.jpg%21200x200.jpg");
     }
 
-    @OnClick({R.id.totalLayout, R.id.readingLayout, R.id.lawsLayout, R.id.debtLayout, R.id.tvSetting})
+    @OnClick({R.id.totalLayout, R.id.readingLayout, R.id.lawsLayout, R.id.debtLayout, R.id.tvReadBack, R.id.tvSetting})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.totalLayout:
@@ -82,6 +83,9 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.debtLayout:
                 // 欠费
+                break;
+            case R.id.tvReadBack:
+                // 我的阅读心得
                 break;
             case R.id.tvSetting:
                 // 设置
