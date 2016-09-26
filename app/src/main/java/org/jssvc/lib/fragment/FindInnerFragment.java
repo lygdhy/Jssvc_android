@@ -1,6 +1,8 @@
 package org.jssvc.lib.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -10,6 +12,8 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.jssvc.lib.R;
+import org.jssvc.lib.activity.MainActivity;
+import org.jssvc.lib.activity.SplashActivity;
 import org.jssvc.lib.adapter.ArticleListAdapter;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.ArticleBean;
@@ -43,7 +47,7 @@ public class FindInnerFragment extends BaseFragment implements BGARefreshLayout.
     private int mMorePageNumber = 0;
     List<ArticleBean> articleBeanList = new ArrayList<>();
 
-    String url = "http://v.juhe.cn/toutiao/index?type=top&key=7eee44e7b89b84e5cc6f79ae24358dd1";
+    Handler handler = new Handler();//模拟数据异步请求
 
     public static FindInnerFragment newInstance(int id) {
         FindInnerFragment fragment = new FindInnerFragment();
@@ -78,7 +82,7 @@ public class FindInnerFragment extends BaseFragment implements BGARefreshLayout.
 
         BGAMoocStyleRefreshViewHolder moocStyleRefreshViewHolder = new BGAMoocStyleRefreshViewHolder(getActivity(), true);
         moocStyleRefreshViewHolder.setUltimateColor(R.color.colorAccent);
-        moocStyleRefreshViewHolder.setOriginalImage(R.mipmap.ic_launcher);
+        moocStyleRefreshViewHolder.setOriginalImage(R.drawable.ic_launcher_dark);
 //        moocStyleRefreshViewHolder.setLoadMoreBackgroundColorRes(R.color.custom_imoocstyle);
         moocStyleRefreshViewHolder.setSpringDistanceScale(0.2f);
 //        moocStyleRefreshViewHolder.setRefreshViewBackgroundColorRes(R.color.custom_imoocstyle);
@@ -93,28 +97,7 @@ public class FindInnerFragment extends BaseFragment implements BGARefreshLayout.
         mNewPageNumber = 0;
         mMorePageNumber = 0;
 
-        for (int i = 0; i < 8; i++) {
-            articleBeanList.add(new ArticleBean("" + i, "标题" + 1, "这里是内容" + 1));
-        }
-
-        OkHttpUtils.post().url(url)
-                .addParams("type", "157301241")
-                .addParams("passwd", "157301241")
-                .addParams("select", "cert_no")
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-
-                    }
-
-                    @Override
-                    public void onResponse(String response, int id) {
-                    }
-                });
-
-        mRefreshLayout.endRefreshing();
-        mAdapter.setData(articleBeanList);
+        handler.postDelayed(new setDataHandler(), 3000);
     }
 
     @Override
@@ -125,12 +108,7 @@ public class FindInnerFragment extends BaseFragment implements BGARefreshLayout.
             showToast("没有最新数据了");
             return;
         }
-
-        for (int i = articleBeanList.size(); i < 8; i++) {
-            articleBeanList.add(new ArticleBean("" + i, "标题" + 1, "这里是内容" + 1));
-        }
-        mRefreshLayout.endRefreshing();
-        mAdapter.addNewData(articleBeanList);
+        handler.postDelayed(new setNewDataHandler(), 3000);
     }
 
     @Override
@@ -141,12 +119,7 @@ public class FindInnerFragment extends BaseFragment implements BGARefreshLayout.
             showToast("没有更多数据了");
             return false;
         }
-
-        for (int i = articleBeanList.size(); i < 8; i++) {
-            articleBeanList.add(new ArticleBean("" + i, "标题" + 1, "这里是内容" + 1));
-        }
-        mRefreshLayout.endLoadingMore();
-        mAdapter.addMoreData(articleBeanList);
+        handler.postDelayed(new setMoreDataHandler(), 3000);
 
 //        showLoadingDialog();
 //        mEngine.loadMoreData(mMorePageNumber).enqueue(new Callback<List<ArticleBean>>() {
@@ -196,5 +169,36 @@ public class FindInnerFragment extends BaseFragment implements BGARefreshLayout.
             return true;
         }
         return false;
+    }
+
+    // =============
+    class setDataHandler implements Runnable {
+        public void run() {
+            for (int i = articleBeanList.size(); i < 6; i++) {
+                articleBeanList.add(new ArticleBean("" + i, "标题" + i, "这里是内容" + i));
+            }
+            mRefreshLayout.endRefreshing();
+            mAdapter.setData(articleBeanList);
+        }
+    }
+
+    class setNewDataHandler implements Runnable {
+        public void run() {
+            for (int i = articleBeanList.size(); i < 6; i++) {
+                articleBeanList.add(new ArticleBean("" + i, "标题" + i, "这里是内容" + i));
+            }
+            mRefreshLayout.endRefreshing();
+            mAdapter.addNewData(articleBeanList);
+        }
+    }
+
+    class setMoreDataHandler implements Runnable {
+        public void run() {
+            for (int i = articleBeanList.size(); i < 6; i++) {
+                articleBeanList.add(new ArticleBean("" + i, "标题" + i, "这里是内容" + i));
+            }
+            mRefreshLayout.endLoadingMore();
+            mAdapter.addMoreData(articleBeanList);
+        }
     }
 }
