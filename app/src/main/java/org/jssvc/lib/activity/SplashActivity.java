@@ -20,7 +20,7 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
 
         StatusBarCompat.translucentStatusBar(this, false);
-s
+
         Handler handler = new Handler();
         handler.postDelayed(new splashhandler(), 500);//静态启动页
     }
