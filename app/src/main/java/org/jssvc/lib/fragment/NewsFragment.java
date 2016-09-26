@@ -66,5 +66,10 @@ public class NewsFragment extends BaseFragment {
         viewpager.setCurrentItem(pos_cur);
     }
 
+    @Override
+    protected void onFirstUserVisible() {
+        
+    }
+
 
 }

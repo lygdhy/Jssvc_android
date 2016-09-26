@@ -69,6 +69,11 @@ public class MineFragment extends BaseFragment {
         simpleDraweeView.setImageURI("http://v1.qzone.cc/avatar/201408/22/21/52/53f74b13786e4125.jpg%21200x200.jpg");
     }
 
+    @Override
+    protected void onFirstUserVisible() {
+
+    }
+
     @OnClick({R.id.totalLayout, R.id.readingLayout, R.id.lawsLayout, R.id.debtLayout, R.id.tvReadBack, R.id.tvSetting})
     public void onClick(View view) {
         switch (view.getId()) {

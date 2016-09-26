@@ -100,4 +100,9 @@ public class FindFragment extends BaseFragment {
             }
         });
     }
+
+    @Override
+    protected void onFirstUserVisible() {
+
+    }
 }

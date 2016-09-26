@@ -1,16 +1,13 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/ui_content"
-    android:orientation="vertical">
+<?xml version="1.0" encoding="utf-8"?>
+<cn.bingoogolapple.refreshlayout.BGARefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/refreshLayout"
+    style="@style/MatchMatch">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="不知道"
-        android:textColor="@color/ui_text_title"
-        android:textSize="16sp" />
-
-</LinearLayout>
+    <ListView
+        android:id="@+id/mListView"
+        style="@style/MatchAuto"
+        android:divider="@color/ui_split"
+        android:overScrollMode="never"
+        android:padding="5dp"
+        android:scrollbars="none" />
+</cn.bingoogolapple.refreshlayout.BGARefreshLayout>
