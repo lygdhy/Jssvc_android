@@ -89,15 +89,11 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.debtLayout:
                 // 欠费
-                Intent intent2 = new Intent(context, WebActivity.class);
-                intent2.putExtra("url", "http://www.hydong.me/article/new_2.html");
-                intent2.putExtra("title", "校园新闻");
-                startActivity(intent2);
                 break;
             case R.id.tvReadBack:
                 // 我的阅读心得
                 Intent intent = new Intent(context, WebActivity.class);
-                intent.putExtra("url", "http://www.hydong.me/article/new_1.html");
+                intent.putExtra("url", "http://www.hydong.me/article/new_2.html");
                 intent.putExtra("title", "校园新闻");
                 startActivity(intent);
                 break;
