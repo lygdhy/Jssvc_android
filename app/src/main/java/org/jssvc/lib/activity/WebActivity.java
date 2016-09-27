@@ -3,6 +3,7 @@ package org.jssvc.lib.activity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -30,6 +31,8 @@ public class WebActivity extends BaseActivity {
     @BindView(R.id.swipeContainer)
     SwipeRefreshLayout swipeContainer;
 
+    String pageTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +40,11 @@ public class WebActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         String url = getIntent().getStringExtra("url");
-        String title = getIntent().getStringExtra("title");
-        tvTitle.setText(title + "");
+        pageTitle = getIntent().getStringExtra("title");
+
+        if (!TextUtils.isEmpty(pageTitle)) {
+            tvTitle.setText(pageTitle + "");
+        }
         loadWeb(url);
     }
 
@@ -76,6 +82,15 @@ public class WebActivity extends BaseActivity {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
+            }
+        });
+        // 设置标题
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                if (TextUtils.isEmpty(pageTitle) && !TextUtils.isEmpty(title)) {
+                    tvTitle.setText(title);
+                }
             }
         });
         // 禁止系统的复制粘贴
