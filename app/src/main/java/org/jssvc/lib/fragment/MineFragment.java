@@ -9,8 +9,8 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.jssvc.lib.R;
-import org.jssvc.lib.activity.AboutActivity;
 import org.jssvc.lib.activity.SettingActivity;
+import org.jssvc.lib.activity.WebActivity;
 import org.jssvc.lib.base.BaseFragment;
 
 import butterknife.BindView;
@@ -43,6 +43,8 @@ public class MineFragment extends BaseFragment {
     TextView tvDebt;
     @BindView(R.id.debtLayout)
     LinearLayout debtLayout;
+    @BindView(R.id.tvReadBack)
+    TextView tvReadBack;
     @BindView(R.id.tvSetting)
     TextView tvSetting;
 
@@ -68,7 +70,12 @@ public class MineFragment extends BaseFragment {
         simpleDraweeView.setImageURI("http://v1.qzone.cc/avatar/201408/22/21/52/53f74b13786e4125.jpg%21200x200.jpg");
     }
 
-    @OnClick({R.id.totalLayout, R.id.readingLayout, R.id.lawsLayout, R.id.debtLayout, R.id.tvSetting})
+    @Override
+    protected void onFirstUserVisible() {
+
+    }
+
+    @OnClick({R.id.totalLayout, R.id.readingLayout, R.id.lawsLayout, R.id.debtLayout, R.id.tvReadBack, R.id.tvSetting})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.totalLayout:
@@ -82,6 +89,17 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.debtLayout:
                 // 欠费
+                Intent intent2 = new Intent(context, WebActivity.class);
+                intent2.putExtra("url", "http://www.hydong.me/article/new_2.html");
+                intent2.putExtra("title", "校园新闻");
+                startActivity(intent2);
+                break;
+            case R.id.tvReadBack:
+                // 我的阅读心得
+                Intent intent = new Intent(context, WebActivity.class);
+                intent.putExtra("url", "http://www.hydong.me/article/new_1.html");
+                intent.putExtra("title", "校园新闻");
+                startActivity(intent);
                 break;
             case R.id.tvSetting:
                 // 设置

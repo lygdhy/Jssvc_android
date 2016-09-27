@@ -1,6 +1,7 @@
 package org.jssvc.lib.fragment;
 
 
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
@@ -60,7 +61,8 @@ public class FindFragment extends BaseFragment {
         //触摸焦点起作用
         webView.requestFocus();
         // 防黑屏
-        webView.setBackgroundColor(0);
+        webView.setBackgroundColor(Color.parseColor("#00000000"));
+        webView.setBackgroundResource(R.color.white);
         // 内嵌打开
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -97,5 +99,10 @@ public class FindFragment extends BaseFragment {
                 super.onProgressChanged(view, newProgress);
             }
         });
+    }
+
+    @Override
+    protected void onFirstUserVisible() {
+
     }
 }

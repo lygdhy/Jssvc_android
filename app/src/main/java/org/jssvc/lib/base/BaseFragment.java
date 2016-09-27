@@ -43,6 +43,18 @@ public abstract class BaseFragment extends Fragment {
         unbinder.unbind();//解绑
     }
 
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        onFirstUserVisible();
+    }
+
+    /**
+     * 第一次对用户可见时会调用该方法
+     */
+    protected abstract void onFirstUserVisible();
+
     /**
      * 全局Toast
      */
