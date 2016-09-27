@@ -27,7 +27,7 @@ public class FindFragment extends BaseFragment {
     @BindView(R.id.swipeContainer)
     SwipeRefreshLayout swipeContainer;
 
-    String url = "http://www.hydong.me/test.html";
+    String url = "http://www.hydong.me/article/app_extend.html";
 
     public static FindFragment newInstance() {
         return new FindFragment();

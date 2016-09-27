@@ -1,10 +1,15 @@
 package org.jssvc.lib.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -75,7 +80,8 @@ public class WebActivity extends BaseActivity {
         //触摸焦点起作用
         webView.requestFocus();
         // 防黑屏
-        webView.setBackgroundColor(0);
+        webView.setBackgroundColor(Color.parseColor("#00000000"));
+        webView.setBackgroundResource(R.color.white);
         // 内嵌打开
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -114,5 +120,24 @@ public class WebActivity extends BaseActivity {
                 super.onProgressChanged(view, newProgress);
             }
         });
+        // 添加一个对象, 让JS可以访问该对象的方法, 该对象中可以调用JS中的方法
+        webView.addJavascriptInterface(new WebAppInterface(this), "AppInterface");
     }
+
+    public class WebAppInterface {
+
+        private Context mContext;
+
+        public WebAppInterface(Context context) {
+            this.mContext = context;
+        }
+
+        @JavascriptInterface
+        public void readOriginalArticle(String url) {
+            Uri uri = Uri.parse(url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        }
+    }
+
 }
