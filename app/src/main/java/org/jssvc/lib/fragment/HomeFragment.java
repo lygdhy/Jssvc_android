@@ -5,7 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
@@ -24,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 
@@ -34,6 +39,8 @@ public class HomeFragment extends BaseFragment {
 
     @BindView(R.id.textView)
     TextView textView;
+    @BindView(R.id.btnLogin)
+    Button btnLogin;
     @BindView(R.id.convenientBanner)
     ConvenientBanner convenientBanner;
 
@@ -48,47 +55,9 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        String url = "http://opac.jssvc.edu.cn:8080/reader/redr_verify.php";
-        textView.setText(url);
-        OkHttpUtils.post().url(url)
-                .addParams("number", "157301241")
-                .addParams("passwd", "157301241")
-                .addParams("select", "cert_no")
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
 
-                    }
-
-                    @Override
-                    public void onResponse(String response, int id) {
-                        textView.setText(response);
-                    }
-                });
     }
 
-    @OnClick(R.id.textView)
-    public void onClick() {
-        String url = "http://opac.jssvc.edu.cn:8080/reader/redr_info.php";
-        textView.setText(url);
-        OkHttpUtils.post().url(url)
-//                .addParams("number", "157301241")
-//                .addParams("passwd", "157301241")
-//                .addParams("select", "cert_no")
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-
-                    }
-
-                    @Override
-                    public void onResponse(String response, int id) {
-                        textView.setText(response);
-                    }
-                });
-    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -116,7 +85,53 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void onFirstUserVisible() {
-        
+
+    }
+
+    @OnClick({R.id.btnLogin, R.id.textView})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnLogin:
+                String url = "http://opac.jssvc.edu.cn:8080/reader/redr_verify.php";
+                textView.setText(url);
+                OkHttpUtils.post().url(url)
+                        .addParams("number", "157301241")
+                        .addParams("passwd", "157301241")
+                        .addParams("select", "cert_no")
+                        .build()
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onError(Call call, Exception e, int id) {
+
+                            }
+
+                            @Override
+                            public void onResponse(String response, int id) {
+                                textView.setText(response);
+                            }
+                        });
+                break;
+            case R.id.textView:
+                String url2 = "http://opac.jssvc.edu.cn:8080/reader/redr_info.php";
+                textView.setText(url2);
+                OkHttpUtils.post().url(url2)
+//                .addParams("number", "157301241")
+//                .addParams("passwd", "157301241")
+//                .addParams("select", "cert_no")
+                        .build()
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onError(Call call, Exception e, int id) {
+
+                            }
+
+                            @Override
+                            public void onResponse(String response, int id) {
+                                textView.setText(response);
+                            }
+                        });
+                break;
+        }
     }
 
     public class LocalImageHolderView implements Holder<AdsBean> {

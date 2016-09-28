@@ -38,6 +38,10 @@
         <activity
             android:name=".activity.SettingActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.BorrowHistoryActivity" />
+        <activity android:name=".activity.BorrowPresentActivity" />
+        <activity android:name=".activity.MyDebtActivity" />
+        <activity android:name=".activity.MyViolationActivity"></activity>
     </application>
 
 </manifest>

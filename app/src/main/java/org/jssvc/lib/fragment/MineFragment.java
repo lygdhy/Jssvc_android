@@ -9,6 +9,10 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.jssvc.lib.R;
+import org.jssvc.lib.activity.BorrowHistoryActivity;
+import org.jssvc.lib.activity.BorrowPresentActivity;
+import org.jssvc.lib.activity.MyDebtActivity;
+import org.jssvc.lib.activity.MyViolationActivity;
 import org.jssvc.lib.activity.SettingActivity;
 import org.jssvc.lib.activity.WebActivity;
 import org.jssvc.lib.base.BaseFragment;
@@ -80,22 +84,26 @@ public class MineFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.totalLayout:
                 // 借阅历史
+                startActivity(new Intent(context, BorrowHistoryActivity.class));
                 break;
             case R.id.readingLayout:
                 // 当前借阅
+                startActivity(new Intent(context, BorrowPresentActivity.class));
                 break;
             case R.id.lawsLayout:
                 // 违章
+                startActivity(new Intent(context, MyViolationActivity.class));
                 break;
             case R.id.debtLayout:
                 // 欠费
+                startActivity(new Intent(context, MyDebtActivity.class));
                 break;
             case R.id.tvReadBack:
                 // 我的阅读心得
-                Intent intent = new Intent(context, WebActivity.class);
-                intent.putExtra("url", "http://www.hydong.me/article/new_2.html");
-                intent.putExtra("title", "校园新闻");
-                startActivity(intent);
+                Intent intentReadBack = new Intent(context, WebActivity.class);
+                intentReadBack.putExtra("url", "http://www.hydong.me/article/new_2.html");
+                intentReadBack.putExtra("title", "校园新闻");
+                startActivity(intentReadBack);
                 break;
             case R.id.tvSetting:
                 // 设置
