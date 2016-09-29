@@ -5,11 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
@@ -23,12 +20,12 @@ import org.jssvc.lib.R;
 import org.jssvc.lib.activity.WebActivity;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.AdsBean;
+import org.jssvc.lib.utils.HttpUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 
@@ -64,8 +61,8 @@ public class HomeFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
 
         List<AdsBean> adsList = new ArrayList<>();
-        adsList.add(new AdsBean("1", "1", "欢度中秋", "http://www.hydong.me/appsrc/bg_addemo.png", "http://baike.baidu.com/view/2568.htm"));
-        adsList.add(new AdsBean("2", "1", "图书馆", "http://www.hydong.me/appsrc/bg_addemo2.png", "http://baike.baidu.com/view/5476774.htm"));
+        adsList.add(new AdsBean("1", "1", "欢度中秋", HttpUtils.URL_AD + "bg_addemo.png", "http://baike.baidu.com/view/2568.htm"));
+        adsList.add(new AdsBean("2", "1", "图书馆", HttpUtils.URL_AD + "bg_addemo2.png", "http://baike.baidu.com/view/5476774.htm"));
 
         //自定义你的Holder，实现更多复杂的界面，不一定是图片翻页，其他任何控件翻页亦可。
         convenientBanner.setPages(new CBViewHolderCreator<LocalImageHolderView>() {

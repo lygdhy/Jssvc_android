@@ -17,9 +17,11 @@ import org.jssvc.lib.activity.MyViolationActivity;
 import org.jssvc.lib.activity.SettingActivity;
 import org.jssvc.lib.activity.WebActivity;
 import org.jssvc.lib.base.BaseFragment;
+import org.jssvc.lib.utils.HttpUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
 
 /**
  * 个人中心
@@ -80,12 +82,12 @@ public class MineFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.tvUserName,R.id.totalLayout, R.id.readingLayout, R.id.lawsLayout, R.id.debtLayout, R.id.tvReadBack, R.id.tvSetting})
+    @OnClick({R.id.tvUserName, R.id.totalLayout, R.id.readingLayout, R.id.lawsLayout, R.id.debtLayout, R.id.tvReadBack, R.id.tvSetting})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvUserName:
                 // 用户登录
-                startActivity(new Intent(context,LoginActivity.class));
+                startActivity(new Intent(context, LoginActivity.class));
                 break;
             case R.id.totalLayout:
                 // 借阅历史
@@ -106,7 +108,7 @@ public class MineFragment extends BaseFragment {
             case R.id.tvReadBack:
                 // 我的阅读心得
                 Intent intentReadBack = new Intent(context, WebActivity.class);
-                intentReadBack.putExtra("url", "http://www.hydong.me/article/new_2.html");
+                intentReadBack.putExtra("url", HttpUtils.URL_ARTICLE + "new_2.html");
                 intentReadBack.putExtra("title", "校园新闻");
                 startActivity(intentReadBack);
                 break;
