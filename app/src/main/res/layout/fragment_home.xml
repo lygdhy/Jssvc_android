@@ -8,7 +8,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="360dp">
+        android:layout_height="340dp">
 
         <com.bigkoo.convenientbanner.ConvenientBanner
             android:id="@+id/convenientBanner"
@@ -16,37 +16,61 @@
             android:layout_height="match_parent"
             app:canLoop="true" />
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/searchLayout"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="45dp"
             android:layout_gravity="bottom"
-            android:layout_margin="15dp"
-            android:background="#22000000">
-            <Button
-                android:id="@+id/btnLogin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="登陆"/>
-        </LinearLayout>
-    </FrameLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bg_home_search_bar"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/tvSearchType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:drawableRight="@drawable/icon_footer_red"
+                android:padding="5dp"
+                android:text="书名"
+                android:textColor="@color/ui_text_body"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/edtSearchText"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="hduhiduhuh"
-                android:textColor="@color/colorAccent" />
-        </LinearLayout>
-    </ScrollView>
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/tvSearchCommit"
+                android:layout_toRightOf="@+id/tvSearchType"
+                android:background="@null"
+                android:hint="请输入书名"
+                android:padding="3dp"
+                android:text=""
+                android:textColor="@color/ui_text_body"
+                android:textColorHint="@color/ui_text_tip"
+                android:textSize="14sp" />
 
+            <TextView
+                android:id="@+id/tvSearchCommit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="5dp"
+                android:text="搜索"
+                android:textColor="@color/ui_text_body"
+                android:textSize="14sp" />
+        </RelativeLayout>
+    </FrameLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
 </LinearLayout>

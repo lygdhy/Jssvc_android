@@ -1,5 +1,6 @@
 package org.jssvc.lib.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -8,9 +9,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.jssvc.lib.R;
+import org.jssvc.lib.activity.WebActivity;
 import org.jssvc.lib.adapter.ArticleListAdapter;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.ArticleBean;
+import org.jssvc.lib.utils.HttpUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,7 +142,11 @@ public class NewsInnerFragment extends BaseFragment implements BGARefreshLayout.
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        showToast("点击了条目 " + mAdapter.getItem(position).getId());
+//        showToast("点击了条目 " + mAdapter.getItem(position).getId());
+        Intent intentReadBack = new Intent(context, WebActivity.class);
+        intentReadBack.putExtra("url", HttpUtils.URL_ARTICLE + "new_2.html");
+        intentReadBack.putExtra("title", "校园新闻");
+        startActivity(intentReadBack);
     }
 
     @Override

@@ -16,5 +16,36 @@
 
     </RelativeLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="登陆" />
+            <Button
+                android:id="@+id/btnGetInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="获取详情" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="hduhiduhuh"
+                android:textColor="@color/colorAccent" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

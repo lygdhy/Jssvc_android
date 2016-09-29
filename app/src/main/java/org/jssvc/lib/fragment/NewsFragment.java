@@ -47,7 +47,7 @@ public class NewsFragment extends BaseFragment {
         findMenus = new ArrayList<>();
         findMenus.add(new FindMenuBean(1, "推荐"));
         findMenus.add(new FindMenuBean(2, "热门"));
-        findMenus.add(new FindMenuBean(3, "哈哈"));
+        findMenus.add(new FindMenuBean(3, "分享"));
 
         fragments = new ArrayList<>();
         for (int i = 0; i < findMenus.size(); i++) {
@@ -68,7 +68,7 @@ public class NewsFragment extends BaseFragment {
 
     @Override
     protected void onFirstUserVisible() {
-        
+
     }
 
 

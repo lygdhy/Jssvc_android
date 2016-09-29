@@ -2,22 +2,33 @@ package org.jssvc.lib.fragment;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.jssvc.lib.R;
+import org.jssvc.lib.activity.SearchBookListActivity;
 import org.jssvc.lib.activity.WebActivity;
+import org.jssvc.lib.adapter.HomeMenuAdapter;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.AdsBean;
 import org.jssvc.lib.utils.HttpUtils;
@@ -26,20 +37,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
 
 /**
  * 首页
  */
 public class HomeFragment extends BaseFragment {
 
-    @BindView(R.id.textView)
-    TextView textView;
-    @BindView(R.id.btnLogin)
-    Button btnLogin;
     @BindView(R.id.convenientBanner)
     ConvenientBanner convenientBanner;
+    @BindView(R.id.recyclerView)
+    RecyclerView mRecyclerView;
+
+    HomeMenuAdapter homeMenuAdapter;
+    @BindView(R.id.tvSearchType)
+    TextView tvSearchType;
+    @BindView(R.id.edtSearchText)
+    EditText edtSearchText;
+    @BindView(R.id.tvSearchCommit)
+    TextView tvSearchCommit;
+    @BindView(R.id.searchLayout)
+    RelativeLayout searchLayout;
+
+    private List<String> mDatas;
+    int searchTypePos = 0;
+    String[] searchTypes = new String[]{"书名", "作者", "索书号", "主题词"};
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -52,9 +75,21 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        mDatas = new ArrayList<String>();
+        mDatas.add("开心");
+        mDatas.add("快乐");
+        mDatas.add("温暖");
+        mDatas.add("幸福");
+
+        //创建默认的线性LayoutManager
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL));
+        //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
+        mRecyclerView.setHasFixedSize(true);
+        //创建并设置Adapter
+        homeMenuAdapter = new HomeMenuAdapter(context, mDatas);
+        mRecyclerView.setAdapter(homeMenuAdapter);
 
     }
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -78,6 +113,28 @@ public class HomeFragment extends BaseFragment {
         //设置翻页的效果，不需要翻页效果可用不设
         //.setPageTransformer(Transformer.DefaultTransformer);    集成特效之后会有白屏现象，新版已经分离，如果要集成特效的例子可以看Demo的点击响应。
         // convenientBanner.setManualPageable(false);//设置不能手动影响
+
+        tvSearchCommit.setVisibility(View.GONE);
+        edtSearchText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (TextUtils.isEmpty(editable.toString())) {
+                    tvSearchCommit.setVisibility(View.GONE);
+                } else {
+                    tvSearchCommit.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     @Override
@@ -85,50 +142,51 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.btnLogin, R.id.textView})
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @OnClick({R.id.tvSearchType, R.id.tvSearchCommit, R.id.searchLayout})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btnLogin:
-                String url = "http://opac.jssvc.edu.cn:8080/reader/redr_verify.php";
-                textView.setText(url);
-                OkHttpUtils.post().url(url)
-                        .addParams("number", "157301241")
-                        .addParams("passwd", "157301241")
-                        .addParams("select", "cert_no")
-                        .build()
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onError(Call call, Exception e, int id) {
-
-                            }
-
-                            @Override
-                            public void onResponse(String response, int id) {
-                                textView.setText(response);
-                            }
-                        });
+            case R.id.tvSearchType:
+                // 选择搜书类型
+                showSearchTypeDialog();
                 break;
-            case R.id.textView:
-                String url2 = "http://opac.jssvc.edu.cn:8080/reader/redr_info.php";
-                textView.setText(url2);
-                OkHttpUtils.post().url(url2)
-//                .addParams("number", "157301241")
-//                .addParams("passwd", "157301241")
-//                .addParams("select", "cert_no")
-                        .build()
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onError(Call call, Exception e, int id) {
-
-                            }
-
-                            @Override
-                            public void onResponse(String response, int id) {
-                                textView.setText(response);
-                            }
-                        });
+            case R.id.tvSearchCommit:
+                // 搜索按鈕
+                String value = edtSearchText.getText().toString().trim();
+                if (!TextUtils.isEmpty(value)) {
+                    Intent intent = new Intent(context, SearchBookListActivity.class);
+                    intent.putExtra("searchType", tvSearchType.getText().toString().trim());
+                    intent.putExtra("searchValue", value);
+                    startActivity(intent);
+                }
+                break;
+            case R.id.searchLayout:
+                // 搜索跟布局，不错任何操作，仅阻止点击事件传递到广告页面上
                 break;
         }
+    }
+
+    // 选择搜索类型
+    private void showSearchTypeDialog() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle("请选择")
+                .setSingleChoiceItems(searchTypes, searchTypePos,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                searchTypePos = which;
+                                tvSearchType.setText(searchTypes[searchTypePos]);
+                                edtSearchText.setHint("请输入" + searchTypes[searchTypePos]);
+                                dialog.dismiss();
+                            }
+                        }
+                ).show();
     }
 
     public class LocalImageHolderView implements Holder<AdsBean> {
