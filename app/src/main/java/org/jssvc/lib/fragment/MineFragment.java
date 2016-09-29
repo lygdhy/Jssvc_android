@@ -11,6 +11,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import org.jssvc.lib.R;
 import org.jssvc.lib.activity.BorrowHistoryActivity;
 import org.jssvc.lib.activity.BorrowPresentActivity;
+import org.jssvc.lib.activity.LoginActivity;
 import org.jssvc.lib.activity.MyDebtActivity;
 import org.jssvc.lib.activity.MyViolationActivity;
 import org.jssvc.lib.activity.SettingActivity;
@@ -63,15 +64,15 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        tvUserName.setText("朱小雨");
-        tvUserLevel.setText("读书达人");
+        tvUserName.setText("点击登陆");
+        tvUserLevel.setText("登陆后更精彩...");
 
-        tvTotal.setText("15");
-        tvReading.setText("2");
-        tvLaws.setText("0");
-        tvDebt.setText("0");
+        tvTotal.setText("*");
+        tvReading.setText("*");
+        tvLaws.setText("*");
+        tvDebt.setText("*");
 
-        simpleDraweeView.setImageURI("http://v1.qzone.cc/avatar/201408/22/21/52/53f74b13786e4125.jpg%21200x200.jpg");
+//        simpleDraweeView.setImageURI("http://v1.qzone.cc/avatar/201408/22/21/52/53f74b13786e4125.jpg%21200x200.jpg");
     }
 
     @Override
@@ -79,9 +80,13 @@ public class MineFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.totalLayout, R.id.readingLayout, R.id.lawsLayout, R.id.debtLayout, R.id.tvReadBack, R.id.tvSetting})
+    @OnClick({R.id.tvUserName,R.id.totalLayout, R.id.readingLayout, R.id.lawsLayout, R.id.debtLayout, R.id.tvReadBack, R.id.tvSetting})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.tvUserName:
+                // 用户登录
+                startActivity(new Intent(context,LoginActivity.class));
+                break;
             case R.id.totalLayout:
                 // 借阅历史
                 startActivity(new Intent(context, BorrowHistoryActivity.class));
