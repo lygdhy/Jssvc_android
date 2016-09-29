@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseFragment;
+import org.jssvc.lib.utils.HttpUtils;
 
 import butterknife.BindView;
 
@@ -26,8 +27,6 @@ public class ExpandFragment extends BaseFragment {
     TextView tvTitle;
     @BindView(R.id.swipeContainer)
     SwipeRefreshLayout swipeContainer;
-
-    String url = "http://www.hydong.me/appexpand/";
 
     public static ExpandFragment newInstance() {
         return new ExpandFragment();
@@ -53,7 +52,7 @@ public class ExpandFragment extends BaseFragment {
                 ContextCompat.getColor(context, R.color.google_yellow),
                 ContextCompat.getColor(context, R.color.google_blue));
 
-        webView.loadUrl(url);
+        webView.loadUrl(HttpUtils.URL_EXPAND);
         //添加javaScript支持
         webView.getSettings().setJavaScriptEnabled(true);
         //取消滚动条
