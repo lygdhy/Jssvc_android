@@ -5,7 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import org.jssvc.lib.R;
-import org.jssvc.lib.adapter.FindTabAdapter;
+import org.jssvc.lib.adapter.NewsTabAdapter;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.FindMenuBean;
 
@@ -25,10 +25,10 @@ public class NewsFragment extends BaseFragment {
     ViewPager viewpager;
 
     private List<FindMenuBean> findMenus;
-    private List<FindInnerFragment> fragments;
+    private List<NewsInnerFragment> fragments;
 
     private int pos_cur = 0;// 默认加载页码
-    private FindTabAdapter pagerAdapter;
+    private NewsTabAdapter pagerAdapter;
 
     public static NewsFragment newInstance() {
         return new NewsFragment();
@@ -51,13 +51,13 @@ public class NewsFragment extends BaseFragment {
 
         fragments = new ArrayList<>();
         for (int i = 0; i < findMenus.size(); i++) {
-            fragments.add(FindInnerFragment.newInstance(findMenus.get(i).getChannelId()));
+            fragments.add(NewsInnerFragment.newInstance(findMenus.get(i).getChannelId()));
         }
 
         //设置TabLayout的模式
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-        pagerAdapter = new FindTabAdapter(getChildFragmentManager(), findMenus, fragments);
+        pagerAdapter = new NewsTabAdapter(getChildFragmentManager(), findMenus, fragments);
         viewpager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewpager);//将TabLayout和ViewPager关联起来
 

@@ -1,6 +1,5 @@
 package org.jssvc.lib.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -8,12 +7,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
-
 import org.jssvc.lib.R;
-import org.jssvc.lib.activity.MainActivity;
-import org.jssvc.lib.activity.SplashActivity;
 import org.jssvc.lib.adapter.ArticleListAdapter;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.ArticleBean;
@@ -26,13 +20,12 @@ import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildLongClickListener;
 import cn.bingoogolapple.refreshlayout.BGAMoocStyleRefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
-import okhttp3.Call;
 
 /**
  * Created by lygdh on 2016/9/26.
  */
 
-public class FindInnerFragment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, BGAOnItemChildClickListener, BGAOnItemChildLongClickListener {
+public class NewsInnerFragment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, BGAOnItemChildClickListener, BGAOnItemChildLongClickListener {
     @BindView(R.id.refreshLayout)
     BGARefreshLayout mRefreshLayout;
     @BindView(R.id.mListView)
@@ -49,8 +42,8 @@ public class FindInnerFragment extends BaseFragment implements BGARefreshLayout.
 
     Handler handler = new Handler();//模拟数据异步请求
 
-    public static FindInnerFragment newInstance(int id) {
-        FindInnerFragment fragment = new FindInnerFragment();
+    public static NewsInnerFragment newInstance(int id) {
+        NewsInnerFragment fragment = new NewsInnerFragment();
         Bundle args = new Bundle();
         args.putInt(ARGS_CHANNEL, id);
         fragment.setArguments(args);
@@ -65,7 +58,7 @@ public class FindInnerFragment extends BaseFragment implements BGARefreshLayout.
 
     @Override
     protected int getContentViewId() {
-        return R.layout.fragment_find_inner;
+        return R.layout.fragment_expand_inner;
     }
 
     @Override

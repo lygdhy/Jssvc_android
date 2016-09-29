@@ -18,7 +18,7 @@ import butterknife.BindView;
 /**
  * 探索&发现
  */
-public class FindFragment extends BaseFragment {
+public class ExpandFragment extends BaseFragment {
 
     @BindView(R.id.webView)
     WebView webView;
@@ -27,15 +27,15 @@ public class FindFragment extends BaseFragment {
     @BindView(R.id.swipeContainer)
     SwipeRefreshLayout swipeContainer;
 
-    String url = "http://www.hydong.me/article/app_extend.html";
+    String url = "http://www.hydong.me/appexpand/";
 
-    public static FindFragment newInstance() {
-        return new FindFragment();
+    public static ExpandFragment newInstance() {
+        return new ExpandFragment();
     }
 
     @Override
     protected int getContentViewId() {
-        return R.layout.fragment_find;
+        return R.layout.fragment_expand;
     }
 
     @Override
