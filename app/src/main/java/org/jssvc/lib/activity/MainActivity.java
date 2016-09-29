@@ -10,7 +10,7 @@ import android.view.View;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.SimpleFragmentPagerAdapter;
 import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.fragment.FindFragment;
+import org.jssvc.lib.fragment.ExpandFragment;
 import org.jssvc.lib.fragment.HomeFragment;
 import org.jssvc.lib.fragment.MineFragment;
 import org.jssvc.lib.fragment.NewsFragment;
@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tabLayout.setupWithViewPager(viewpager);
         fragments.add(HomeFragment.newInstance());
         fragments.add(NewsFragment.newInstance());
-        fragments.add(FindFragment.newInstance());
+        fragments.add(ExpandFragment.newInstance());
         fragments.add(MineFragment.newInstance());
         pagerAdapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), this, fragments);
         viewpager.setAdapter(pagerAdapter);

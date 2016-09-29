@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import org.jssvc.lib.bean.FindMenuBean;
-import org.jssvc.lib.fragment.FindInnerFragment;
+import org.jssvc.lib.fragment.NewsInnerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +14,12 @@ import java.util.List;
  * FragmentPager适配器
  */
 
-public class FindTabAdapter extends FragmentPagerAdapter {
+public class NewsTabAdapter extends FragmentPagerAdapter {
 
     List<FindMenuBean> findMenus = new ArrayList<>();
-    List<FindInnerFragment> fragments = new ArrayList<>();
+    List<NewsInnerFragment> fragments = new ArrayList<>();
 
-    public FindTabAdapter(FragmentManager fm, List<FindMenuBean> findMenus, List<FindInnerFragment> fragments) {
+    public NewsTabAdapter(FragmentManager fm, List<FindMenuBean> findMenus, List<NewsInnerFragment> fragments) {
         super(fm);
         this.findMenus = findMenus;
         this.fragments = fragments;
