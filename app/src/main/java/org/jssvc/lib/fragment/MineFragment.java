@@ -17,7 +17,7 @@ import org.jssvc.lib.activity.MyViolationActivity;
 import org.jssvc.lib.activity.SettingActivity;
 import org.jssvc.lib.activity.WebActivity;
 import org.jssvc.lib.base.BaseFragment;
-import org.jssvc.lib.utils.HttpUtils;
+import org.jssvc.lib.utils.HttpUrlParams;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -108,7 +108,7 @@ public class MineFragment extends BaseFragment {
             case R.id.tvReadBack:
                 // 我的阅读心得
                 Intent intentReadBack = new Intent(context, WebActivity.class);
-                intentReadBack.putExtra("url", HttpUtils.URL_ARTICLE + "new_2.html");
+                intentReadBack.putExtra("url", HttpUrlParams.URL_ARTICLE + "new_2.html");
                 intentReadBack.putExtra("title", "校园新闻");
                 startActivity(intentReadBack);
                 break;

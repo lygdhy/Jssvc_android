@@ -4,7 +4,7 @@ package org.jssvc.lib.utils;
  * Created by lygdh on 2016/9/13.
  */
 
-public class HttpUtils {
+public class HttpUrlParams {
 
     public static final String BASE_URL = "http://www.hydong.me/";
 

@@ -16,7 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,7 +31,8 @@ import org.jssvc.lib.activity.WebActivity;
 import org.jssvc.lib.adapter.HomeMenuAdapter;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.AdsBean;
-import org.jssvc.lib.utils.HttpUtils;
+import org.jssvc.lib.utils.HttpUrlParams;
+import org.jssvc.lib.utils.ScreenUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,8 @@ import butterknife.OnClick;
  */
 public class HomeFragment extends BaseFragment {
 
+    @BindView(R.id.frameLayout)
+    FrameLayout frameLayout;
     @BindView(R.id.convenientBanner)
     ConvenientBanner convenientBanner;
     @BindView(R.id.recyclerView)
@@ -75,6 +78,9 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        // 广告和菜单等分屏幕
+        frameLayout.getLayoutParams().height = (ScreenUtils.getScreenHeight(context) / 2);
+
         mDatas = new ArrayList<String>();
         mDatas.add("开心");
         mDatas.add("快乐");
@@ -96,8 +102,8 @@ public class HomeFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
 
         List<AdsBean> adsList = new ArrayList<>();
-        adsList.add(new AdsBean("1", "1", "欢度中秋", HttpUtils.URL_AD + "bg_addemo.png", "http://baike.baidu.com/view/2568.htm"));
-        adsList.add(new AdsBean("2", "1", "图书馆", HttpUtils.URL_AD + "bg_addemo2.png", "http://baike.baidu.com/view/5476774.htm"));
+        adsList.add(new AdsBean("1", "1", "欢度中秋", HttpUrlParams.URL_AD + "bg_addemo.png", "http://baike.baidu.com/view/2568.htm"));
+        adsList.add(new AdsBean("2", "1", "图书馆", HttpUrlParams.URL_AD + "bg_addemo2.png", "http://baike.baidu.com/view/5476774.htm"));
 
         //自定义你的Holder，实现更多复杂的界面，不一定是图片翻页，其他任何控件翻页亦可。
         convenientBanner.setPages(new CBViewHolderCreator<LocalImageHolderView>() {
