@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseFragment;
-import org.jssvc.lib.utils.HttpUrlParams;
+import org.jssvc.lib.data.HttpUrlParams;
 
 import butterknife.BindView;
 

@@ -31,7 +31,7 @@ import org.jssvc.lib.activity.WebActivity;
 import org.jssvc.lib.adapter.HomeMenuAdapter;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.AdsBean;
-import org.jssvc.lib.utils.HttpUrlParams;
+import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.ScreenUtils;
 
 import java.util.ArrayList;
