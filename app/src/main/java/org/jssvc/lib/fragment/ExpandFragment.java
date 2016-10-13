@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseFragment;
-import org.jssvc.lib.utils.HttpUtils;
+import org.jssvc.lib.data.HttpUrlParams;
 
 import butterknife.BindView;
 
@@ -52,7 +52,7 @@ public class ExpandFragment extends BaseFragment {
                 ContextCompat.getColor(context, R.color.google_yellow),
                 ContextCompat.getColor(context, R.color.google_blue));
 
-        webView.loadUrl(HttpUtils.URL_EXPAND);
+        webView.loadUrl(HttpUrlParams.URL_EXPAND);
         //添加javaScript支持
         webView.getSettings().setJavaScriptEnabled(true);
         //取消滚动条

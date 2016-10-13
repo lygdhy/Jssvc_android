@@ -46,28 +46,33 @@
                         fresco:roundingBorderColor="@color/white"
                         fresco:roundingBorderWidth="2dp" />
 
-                    <TextView
-                        android:id="@+id/tvUserName"
+                    <LinearLayout
+                        android:id="@+id/userInfoLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="50dp"
-                        android:text="读者信息"
-                        android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tvUserLevel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/tvUserName"
-                        android:layout_alignStart="@+id/tvUserName"
-                        android:layout_below="@+id/tvUserName"
-                        android:layout_marginTop="5dp"
-                        android:text="等级"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        <TextView
+                            android:id="@+id/tvUserName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="读者信息"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/tvUserLevel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="等级"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
                 </RelativeLayout>
 
                 <LinearLayout

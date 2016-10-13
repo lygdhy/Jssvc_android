@@ -17,7 +17,8 @@ import org.jssvc.lib.activity.MyViolationActivity;
 import org.jssvc.lib.activity.SettingActivity;
 import org.jssvc.lib.activity.WebActivity;
 import org.jssvc.lib.base.BaseFragment;
-import org.jssvc.lib.utils.HttpUtils;
+import org.jssvc.lib.data.AccountPref;
+import org.jssvc.lib.data.HttpUrlParams;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -30,6 +31,8 @@ public class MineFragment extends BaseFragment {
 
     @BindView(R.id.simpleDraweeView)
     SimpleDraweeView simpleDraweeView;
+    @BindView(R.id.userInfoLayout)
+    LinearLayout userInfoLayout;
     @BindView(R.id.tvUserName)
     TextView tvUserName;
     @BindView(R.id.tvUserLevel)
@@ -82,11 +85,15 @@ public class MineFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.tvUserName, R.id.totalLayout, R.id.readingLayout, R.id.lawsLayout, R.id.debtLayout, R.id.tvReadBack, R.id.tvSetting})
+    @OnClick({R.id.userInfoLayout, R.id.simpleDraweeView, R.id.totalLayout, R.id.readingLayout, R.id.lawsLayout, R.id.debtLayout, R.id.tvReadBack, R.id.tvSetting})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tvUserName:
-                // 用户登录
+            case R.id.simpleDraweeView:
+            case R.id.userInfoLayout:
+                // 用户登录|用户详情
+                if (AccountPref.isLogon(context)) {
+                } else {
+                }
                 startActivity(new Intent(context, LoginActivity.class));
                 break;
             case R.id.totalLayout:
@@ -108,7 +115,7 @@ public class MineFragment extends BaseFragment {
             case R.id.tvReadBack:
                 // 我的阅读心得
                 Intent intentReadBack = new Intent(context, WebActivity.class);
-                intentReadBack.putExtra("url", HttpUtils.URL_ARTICLE + "new_2.html");
+                intentReadBack.putExtra("url", HttpUrlParams.URL_ARTICLE + "new_2.html");
                 intentReadBack.putExtra("title", "校园新闻");
                 startActivity(intentReadBack);
                 break;
