@@ -13,9 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.EmptySplashActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppSplash">
+            android:name=".activity.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,14 +22,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.SplashActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppSplash" />
-        <activity
             android:name=".activity.MainActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".activity.AboutActivity"
             android:screenOrientation="portrait" />

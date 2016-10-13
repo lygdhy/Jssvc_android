@@ -93,7 +93,7 @@ public class NewsInnerFragment extends BaseFragment implements BGARefreshLayout.
         mNewPageNumber = 0;
         mMorePageNumber = 0;
 
-        handler.postDelayed(new setDataHandler(), 3000);
+        handler.postDelayed(new setDataHandler(), 1000);
     }
 
     @Override
@@ -104,7 +104,7 @@ public class NewsInnerFragment extends BaseFragment implements BGARefreshLayout.
             showToast("没有最新数据了");
             return;
         }
-        handler.postDelayed(new setNewDataHandler(), 3000);
+        handler.postDelayed(new setNewDataHandler(), 1000);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class NewsInnerFragment extends BaseFragment implements BGARefreshLayout.
             showToast("没有更多数据了");
             return false;
         }
-        handler.postDelayed(new setMoreDataHandler(), 3000);
+        handler.postDelayed(new setMoreDataHandler(), 1000);
 
 //        showLoadingDialog();
 //        mEngine.loadMoreData(mMorePageNumber).enqueue(new Callback<List<ArticleBean>>() {

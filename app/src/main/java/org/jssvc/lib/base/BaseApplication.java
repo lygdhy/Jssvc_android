@@ -1,9 +1,7 @@
 package org.jssvc.lib.base;
 
 import android.app.Activity;
-import android.app.Application;
-import android.content.Context;
-import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.view.View;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -24,16 +22,10 @@ import okhttp3.OkHttpClient;
  * Created by lygdh on 2016/9/13.
  */
 
-public class BaseApplication extends Application {
+public class BaseApplication extends MultiDexApplication {
     BaseApplication appContext;
 
     private ActivityLifecycleHelper mActivityLifecycleHelper;
-
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiDex.install(this);
-    }
 
     @Override
     public void onCreate() {
