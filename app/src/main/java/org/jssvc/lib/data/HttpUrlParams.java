@@ -6,11 +6,13 @@ package org.jssvc.lib.data;
 
 public class HttpUrlParams {
 
-    public static final String BASE_URL = "http://www.hydong.me/";
+    // 平台服务
+    public static final String BASE_HOST = "http://www.jssvc.org/";
+    public static final String BASE_API = BASE_HOST + "app/api/";//接口地址
 
-    public static final String URL_EXPAND = BASE_URL + "appSupport/expand/";//扩展页面
-    public static final String URL_AD = BASE_URL + "appSupport/adPics/";//广告
-    public static final String URL_ARTICLE = BASE_URL + "appSupport/article/";//文章
+    public static final String URL_EXPAND = BASE_HOST + "app/expand/";//扩展页面
+    public static final String URL_AD = BASE_HOST + "app/adPics/";//广告
+    public static final String URL_ARTICLE = BASE_HOST + "app/article/";//文章
 
     // 图书馆
     public static final String BASE_LIB_URL = "http://opac.jssvc.edu.cn:8080/";
