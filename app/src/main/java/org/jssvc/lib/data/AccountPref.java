@@ -77,13 +77,4 @@ public class AccountPref {
     public static boolean isLogon(Context context) {
         return !TextUtils.isEmpty(getLogonAccoundNumber(context)) && !TextUtils.isEmpty(getLogonAccoundPwd(context));
     }
-
-    // 是否有登陆
-    public static boolean checkLogon(Context context) {
-        if (!isLogon(context)) {
-            LoginActivity.launch(context);
-            return false;
-        }
-        return true;
-    }
 }

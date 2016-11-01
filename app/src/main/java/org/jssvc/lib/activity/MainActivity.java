@@ -10,6 +10,7 @@ import android.view.View;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.SimpleFragmentPagerAdapter;
 import org.jssvc.lib.base.BaseActivity;
+import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.fragment.ExpandFragment;
 import org.jssvc.lib.fragment.HomeFragment;
 import org.jssvc.lib.fragment.MineFragment;
