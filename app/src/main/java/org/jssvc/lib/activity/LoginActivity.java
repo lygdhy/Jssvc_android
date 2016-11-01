@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
@@ -19,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
+import okhttp3.Response;
 
 import static org.jssvc.lib.data.AccountPref.getLogonAccoundNumber;
 import static org.jssvc.lib.data.AccountPref.getLogonAccoundPwd;
@@ -75,39 +76,39 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.btnLogin:
                 // 登陆
-                OkHttpUtils.post().url(HttpUrlParams.URL_LIB_LOGIN)
-                        .addParams("number", getLogonAccoundNumber(context))
-                        .addParams("passwd", getLogonAccoundPwd(context))
-                        .addParams("select", getLogonType(context))
-                        .build()
+                OkGo.post(HttpUrlParams.URL_LIB_LOGIN)
+                        .tag(this)
+                        .params("number", getLogonAccoundNumber(context))
+                        .params("passwd", getLogonAccoundPwd(context))
+                        .params("select", getLogonType(context))
                         .execute(new StringCallback() {
                             @Override
-                            public void onError(Call call, Exception e, int id) {
-                                showToast("onError=" + e.getMessage());
-                            }
-
-                            @Override
-                            public void onResponse(String response, int id) {
-                                textView.setText(response);
+                            public void onSuccess(String s, Call call, Response response) {
+                                // s 即为所需要的结果
+                                textView.setText(s);
                             }
                         });
                 break;
             case R.id.btnGetInfo:
                 // 获取详情
-                OkHttpUtils.post().url(HttpUrlParams.URL_LIB_ACCOUND)
-                        .build()
+                OkGo.post(HttpUrlParams.URL_LIB_ACCOUND)
+                        .tag(this)
                         .execute(new StringCallback() {
                             @Override
-                            public void onError(Call call, Exception e, int id) {
-
-                            }
-
-                            @Override
-                            public void onResponse(String response, int id) {
-                                textView.setText(response);
+                            public void onSuccess(String s, Call call, Response response) {
+                                // s 即为所需要的结果
+                                textView.setText(s);
                             }
                         });
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        //根据 Tag 取消请求
+        OkGo.getInstance().cancelTag(this);
     }
 }

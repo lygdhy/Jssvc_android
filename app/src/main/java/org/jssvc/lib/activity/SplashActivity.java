@@ -4,14 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.data.HttpUrlParams;
 
 import okhttp3.Call;
+import okhttp3.Response;
 import qiu.niorgai.StatusBarCompat;
 
 import static org.jssvc.lib.data.AccountPref.getLogonAccoundNumber;
@@ -48,21 +49,22 @@ public class SplashActivity extends BaseActivity {
             if (isLogon(context)) {
                 // 用户名和密码都在，静默登陆
                 // 登陆
-                OkHttpUtils.post().url(HttpUrlParams.URL_LIB_LOGIN)
-                        .addParams("number", getLogonAccoundNumber(context))
-                        .addParams("passwd", getLogonAccoundPwd(context))
-                        .addParams("select", getLogonType(context))
-                        .build()
+                OkGo.post(HttpUrlParams.URL_LIB_LOGIN)
+                        .tag(this)
+                        .params("number", getLogonAccoundNumber(context))
+                        .params("passwd", getLogonAccoundPwd(context))
+                        .params("select", getLogonType(context))
                         .execute(new StringCallback() {
                             @Override
-                            public void onError(Call call, Exception e, int id) {
-                                // 登陆失败也直接进入
-                                startActivity(new Intent(context, MainActivity.class));
+                            public void onError(Call call, Response response, Exception e) {
+                                super.onError(call, response, e);
+                                // 登陆失败
+                                startActivity(new Intent(context, LoginActivity.class));
                                 finish();
                             }
 
                             @Override
-                            public void onResponse(String response, int id) {
+                            public void onSuccess(String s, Call call, Response response) {
                                 // 登陆成功，直接进入
                                 startActivity(new Intent(context, MainActivity.class));
                                 finish();
@@ -83,6 +85,15 @@ public class SplashActivity extends BaseActivity {
      */
     protected boolean supportSlideBack() {
         return false;
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        //根据 Tag 取消请求
+        OkGo.getInstance().cancelTag(this);
     }
 
 }
