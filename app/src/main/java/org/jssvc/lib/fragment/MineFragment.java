@@ -2,6 +2,8 @@ package org.jssvc.lib.fragment;
 
 
 import android.content.Intent;
+import android.net.Uri;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import org.jssvc.lib.activity.LoginActivity;
 import org.jssvc.lib.activity.MyDebtActivity;
 import org.jssvc.lib.activity.MyViolationActivity;
 import org.jssvc.lib.activity.SettingActivity;
+import org.jssvc.lib.activity.UserBriefActivity;
 import org.jssvc.lib.activity.WebActivity;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.data.AccountPref;
@@ -69,15 +72,36 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        tvUserName.setText("点击登陆");
-        tvUserLevel.setText("登陆后更精彩...");
 
-        tvTotal.setText("*");
-        tvReading.setText("*");
-        tvLaws.setText("*");
-        tvDebt.setText("*");
+    }
 
-//        simpleDraweeView.setImageURI("http://v1.qzone.cc/avatar/201408/22/21/52/53f74b13786e4125.jpg%21200x200.jpg");
+    @Override
+    public void onResume() {
+        super.onResume();
+        // 判断有没有成功登陆
+        if (!AccountPref.isLogon(context)) {
+            // 未成功登陆
+            tvUserName.setText("点击登陆");
+            tvUserLevel.setText("登陆后更精彩...");
+
+            tvTotal.setText("*");
+            tvReading.setText("*");
+            tvLaws.setText("*");
+            tvDebt.setText("*");
+
+            simpleDraweeView.setImageURI(Uri.parse("res://" + context.getPackageName() + "/" + R.drawable.def_user_avatar));
+        } else {
+            // 成功登陆
+            tvUserName.setText("董洪逾");
+            tvUserLevel.setText("初出茅庐");
+
+            tvTotal.setText("12");
+            tvReading.setText("2");
+            tvLaws.setText("0");
+            tvDebt.setText("0");
+
+            simpleDraweeView.setImageURI("https://avatars0.githubusercontent.com/u/7424705?v=3&s=466");
+        }
     }
 
     @Override
@@ -90,11 +114,12 @@ public class MineFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.simpleDraweeView:
             case R.id.userInfoLayout:
-                // 用户登录|用户详情
                 if (AccountPref.isLogon(context)) {
+                    // 用户详情
+                    startActivity(new Intent(context, UserBriefActivity.class));
                 } else {
+                    startActivity(new Intent(context, LoginActivity.class));
                 }
-                startActivity(new Intent(context, LoginActivity.class));
                 break;
             case R.id.totalLayout:
                 // 借阅历史

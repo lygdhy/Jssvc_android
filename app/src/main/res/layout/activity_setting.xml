@@ -54,4 +54,14 @@
         android:padding="16dp"
         android:text="关于" />
 
+    <Button
+        android:id="@+id/btnExit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@color/red"
+        android:text="退出登陆"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
 </LinearLayout>
