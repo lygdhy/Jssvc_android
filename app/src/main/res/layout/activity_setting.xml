@@ -22,37 +22,64 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@color/white"
+        android:background="@drawable/bg_selector_while"
+        android:drawableLeft="@drawable/icon_paperplane"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
         android:padding="16dp"
         android:text="活动通知" />
 
-    <TextView
-        android:id="@+id/tvFeedback"
-        style="@style/tv_formal"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@color/white"
-        android:padding="16dp"
-        android:text="意见反馈" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvVersion"
-        style="@style/tv_formal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="16dp"
-        android:text="版本检查" />
+        <TextView
+            android:id="@+id/tvFeedback"
+            style="@style/tv_formal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_selector_while"
+            android:drawableLeft="@drawable/icon_edit"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:text="意见反馈" />
 
-    <TextView
-        android:id="@+id/tvAbout"
-        style="@style/tv_formal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="16dp"
-        android:text="关于" />
+        <View
+            style="@style/Item_split_horizontal"
+            android:layout_marginLeft="40dp" />
+
+        <TextView
+            android:id="@+id/tvVersion"
+            style="@style/tv_formal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_selector_while"
+            android:drawableLeft="@drawable/icon_dynamic"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:text="版本检查" />
+
+        <View
+            style="@style/Item_split_horizontal"
+            android:layout_marginLeft="40dp" />
+
+        <TextView
+            android:id="@+id/tvAbout"
+            style="@style/tv_formal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_selector_while"
+            android:drawableLeft="@drawable/icon_bubble"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:text="关于" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnExit"

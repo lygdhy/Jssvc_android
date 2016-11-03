@@ -85,14 +85,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/bg_selector_while"
                         android:gravity="center"
                         android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ivTotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_list" />
 
                         <TextView
                             android:id="@+id/tvTotal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
+                            android:gravity="center"
                             android:lines="1"
                             android:text="0"
                             android:textColor="@color/colorAccent"
@@ -117,14 +125,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/bg_selector_while"
                         android:gravity="center"
                         android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ivReading"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_found" />
 
                         <TextView
                             android:id="@+id/tvReading"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
+                            android:gravity="center"
                             android:lines="1"
                             android:text="0"
                             android:textColor="@color/colorAccent"
@@ -149,14 +165,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/bg_selector_while"
                         android:gravity="center"
                         android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ivLaws"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_bulb" />
 
                         <TextView
                             android:id="@+id/tvLaws"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
+                            android:gravity="center"
                             android:lines="1"
                             android:text="0"
                             android:textColor="@color/colorAccent"
@@ -181,14 +205,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/bg_selector_while"
                         android:gravity="center"
                         android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ivDebt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_banknote" />
 
                         <TextView
                             android:id="@+id/tvDebt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
+                            android:gravity="center"
                             android:lines="1"
                             android:text="0"
                             android:textColor="@color/colorAccent"
@@ -210,7 +242,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@color/white"
+                android:background="@drawable/bg_selector_while"
+                android:drawableLeft="@drawable/icon_pen"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
                 android:padding="16dp"
                 android:text="读书心得"
                 android:textColor="@color/ui_text_title"
@@ -221,7 +256,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@color/white"
+                android:background="@drawable/bg_selector_while"
+                android:drawableLeft="@drawable/icon_settings"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
                 android:padding="16dp"
                 android:text="设置"
                 android:textColor="@color/ui_text_title"

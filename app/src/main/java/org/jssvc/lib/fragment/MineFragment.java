@@ -3,8 +3,8 @@ package org.jssvc.lib.fragment;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -60,6 +60,14 @@ public class MineFragment extends BaseFragment {
     TextView tvReadBack;
     @BindView(R.id.tvSetting)
     TextView tvSetting;
+    @BindView(R.id.ivTotal)
+    ImageView ivTotal;
+    @BindView(R.id.ivReading)
+    ImageView ivReading;
+    @BindView(R.id.ivLaws)
+    ImageView ivLaws;
+    @BindView(R.id.ivDebt)
+    ImageView ivDebt;
 
     public static MineFragment newInstance() {
         return new MineFragment();
@@ -84,10 +92,14 @@ public class MineFragment extends BaseFragment {
             tvUserName.setText("点击登陆");
             tvUserLevel.setText("登陆后更精彩...");
 
-            tvTotal.setText("*");
-            tvReading.setText("*");
-            tvLaws.setText("*");
-            tvDebt.setText("*");
+            tvTotal.setVisibility(View.GONE);
+            tvReading.setVisibility(View.GONE);
+            tvLaws.setVisibility(View.GONE);
+            tvDebt.setVisibility(View.GONE);
+            ivTotal.setVisibility(View.VISIBLE);
+            ivReading.setVisibility(View.VISIBLE);
+            ivLaws.setVisibility(View.VISIBLE);
+            ivDebt.setVisibility(View.VISIBLE);
 
             simpleDraweeView.setImageURI(Uri.parse("res://" + context.getPackageName() + "/" + R.drawable.def_user_avatar));
         } else {
@@ -99,6 +111,14 @@ public class MineFragment extends BaseFragment {
             tvReading.setText("2");
             tvLaws.setText("0");
             tvDebt.setText("0");
+            tvTotal.setVisibility(View.VISIBLE);
+            tvReading.setVisibility(View.VISIBLE);
+            tvLaws.setVisibility(View.VISIBLE);
+            tvDebt.setVisibility(View.VISIBLE);
+            ivTotal.setVisibility(View.GONE);
+            ivReading.setVisibility(View.GONE);
+            ivLaws.setVisibility(View.GONE);
+            ivDebt.setVisibility(View.GONE);
 
             simpleDraweeView.setImageURI("https://avatars0.githubusercontent.com/u/7424705?v=3&s=466");
         }
