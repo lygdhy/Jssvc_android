@@ -2,8 +2,10 @@ package org.jssvc.lib.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -43,8 +45,14 @@ public class LoginActivity extends BaseActivity {
     EditText edtName;
     @BindView(R.id.edtPwd)
     EditText edtPwd;
+    @BindView(R.id.tvLoginType)
+    TextView tvLoginType;
     @BindView(R.id.textView)
     TextView textView;
+
+    String[] loginTypes = new String[]{"证件号", "条码号", "Email"};
+    String[] loginTypesCode = new String[]{"cert_no", "bar_no", "email"};
+    int loginTypePos = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,24 +60,19 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-//        // 设置登陆信息
-//        String userid = "157301241";
-//        String pwd = "157301241";
-        String type = "cert_no";
-//
-//        saveLoginAccoundNumber(context, userid);
-//        saveLoginAccoundPwd(context, pwd);
-        saveLoginType(context, type);
-
         edtName.setText(getLogonAccoundNumber(context));
         edtPwd.setText(getLogonAccoundPwd(context));
     }
 
-    @OnClick({R.id.tvBack, R.id.btnLogin})
+    @OnClick({R.id.tvBack, R.id.tvLoginType, R.id.btnLogin})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvBack:
                 finish();
+                break;
+            case R.id.tvLoginType:
+                // 登陆方式
+                showLoginTypeDialog();
                 break;
             case R.id.btnLogin:
                 // 登陆
@@ -80,12 +83,13 @@ public class LoginActivity extends BaseActivity {
                 } else {
                     saveLoginAccoundNumber(context, loginname);
                     saveLoginAccoundPwd(context, loginpwd);
+                    saveLoginType(context, loginTypesCode[loginTypePos]);
 
                     OkGo.post(HttpUrlParams.URL_LIB_LOGIN)
                             .tag(this)
                             .params("number", loginname)
                             .params("passwd", loginpwd)
-                            .params("select", getLogonType(context))
+                            .params("select", loginTypesCode[loginTypePos])
                             .execute(new StringCallback() {
                                 @Override
                                 public void onSuccess(String s, Call call, Response response) {
@@ -102,6 +106,22 @@ public class LoginActivity extends BaseActivity {
                 }
                 break;
         }
+    }
+
+    // 登陆方式选择
+    private void showLoginTypeDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("请选择登陆方式")
+                .setSingleChoiceItems(loginTypes, loginTypePos,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                loginTypePos = which;
+                                tvLoginType.setText(loginTypes[loginTypePos]);
+                                edtName.setHint("请输入" + loginTypes[loginTypePos]);
+                                dialog.dismiss();
+                            }
+                        }
+                ).show();
     }
 
     @Override

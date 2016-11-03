@@ -53,11 +53,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".activity.SearchBookListActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.UserBriefActivity"></activity>
+        <activity
+            android:name=".activity.UserBriefActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
