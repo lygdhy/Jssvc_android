@@ -1,6 +1,7 @@
 package org.jssvc.lib.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -61,6 +62,8 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.tvFeedback:
                 // 意见反馈
+                String url = "mqqwpa://im/chat?chat_type=wpa&uin=149553453";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                 break;
             case R.id.tvAbout:
                 // 关于我们
