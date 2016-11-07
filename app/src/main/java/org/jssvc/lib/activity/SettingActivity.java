@@ -75,7 +75,7 @@ public class SettingActivity extends BaseActivity {
                         AppUtils.isInstallApp(context, "com.tencent.mobileqqi") ||
                         AppUtils.isInstallApp(context, "com.tencent.minihd.qq") ||
                         AppUtils.isInstallApp(context, "com.tencent.eim")) {
-                    String url = "mqqwpa://im/chat?chat_type=wpa&uin=149553453";
+                    String url = "mqqwpa://im/chat?chat_type=wpa&uin=2906501168";
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                 } else {
                     showToast("暂未安装QQ相关软件无法发起聊天");
