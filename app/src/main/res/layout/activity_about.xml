@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ui_content"
@@ -16,11 +17,57 @@
 
     </RelativeLayout>
 
-    <TextView
+    <org.jssvc.lib.view.ScrollViewExtend
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
-        android:text="关于我们"
-        android:textColor="@color/colorAccent" />
+        android:fillViewport="true">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.bigkoo.convenientbanner.ConvenientBanner
+                android:id="@+id/convenientBanner"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:canLoop="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:lineSpacingExtra="5dp"
+                android:padding="10dp"
+                android:text="关于我们关于我们关于我们\n关于我们\n关于我们关于我们关于我们关于我们\n关于我们关于我们\n关于我们\n关于我们关于我们关于我们关于我们\n关于我们\n关于我们关于我们关于我们\n关于我们"
+                android:textColor="@color/colorAccent" />
+
+            <View
+                style="@style/Item_split_horizontal"
+                android:background="@color/ui_content" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:tabBackground="@color/white"
+                app:tabIndicatorColor="@color/colorAccent"
+                app:tabIndicatorHeight="2dp"
+                app:tabMode="fixed"
+                app:tabPaddingEnd="12dp"
+                app:tabPaddingStart="12dp"
+                app:tabSelectedTextColor="@color/colorAccent"
+                app:tabTextColor="@color/ui_text_title" />
+
+            <View
+                style="@style/Item_split_horizontal"
+                android:background="@color/ui_content" />
+
+            <org.jssvc.lib.view.CustomViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+        </LinearLayout>
+    </org.jssvc.lib.view.ScrollViewExtend>
 </LinearLayout>
