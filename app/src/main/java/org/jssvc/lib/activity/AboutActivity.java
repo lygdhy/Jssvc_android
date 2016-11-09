@@ -1,16 +1,19 @@
 package org.jssvc.lib.activity;
 
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bigkoo.convenientbanner.ConvenientBanner;
+
 import org.jssvc.lib.R;
+import org.jssvc.lib.adapter.ShowTabAdapter;
 import org.jssvc.lib.base.BaseActivity;
+import org.jssvc.lib.fragment.TabAFragment;
+import org.jssvc.lib.fragment.TabBFragment;
+import org.jssvc.lib.fragment.TabCFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +29,21 @@ public class AboutActivity extends BaseActivity {
 
     @BindView(R.id.tvBack)
     TextView tvBack;
+    @BindView(R.id.convenientBanner)
+    ConvenientBanner convenientBanner;
+    @BindView(R.id.tabLayout)
+    TabLayout tabLayout;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
-    View view1, view2, view3;
-    List<View> viewList;//view数组
+    private TabAFragment tabAFragment;
+    private TabBFragment tabBFragment;
+    private TabCFragment tabCFragment;
+
+    private List<String> list_title;
+    private List<Fragment> list_fragment;
+
+    private ShowTabAdapter showTabAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,62 +51,35 @@ public class AboutActivity extends BaseActivity {
         setContentView(R.layout.activity_about);
         ButterKnife.bind(this);
 
-        LayoutInflater inflater = getLayoutInflater();
-        view1 = inflater.inflate(R.layout.pager_layout_1, null);
-        view2 = inflater.inflate(R.layout.pager_layout_2, null);
-        view3 = inflater.inflate(R.layout.pager_layout_3, null);
+        //初始化各fragment
+        tabAFragment = new TabAFragment();
+        tabBFragment = new TabBFragment();
+        tabCFragment = new TabCFragment();
 
-        view1.getHeight();
+        //将fragment装进列表中
+        list_fragment = new ArrayList<>();
+        list_fragment.add(tabAFragment);
+        list_fragment.add(tabBFragment);
+        list_fragment.add(tabCFragment);
 
-        viewList = new ArrayList<View>();// 将要分页显示的View装入数组中
-        viewList.add(view1);
-        viewList.add(view2);
-        viewList.add(view3);
+        //将名称加载tab名字列表
+        list_title = new ArrayList<>();
+        list_title.add("产品详情");
+        list_title.add("费用说明");
+        list_title.add("预定须知");
 
-        PagerAdapter pagerAdapter = new PagerAdapter() {
+        //设置TabLayout的模式
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        //为TabLayout添加tab名称
+        tabLayout.addTab(tabLayout.newTab().setText(list_title.get(0)));
+        tabLayout.addTab(tabLayout.newTab().setText(list_title.get(1)));
+        tabLayout.addTab(tabLayout.newTab().setText(list_title.get(2)));
 
-            @Override
-            public boolean isViewFromObject(View arg0, Object arg1) {
-                // TODO Auto-generated method stub
-                return arg0 == arg1;
-            }
+        showTabAdapter = new ShowTabAdapter(getSupportFragmentManager(), list_fragment, list_title);
+        viewPager.setAdapter(showTabAdapter);
 
-            @Override
-            public int getCount() {
-                // TODO Auto-generated method stub
-                return viewList.size();
-            }
-
-            @Override
-            public void destroyItem(ViewGroup container, int position, Object object) {
-                // TODO Auto-generated method stub
-                container.removeView(viewList.get(position));
-            }
-
-            @Override
-            public Object instantiateItem(ViewGroup container, int position) {
-                // TODO Auto-generated method stub
-                container.addView(viewList.get(position));
-
-                return viewList.get(position);
-            }
-        };
-
-        viewPager.setAdapter(pagerAdapter);
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-
-        // 自定义类似于ViewPager的可上下滑动切换效果的视图
-        // http://blog.csdn.net/u010214991/article/details/50786595
-
-        int ss = view1.getHeight() + view2.getHeight() + view3.getHeight();
-        showToast(ss+"");
-        LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) viewPager.getLayoutParams();
-        linearParams.height = ss;
-        viewPager.setLayoutParams(linearParams);
+        //TabLayout加载viewpager
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     @OnClick(R.id.tvBack)

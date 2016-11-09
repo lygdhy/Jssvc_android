@@ -5,10 +5,19 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:lineSpacingExtra="5dp"
         android:padding="10dp"
-        android:text="pager_layout_1\npager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1pager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1pager_layout_1pager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1pager_layout_1pager_layout_1pager_layout_1pager_layout_1\npager_layout_1\npager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1pager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1pager_layout_1pager_layout_1pager_layout_1\npager_layout_1\npager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1pager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1pager_layout_1pager_layout_1pager_layout_1\npager_layout_1\npager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1pager_layout_1\npager_layout_1\npager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1pager_layout_1\npager_layout_1\npager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1\npager_layout_1\npager_layout_1pager_layout_1pager_layout_1pager_layout_1\npager_layout_1pager_layout_1\npager_layout_1\npager_layout_1pager_layout_1pager_layout_1pager_layout_1\npager_layout_1\npager_layout_1pager_layout_1pager_layout_1\npager_layout_1"
+        android:text="产品详情"
+        android:textColor="@color/colorAccent"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="5dp"
+        android:padding="10dp"
+        android:text="pager_layout_1pager_layout_1pager_layout_1pager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1pager_layout_1pager_layout_1pager_layout_1\npager_layout_1\npager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1pager_layout_1\npager_layout_1\npager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1pager_layout_1\npager_layout_1\npager_layout_1pager_layout_1\npager_layout_1pager_layout_1pager_layout_1\npager_layout_1\npager_layout_1pager_layout_1pager_layout_1pager_layout_1\npager_layout_1pager_layout_1\npager_layout_1\npager_layout_1pager_layout_1pager_layout_1pager_layout_1\npager_layout_1\npager_layout_1pager_layout_1pager_layout_1\npager_layout_1"
         android:textColor="@color/colorAccent" />
 </LinearLayout>
