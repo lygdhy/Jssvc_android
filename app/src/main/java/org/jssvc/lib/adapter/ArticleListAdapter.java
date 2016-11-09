@@ -2,6 +2,8 @@ package org.jssvc.lib.adapter;
 
 import android.content.Context;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+
 import org.jssvc.lib.R;
 import org.jssvc.lib.bean.ArticleBean;
 
@@ -26,6 +28,9 @@ public class ArticleListAdapter extends BGAAdapterViewAdapter<ArticleBean> {
 
     @Override
     public void fillData(BGAViewHolderHelper viewHolderHelper, int position, ArticleBean model) {
-        viewHolderHelper.setText(R.id.tv_item_normal_title, model.getTitle()).setText(R.id.tv_item_normal_detail, model.getBody());
+        viewHolderHelper.setText(R.id.tv_item_normal_title, model.getTitle());
+        viewHolderHelper.setText(R.id.tv_item_normal_detail, model.getAuthor() + "  " + model.getDate());
+        SimpleDraweeView simpleDraweeView = (SimpleDraweeView)viewHolderHelper.getView(R.id.draweeView);
+        simpleDraweeView.setImageURI(model.getPic());
     }
 }

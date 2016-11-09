@@ -174,9 +174,10 @@ public class NewsInnerFragment extends BaseFragment implements BGARefreshLayout.
     // =============
     class setDataHandler implements Runnable {
         public void run() {
-            for (int i = articleBeanList.size(); i < 6; i++) {
-                articleBeanList.add(new ArticleBean("" + i, "标题" + i, "这里是内容" + i));
-            }
+            articleBeanList.add(new ArticleBean("1", "1", "http://www.jssvc.edu.cn/UploadFiles/201611795214266.jpg", "我校师生喜获2016年全国职业院校物联网创新创意大赛一等奖", "这里是内容", "电子信息工程学院", "2016-11-09"));
+            articleBeanList.add(new ArticleBean("1", "1", "http://www.jssvc.edu.cn/UploadFiles/2016114162125730.jpg", "《江苏省丝绸织绣产品功能检测试验基地建设》项目汇报暨校内验收会在教育与人文学院举行", "这里是内容", "教育与人文学院", "2016-11-09"));
+            articleBeanList.add(new ArticleBean("1", "1", "http://www.jssvc.edu.cn/UploadFiles/2016113144040425.jpg", "阿里巴巴集团“百城千校、百万英才”跨境电商人才培养项目落户我校商学院", "这里是内容", "商学院", "2016-11-09"));
+
             mRefreshLayout.endRefreshing();
             mAdapter.setData(articleBeanList);
         }
@@ -184,9 +185,10 @@ public class NewsInnerFragment extends BaseFragment implements BGARefreshLayout.
 
     class setNewDataHandler implements Runnable {
         public void run() {
-            for (int i = articleBeanList.size(); i < 6; i++) {
-                articleBeanList.add(new ArticleBean("" + i, "标题" + i, "这里是内容" + i));
-            }
+            articleBeanList.add(new ArticleBean("1", "1", "http://www.jssvc.edu.cn/UploadFiles/201611795214266.jpg", "我校师生喜获2016年全国职业院校物联网创新创意大赛一等奖", "这里是内容", "电子信息工程学院", "2016-11-09"));
+            articleBeanList.add(new ArticleBean("1", "1", "http://www.jssvc.edu.cn/UploadFiles/2016114162125730.jpg", "《江苏省丝绸织绣产品功能检测试验基地建设》项目汇报暨校内验收会在教育与人文学院举行", "这里是内容", "教育与人文学院", "2016-11-09"));
+            articleBeanList.add(new ArticleBean("1", "1", "http://www.jssvc.edu.cn/UploadFiles/2016113144040425.jpg", "阿里巴巴集团“百城千校、百万英才”跨境电商人才培养项目落户我校商学院", "这里是内容", "商学院", "2016-11-09"));
+
             mRefreshLayout.endRefreshing();
             mAdapter.addNewData(articleBeanList);
         }
@@ -194,9 +196,10 @@ public class NewsInnerFragment extends BaseFragment implements BGARefreshLayout.
 
     class setMoreDataHandler implements Runnable {
         public void run() {
-            for (int i = articleBeanList.size(); i < 6; i++) {
-                articleBeanList.add(new ArticleBean("" + i, "标题" + i, "这里是内容" + i));
-            }
+            articleBeanList.add(new ArticleBean("1", "1", "http://www.jssvc.edu.cn/UploadFiles/201611795214266.jpg", "我校师生喜获2016年全国职业院校物联网创新创意大赛一等奖", "这里是内容", "电子信息工程学院", "2016-11-09"));
+            articleBeanList.add(new ArticleBean("1", "1", "http://www.jssvc.edu.cn/UploadFiles/2016114162125730.jpg", "《江苏省丝绸织绣产品功能检测试验基地建设》项目汇报暨校内验收会在教育与人文学院举行", "这里是内容", "教育与人文学院", "2016-11-09"));
+            articleBeanList.add(new ArticleBean("1", "1", "http://www.jssvc.edu.cn/UploadFiles/2016113144040425.jpg", "阿里巴巴集团“百城千校、百万英才”跨境电商人才培养项目落户我校商学院", "这里是内容", "商学院", "2016-11-09"));
+
             mRefreshLayout.endLoadingMore();
             mAdapter.addMoreData(articleBeanList);
         }
