@@ -9,7 +9,7 @@
 
         <TextView
             style="@style/ActionBar_Title_Style_1"
-            android:text="直击" />
+            android:text="直击校园" />
 
     </RelativeLayout>
 

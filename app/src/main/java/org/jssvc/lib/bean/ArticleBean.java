@@ -6,8 +6,12 @@ package org.jssvc.lib.bean;
 
 public class ArticleBean {
     private String id;
+    private String type;
+    private String pic;
     private String title;
     private String body;
+    private String author;
+    private String date;
 
     public String getId() {
         return id;
@@ -33,9 +37,45 @@ public class ArticleBean {
         this.body = body;
     }
 
-    public ArticleBean(String id, String title, String body) {
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
+    }
+
+    public ArticleBean(String id, String type, String pic, String title, String body, String author, String date) {
         this.id = id;
+        this.type = type;
+        this.pic = pic;
         this.title = title;
         this.body = body;
+        this.author = author;
+        this.date = date;
     }
 }

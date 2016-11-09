@@ -45,9 +45,9 @@ public class NewsFragment extends BaseFragment {
 
         //将fragment装进列表中
         findMenus = new ArrayList<>();
-        findMenus.add(new FindMenuBean(1, "推荐"));
-        findMenus.add(new FindMenuBean(2, "热门"));
-        findMenus.add(new FindMenuBean(3, "分享"));
+        findMenus.add(new FindMenuBean(1, "院部动态"));
+        findMenus.add(new FindMenuBean(2, "校园新闻"));
+        findMenus.add(new FindMenuBean(3, "读者分享"));
 
         fragments = new ArrayList<>();
         for (int i = 0; i < findMenus.size(); i++) {
