@@ -164,7 +164,6 @@ public class SwipeWindowHelper extends Handler {
 
                 if (!mViewManager.addViewFromPreviousActivity()) return;
 
-                // add shadow view on the left of content view
                 mViewManager.addShadowView();
 
                 if (mCurrentContentView.getChildCount() >= 3) {
