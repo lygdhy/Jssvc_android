@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+
 import org.jssvc.lib.R;
 
 import java.util.ArrayList;
@@ -44,21 +46,22 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
         switch (position) {
             case 0:
                 holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.icon_menu_home));
-                holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.google_yellow));
+                holder.draweeView.setImageURI("http://www.hydong.me/app/adPics/bg_bookmark_demo.jpg");
                 break;
             case 1:
                 holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.icon_menu_news));
-                holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.google_blue));
+                holder.draweeView.setImageURI("http://www.hydong.me/app/adPics/bg_bookmark_demo.jpg");
                 break;
             case 2:
                 holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.icon_menu_find));
-                holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.google_red));
+                holder.draweeView.setImageURI("http://www.hydong.me/app/adPics/bg_bookmark_demo.jpg");
                 break;
             case 3:
                 holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.icon_menu_mine));
-                holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.google_green));
+                holder.draweeView.setImageURI("http://www.hydong.me/app/adPics/bg_bookmark_demo.jpg");
                 break;
         }
+
     }
 
     @Override
@@ -71,12 +74,14 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
         TextView tvTitle;
         ImageView imageView;
         CardView cardView;
+        SimpleDraweeView draweeView;
 
         public ViewHolder(View view) {
             super(view);
             tvTitle = (TextView) view.findViewById(R.id.tvTitle);
             imageView = (ImageView) view.findViewById(R.id.imageView);
             cardView = (CardView) view.findViewById(R.id.cardView);
+            draweeView = (SimpleDraweeView) view.findViewById(R.id.draweeView);
         }
     }
 }

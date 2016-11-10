@@ -4,7 +4,9 @@ package org.jssvc.lib.fragment;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.View;
+import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -39,6 +41,61 @@ public class ExpandFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+
+        String url = HttpUrlParams.URL_EXPAND;
+
+        loadWeb(url);
+
+    }
+
+    // 加载页面
+    private void loadWeb(String url) {
+
+        webView.loadUrl(url);
+        //添加javaScript支持
+        webView.getSettings().setJavaScriptEnabled(true);
+        //取消滚动条
+        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+        //触摸焦点起作用
+        webView.requestFocus();
+        // 防黑屏
+        webView.setBackgroundColor(Color.parseColor("#00000000"));
+        webView.setBackgroundResource(R.color.white);
+
+        // 内嵌打开
+        webView.setWebViewClient(new WebViewClient() {
+            // 截取网页名称
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                if (!TextUtils.isEmpty(view.getTitle())) {
+                    tvTitle.setText(view.getTitle() + "");
+                } else {
+                    tvTitle.setText("发现");
+                }
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
+        // 支持JsAlert
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+                return super.onJsAlert(view, url, message, result);
+            }
+        });
+
+        // 禁止系统的复制粘贴
+        webView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                return true;
+            }
+        });
+
         // 刷新页面
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -52,38 +109,6 @@ public class ExpandFragment extends BaseFragment {
                 ContextCompat.getColor(context, R.color.google_yellow),
                 ContextCompat.getColor(context, R.color.google_blue));
 
-        webView.loadUrl(HttpUrlParams.URL_EXPAND);
-        //添加javaScript支持
-        webView.getSettings().setJavaScriptEnabled(true);
-        //取消滚动条
-        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-        //触摸焦点起作用
-        webView.requestFocus();
-        // 防黑屏
-        webView.setBackgroundColor(Color.parseColor("#00000000"));
-        webView.setBackgroundResource(R.color.white);
-        // 内嵌打开
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-        });
-        // 设置标题
-        webView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public void onReceivedTitle(WebView view, String title) {
-                tvTitle.setText(title);
-            }
-        });
-        // 禁止系统的复制粘贴
-        webView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                return true;
-            }
-        });
         //设置进度条
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
