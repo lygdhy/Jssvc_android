@@ -9,7 +9,7 @@
 
         <TextView
             style="@style/ActionBar_Title_Style_1"
-            android:text="个人中心" />
+            android:text="@string/module_mine" />
 
     </RelativeLayout>
 

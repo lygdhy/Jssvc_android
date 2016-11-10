@@ -70,7 +70,7 @@ public class ExpandFragment extends BaseFragment {
                 if (!TextUtils.isEmpty(view.getTitle())) {
                     tvTitle.setText(view.getTitle() + "");
                 } else {
-                    tvTitle.setText("发现");
+                    tvTitle.setText(getString(R.string.module_exp));
                 }
             }
 

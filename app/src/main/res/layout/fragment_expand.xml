@@ -9,7 +9,7 @@
         <TextView
             android:id="@+id/tvTitle"
             style="@style/ActionBar_Title_Style_1"
-            android:text="探索" />
+            android:text="@string/module_exp" />
 
     </RelativeLayout>
 
