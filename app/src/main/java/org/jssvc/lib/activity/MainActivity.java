@@ -1,6 +1,5 @@
 package org.jssvc.lib.activity;
 
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -10,7 +9,6 @@ import android.view.View;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.SimpleFragmentPagerAdapter;
 import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.fragment.ExpandFragment;
 import org.jssvc.lib.fragment.HomeFragment;
 import org.jssvc.lib.fragment.MineFragment;
@@ -20,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import qiu.niorgai.StatusBarCompat;
 
 /**
@@ -38,11 +35,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private SimpleFragmentPagerAdapter pagerAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+    protected int getContentViewId() {
+        return R.layout.activity_main;
+    }
 
+    @Override
+    protected void initView() {
         tabLayout.setupWithViewPager(viewpager);
         fragments.add(HomeFragment.newInstance());
         fragments.add(NewsFragment.newInstance());

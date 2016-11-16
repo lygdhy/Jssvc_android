@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
@@ -19,7 +18,6 @@ import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -39,11 +37,12 @@ public class WebActivity extends BaseActivity {
     String pageTitle;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web);
-        ButterKnife.bind(this);
+    protected int getContentViewId() {
+        return R.layout.activity_web;
+    }
 
+    @Override
+    protected void initView() {
         String url = getIntent().getStringExtra("url");
         pageTitle = getIntent().getStringExtra("title");
 

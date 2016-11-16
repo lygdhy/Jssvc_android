@@ -1,6 +1,5 @@
 package org.jssvc.lib.activity;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,7 +11,6 @@ import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.data.HttpUrlParams;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
@@ -28,11 +26,12 @@ public class UserBriefActivity extends BaseActivity {
     TextView textView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_brief);
-        ButterKnife.bind(this);
+    protected int getContentViewId() {
+        return R.layout.activity_user_brief;
+    }
 
+    @Override
+    protected void initView() {
         // 加载用户数据
         OkGo.post(HttpUrlParams.URL_LIB_ACCOUND)
                 .tag(this)

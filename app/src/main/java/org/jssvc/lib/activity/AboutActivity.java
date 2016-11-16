@@ -1,7 +1,6 @@
 package org.jssvc.lib.activity;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -25,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -54,12 +52,13 @@ public class AboutActivity extends BaseActivity {
     private ShowTabAdapter showTabAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
-        ButterKnife.bind(this);
+    protected int getContentViewId() {
+        return R.layout.activity_about;
+    }
 
-        //初始化各fragment
+    @Override
+    protected void initView() {
+//初始化各fragment
         tabAFragment = new TabAFragment();
         tabBFragment = new TabBFragment();
         tabCFragment = new TabCFragment();
@@ -108,7 +107,6 @@ public class AboutActivity extends BaseActivity {
         //设置翻页的效果，不需要翻页效果可用不设
         //.setPageTransformer(Transformer.DefaultTransformer);    集成特效之后会有白屏现象，新版已经分离，如果要集成特效的例子可以看Demo的点击响应。
         // convenientBanner.setManualPageable(false);//设置不能手动影响
-
     }
 
     @OnClick(R.id.tvBack)

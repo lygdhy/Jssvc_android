@@ -1,13 +1,11 @@
 package org.jssvc.lib.activity;
 
-import android.os.Bundle;
 import android.widget.TextView;
 
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -19,10 +17,13 @@ public class MyDebtActivity extends BaseActivity {
     TextView tvBack;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_debt);
-        ButterKnife.bind(this);
+    protected int getContentViewId() {
+        return R.layout.activity_my_debt;
+    }
+
+    @Override
+    protected void initView() {
+
     }
 
     @OnClick(R.id.tvBack)

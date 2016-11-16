@@ -1,10 +1,6 @@
 package org.jssvc.lib.activity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,14 +16,12 @@ import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.data.HttpUrlParams;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
 import static org.jssvc.lib.data.AccountPref.getLogonAccoundNumber;
 import static org.jssvc.lib.data.AccountPref.getLogonAccoundPwd;
-import static org.jssvc.lib.data.AccountPref.getLogonType;
 import static org.jssvc.lib.data.AccountPref.saveLoginAccoundNumber;
 import static org.jssvc.lib.data.AccountPref.saveLoginAccoundPwd;
 import static org.jssvc.lib.data.AccountPref.saveLoginType;
@@ -55,11 +49,12 @@ public class LoginActivity extends BaseActivity {
     int loginTypePos = 0;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
+    protected int getContentViewId() {
+        return R.layout.activity_login;
+    }
 
+    @Override
+    protected void initView() {
         edtName.setText(getLogonAccoundNumber(context));
         edtPwd.setText(getLogonAccoundPwd(context));
     }
