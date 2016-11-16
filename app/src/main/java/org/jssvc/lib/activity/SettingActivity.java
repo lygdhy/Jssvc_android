@@ -2,7 +2,6 @@ package org.jssvc.lib.activity;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,7 +12,6 @@ import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.utils.AppUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -35,19 +33,20 @@ public class SettingActivity extends BaseActivity {
     Button btnExit;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
-        ButterKnife.bind(this);
+    protected int getContentViewId() {
+        return R.layout.activity_setting;
+    }
 
+    @Override
+    protected void initView() {
         // 隐藏/显示登出按钮
         if (AccountPref.isLogon(context)) {
             btnExit.setVisibility(View.VISIBLE);
         } else {
             btnExit.setVisibility(View.GONE);
         }
-
     }
+
 
     @OnClick({R.id.tvBack, R.id.tvMsg, R.id.tvVersion, R.id.tvFeedback, R.id.tvAbout, R.id.btnExit})
     public void onClick(View view) {

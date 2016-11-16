@@ -8,22 +8,39 @@ import android.widget.Toast;
 
 import org.jssvc.lib.utils.SwipeWindowHelper;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * Activity 基类
  */
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
+    private Unbinder unbinder;
     public Context context;
     private Toast toast = null;//全局Toast
 
     private SwipeWindowHelper mSwipeWindowHelper;// 滑动关闭
 
+    protected abstract int getContentViewId();
+
+    protected abstract void initView();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(getContentViewId());
+        unbinder = ButterKnife.bind(this);
         context = this;
+        initView();
 
         // 修改StatusBar颜色
 //        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(context, R.color.colorAccent), 30);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
     }
 
     /**
