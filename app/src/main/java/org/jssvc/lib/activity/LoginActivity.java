@@ -1,6 +1,7 @@
 package org.jssvc.lib.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,26 +12,20 @@ import android.widget.TextView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
-import org.jssvc.lib.R;
-import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.data.HttpUrlParams;
-
 import butterknife.BindView;
 import butterknife.OnClick;
+import org.jssvc.lib.R;
+import org.jssvc.lib.base.BaseActivity;
+import org.jssvc.lib.data.AccountPref;
+import org.jssvc.lib.data.HttpUrlParams;
+import org.jssvc.lib.utils.HtmlParseUtils;
 import okhttp3.Call;
 import okhttp3.Response;
 
-import static org.jssvc.lib.data.AccountPref.getLogonAccoundNumber;
-import static org.jssvc.lib.data.AccountPref.getLogonAccoundPwd;
-import static org.jssvc.lib.data.AccountPref.saveLoginAccoundNumber;
-import static org.jssvc.lib.data.AccountPref.saveLoginAccoundPwd;
-import static org.jssvc.lib.data.AccountPref.saveLoginType;
-
 /**
- * 用户登陆
+ * 登陆页面
  */
 public class LoginActivity extends BaseActivity {
-
     @BindView(R.id.tvBack)
     TextView tvBack;
     @BindView(R.id.btnLogin)
@@ -55,8 +50,15 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        edtName.setText(getLogonAccoundNumber(context));
-        edtPwd.setText(getLogonAccoundPwd(context));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        edtName.setText(AccountPref.getLogonAccoundNumber(context));
+        edtPwd.setText(AccountPref.getLogonAccoundPwd(context));
+
+
     }
 
     @OnClick({R.id.tvBack, R.id.tvLoginType, R.id.btnLogin})
@@ -76,10 +78,9 @@ public class LoginActivity extends BaseActivity {
                 if (TextUtils.isEmpty(loginname) || TextUtils.isEmpty(loginpwd)) {
                     showToast("登陆信息不能为空");
                 } else {
-                    saveLoginAccoundNumber(context, loginname);
-                    saveLoginAccoundPwd(context, loginpwd);
-                    saveLoginType(context, loginTypesCode[loginTypePos]);
-
+                    AccountPref.saveLoginAccoundNumber(context, loginname);
+                    AccountPref.saveLoginAccoundPwd(context, loginpwd);
+                    AccountPref.saveLoginType(context, loginTypesCode[loginTypePos]);
                     OkGo.post(HttpUrlParams.URL_LIB_LOGIN)
                             .tag(this)
                             .params("number", loginname)
@@ -89,17 +90,38 @@ public class LoginActivity extends BaseActivity {
                                 @Override
                                 public void onSuccess(String s, Call call, Response response) {
                                     // s 即为所需要的结果
-                                    finish();
+                                    parseHtml(s);
                                 }
 
                                 @Override
                                 public void onError(Call call, Response response, Exception e) {
                                     super.onError(call, response, e);
+                                    if (response == null) {
+                                        showToast("(≧o≦)服务器跪了，暂时无法提供服务!");
+                                    }
                                 }
 
                             });
                 }
                 break;
+        }
+    }
+
+    // 解析网页
+    private void parseHtml(String s) {
+        String errorMsg = HtmlParseUtils.getErrMsgOnLogin(s);
+        if (TextUtils.isEmpty(errorMsg)) {
+            // 登陆成功
+            finish();
+        } else {
+            // 有错误提示
+            if (errorMsg.contains("认证失败")) {
+                // “如果认证失败，您将不能使用我的图书馆功能”
+                startActivity(new Intent(context, RegisterActivity.class));
+            } else {
+                showToast(errorMsg);
+                AccountPref.removeLogonAccoundPwd(context);
+            }
         }
     }
 

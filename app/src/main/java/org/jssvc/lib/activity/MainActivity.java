@@ -1,38 +1,51 @@
 package org.jssvc.lib.activity;
 
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import org.jssvc.lib.R;
-import org.jssvc.lib.adapter.SimpleFragmentPagerAdapter;
-import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.fragment.ExpandFragment;
-import org.jssvc.lib.fragment.HomeFragment;
-import org.jssvc.lib.fragment.MineFragment;
-import org.jssvc.lib.fragment.NewsFragment;
+import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.bigkoo.convenientbanner.holder.Holder;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import qiu.niorgai.StatusBarCompat;
+import butterknife.OnClick;
+import org.jssvc.lib.R;
+import org.jssvc.lib.base.BaseActivity;
+import org.jssvc.lib.bean.AdsBean;
+import org.jssvc.lib.data.AccountPref;
 
 /**
- * APP主程序
+ * 主程序
  */
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity {
 
-    @BindView(R.id.viewpager)
-    ViewPager viewpager;
-    @BindView(R.id.tabLayout)
-    TabLayout tabLayout;
-
-    private int pos_cur = 0;// 默认加载页码
-    private List<Fragment> fragments = new ArrayList<>();
-    private SimpleFragmentPagerAdapter pagerAdapter;
+    @BindView(R.id.convenientBanner)
+    ConvenientBanner convenientBanner;
+    @BindView(R.id.btnCardInfo)
+    LinearLayout btnCardInfo;
+    @BindView(R.id.btnCurentBorrow)
+    LinearLayout btnCurentBorrow;
+    @BindView(R.id.btnHistoryBorrow)
+    LinearLayout btnHistoryBorrow;
+    @BindView(R.id.btnBookSearch)
+    LinearLayout btnBookSearch;
+    @BindView(R.id.btnHelp)
+    LinearLayout btnHelp;
+    @BindView(R.id.btnVideo)
+    LinearLayout btnVideo;
+    @BindView(R.id.btnMsg)
+    LinearLayout btnMsg;
+    @BindView(R.id.btnSetting)
+    LinearLayout btnSetting;
+    @BindView(R.id.tvPoint)
+    TextView tvPoint;
 
     @Override
     protected int getContentViewId() {
@@ -41,70 +54,120 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void initView() {
-        tabLayout.setupWithViewPager(viewpager);
-        fragments.add(HomeFragment.newInstance());
-        fragments.add(NewsFragment.newInstance());
-        fragments.add(ExpandFragment.newInstance());
-        fragments.add(MineFragment.newInstance());
-        pagerAdapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), this, fragments);
-        viewpager.setAdapter(pagerAdapter);
-        viewpager.setOffscreenPageLimit(fragments.size());
+        tvPoint.setVisibility(View.GONE);
 
-        for (int i = 0; i < fragments.size(); i++) {
-            TabLayout.Tab tab = tabLayout.getTabAt(i);
-            tab.setCustomView(pagerAdapter.getTabView(i));
-            if (tab.getCustomView() != null) {
-                View tabView = (View) tab.getCustomView().getParent();
-                tabView.setTag(i);
-                tabView.setOnClickListener(this);
+        showAd();
+    }
+
+    @OnClick({R.id.btnCardInfo, R.id.btnCurentBorrow, R.id.btnHistoryBorrow, R.id.btnBookSearch, R.id.btnMsg, R.id.btnHelp, R.id.btnVideo, R.id.btnSetting})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnCardInfo:
+                // 证件信息
+                if (AccountPref.isLogon(context)) {
+                    startActivity(new Intent(context, CardInfoActivity.class));
+                } else {
+                    startActivity(new Intent(context, LoginActivity.class));
+                }
+                break;
+            case R.id.btnCurentBorrow:
+                // 当前借阅 / 催还续借
+                if (AccountPref.isLogon(context)) {
+                    startActivity(new Intent(context, CurentBorrowActivity.class));
+                } else {
+                    startActivity(new Intent(context, LoginActivity.class));
+                }
+                break;
+            case R.id.btnHistoryBorrow:
+                // 借阅历史
+                if (AccountPref.isLogon(context)) {
+                    startActivity(new Intent(context, HistoryBorrowActivity.class));
+                } else {
+                    startActivity(new Intent(context, LoginActivity.class));
+                }
+                break;
+            case R.id.btnBookSearch:
+                // 图书搜索
+                startActivity(new Intent(context, BookSearchActivity.class));
+                break;
+            case R.id.btnMsg:
+                // 消息中心
+                startActivity(new Intent(context, MsgActivity.class));
+                break;
+            case R.id.btnHelp:
+                // 帮助指南
+                startActivity(new Intent(context, HelpActivity.class));
+                break;
+            case R.id.btnVideo:
+                // 图书馆简介
+                startActivity(new Intent(context, VideoActivity.class));
+                break;
+            case R.id.btnSetting:
+                // 设置
+                startActivity(new Intent(context, SettingActivity.class));
+                break;
+        }
+    }
+
+    private void showAd() {
+        List<AdsBean> adsList = new ArrayList<>();
+        adsList.add(new AdsBean("1", "1", "主题一", "http://www.hydong.me/app/libapp/0001.png", "http://lib.jssvc.edu.cn/"));
+        adsList.add(new AdsBean("2", "1", "主题二", "http://www.hydong.me/app/libapp/0002.png", "http://lib.jssvc.edu.cn/"));
+
+        //自定义你的Holder，实现更多复杂的界面，不一定是图片翻页，其他任何控件翻页亦可。
+        convenientBanner.setPages(new CBViewHolderCreator<LocalImageHolderView>() {
+            @Override
+            public LocalImageHolderView createHolder() {
+                return new LocalImageHolderView();
             }
-        }
-        viewpager.addOnPageChangeListener(new OnMyPageChangeListener());
-        viewpager.setCurrentItem(pos_cur);
-        setStatusBar(pos_cur);
+        }, adsList)
+                //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
+                .setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
+                //设置指示器的方向
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
+        //设置翻页的效果，不需要翻页效果可用不设
+        //.setPageTransformer(Transformer.DefaultTransformer);    集成特效之后会有白屏现象，新版已经分离，如果要集成特效的例子可以看Demo的点击响应。
+        // convenientBanner.setManualPageable(false);//设置不能手动影响
     }
 
+    public class LocalImageHolderView implements Holder<AdsBean> {
+        private SimpleDraweeView simpleDraweeView;
+
+        @Override
+        public View createView(Context context) {
+            simpleDraweeView = new SimpleDraweeView(context);
+            simpleDraweeView.setScaleType(SimpleDraweeView.ScaleType.CENTER_CROP);
+            return simpleDraweeView;
+        }
+
+        @Override
+        public void UpdateUI(final Context context, final int position, final AdsBean adsBean) {
+            simpleDraweeView.setImageURI(adsBean.getPic());
+            simpleDraweeView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                    Intent intent = new Intent(context, WebActivity.class);
+//                    intent.putExtra("url", adsBean.getUrl());
+//                    intent.putExtra("title", adsBean.getTitle());
+//                    startActivity(intent);
+                }
+            });
+        }
+    }
+
+    // 开始自动翻页
     @Override
-    public void onClick(View v) {
-        int position = (int) v.getTag();
-        if (position != pos_cur) {
-            pos_cur = position;
-        }
-        setStatusBar(position);
+    public void onResume() {
+        super.onResume();
+        //开始自动翻页
+        convenientBanner.startTurning(5000);
     }
 
-    // 滑动监听
-    private class OnMyPageChangeListener implements ViewPager.OnPageChangeListener {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            setStatusBar(position);
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
-    }
-
-    // 根据当前的fragment标签设置StatusBar
-    public void setStatusBar(int pos) {
-        if (pos == 0)
-            StatusBarCompat.translucentStatusBar(this, false);
-        else
-            StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(context, R.color.colorPrimaryDark));
-    }
-
-    /**
-     * 是否支持滑动返回
-     *
-     * @return
-     */
-    protected boolean supportSlideBack() {
-        return false;
+    // 停止自动翻页
+    @Override
+    public void onPause() {
+        super.onPause();
+        //停止翻页
+        convenientBanner.stopTurning();
     }
 }

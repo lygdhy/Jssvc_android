@@ -1,8 +1,3 @@
 <resources>
-    <string name="app_name">书+</string>
-
-    <string name="module_home">首页</string>
-    <string name="module_news">直击校园</string>
-    <string name="module_exp">发现</string>
-    <string name="module_mine">个人中心</string>
+    <string name="app_name">掌上图书馆</string>
 </resources>

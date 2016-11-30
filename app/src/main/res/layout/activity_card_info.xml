@@ -1,0 +1,233 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/content_bottom"
+            android:scaleType="fitXY" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout style="@style/ActionBar_Whole_Style_1">
+
+            <TextView
+                android:id="@+id/tvBack"
+                style="@style/ActionBar_Left_Style_1" />
+
+            <TextView
+                style="@style/ActionBar_Title_Style_1"
+                android:text="证件信息" />
+        </RelativeLayout>
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/ivLevel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/level_list" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="读者姓名"
+                            android:textColor="@color/ui_text_title"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/tvLevel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="读者等级\n读者等级"
+                            android:textColor="@color/ui_text_body"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <View style="@style/Item_split_horizontal" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <TextView
+                            style="@style/itemThemeKey"
+                            android:text="工作单位" />
+
+                        <TextView
+                            android:id="@+id/tvUserDepart"
+                            style="@style/itemThemeValue"
+                            android:text="" />
+                    </RelativeLayout>
+
+                    <View style="@style/Item_split_horizontal" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <TextView
+                            style="@style/itemThemeKey"
+                            android:text="读者证件号" />
+
+                        <TextView
+                            android:id="@+id/tvUserNum"
+                            style="@style/itemThemeValue"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:text="" />
+                    </RelativeLayout>
+
+                    <View style="@style/Item_split_horizontal" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <TextView
+                            style="@style/itemThemeKey"
+                            android:text="读者类型" />
+
+                        <TextView
+                            android:id="@+id/tvUserType"
+                            style="@style/itemThemeValue"
+                            android:text="" />
+                    </RelativeLayout>
+
+                    <View style="@style/Item_split_horizontal" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <TextView
+                            style="@style/itemThemeKey"
+                            android:text="借阅等级" />
+
+                        <TextView
+                            android:id="@+id/tvUserLevel"
+                            style="@style/itemThemeValue"
+                            android:text="" />
+                    </RelativeLayout>
+
+
+                    <View style="@style/Item_split_horizontal" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <TextView
+                            style="@style/itemThemeKey"
+                            android:text="违章状态" />
+
+                        <TextView
+                            android:id="@+id/tvRules"
+                            style="@style/itemThemeValue"
+                            android:text="" />
+                    </RelativeLayout>
+
+                    <View style="@style/Item_split_horizontal" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <TextView
+                            style="@style/itemThemeKey"
+                            android:text="欠费状态" />
+
+                        <TextView
+                            android:id="@+id/tvArrearage"
+                            style="@style/itemThemeValue"
+                            android:text="" />
+                    </RelativeLayout>
+
+                    <View style="@style/Item_split_horizontal" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <TextView
+                            style="@style/itemThemeKey"
+                            android:text="生效日期" />
+
+                        <TextView
+                            android:id="@+id/tvCardStart"
+                            style="@style/itemThemeValue"
+                            android:text="" />
+                    </RelativeLayout>
+
+                    <View style="@style/Item_split_horizontal" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <TextView
+                            style="@style/itemThemeKey"
+                            android:text="失效日期" />
+
+                        <TextView
+                            android:id="@+id/tvCardEnd"
+                            style="@style/itemThemeValue"
+                            android:text="" />
+                    </RelativeLayout>
+
+                    <View style="@style/Item_split_horizontal" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</FrameLayout>

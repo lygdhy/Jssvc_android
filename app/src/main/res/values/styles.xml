@@ -10,8 +10,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
+        <!-- 设置activity切换动画 -->
         <item name="android:windowAnimationStyle">@style/activityAnimation</item>
+        <!--listview Divider-->
+        <item name="android:listDivider">@drawable/divider_bg</item>
     </style>
 
     <style name="activityAnimation" parent="@android:style/Animation">
@@ -21,13 +23,6 @@
         <item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
     </style>
 
-    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabIndicatorColor">@color/ui_content</item>
-        <item name="tabIndicatorHeight">0dp</item>
-        <item name="tabPaddingStart">12dp</item>
-        <item name="tabPaddingEnd">12dp</item>
-        <item name="tabBackground">@drawable/bg_selector_tabhost</item>
-    </style>
     <!-- ActionBar_Whole_Style_1 -->
     <style name="ActionBar_Whole_Style_1">
         <item name="android:layout_width">fill_parent</item>
@@ -92,5 +87,63 @@
         <item name="android:layout_width">0.5dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/ui_split</item>
+    </style>
+
+    <!-- 菜单Block -->
+    <style name="home_menu_block">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_margin">3dp</item>
+    </style>
+
+    <!--首页菜单文字-->
+    <style name="home_menu_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!--列表菜单文字-->
+    <style name="list_menu_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/ui_text_title</item>
+    </style>
+
+    <style name="list_menu_value">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/ui_text_tip</item>
+    </style>
+
+    <style name="itemThemeKey">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/ui_theme</item>
+    </style>
+
+    <style name="itemThemeValue">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/ui_text_body</item>
     </style>
 </resources>

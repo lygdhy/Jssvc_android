@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="false">
+        <shape>
+
+            <!-- 填充 -->
+            <solid android:color="#8bc62e" />
+
+            <!-- 颜色渐变：渐变方向、开始颜色、结束颜色 -->
+            <gradient android:angle="90" android:endColor="#8bc62e" android:startColor="#8bc62e" android:type="linear" />
+
+            <!-- 按钮边缘：边缘宽、边缘颜色 -->
+            <stroke android:width="0dp" android:color="#8bc62e" />
+
+            <!-- 按钮四个圆角：半径 -->
+            <corners android:radius="2dp" />
+
+            <!-- 按钮文字和边缘距离(内边距) -->
+            <padding android:bottom="0dp" android:left="6dp" android:right="6dp" android:top="0dp" />
+        </shape>
+    </item>
+    <item android:state_pressed="true">
+        <shape>
+
+            <!-- 填充 -->
+            <solid android:color="#7fba22" />
+
+            <!-- 颜色渐变：渐变方向、开始颜色、结束颜色 -->
+            <gradient android:angle="90" android:endColor="#7fba22" android:startColor="#7fba22" android:type="linear" />
+
+            <!-- 按钮边缘 -->
+            <stroke android:width="0dp" android:color="#7fba22" />
+
+            <!-- 按钮四个圆角：半径 -->
+            <corners android:radius="2dp" />
+
+            <!-- 按钮文字和边缘距离(内边距) -->
+            <padding android:bottom="0dp" android:left="6dp" android:right="6dp" android:top="0dp" />
+        </shape>
+    </item>
+
+</selector>

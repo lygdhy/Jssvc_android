@@ -1,0 +1,151 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_content"
+    android:orientation="vertical">
+
+    <RelativeLayout style="@style/ActionBar_Whole_Style_1">
+
+        <TextView
+            android:id="@+id/tvBack"
+            style="@style/ActionBar_Left_Style_1" />
+
+        <TextView
+            style="@style/ActionBar_Title_Style_1"
+            android:text="意见反馈" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="图书服务"
+                android:textColor="@color/ui_theme"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:text="咨询时间:正常工作日9:00~16:30"
+                android:textColor="@color/ui_theme"
+                android:textSize="10sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/tvLibSer1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_selector_blue_circle"
+                    android:lineSpacingExtra="2dp"
+                    android:text="图多多\n[QQ1872237872]"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/tvLibSer2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_selector_blue_circle"
+                    android:lineSpacingExtra="2dp"
+                    android:text="图妹妹\n[QQ893196521]"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/tvLibSer3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_selector_blue_circle"
+                    android:lineSpacingExtra="2dp"
+                    android:text="图小小\n[QQ897457690]"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/tvLibSer4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_selector_blue_circle"
+                    android:lineSpacingExtra="2dp"
+                    android:text="图姐姐\n[QQ149553453]"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="技术支持"
+                android:textColor="@color/ui_theme"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:text="咨询时间:全天"
+                android:textColor="@color/ui_theme"
+                android:textSize="10sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/tvOrgSer1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_selector_blue_circle"
+                    android:lineSpacingExtra="2dp"
+                    android:text="小智\n[QQ2906501168]"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_selector_blue_circle"
+                    android:lineSpacingExtra="2dp"
+                    android:text="小智\n[QQ2906501168]"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
