@@ -22,7 +22,7 @@
             android:text="BarNo" />
     </RelativeLayout>
 
-    <jssvc.andstu.lib.view.ScrollViewExtend
+    <org.jssvc.lib.view.ScrollViewExtend
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -83,10 +83,10 @@
                 style="@style/Item_split_horizontal"
                 android:background="@color/ui_content" />
 
-            <jssvc.andstu.lib.view.CustomViewPager
+            <org.jssvc.lib.view.CustomViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-    </jssvc.andstu.lib.view.ScrollViewExtend>
+    </org.jssvc.lib.view.ScrollViewExtend>
 </LinearLayout>
