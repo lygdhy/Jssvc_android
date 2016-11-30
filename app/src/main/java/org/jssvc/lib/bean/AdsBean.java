@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 /**
  * 广告bean
- * Created by lygdh on 2016/9/22.
  */
 
 public class AdsBean implements Serializable {

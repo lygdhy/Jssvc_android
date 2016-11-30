@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_content"
+    android:orientation="vertical">
+
+    <RelativeLayout style="@style/ActionBar_Whole_Style_1">
+
+        <TextView
+            android:id="@+id/tvBack"
+            style="@style/ActionBar_Left_Style_1" />
+
+        <TextView
+            style="@style/ActionBar_Title_Style_1"
+            android:text="账户激活(1/2)" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:lineSpacingExtra="10dp"
+                android:text="您尚未完成身份认证，请输入您的姓名进行认证。\n如果认证失败，您将无法使用掌上图书馆功能。"
+                android:textColor="@color/ui_text_body"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/edtRealName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:background="#fff"
+                android:hint="请输入您图书证上的姓名"
+                android:padding="10dp"
+                android:textColor="@color/ui_text_body"
+                android:textColorHint="@color/ui_text_tip"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/bg_selector_blue_circle"
+                android:text="验证"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

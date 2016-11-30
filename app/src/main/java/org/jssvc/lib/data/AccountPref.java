@@ -6,7 +6,6 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 
-import org.jssvc.lib.activity.LoginActivity;
 import org.jssvc.lib.bean.User;
 
 /**

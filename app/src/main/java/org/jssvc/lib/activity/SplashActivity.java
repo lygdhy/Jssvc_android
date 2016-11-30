@@ -1,7 +1,6 @@
 package org.jssvc.lib.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 
@@ -12,7 +11,6 @@ import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
-
 import okhttp3.Call;
 import okhttp3.Response;
 import qiu.niorgai.StatusBarCompat;
@@ -23,26 +21,20 @@ import qiu.niorgai.StatusBarCompat;
 public class SplashActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+    protected int getContentViewId() {
+        return R.layout.activity_splash;
+    }
 
+    @Override
+    protected void initView() {
         StatusBarCompat.translucentStatusBar(this, false);
 
         Handler handler = new Handler();
-        handler.postDelayed(new splashhandler(), 500);//静态启动页
+        handler.postDelayed(new splashhandler(), 1000);//静态启动页
     }
 
     class splashhandler implements Runnable {
         public void run() {
-
-//            if (AppPref.isFirstRunning(context)) {
-//                // 第一次启动APP，展示新版特性
-//                AppPref.setAlreadyRun(context);// 这句话带入下一步骤执行
-//            } else {
-//                // 进入主题
-//            }
-
             if (AccountPref.isLogon(context)) {
                 // 用户名和密码都在，静默登陆
                 OkGo.post(HttpUrlParams.URL_LIB_LOGIN)
@@ -79,23 +71,4 @@ public class SplashActivity extends BaseActivity {
             }
         }
     }
-
-    /**
-     * 是否支持滑动返回
-     *
-     * @return
-     */
-    protected boolean supportSlideBack() {
-        return false;
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        //根据 Tag 取消请求
-        OkGo.getInstance().cancelTag(this);
-    }
-
 }

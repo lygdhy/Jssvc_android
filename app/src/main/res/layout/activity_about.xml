@@ -1,11 +1,12 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ui_content"
     android:orientation="vertical">
 
-    <RelativeLayout style="@style/ActionBar_Whole_Style_1">
+    <RelativeLayout
+        android:id="@+id/rlTop"
+        style="@style/ActionBar_Whole_Style_1">
 
         <TextView
             android:id="@+id/tvBack"
@@ -14,60 +15,137 @@
         <TextView
             style="@style/ActionBar_Title_Style_1"
             android:text="关于我们" />
-
     </RelativeLayout>
 
-    <org.jssvc.lib.view.ScrollViewExtend
+    <RelativeLayout
+        android:id="@+id/rlBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="20dp"
+            android:text="苏州市职业大学计算机工程学院安卓工作室\n「掌上图书馆」研发小组\n©2016 Jssvc.org"
+            android:textColor="@color/ui_text_tip"
+            android:textSize="10sp" />
+    </RelativeLayout>
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_above="@+id/rlBottom"
+        android:layout_below="@+id/rlTop">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.bigkoo.convenientbanner.ConvenientBanner
-                android:id="@+id/convenientBanner"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                app:canLoop="true" />
-
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:lineSpacingExtra="5dp"
-                android:padding="10dp"
-                android:text="关于我们关于我们关于我们\n关于我们\n关于我们关于我们关于我们关于我们\n关于我们关于我们\n关于我们\n关于我们关于我们关于我们关于我们\n关于我们\n关于我们关于我们关于我们\n关于我们"
-                android:textColor="@color/colorAccent" />
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-            <View
-                style="@style/Item_split_horizontal"
-                android:background="@color/ui_content" />
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_launcher" />
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                app:tabBackground="@color/white"
-                app:tabIndicatorColor="@color/colorAccent"
-                app:tabIndicatorHeight="2dp"
-                app:tabMode="fixed"
-                app:tabPaddingEnd="12dp"
-                app:tabPaddingStart="12dp"
-                app:tabSelectedTextColor="@color/colorAccent"
-                app:tabTextColor="@color/ui_text_title" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:padding="5dp"
+                    android:text="@string/app_name"
+                    android:textColor="@color/ui_text_title"
+                    android:textSize="16sp" />
 
-            <View
-                style="@style/Item_split_horizontal"
-                android:background="@color/ui_content" />
+                <TextView
+                    android:id="@+id/tvVer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ver 1.0"
+                    android:textColor="@color/ui_text_title"
+                    android:textSize="12sp" />
+            </LinearLayout>
 
-            <org.jssvc.lib.view.CustomViewPager
-                android:id="@+id/viewPager"
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white" />
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_stress_top_border" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="资源支持"
+                    android:textColor="@color/ui_theme"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="馆长信箱：zny@jssvc.edu.cn"
+                    android:textColor="@color/ui_text_body"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="藏馆主站：http://lib.jssvc.edu.cn/"
+                    android:textColor="@color/ui_text_body"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="技术支持"
+                    android:textColor="@color/ui_theme"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="网易信箱：jssvcdev@126.com"
+                    android:textColor="@color/ui_text_body"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="腾讯信箱：2906501168@qq.com"
+                    android:textColor="@color/ui_text_body"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
         </LinearLayout>
-    </org.jssvc.lib.view.ScrollViewExtend>
-</LinearLayout>
+    </ScrollView>
+</RelativeLayout>

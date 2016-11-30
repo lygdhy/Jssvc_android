@@ -1,8 +1,6 @@
 package org.jssvc.lib.base;
 
-import android.app.Activity;
 import android.support.multidex.MultiDexApplication;
-import android.view.View;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.lzy.okgo.OkGo;
@@ -11,29 +9,25 @@ import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.store.PersistentCookieStore;
 import com.lzy.okgo.model.HttpHeaders;
 import com.lzy.okgo.model.HttpParams;
-
-import org.jssvc.lib.utils.ActivityLifecycleHelper;
-
+import com.pgyersdk.crash.PgyCrashManager;
 
 /**
- * Created by lygdh on 2016/9/13.
+ * Created by lygdh on 2016/11/15.
  */
 
 public class BaseApplication extends MultiDexApplication {
     BaseApplication appContext;
-
-    private ActivityLifecycleHelper mActivityLifecycleHelper;
 
     @Override
     public void onCreate() {
         super.onCreate();
         appContext = this;
 
-        // 滑动返回
-        registerActivityLifecycleCallbacks(mActivityLifecycleHelper = new ActivityLifecycleHelper());
-
         // 初始化Fresco
         Fresco.initialize(this);
+
+        // 蒲公英
+        PgyCrashManager.register(this);
 
         // 初始化OkGo
         //---------这里给出的是示例代码,告诉你可以这么传,实际使用的时候,根据需要传,不需要就不传-------------//
@@ -77,25 +71,6 @@ public class BaseApplication extends MultiDexApplication {
                     .addCommonParams(params);                                          //设置全局公共参数
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    public ActivityLifecycleHelper getActivityLifecycleHelper() {
-        return mActivityLifecycleHelper;
-    }
-
-    public void onSlideBack(boolean isReset, float distance) {
-        if (mActivityLifecycleHelper != null) {
-            Activity lastActivity = mActivityLifecycleHelper.getPreActivity();
-            if (lastActivity != null) {
-                View contentView = lastActivity.findViewById(android.R.id.content);
-                if (isReset) {
-                    contentView.setX(contentView.getLeft());
-                } else {
-                    final int width = getResources().getDisplayMetrics().widthPixels;
-                    contentView.setX(-width / 3 + distance / 3);
-                }
-            }
         }
     }
 }
