@@ -7,7 +7,6 @@ import android.widget.ScrollView;
 
 /**
  * 能够兼容ViewPager的ScrollView
- *
  * @Description: 解决了ViewPager在ScrollView中的滑动反弹问题
  */
 public class ScrollViewExtend extends ScrollView {
