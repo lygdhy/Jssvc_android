@@ -8,14 +8,15 @@ import android.widget.TextView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.User;
 import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -59,12 +60,14 @@ public class CardInfoActivity extends BaseActivity {
     @Override
     protected void initView() {
         scrollView.setVisibility(View.GONE);
+        showProgressDialog();
 
         OkGo.post(HttpUrlParams.URL_LIB_ACCOUND)
                 .tag(this)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
+                        dissmissProgressDialog();
                         // s 即为所需要的结果
                         parseHtml(s);
                     }
@@ -72,7 +75,8 @@ public class CardInfoActivity extends BaseActivity {
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
-                        showToast("onError -> HttpUrlParams.BASE_LIB_URL");
+                        dissmissProgressDialog();
+                        dealNetError(e);
                     }
                 });
     }

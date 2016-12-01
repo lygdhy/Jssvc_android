@@ -10,13 +10,14 @@ import android.widget.TextView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -51,12 +52,15 @@ public class RegisterActivity extends BaseActivity {
                 // 激活
                 String realname = edtRealName.getText().toString().trim();
                 if (!TextUtils.isEmpty(realname)) {
+                    showProgressDialog();
+
                     OkGo.post(HttpUrlParams.URL_LIB_USER_REGISTER)
                             .tag(this)
                             .params("name", realname)
                             .execute(new StringCallback() {
                                 @Override
                                 public void onSuccess(String s, Call call, Response response) {
+                                    dissmissProgressDialog();
                                     // s 即为所需要的结果
                                     parseHtml(s);
                                 }
@@ -64,6 +68,8 @@ public class RegisterActivity extends BaseActivity {
                                 @Override
                                 public void onError(Call call, Response response, Exception e) {
                                     super.onError(call, response, e);
+                                    dissmissProgressDialog();
+                                    dealNetError(e);
                                 }
 
                             });

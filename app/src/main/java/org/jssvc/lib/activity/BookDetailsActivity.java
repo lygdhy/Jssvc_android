@@ -10,12 +10,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.ShowTabAdapter;
 import org.jssvc.lib.base.BaseActivity;
@@ -25,6 +19,13 @@ import org.jssvc.lib.fragment.BookDetailInfoFragment;
 import org.jssvc.lib.fragment.BookDetailInlibFragment;
 import org.jssvc.lib.utils.HtmlParseUtils;
 import org.jssvc.lib.view.CustomViewPager;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -62,11 +63,14 @@ public class BookDetailsActivity extends BaseActivity {
     protected void initView() {
         tvBookName.setText(getIntent().getStringExtra("title") + "");
         detialUrl = getIntent().getStringExtra("url");
+
+        showProgressDialog();
         OkGo.post(detialUrl)
                 .tag(this)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
+                        dissmissProgressDialog();
                         // s 即为所需要的结果
                         parseHtml(s);
                     }
@@ -74,7 +78,8 @@ public class BookDetailsActivity extends BaseActivity {
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
-                        showToast("onError -> HttpUrlParams.BASE_LIB_URL");
+                        dissmissProgressDialog();
+                        dealNetError(e);
                     }
                 });
     }

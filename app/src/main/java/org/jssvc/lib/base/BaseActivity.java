@@ -7,6 +7,10 @@ import android.widget.Toast;
 
 import com.pgyersdk.crash.PgyCrashManager;
 
+import org.jssvc.lib.utils.KeyboardUtils;
+import org.jssvc.lib.utils.NetworkUtils;
+import org.jssvc.lib.view.pDialog.XProgressDialog;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -19,6 +23,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public Context context;
 
     private Toast toast = null;//全局Toast
+    private XProgressDialog progressDialog = null;//全局ProgressDialog
 
     protected abstract int getContentViewId();
 
@@ -43,7 +48,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * 全局Toast
+     * show Toast
      */
     protected void showToast(String msg) {
         if (toast == null) {
@@ -52,5 +57,52 @@ public abstract class BaseActivity extends AppCompatActivity {
             toast.setText(msg);
         }
         toast.show();
+    }
+
+    /**
+     * show ProgressDialog
+     */
+    protected void showProgressDialog() {
+        KeyboardUtils.hideSoftInput(this);
+        if (progressDialog == null) {
+            progressDialog = new XProgressDialog(context, XProgressDialog.THEME_HORIZONTAL_SPOT);
+        }
+        progressDialog.show();
+    }
+
+    /**
+     * show ProgressDialog
+     */
+    protected void showProgressDialog(String msg) {
+        KeyboardUtils.hideSoftInput(this);
+        if (progressDialog == null) {
+            progressDialog = new XProgressDialog(context, msg, XProgressDialog.THEME_HORIZONTAL_SPOT);
+        } else {
+            progressDialog.setMessage(msg);
+        }
+        progressDialog.show();
+    }
+
+    /**
+     * dissmiss ProgressDialog
+     */
+    protected void dissmissProgressDialog() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
+
+    /**
+     * 网络错误处理
+     */
+    protected void dealNetError(Exception e) {
+        if (!NetworkUtils.isConnected(context)) {
+            showToast("无法连接网络");
+        } else if (e.getMessage().contains("No address associated with hostname")) {
+            // Unable to resolve host "opac.jssvc.edu.cn": No address associated with hostname
+            showToast("服务器故障，请稍后重试！");
+        } else {
+            showToast("网络出错：" + e.getMessage());
+        }
     }
 }

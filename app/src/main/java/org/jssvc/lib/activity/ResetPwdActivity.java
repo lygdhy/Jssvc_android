@@ -9,13 +9,14 @@ import android.widget.TextView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -51,6 +52,8 @@ public class ResetPwdActivity extends BaseActivity {
                 // 激活
                 String newpwd = edtPwd.getText().toString().trim();
                 if (!TextUtils.isEmpty(newpwd)) {
+                    showProgressDialog();
+
                     OkGo.post(HttpUrlParams.URL_LIB_CHANGE_PWD)
                             .tag(this)
                             .params("old_passwd", AccountPref.getLogonAccoundPwd(context))
@@ -60,6 +63,7 @@ public class ResetPwdActivity extends BaseActivity {
                             .execute(new StringCallback() {
                                 @Override
                                 public void onSuccess(String s, Call call, Response response) {
+                                    dissmissProgressDialog();
                                     // s 即为所需要的结果
                                     parseHtml(s);
                                 }
@@ -67,6 +71,8 @@ public class ResetPwdActivity extends BaseActivity {
                                 @Override
                                 public void onError(Call call, Response response, Exception e) {
                                     super.onError(call, response, e);
+                                    dissmissProgressDialog();
+                                    dealNetError(e);
                                 }
 
                             });

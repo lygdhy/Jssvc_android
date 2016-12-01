@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import org.jssvc.lib.view.pDialog.XProgressDialog;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -24,14 +26,22 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends Fragment {
 
     private Toast toast = null;//全局Toast
+    private XProgressDialog progressDialog = null;//全局ProgressDialog
 
     private Unbinder unbinder;
 
     protected Context context;
+    protected BaseActivity mActivity;
 
     protected abstract int getContentViewId();
 
     protected abstract void initView();
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (BaseActivity) getActivity();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -49,15 +59,38 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
-     * 全局Toast
+     * show Toast
      */
     protected void showToast(String msg) {
-        if (toast == null) {
-            toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
-        } else {
-            toast.setText(msg);
-        }
-        toast.show();
+        mActivity.showToast(msg);
+    }
+
+    /**
+     * show ProgressDialog
+     */
+    protected void showProgressDialog() {
+        mActivity.showProgressDialog();
+    }
+
+    /**
+     * show ProgressDialog
+     */
+    protected void showProgressDialog(String msg) {
+        mActivity.showProgressDialog(msg);
+    }
+
+    /**
+     * dissmiss ProgressDialog
+     */
+    protected void dissmissProgressDialog() {
+        mActivity.dissmissProgressDialog();
+    }
+
+    /**
+     * 网络错误处理
+     */
+    protected void dealNetError(Exception e) {
+        mActivity.dealNetError(e);
     }
 }
 
