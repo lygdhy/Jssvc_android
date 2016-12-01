@@ -7,6 +7,9 @@ import android.widget.Toast;
 
 import com.pgyersdk.crash.PgyCrashManager;
 
+import org.jssvc.lib.utils.KeyboardUtils;
+import org.jssvc.lib.view.pDialog.XProgressDialog;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -19,6 +22,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public Context context;
 
     private Toast toast = null;//全局Toast
+    private XProgressDialog progressDialog = null;//全局ProgressDialog
 
     protected abstract int getContentViewId();
 
@@ -52,5 +56,38 @@ public abstract class BaseActivity extends AppCompatActivity {
             toast.setText(msg);
         }
         toast.show();
+    }
+
+    /**
+     * show ProgressDialog
+     */
+    protected void showProgressDialog() {
+        KeyboardUtils.hideSoftInput(this);
+        if (progressDialog == null) {
+            progressDialog = new XProgressDialog(context, XProgressDialog.THEME_HORIZONTAL_SPOT);
+        }
+        progressDialog.show();
+    }
+
+    /**
+     * show ProgressDialog
+     */
+    protected void showProgressDialog(String msg) {
+        KeyboardUtils.hideSoftInput(this);
+        if (progressDialog == null) {
+            progressDialog = new XProgressDialog(context, msg, XProgressDialog.THEME_HORIZONTAL_SPOT);
+        } else {
+            progressDialog.setMessage(msg);
+        }
+        progressDialog.show();
+    }
+
+    /**
+     * dissmiss ProgressDialog
+     */
+    protected void dissmissProgressDialog() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
     }
 }

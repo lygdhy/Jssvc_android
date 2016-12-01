@@ -8,8 +8,8 @@ android {
         applicationId "org.jssvc.lib"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 1
-        versionName "2.1"
+        versionCode 9
+        versionName '2.1'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         // Enabling multidex support.
@@ -23,6 +23,8 @@ android {
     }
     dexOptions {
         javaMaxHeapSize "4g"
+    }
+    productFlavors {
     }
 }
 
@@ -59,4 +61,6 @@ dependencies {
     compile 'com.pgyersdk:sdk:2.4.0'
     // stickylist
     compile 'se.emilsjolander:stickylistheaders:2.7.0'
+    // 权限管理
+    compile 'com.mylhyl:acp:1.1.7'
 }

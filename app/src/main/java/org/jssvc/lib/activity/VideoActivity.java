@@ -1,5 +1,6 @@
 package org.jssvc.lib.activity;
 
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -15,17 +16,20 @@ import android.widget.TextView;
 import com.universalvideoview.UniversalMediaController;
 import com.universalvideoview.UniversalVideoView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.ShowTabAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.fragment.LibResumeFragment;
 import org.jssvc.lib.fragment.LibScheduleFragment;
 import org.jssvc.lib.fragment.LibYellowPagesFragment;
+import org.jssvc.lib.utils.NetworkUtils;
+import org.jssvc.lib.view.CustomDialog;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 图书馆宣传片
@@ -68,10 +72,6 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
 
     @Override
     protected void initView() {
-        mVideoView.setMediaController(mMediaController);
-        setVideoAreaSize();
-        mVideoView.setVideoViewCallback(this);
-
         //将fragment装进列表中
         list_fragment = new ArrayList<>();
         list_fragment.add(new LibResumeFragment());
@@ -98,8 +98,37 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(1);
 
-        // 开始播放
-        startPlayVideo();
+
+        // 关于视频
+        mVideoView.setMediaController(mMediaController);
+        setVideoAreaSize();
+        mVideoView.setVideoViewCallback(this);
+        if (NetworkUtils.isConnected(context)) {
+            if (NetworkUtils.isWifiConnected(context)) {
+                showToast("已连接WIFI，请放心观看！");
+                // 开始播放
+                startPlayVideo();
+            } else {
+                CustomDialog.Builder builder = new CustomDialog.Builder(context);
+                builder.setTitle("提示");
+                builder.setMessage("WIFI已断开，确定要播放吗？");
+                builder.setPositiveButton("哥不差钱", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        // 开始播放
+                        startPlayVideo();
+                    }
+                });
+                builder.setNegativeButton("冷静冷静", new android.content.DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.create().show();
+            }
+        } else {
+            showToast("暂无网络连接");
+        }
     }
 
     @OnClick({R.id.tvBack})
@@ -197,22 +226,18 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
 
     @Override
     public void onPause(MediaPlayer mediaPlayer) {
-
     }
 
     @Override
     public void onStart(MediaPlayer mediaPlayer) {
-
     }
 
     @Override
     public void onBufferingStart(MediaPlayer mediaPlayer) {
-
     }
 
     @Override
     public void onBufferingEnd(MediaPlayer mediaPlayer) {
-
     }
 
     @Override

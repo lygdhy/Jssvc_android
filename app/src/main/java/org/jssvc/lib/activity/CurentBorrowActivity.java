@@ -2,7 +2,6 @@ package org.jssvc.lib.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -14,18 +13,20 @@ import android.widget.TextView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.BookReadingAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.BookReadingBean;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
+import org.jssvc.lib.view.CustomDialog;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -66,11 +67,13 @@ public class CurentBorrowActivity extends BaseActivity {
 
     // 获取图书列表
     private void loadBookList() {
+        showProgressDialog();
         OkGo.post(HttpUrlParams.URL_LIB_CURRENT_BORROW)
                 .tag(this)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
+                        dissmissProgressDialog();
                         // s 即为所需要的结果
                         parseHtml(s);
                     }
@@ -78,6 +81,7 @@ public class CurentBorrowActivity extends BaseActivity {
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
+                        dissmissProgressDialog();
                         showToast("onError -> HttpUrlParams.BASE_LIB_URL");
                     }
                 });
@@ -118,6 +122,7 @@ public class CurentBorrowActivity extends BaseActivity {
             @Override
             public void onXujieClick(View view, BookReadingBean item) {
                 // 续借
+                showProgressDialog();
                 OkGo.get(HttpUrlParams.URL_LIB_RENEW_BORROW)
                         .tag(this)
                         .params("bar_code", item.getBarCode())
@@ -125,6 +130,7 @@ public class CurentBorrowActivity extends BaseActivity {
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(String s, Call call, Response response) {
+                                dissmissProgressDialog();
                                 // s 即为所需要的结果
                                 showResultDialog(s);
                             }
@@ -132,6 +138,7 @@ public class CurentBorrowActivity extends BaseActivity {
                             @Override
                             public void onError(Call call, Response response, Exception e) {
                                 super.onError(call, response, e);
+                                dissmissProgressDialog();
                                 showToast("onError -> HttpUrlParams.BASE_LIB_URL");
                             }
                         });
@@ -141,14 +148,14 @@ public class CurentBorrowActivity extends BaseActivity {
 
     // 续借结果
     private void showResultDialog(String result) {
-        new AlertDialog.Builder(this)
+        CustomDialog.Builder builder = new CustomDialog.Builder(context)
                 .setTitle("续借结果")
-                .setMessage(Html.fromHtml(result))
+                .setMessage(Html.fromHtml(result) + "")
                 .setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        loadBookList();
+                    public void onClick(final DialogInterface dialog, int which) {
+                        dialog.dismiss();
                     }
-                }).show();
+                });
+        builder.create().show();
     }
 }

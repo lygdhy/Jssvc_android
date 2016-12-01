@@ -12,13 +12,14 @@ import android.widget.TextView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -57,8 +58,6 @@ public class LoginActivity extends BaseActivity {
         super.onResume();
         edtName.setText(AccountPref.getLogonAccoundNumber(context));
         edtPwd.setText(AccountPref.getLogonAccoundPwd(context));
-
-
     }
 
     @OnClick({R.id.tvBack, R.id.tvLoginType, R.id.btnLogin})
@@ -78,6 +77,8 @@ public class LoginActivity extends BaseActivity {
                 if (TextUtils.isEmpty(loginname) || TextUtils.isEmpty(loginpwd)) {
                     showToast("登陆信息不能为空");
                 } else {
+                    showProgressDialog();
+
                     AccountPref.saveLoginAccoundNumber(context, loginname);
                     AccountPref.saveLoginAccoundPwd(context, loginpwd);
                     AccountPref.saveLoginType(context, loginTypesCode[loginTypePos]);
@@ -89,6 +90,7 @@ public class LoginActivity extends BaseActivity {
                             .execute(new StringCallback() {
                                 @Override
                                 public void onSuccess(String s, Call call, Response response) {
+                                    dissmissProgressDialog();
                                     // s 即为所需要的结果
                                     parseHtml(s);
                                 }
@@ -96,6 +98,7 @@ public class LoginActivity extends BaseActivity {
                                 @Override
                                 public void onError(Call call, Response response, Exception e) {
                                     super.onError(call, response, e);
+                                    dissmissProgressDialog();
                                     if (response == null) {
                                         showToast("(≧o≦)服务器跪了，暂时无法提供服务!");
                                     }
