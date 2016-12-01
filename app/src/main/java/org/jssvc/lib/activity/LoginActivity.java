@@ -77,7 +77,7 @@ public class LoginActivity extends BaseActivity {
                 if (TextUtils.isEmpty(loginname) || TextUtils.isEmpty(loginpwd)) {
                     showToast("登陆信息不能为空");
                 } else {
-                    showProgressDialog();
+                    showProgressDialog("登录中...");
 
                     AccountPref.saveLoginAccoundNumber(context, loginname);
                     AccountPref.saveLoginAccoundPwd(context, loginpwd);

@@ -65,6 +65,7 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
     int typePos = 0;
     int searchPage = 1;
     String searchText = "";
+    int maxPageSize = 1;// 最大页数，根据返回值动态计算
 
     @Override
     protected int getContentViewId() {
@@ -145,23 +146,18 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
             searchPage++;
         }
 
-        showProgressDialog();
+        showProgressDialog("检索中...");
 
         OkGo.post(HttpUrlParams.URL_LIB_BOOK_SEARCH)
                 .tag(this)
                 .params("strSearchType", searchTypesCode[typePos])
                 .params("strText", searchText)
+                .params("page", String.valueOf(searchPage))
+
                 .params("sort", "CATA_DATE")
                 .params("orderby", "DESC")
                 .params("showmode", "list")
-
                 .params("dept", "ALL")
-                .params("displaypg", "20")
-                .params("page", String.valueOf(searchPage))
-
-                .params("historyCount", "1")
-                .params("doctype", "ALL")
-                .params("match_flag", "forward")
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
@@ -187,6 +183,7 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
             booklists.clear();
         }
 
+        // 获取图书数据
         List<BookSearchBean> list = new ArrayList<>();
         list.addAll(HtmlParseUtils.getBookSearchList(s));
 
@@ -204,6 +201,11 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
             rlEmpty.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         }
+
+        // 获取搜索总数
+        int count = HtmlParseUtils.getBookSearchListCount(s);
+        int rem = count % 20;
+        maxPageSize = (rem == 0) ? (count / 20) : (count / 20) + 1;
     }
 
     // 方式选择
@@ -224,12 +226,19 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        searchBookEngine(true);
+        if (!TextUtils.isEmpty(searchText)) {
+            searchBookEngine(true);
+        }
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        searchBookEngine(false);
+        // 判断是否还有下一页
+        if (searchPage < maxPageSize) {
+            searchBookEngine(false);
+        } else {
+            showToast("木有更多数据了");
+        }
         return false;
     }
 }

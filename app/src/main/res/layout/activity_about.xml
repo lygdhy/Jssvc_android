@@ -141,7 +141,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="腾讯信箱：2906501168@qq.com"
+                    android:text="腾讯信箱：jssvcdev@qq.com"
                     android:textColor="@color/ui_text_body"
                     android:textSize="14sp" />
 

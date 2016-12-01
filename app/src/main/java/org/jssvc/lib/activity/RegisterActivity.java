@@ -52,7 +52,7 @@ public class RegisterActivity extends BaseActivity {
                 // 激活
                 String realname = edtRealName.getText().toString().trim();
                 if (!TextUtils.isEmpty(realname)) {
-                    showProgressDialog();
+                    showProgressDialog("正在提交...");
 
                     OkGo.post(HttpUrlParams.URL_LIB_USER_REGISTER)
                             .tag(this)

@@ -122,7 +122,7 @@ public class CurentBorrowActivity extends BaseActivity {
             @Override
             public void onXujieClick(View view, BookReadingBean item) {
                 // 续借
-                showProgressDialog();
+                showProgressDialog("申请中...");
                 OkGo.get(HttpUrlParams.URL_LIB_RENEW_BORROW)
                         .tag(this)
                         .params("bar_code", item.getBarCode())

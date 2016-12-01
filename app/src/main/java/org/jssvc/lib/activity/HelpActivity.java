@@ -1,22 +1,18 @@
 package org.jssvc.lib.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.QleftAdapter;
 import org.jssvc.lib.adapter.QrightAdapter;
@@ -24,6 +20,12 @@ import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.CategoryBean;
 import org.jssvc.lib.bean.QuestionBean;
 import org.jssvc.lib.utils.AppUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 /**
@@ -90,6 +92,9 @@ public class HelpActivity extends BaseActivity implements
                     QuestionBean dishBean = rightList.get(i);
                     if (categoryBean.id == dishBean.id) {
                         lvRight.setSelection(i);
+
+                        lvLeft.setSelection(position);
+                        notifyLeftAdapter(position);
                         break;
                     }
                 }
@@ -132,30 +137,47 @@ public class HelpActivity extends BaseActivity implements
     }
 
     private void qqCheckDialog() {
-        final String items[] = {"图多多", "图小小", "图妹妹", "图姐姐"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("在线服务");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
+        final AlertDialog dlg = new AlertDialog.Builder(context).create();
+        dlg.show();
+        dlg.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        dlg.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        Window window = dlg.getWindow();
+        window.setContentView(R.layout.dialog_list_select_layout);
+
+        LinearLayout layout1 = (LinearLayout) window.findViewById(R.id.layout1);
+        LinearLayout layout2 = (LinearLayout) window.findViewById(R.id.layout2);
+        LinearLayout layout3 = (LinearLayout) window.findViewById(R.id.layout3);
+        LinearLayout layout4 = (LinearLayout) window.findViewById(R.id.layout4);
+
+        layout1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                switch (which) {
-                    case 0:
-                        callQQCell("1872237872");
-                        break;
-                    case 1:
-                        callQQCell("897457690");
-                        break;
-                    case 2:
-                        callQQCell("893196521");
-                        break;
-                    case 3:
-                        callQQCell("149553453");
-                        break;
-                }
+            public void onClick(View view) {
+                callQQCell("1872237872");
+                dlg.dismiss();
             }
         });
-        builder.create().show();
+        layout2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callQQCell("897457690");
+                dlg.dismiss();
+            }
+        });
+        layout3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callQQCell("893196521");
+                dlg.dismiss();
+            }
+        });
+        layout4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callQQCell("149553453");
+                dlg.dismiss();
+            }
+        });
     }
 
     private void callQQCell(String qqNum) {
@@ -187,7 +209,7 @@ public class HelpActivity extends BaseActivity implements
     @Override
     public void onStickyHeaderChanged(StickyListHeadersListView l, View header, int itemPosition, long headerId) {
         QuestionBean dishBean = rightList.get(itemPosition);
-        long id = dishBean.id;
+        long id = dishBean.getId();
         int position = getCateId(id);
         if (position != -1) {
             lvLeft.setSelection(position);
@@ -195,12 +217,8 @@ public class HelpActivity extends BaseActivity implements
         }
     }
 
-    // 通过header的偏移量做出渐显的效果
     @Override
     public void onStickyHeaderOffsetChanged(StickyListHeadersListView l, View header, int offset) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            header.setAlpha(1 - (offset / (float) header.getMeasuredHeight()));
-        }
     }
 
     // ===================数据获取=============================
@@ -234,7 +252,7 @@ public class HelpActivity extends BaseActivity implements
 
     // ===================初始化数据=============================
     private List<QuestionBean> initRightData() {
-        List<QuestionBean> tempList = new ArrayList<QuestionBean>();
+        List<QuestionBean> tempList = new ArrayList<>();
         String[] categoryArr = getResources().getStringArray(R.array.question_category);
         // 第一组
         String[] questArr1 = getResources().getStringArray(R.array.question_list_1);
@@ -367,7 +385,7 @@ public class HelpActivity extends BaseActivity implements
 
     private List<CategoryBean> initLeftData() {
         String[] categoryArr = getResources().getStringArray(R.array.question_category);
-        List<CategoryBean> tempList = new ArrayList<CategoryBean>();
+        List<CategoryBean> tempList = new ArrayList<>();
         for (int i = 0; i < categoryArr.length; i++) {
             CategoryBean item = new CategoryBean();
             if (i == 0) {

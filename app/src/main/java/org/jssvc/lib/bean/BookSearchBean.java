@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 
 public class BookSearchBean implements Serializable {
+    private String No;//no
     private String Title;//书名
     private String Type;// 图书类型
     private String Code;// 编码
@@ -23,6 +24,14 @@ public class BookSearchBean implements Serializable {
 
     public void setDetialUrl(String detialUrl) {
         DetialUrl = detialUrl;
+    }
+
+    public String getNo() {
+        return No;
+    }
+
+    public void setNo(String no) {
+        No = no;
     }
 
     public String getTitle() {
