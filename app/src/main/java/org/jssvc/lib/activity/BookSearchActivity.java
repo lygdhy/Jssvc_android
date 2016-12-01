@@ -16,24 +16,29 @@ import android.widget.TextView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.BookSearchAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.BookSearchBean;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+import cn.bingoogolapple.refreshlayout.BGAMoocStyleRefreshViewHolder;
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import okhttp3.Call;
 import okhttp3.Response;
+
+import static org.jssvc.lib.R.id.refreshLayout;
 
 /**
  * 图书搜索
  */
-public class BookSearchActivity extends BaseActivity {
+public class BookSearchActivity extends BaseActivity implements BGARefreshLayout.BGARefreshLayoutDelegate {
 
     @BindView(R.id.tvBack)
     TextView tvBack;
@@ -41,18 +46,25 @@ public class BookSearchActivity extends BaseActivity {
     TextView tvType;
     @BindView(R.id.edtKey)
     EditText edtKey;
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
     @BindView(R.id.rlEmpty)
     RelativeLayout rlEmpty;
+
+    @BindView(R.id.lvHistory)
+    RecyclerView lvHistory;//搜索记录
+
+    @BindView(refreshLayout)
+    BGARefreshLayout mRefreshLayout;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;//查询数据
+
+    BookSearchAdapter bookSearchAdapter;
+    List<BookSearchBean> booklists = new ArrayList<>();
 
     String[] searchTypes = new String[]{"题名", "责任者", "主题词", "ISBN/ISSN", "索书号", "出版社"};
     String[] searchTypesCode = new String[]{"title", "author", "keyword", "isbn", "callno", "publisher"};
     int typePos = 0;
     int searchPage = 1;
-
-    BookSearchAdapter bookSearchAdapter;
-    List<BookSearchBean> booklists = new ArrayList<>();
+    String searchText = "";
 
     @Override
     protected int getContentViewId() {
@@ -61,6 +73,10 @@ public class BookSearchActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        lvHistory.setVisibility(View.GONE);//搜索记录
+
+        initRefreshLayout();
+
         rlEmpty.setVisibility(View.GONE);
 
         tvType.setText(searchTypes[typePos]);
@@ -69,9 +85,9 @@ public class BookSearchActivity extends BaseActivity {
         edtKey.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                    String key = edtKey.getText().toString().trim();
-                    if (!TextUtils.isEmpty(key)) {
-                        doSearch(true, key);
+                    searchText = edtKey.getText().toString().trim();
+                    if (!TextUtils.isEmpty(searchText)) {
+                        searchBookEngine(true);
                     }
                     return true;
                 }
@@ -100,6 +116,15 @@ public class BookSearchActivity extends BaseActivity {
         });
     }
 
+    private void initRefreshLayout() {
+        mRefreshLayout.setDelegate(this);
+        BGAMoocStyleRefreshViewHolder moocStyleRefreshViewHolder = new BGAMoocStyleRefreshViewHolder(this, true);
+        moocStyleRefreshViewHolder.setUltimateColor(R.color.ui_theme);
+        moocStyleRefreshViewHolder.setOriginalImage(R.drawable.icon_book_open);
+        moocStyleRefreshViewHolder.setSpringDistanceScale(0.2f);
+        mRefreshLayout.setRefreshViewHolder(moocStyleRefreshViewHolder);
+    }
+
     @OnClick({R.id.tvBack, R.id.tvType})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -112,17 +137,20 @@ public class BookSearchActivity extends BaseActivity {
         }
     }
 
-    // 发起搜索
-    private void doSearch(final boolean isRefresh, String keyword) {
+    // 图书检索
+    private void searchBookEngine(final boolean isRefresh) {
         if (isRefresh) {
             searchPage = 1;
         } else {
             searchPage++;
         }
+
+        showProgressDialog();
+
         OkGo.post(HttpUrlParams.URL_LIB_BOOK_SEARCH)
                 .tag(this)
                 .params("strSearchType", searchTypesCode[typePos])
-                .params("strText", keyword)
+                .params("strText", searchText)
                 .params("sort", "CATA_DATE")
                 .params("orderby", "DESC")
                 .params("showmode", "list")
@@ -137,6 +165,8 @@ public class BookSearchActivity extends BaseActivity {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
+                        dissmissProgressDialog();
+                        mRefreshLayout.endRefreshing();
                         // s 即为所需要的结果
                         parseHtml(isRefresh, s);
                     }
@@ -144,7 +174,9 @@ public class BookSearchActivity extends BaseActivity {
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
-                        showToast("onError -> HttpUrlParams.BASE_LIB_URL");
+                        dissmissProgressDialog();
+                        mRefreshLayout.endRefreshing();
+                        dealNetError(e);
                     }
                 });
     }
@@ -188,5 +220,16 @@ public class BookSearchActivity extends BaseActivity {
                             }
                         }
                 ).show();
+    }
+
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        searchBookEngine(true);
+    }
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        searchBookEngine(false);
+        return false;
     }
 }

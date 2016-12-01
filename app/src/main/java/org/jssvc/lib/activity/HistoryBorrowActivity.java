@@ -11,17 +11,18 @@ import android.widget.TextView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.BookReturnAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.BookReadingBean;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -61,12 +62,14 @@ public class HistoryBorrowActivity extends BaseActivity {
     }
 
     private void loadBookList() {
+        showProgressDialog();
         OkGo.post(HttpUrlParams.URL_LIB_HISTORY_BORROW)
                 .tag(this)
                 .params("para_string", "all")// all 显示全部; page 分页显示
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
+                        dissmissProgressDialog();
                         // s 即为所需要的结果
                         parseHtml(s);
                     }
@@ -74,7 +77,8 @@ public class HistoryBorrowActivity extends BaseActivity {
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
-                        showToast("onError -> HttpUrlParams.BASE_LIB_URL");
+                        dissmissProgressDialog();
+                        dealNetError(e);
                     }
                 });
     }

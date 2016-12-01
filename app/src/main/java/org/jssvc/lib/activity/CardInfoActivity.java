@@ -76,7 +76,7 @@ public class CardInfoActivity extends BaseActivity {
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
                         dissmissProgressDialog();
-                        showToast("onError -> HttpUrlParams.BASE_LIB_URL");
+                        dealNetError(e);
                     }
                 });
     }

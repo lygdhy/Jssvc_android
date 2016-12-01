@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import org.jssvc.lib.utils.KeyboardUtils;
 import org.jssvc.lib.view.pDialog.XProgressDialog;
 
 import butterknife.ButterKnife;
@@ -32,10 +31,17 @@ public abstract class BaseFragment extends Fragment {
     private Unbinder unbinder;
 
     protected Context context;
+    protected BaseActivity mActivity;
 
     protected abstract int getContentViewId();
 
     protected abstract void initView();
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (BaseActivity) getActivity();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,48 +59,38 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
-     * 全局Toast
+     * show Toast
      */
     protected void showToast(String msg) {
-        if (toast == null) {
-            toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
-        } else {
-            toast.setText(msg);
-        }
-        toast.show();
+        mActivity.showToast(msg);
     }
 
     /**
      * show ProgressDialog
      */
     protected void showProgressDialog() {
-        KeyboardUtils.hideSoftInput(getActivity());
-        if (progressDialog == null) {
-            progressDialog = new XProgressDialog(context, XProgressDialog.THEME_HORIZONTAL_SPOT);
-        }
-        progressDialog.show();
+        mActivity.showProgressDialog();
     }
 
     /**
      * show ProgressDialog
      */
     protected void showProgressDialog(String msg) {
-        KeyboardUtils.hideSoftInput(getActivity());
-        if (progressDialog == null) {
-            progressDialog = new XProgressDialog(context, msg, XProgressDialog.THEME_HORIZONTAL_SPOT);
-        } else {
-            progressDialog.setMessage(msg);
-        }
-        progressDialog.show();
+        mActivity.showProgressDialog(msg);
     }
 
     /**
      * dissmiss ProgressDialog
      */
     protected void dissmissProgressDialog() {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-        }
+        mActivity.dissmissProgressDialog();
+    }
+
+    /**
+     * 网络错误处理
+     */
+    protected void dealNetError(Exception e) {
+        mActivity.dealNetError(e);
     }
 }
 

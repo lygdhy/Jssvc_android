@@ -87,6 +87,7 @@ public class SplashActivity extends BaseActivity {
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
+                        dealNetError(e);
                         // 登陆失败
                         AccountPref.removeLogonAccoundPwd(context);
                     }

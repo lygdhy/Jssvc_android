@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.pgyersdk.crash.PgyCrashManager;
 
 import org.jssvc.lib.utils.KeyboardUtils;
+import org.jssvc.lib.utils.NetworkUtils;
 import org.jssvc.lib.view.pDialog.XProgressDialog;
 
 import butterknife.ButterKnife;
@@ -47,7 +48,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * 全局Toast
+     * show Toast
      */
     protected void showToast(String msg) {
         if (toast == null) {
@@ -88,6 +89,20 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void dissmissProgressDialog() {
         if (progressDialog != null) {
             progressDialog.dismiss();
+        }
+    }
+
+    /**
+     * 网络错误处理
+     */
+    protected void dealNetError(Exception e) {
+        if (!NetworkUtils.isConnected(context)) {
+            showToast("无法连接网络");
+        } else if (e.getMessage().contains("No address associated with hostname")) {
+            // Unable to resolve host "opac.jssvc.edu.cn": No address associated with hostname
+            showToast("服务器故障，请稍后重试！");
+        } else {
+            showToast("网络出错：" + e.getMessage());
         }
     }
 }

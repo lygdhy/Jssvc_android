@@ -99,9 +99,7 @@ public class LoginActivity extends BaseActivity {
                                 public void onError(Call call, Response response, Exception e) {
                                     super.onError(call, response, e);
                                     dissmissProgressDialog();
-                                    if (response == null) {
-                                        showToast("(≧o≦)服务器跪了，暂时无法提供服务!");
-                                    }
+                                    dealNetError(e);
                                 }
 
                             });
