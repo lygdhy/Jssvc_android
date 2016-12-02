@@ -4,10 +4,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 帮助中心
@@ -16,6 +17,8 @@ public class HelpDetailsActivity extends BaseActivity {
 
     @BindView(R.id.tvBack)
     TextView tvBack;
+    @BindView(R.id.tvTitle)
+    TextView tvTitle;
     @BindView(R.id.textView1)
     TextView textView1;
     @BindView(R.id.textView2)
@@ -30,10 +33,12 @@ public class HelpDetailsActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        String c = getIntent().getStringExtra("c");
         String q = getIntent().getStringExtra("q");
         String a = getIntent().getStringExtra("a");
         String t = getIntent().getStringExtra("t");
 
+        tvTitle.setText(c);
         textView1.setText(q);
         textView2.setText(a);
 
