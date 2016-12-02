@@ -137,6 +137,20 @@ public class HtmlParseUtils {
     }
 
     // 图书搜索===========================================================================
+    // 获取搜索总数
+    public static int getBookSearchListCount(String result) {
+        int count = 0;
+//        Integer count = 0;
+        Document doc = Jsoup.parse(result);
+        String s = doc.getElementsByClass("red").text();
+        try {
+            count = Integer.parseInt(s);// 数字or提示信息，使用Integer做返回值类型自处理异常
+        } catch (Exception e) {
+            count = 0;
+        }
+        return count;
+    }
+
     // 解析图书搜索
     public static List<BookSearchBean> getBookSearchList(String result) {
         List<BookSearchBean> bookList = new ArrayList<>();
@@ -153,8 +167,11 @@ public class HtmlParseUtils {
 
             Elements titles = link.select("h3>a");// 书名
             String namenum = titles.get(0).text();
-            String n[] = namenum.split("\\.");
-            book.setTitle(n[1]);
+            String str[] = namenum.split("\\.");
+            String itemNo = str[0];
+            String name = namenum.substring(itemNo.length() + 1, namenum.length());
+            book.setNo(itemNo);// 提取标号
+            book.setTitle(name);// 提取书名全称
 
             Elements copys = link.select("p>span");// 副本
             String fuben = copys.get(0).text();

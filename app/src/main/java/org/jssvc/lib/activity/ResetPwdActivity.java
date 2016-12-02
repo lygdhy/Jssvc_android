@@ -52,7 +52,7 @@ public class ResetPwdActivity extends BaseActivity {
                 // 激活
                 String newpwd = edtPwd.getText().toString().trim();
                 if (!TextUtils.isEmpty(newpwd)) {
-                    showProgressDialog();
+                    showProgressDialog("正在提交...");
 
                     OkGo.post(HttpUrlParams.URL_LIB_CHANGE_PWD)
                             .tag(this)

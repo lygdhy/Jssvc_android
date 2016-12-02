@@ -21,6 +21,11 @@ public class HttpUrlParams {
 
     public static final String URL_LIB_BOOK_SEARCH = BASE_LIB_URL + "opac/openlink.php";// 图书搜索
 
+    // 自有服务
+    public static final String BASE_ORG_URL = "http://www.jssvc.org/";
+
+    public static final String URL_ORG_FEEDBACK = BASE_ORG_URL + "svu/feedback.php";// 意见反馈
+
     // 新书推荐
     // http://lib.jssvc.edu.cn/reading/newbooks/new.html
 }

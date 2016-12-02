@@ -39,6 +39,7 @@ public class BookSearchAdapter extends RecyclerView.Adapter<BookSearchAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         BookSearchBean item = menuList.get(position);
+        holder.tvNo.setText(item.getNo());
         holder.tvTitle.setText(item.getTitle());
         holder.tvCode.setText("分类号：" + item.getCode() + "");
         holder.tvAuthor.setText("责任者：" + item.getAuthor() + "");
@@ -59,11 +60,12 @@ public class BookSearchAdapter extends RecyclerView.Adapter<BookSearchAdapter.Vi
 
     //自定义的ViewHolder，持有每个Item的的所有界面元素
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvCode, tvTitle, tvAuthor, tvPublisher, tvType;
+        TextView tvCode, tvNo, tvTitle, tvAuthor, tvPublisher, tvType;
         TextView tvRemain, tvTotal;
 
         public ViewHolder(View view) {
             super(view);
+            tvNo = (TextView) view.findViewById(R.id.tvNo);
             tvTitle = (TextView) view.findViewById(R.id.tvTitle);
             tvCode = (TextView) view.findViewById(R.id.tvCode);
             tvAuthor = (TextView) view.findViewById(R.id.tvAuthor);
