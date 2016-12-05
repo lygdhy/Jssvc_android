@@ -15,16 +15,22 @@ import android.widget.TextView;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
+import com.umeng.analytics.MobclickAgent;
 
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.BookSearchAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.BookSearchBean;
+import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -147,6 +153,15 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
         }
 
         showProgressDialog("检索中...");
+
+        // 搜索事件统计
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", AccountPref.getLogonAccoundNumber(context));
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        map.put("optDate", df.format(new Date()));
+        map.put("strSearchType", searchTypesCode[typePos]);
+        map.put("strText", searchText);
+        MobclickAgent.onEvent(context, "book_search", map);
 
         OkGo.post(HttpUrlParams.URL_LIB_BOOK_SEARCH)
                 .tag(this)

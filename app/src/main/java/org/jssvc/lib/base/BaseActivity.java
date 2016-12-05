@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.pgyersdk.crash.PgyCrashManager;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.message.PushAgent;
 
 import org.jssvc.lib.utils.KeyboardUtils;
 import org.jssvc.lib.utils.NetworkUtils;
@@ -37,7 +39,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         context = this;
         initView();
 
+        // 蒲公英错误日志收集
         PgyCrashManager.register(this);
+
+        // 友盟推送
+        PushAgent.getInstance(context).onAppStart();
     }
 
     @Override
@@ -45,6 +51,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
         unbinder.unbind();
         PgyCrashManager.unregister();
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     /**

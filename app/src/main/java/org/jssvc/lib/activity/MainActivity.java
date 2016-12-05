@@ -1,7 +1,10 @@
 package org.jssvc.lib.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -11,9 +14,13 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.umeng.message.MsgConstant;
+import com.umeng.message.PushAgent;
+import com.umeng.message.common.UmengMessageDeviceConfig;
 
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
+import org.jssvc.lib.base.BaseApplication;
 import org.jssvc.lib.bean.AdsBean;
 import org.jssvc.lib.data.AccountPref;
 
@@ -49,6 +56,9 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.tvPoint)
     TextView tvPoint;
 
+    private PushAgent mPushAgent;
+    private MyReceiver myReceiver;
+
     @Override
     protected int getContentViewId() {
         return R.layout.activity_main;
@@ -59,6 +69,30 @@ public class MainActivity extends BaseActivity {
         tvPoint.setVisibility(View.GONE);
 
         showAd();
+
+        myReceiver = new MyReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BaseApplication.UPDATE_STATUS_ACTION);
+        registerReceiver(myReceiver, filter);
+
+        mPushAgent = PushAgent.getInstance(this);
+        mPushAgent.onAppStart();
+    }
+
+    class MyReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            appInfo();
+        }
+    }
+
+    private void appInfo() {
+        String pkgName = getApplicationContext().getPackageName();
+        String info = String.format("DeviceToken:%s\n" + "SdkVersion:%s\nAppVersionCode:%s\nAppVersionName:%s",
+                mPushAgent.getRegistrationId(), MsgConstant.SDK_VERSION,
+                UmengMessageDeviceConfig.getAppVersionCode(this), UmengMessageDeviceConfig.getAppVersionName(this));
+        Log.d("MainActivity", "应用包名:" + pkgName + "\n" + info);
     }
 
     @OnClick({R.id.btnCardInfo, R.id.btnCurentBorrow, R.id.btnHistoryBorrow, R.id.btnBookSearch, R.id.btnMsg, R.id.btnHelp, R.id.btnVideo, R.id.btnSetting})
@@ -109,6 +143,12 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(context, SettingActivity.class));
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(myReceiver);
     }
 
     private void showAd() {

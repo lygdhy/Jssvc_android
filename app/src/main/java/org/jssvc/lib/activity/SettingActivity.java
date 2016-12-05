@@ -17,6 +17,7 @@ import com.mylhyl.acp.AcpOptions;
 import com.pgyersdk.javabean.AppBean;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
+import com.umeng.analytics.MobclickAgent;
 
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
@@ -68,7 +69,7 @@ public class SettingActivity extends BaseActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         if (AccountPref.isLogon(context)) {
             // 用户名和密码都在
@@ -116,6 +117,8 @@ public class SettingActivity extends BaseActivity {
                 if (AccountPref.isLogon(context)) {
                     AccountPref.removeLogonAccoundPwd(context);
                     btnExit.setVisibility(View.GONE);
+                    // 账号统计
+                    MobclickAgent.onProfileSignOff();
                 }
                 break;
         }

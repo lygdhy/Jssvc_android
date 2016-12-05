@@ -12,18 +12,23 @@ import android.widget.TextView;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
+import com.umeng.analytics.MobclickAgent;
 
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.BookReadingAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.BookReadingBean;
+import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
 import org.jssvc.lib.view.CustomDialog;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -123,6 +128,16 @@ public class CurentBorrowActivity extends BaseActivity {
             public void onXujieClick(View view, BookReadingBean item) {
                 // 续借
                 showProgressDialog("申请中...");
+
+                // 续借事件统计
+                Map<String, String> map = new HashMap<>();
+                map.put("userName", AccountPref.getLogonAccoundNumber(context));
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                map.put("optDate", df.format(new Date()));
+                map.put("bookBarCode", item.getBarCode());
+                map.put("bookTitle", item.getBookName());
+                MobclickAgent.onEvent(context, "book_renew", map);
+
                 OkGo.get(HttpUrlParams.URL_LIB_RENEW_BORROW)
                         .tag(this)
                         .params("bar_code", item.getBarCode())
