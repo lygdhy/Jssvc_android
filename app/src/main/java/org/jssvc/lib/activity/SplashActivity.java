@@ -10,6 +10,7 @@ import com.lzy.okgo.callback.StringCallback;
 import com.mylhyl.acp.Acp;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
+import com.umeng.analytics.MobclickAgent;
 
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
@@ -94,7 +95,8 @@ public class SplashActivity extends BaseActivity {
 
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
-                        // 登陆成功
+                        // 账号统计
+                        MobclickAgent.onProfileSignIn(AccountPref.getLogonType(context).toUpperCase(), AccountPref.getLogonAccoundNumber(context));
                     }
 
                     @Override
@@ -106,4 +108,5 @@ public class SplashActivity extends BaseActivity {
                     }
                 });
     }
+
 }

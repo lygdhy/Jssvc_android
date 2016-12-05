@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="D:\studio2.2\workspace\jssvc_library_android\UmengPushSDK\src\main\shaders"/></dataSet><dataSet config="release"><source path="D:\studio2.2\workspace\jssvc_library_android\UmengPushSDK\build-types\release\shaders"/></dataSet></merger>

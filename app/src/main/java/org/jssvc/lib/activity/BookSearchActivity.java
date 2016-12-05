@@ -15,16 +15,22 @@ import android.widget.TextView;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
+import com.umeng.analytics.MobclickAgent;
 
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.BookSearchAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.BookSearchBean;
+import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -148,6 +154,15 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
 
         showProgressDialog("检索中...");
 
+        // 搜索事件统计
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", AccountPref.getLogonAccoundNumber(context));
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        map.put("optDate", df.format(new Date()));
+        map.put("strSearchType", searchTypesCode[typePos]);
+        map.put("strText", searchText);
+        MobclickAgent.onEvent(context, "book_search", map);
+
         OkGo.post(HttpUrlParams.URL_LIB_BOOK_SEARCH)
                 .tag(this)
                 .params("strSearchType", searchTypesCode[typePos])
@@ -226,18 +241,24 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        if (!TextUtils.isEmpty(searchText)) {
+        if (TextUtils.isEmpty(searchText)) {
+            mRefreshLayout.endRefreshing();
+        } else {
             searchBookEngine(true);
         }
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        // 判断是否还有下一页
-        if (searchPage < maxPageSize) {
-            searchBookEngine(false);
+        if (TextUtils.isEmpty(searchText)) {
+            mRefreshLayout.endRefreshing();
         } else {
-            showToast("木有更多数据了");
+            // 判断是否还有下一页
+            if (searchPage < maxPageSize) {
+                searchBookEngine(false);
+            } else {
+                showToast("木有更多数据了");
+            }
         }
         return false;
     }

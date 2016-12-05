@@ -113,6 +113,7 @@ public class HelpActivity extends BaseActivity implements
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(context, HelpDetailsActivity.class);
+                intent.putExtra("c", "" + rightList.get(position).getCategory());//类别
                 intent.putExtra("q", "" + rightList.get(position).getTitle());
                 intent.putExtra("a", "" + rightList.get(position).getContent());
                 intent.putExtra("t", "" + rightList.get(position).getTip());

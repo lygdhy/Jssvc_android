@@ -14,6 +14,14 @@
         <item name="android:windowAnimationStyle">@style/activityAnimation</item>
         <!--listview Divider-->
         <item name="android:listDivider">@drawable/divider_bg</item>
+        <!--背景颜色-->
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <!--启动页主题-->
+    <style name="StartAppTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/layout_list_start_pic</item>
     </style>
 
     <style name="activityAnimation" parent="@android:style/Animation">

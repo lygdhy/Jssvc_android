@@ -150,7 +150,7 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         if (mVideoView != null && mVideoView.isPlaying()) {
             mSeekPosition = mVideoView.getCurrentPosition();

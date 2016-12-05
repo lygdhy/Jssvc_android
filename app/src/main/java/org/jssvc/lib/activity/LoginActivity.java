@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
+import com.umeng.analytics.MobclickAgent;
 
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
@@ -54,7 +55,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         edtName.setText(AccountPref.getLogonAccoundNumber(context));
         edtPwd.setText(AccountPref.getLogonAccoundPwd(context));
@@ -112,6 +113,8 @@ public class LoginActivity extends BaseActivity {
     private void parseHtml(String s) {
         String errorMsg = HtmlParseUtils.getErrMsgOnLogin(s);
         if (TextUtils.isEmpty(errorMsg)) {
+            // 账号统计
+            MobclickAgent.onProfileSignIn(AccountPref.getLogonType(context).toUpperCase(), AccountPref.getLogonAccoundNumber(context));
             // 登陆成功
             finish();
         } else {
