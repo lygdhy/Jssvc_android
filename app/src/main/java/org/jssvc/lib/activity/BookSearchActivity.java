@@ -226,18 +226,24 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        if (!TextUtils.isEmpty(searchText)) {
+        if (TextUtils.isEmpty(searchText)) {
+            mRefreshLayout.endRefreshing();
+        } else {
             searchBookEngine(true);
         }
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        // 判断是否还有下一页
-        if (searchPage < maxPageSize) {
-            searchBookEngine(false);
+        if (TextUtils.isEmpty(searchText)) {
+            mRefreshLayout.endRefreshing();
         } else {
-            showToast("木有更多数据了");
+            // 判断是否还有下一页
+            if (searchPage < maxPageSize) {
+                searchBookEngine(false);
+            } else {
+                showToast("木有更多数据了");
+            }
         }
         return false;
     }
