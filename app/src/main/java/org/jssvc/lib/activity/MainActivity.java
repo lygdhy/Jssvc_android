@@ -2,6 +2,7 @@ package org.jssvc.lib.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -11,15 +12,16 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.jssvc.lib.R;
+import org.jssvc.lib.base.BaseActivity;
+import org.jssvc.lib.bean.AdsBean;
+import org.jssvc.lib.data.AccountPref;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import org.jssvc.lib.R;
-import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.bean.AdsBean;
-import org.jssvc.lib.data.AccountPref;
 
 /**
  * 主程序
@@ -169,5 +171,22 @@ public class MainActivity extends BaseActivity {
         super.onPause();
         //停止翻页
         convenientBanner.stopTurning();
+    }
+
+    // 按两次返回键退出====================================
+    private long mExitTime;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                showToast("再按一次退出程序");
+                mExitTime = System.currentTimeMillis();
+            } else {
+                finish();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
