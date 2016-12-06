@@ -163,14 +163,18 @@ public class SettingActivity extends BaseActivity {
         PgyUpdateManager.register(SettingActivity.this, new UpdateManagerListener() {
             @Override
             public void onUpdateAvailable(final String result) {
-                tvCheck.setText("发现新版本");
-                tvCheck.setTextColor(ContextCompat.getColor(context, R.color.red));
+                if (tvCheck != null) {
+                    tvCheck.setText("发现新版本");
+                    tvCheck.setTextColor(ContextCompat.getColor(context, R.color.red));
+                }
             }
 
             @Override
             public void onNoUpdateAvailable() {
-                tvCheck.setText("已经是最新版");
-                tvCheck.setTextColor(ContextCompat.getColor(context, R.color.ui_text_tip));
+                if (tvCheck != null) {
+                    tvCheck.setText("已经是最新版");
+                    tvCheck.setTextColor(ContextCompat.getColor(context, R.color.ui_text_tip));
+                }
             }
         });
     }
