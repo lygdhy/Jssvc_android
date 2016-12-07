@@ -9,12 +9,10 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 获取MAC地址 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 读写sdcard，storage等等 -->
 
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-
     <!-- 可选 -->
+    <!-- 获取logcat日志 -->
     <uses-permission android:name="android.permission.READ_LOGS" />
 
-    <!-- 获取logcat日志 -->
     <application
         android:name=".base.BaseApplication"
         android:allowBackup="true"
@@ -41,15 +39,11 @@
             android:name="UMENG_MESSAGE_SECRET"
             android:value="b8e3c15f6490a2126ce6df9c41340e27" />
 
-        <service android:name="org.jssvc.lib.push.NotificationService" />
-        <service android:name="org.jssvc.lib.push.MyPushIntentService" />
-        <service android:name="org.jssvc.lib.push.UmengNotificationService" />
-        <service android:name="org.jssvc.lib.push.MyNotificationService" />
-
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/StartAppTheme" />
+
         <activity
             android:name=".activity.EmptySplashActivity"
             android:screenOrientation="portrait"

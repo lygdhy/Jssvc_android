@@ -7,11 +7,10 @@ import android.text.TextUtils;
 import java.util.List;
 
 /**
- * Created by lygdh on 2016/12/5.
+ * Created by lygdh on 2016/12/6.
  */
 
 public class Helper {
-
     public static boolean isServiceRunning(Context context, String className) {
         boolean isRunning = false;
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -27,5 +26,4 @@ public class Helper {
         }
         return isRunning;
     }
-
 }
