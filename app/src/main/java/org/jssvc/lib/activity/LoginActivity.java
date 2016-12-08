@@ -52,6 +52,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        textView.setVisibility(View.GONE);
     }
 
     @Override

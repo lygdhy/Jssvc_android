@@ -22,6 +22,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:orientation="vertical"
             android:padding="10dp">
 
@@ -29,8 +30,11 @@
                 android:id="@+id/tvBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="消息中心"
-                android:textColor="@color/ui_text_body"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/icon_404_sky"
+                android:gravity="center"
+                android:text="即将开放 ..."
+                android:textColor="@color/ui_text_tip"
                 android:textSize="14sp" />
 
         </LinearLayout>
