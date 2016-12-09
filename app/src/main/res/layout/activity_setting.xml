@@ -22,9 +22,31 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/rlPush"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_selector_while">
+
+            <TextView
+                style="@style/list_menu_title"
+                android:layout_margin="10dp"
+                android:drawableLeft="@drawable/icon_menu_push"
+                android:text="消息通知" />
+
+            <ImageView
+                android:id="@+id/ivPushState"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/icon_switch_on" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/rlCheck"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:background="@drawable/bg_selector_while"
             android:padding="10dp">
 
@@ -99,6 +121,24 @@
                 style="@style/list_menu_title"
                 android:drawableLeft="@drawable/icon_menu_about"
                 android:text="关于我们" />
+
+            <TextView
+                style="@style/list_menu_value"
+                android:drawableRight="@drawable/icon_goto" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlShare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_selector_while"
+            android:padding="10dp">
+
+            <TextView
+                style="@style/list_menu_title"
+                android:drawableLeft="@drawable/icon_menu_share"
+                android:text="应用分享" />
 
             <TextView
                 style="@style/list_menu_value"
