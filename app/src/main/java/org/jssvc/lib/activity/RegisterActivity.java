@@ -12,7 +12,6 @@ import com.lzy.okgo.callback.StringCallback;
 
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
 
@@ -22,7 +21,7 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 /**
- * 账户激活1-身份验证
+ * 账户激活-身份验证
  */
 public class RegisterActivity extends BaseActivity {
     @BindView(R.id.tvBack)
@@ -39,7 +38,7 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        btnRegister.setText("验证 " + AccountPref.getLogonAccoundNumber(context));
+//        AccountPref.getLogonAccoundNumber(context)
     }
 
     @OnClick({R.id.tvBack, R.id.btnRegister})

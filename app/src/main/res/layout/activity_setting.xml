@@ -43,6 +43,24 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rlPwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0.5dp"
+            android:background="@drawable/bg_selector_while"
+            android:padding="10dp">
+
+            <TextView
+                style="@style/list_menu_title"
+                android:drawableLeft="@drawable/icon_menu_update"
+                android:text="修改密码" />
+
+            <TextView
+                style="@style/list_menu_value"
+                android:drawableRight="@drawable/icon_goto" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/rlCheck"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -138,7 +156,7 @@
             <TextView
                 style="@style/list_menu_title"
                 android:drawableLeft="@drawable/icon_menu_share"
-                android:text="应用分享" />
+                android:text="分享APP" />
 
             <TextView
                 style="@style/list_menu_value"
