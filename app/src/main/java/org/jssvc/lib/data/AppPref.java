@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 
 public class AppPref {
     private static final String KEY_IS_FIRST_RUNNING = "is_first_running";
+    private static final String KEY_IS_READ_HELP_TIP = "is_first_help";
 
     private static SharedPreferences getPreference(Context context) {
         return context.getApplicationContext().getSharedPreferences("app_preference", Context.MODE_PRIVATE);
@@ -20,5 +21,13 @@ public class AppPref {
 
     public static boolean isFirstRunning(Context context) {
         return getPreference(context).getBoolean(KEY_IS_FIRST_RUNNING, true);
+    }
+
+    public static void setHelpClose(Context context) {
+        getPreference(context).edit().putBoolean(KEY_IS_READ_HELP_TIP, false).apply();
+    }
+
+    public static boolean isFirstHelp(Context context) {
+        return getPreference(context).getBoolean(KEY_IS_READ_HELP_TIP, true);
     }
 }

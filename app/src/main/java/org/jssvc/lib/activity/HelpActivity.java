@@ -19,6 +19,7 @@ import org.jssvc.lib.adapter.QrightAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.CategoryBean;
 import org.jssvc.lib.bean.QuestionBean;
+import org.jssvc.lib.data.AppPref;
 import org.jssvc.lib.utils.AppUtils;
 
 import java.util.ArrayList;
@@ -71,6 +72,12 @@ public class HelpActivity extends BaseActivity implements
 
     @Override
     protected void initView() {
+        if (AppPref.isFirstHelp(context)) {
+            rlTip.setVisibility(View.VISIBLE);
+        } else {
+            rlTip.setVisibility(View.GONE);
+        }
+
         // 获取焦点
         lvLeft.setFocusable(false);
         lvRight.setFocusable(false);
@@ -132,6 +139,7 @@ public class HelpActivity extends BaseActivity implements
                 qqCheckDialog();
                 break;
             case R.id.ivClose:
+                AppPref.setHelpClose(context);
                 rlTip.setVisibility(View.GONE);
                 break;
         }
