@@ -177,7 +177,11 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
                         dissmissProgressDialog();
-                        mRefreshLayout.endRefreshing();
+                        if (isRefresh) {
+                            mRefreshLayout.endRefreshing();
+                        } else {
+                            mRefreshLayout.endLoadingMore();
+                        }
                         // s 即为所需要的结果
                         parseHtml(isRefresh, s);
                     }
@@ -186,7 +190,11 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
                         dissmissProgressDialog();
-                        mRefreshLayout.endRefreshing();
+                        if (isRefresh) {
+                            mRefreshLayout.endRefreshing();
+                        } else {
+                            mRefreshLayout.endLoadingMore();
+                        }
                         dealNetError(e);
                     }
                 });
