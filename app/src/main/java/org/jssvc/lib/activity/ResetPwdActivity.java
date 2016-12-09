@@ -21,16 +21,18 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 /**
- * 账户激活2-重置密码
+ * 重置密码
  */
 public class ResetPwdActivity extends BaseActivity {
 
     @BindView(R.id.tvBack)
     TextView tvBack;
+    @BindView(R.id.tvCurrentUser)
+    TextView tvCurrentUser;
     @BindView(R.id.edtPwd)
     EditText edtPwd;
-    @BindView(R.id.btnRegister)
-    Button btnRegister;
+    @BindView(R.id.btnSubmit)
+    Button btnSubmit;
 
     @Override
     protected int getContentViewId() {
@@ -39,17 +41,18 @@ public class ResetPwdActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        btnRegister.setText("激活 " + AccountPref.getLogonAccoundNumber(context));
+//        AccountPref.getLogonAccoundNumber(context)
+        tvCurrentUser.setText("当前帐号为" + AccountPref.getLogonAccoundNumber(context));
     }
 
-    @OnClick({R.id.tvBack, R.id.btnRegister})
+    @OnClick({R.id.tvBack, R.id.btnSubmit})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvBack:
                 finish();
                 break;
-            case R.id.btnRegister:
-                // 激活
+            case R.id.btnSubmit:
+                // 提交请求
                 String newpwd = edtPwd.getText().toString().trim();
                 if (!TextUtils.isEmpty(newpwd)) {
                     showProgressDialog("正在提交...");

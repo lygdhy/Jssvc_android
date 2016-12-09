@@ -48,6 +48,10 @@ public class SettingActivity extends BaseActivity {
     RelativeLayout rlFeedback;
     @BindView(R.id.rlAbout)
     RelativeLayout rlAbout;
+    @BindView(R.id.rlPwd)
+    RelativeLayout rlPwd;
+    @BindView(R.id.rlShare)
+    RelativeLayout rlShare;
     @BindView(R.id.btnExit)
     Button btnExit;
     @BindView(R.id.tvCheck)
@@ -75,12 +79,15 @@ public class SettingActivity extends BaseActivity {
             // 用户名和密码都在
             btnExit.setVisibility(View.VISIBLE);
             btnExit.setText("注销" + AccountPref.getLogonAccoundNumber(context));
+
+            rlPwd.setVisibility(View.VISIBLE);
         } else {
             btnExit.setVisibility(View.GONE);
+            rlPwd.setVisibility(View.GONE);
         }
     }
 
-    @OnClick({R.id.tvBack, R.id.rlCheck, R.id.rlClear, R.id.rlFeedback, R.id.rlAbout, R.id.btnExit})
+    @OnClick({R.id.tvBack, R.id.rlCheck, R.id.rlClear, R.id.rlFeedback, R.id.rlAbout, R.id.btnExit, R.id.rlPwd, R.id.rlShare})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvBack:
@@ -111,6 +118,14 @@ public class SettingActivity extends BaseActivity {
             case R.id.rlAbout:
                 // 关于我们
                 startActivity(new Intent(context, AboutActivity.class));
+                break;
+            case R.id.rlPwd:
+                // 修改密码
+                startActivity(new Intent(context, ResetPwdActivity.class));
+                break;
+            case R.id.rlShare:
+                // 分享APP
+                showToast("分享APP");
                 break;
             case R.id.btnExit:
                 // 注销
