@@ -16,10 +16,10 @@
             style="@style/ActionBar_Title_Style_1"
             android:text="图书详情" />
 
-        <TextView
-            android:id="@+id/tvBarNo"
+        <ImageView
+            android:id="@+id/tvCollect"
             style="@style/ActionBar_Right_Style_1"
-            android:text="BarNo" />
+            android:src="@drawable/icon_collect_off" />
     </RelativeLayout>
 
     <org.jssvc.lib.view.ScrollViewExtend
