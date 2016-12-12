@@ -2,16 +2,17 @@ package org.jssvc.lib.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jssvc.lib.R;
 import org.jssvc.lib.bean.BookSearchBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lygdh on 2016/11/14.
@@ -43,7 +44,7 @@ public class BookSearchAdapter extends RecyclerView.Adapter<BookSearchAdapter.Vi
         holder.tvTitle.setText(item.getTitle());
         holder.tvCode.setText("分类号：" + item.getCode() + "");
         holder.tvAuthor.setText("责任者：" + item.getAuthor() + "");
-        holder.tvPublisher.setText("出版社：" + item.getPublisher());
+        holder.tvPublisher.setText("出版社：" + Html.fromHtml(item.getPublisher()));
         holder.tvType.setText("图书类型：" + item.getType() + "");
 
         holder.tvRemain.setText(item.getCopy_Remain() + "");

@@ -6,16 +6,15 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jssvc.lib.bean.BookAccessBean;
 import org.jssvc.lib.bean.BookDetailsBean;
 import org.jssvc.lib.bean.BookReadingBean;
 import org.jssvc.lib.bean.BookSearchBean;
 import org.jssvc.lib.bean.User;
 import org.jssvc.lib.data.HttpUrlParams;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lygdh on 2016/11/15.
@@ -187,9 +186,7 @@ public class HtmlParseUtils {
             String linkInnerH = authors.html();
             String a[] = linkInnerH.split("<br>");
             book.setAuthor(TextUtils.isEmpty(a[0]) ? "" : a[0]);// 作者
-            String b[] = a[1].split("&nbsp;");
-            book.setPublisher(TextUtils.isEmpty(b[0]) ? "" : b[0]);// 出版社
-            book.setPublish_Year(TextUtils.isEmpty(b[1]) ? "" : b[1]);// 日期
+            book.setPublisher(TextUtils.isEmpty(a[1]) ? "" : a[1]);// 出版社&日期
 
             bookList.add(book);
         }

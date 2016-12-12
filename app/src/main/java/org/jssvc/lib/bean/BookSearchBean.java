@@ -12,8 +12,7 @@ public class BookSearchBean implements Serializable {
     private String Type;// 图书类型
     private String Code;// 编码
     private String Author;// 作者
-    private String Publisher;// 出版社
-    private String Publish_Year;// 出版年份
+    private String Publisher;// 出版社&出版年份
     private String Copy_Total;// 馆藏总数
     private String Copy_Remain;// 可借副本
     private String DetialUrl;// 图书详情链接
@@ -72,14 +71,6 @@ public class BookSearchBean implements Serializable {
 
     public void setPublisher(String publisher) {
         Publisher = publisher;
-    }
-
-    public String getPublish_Year() {
-        return Publish_Year;
-    }
-
-    public void setPublish_Year(String publish_Year) {
-        Publish_Year = publish_Year;
     }
 
     public String getCopy_Total() {
