@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -36,8 +37,8 @@ public class BookDetailsActivity extends BaseActivity {
 
     @BindView(R.id.tvBack)
     TextView tvBack;
-    @BindView(R.id.tvBarNo)
-    TextView tvBarNo;
+    @BindView(R.id.tvCollect)
+    ImageView tvCollect;
     @BindView(R.id.bookView)
     SimpleDraweeView bookView;
     @BindView(R.id.tvBookName)
@@ -61,6 +62,8 @@ public class BookDetailsActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        tvCollect.setVisibility(View.GONE);
+
         tvBookName.setText(getIntent().getStringExtra("title") + "");
         detialUrl = getIntent().getStringExtra("url");
 
@@ -84,18 +87,15 @@ public class BookDetailsActivity extends BaseActivity {
                 });
     }
 
-    @OnClick({R.id.tvBack, R.id.tvBarNo})
+    @OnClick({R.id.tvBack, R.id.tvCollect})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvBack:
                 finish();
                 break;
-            case R.id.tvBarNo:
-                // 显示条码
-                String[] strs = detialUrl.split("=");
-                if (strs.length == 2) {
-                    showToast(strs[1] + "");
-                }
+            case R.id.tvCollect:
+                // 收藏
+                tvCollect.setImageResource(R.drawable.icon_collect_on);
                 break;
         }
     }
