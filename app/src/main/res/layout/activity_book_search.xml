@@ -15,20 +15,20 @@
             android:text="图书搜索" />
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_gravity="bottom"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingLeft="10dp">
 
         <TextView
             android:id="@+id/tvType"
             android:layout_width="60dp"
             android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:drawableRight="@drawable/icon_footer_red"
             android:gravity="center"
@@ -37,14 +37,18 @@
             android:textSize="14sp" />
 
         <View
+            android:id="@+id/split"
             style="@style/Item_split_vertical"
-            android:layout_margin="10dp" />
+            android:layout_margin="10dp"
+            android:layout_toRightOf="@+id/tvType" />
 
         <EditText
             android:id="@+id/edtKey"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/ivSearch"
+            android:layout_toRightOf="@+id/split"
             android:background="@null"
             android:hint="请输入关键字"
             android:imeOptions="actionSearch"
@@ -54,7 +58,18 @@
             android:textColor="@color/ui_text_body"
             android:textColorHint="@color/ui_text_tip"
             android:textSize="14sp" />
-    </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="13dp"
+            android:src="@drawable/icon_search" />
+    </RelativeLayout>
+
+    <View style="@style/Item_split_horizontal" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -78,12 +93,6 @@
 
         </RelativeLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/lvHistory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp" />
-
         <cn.bingoogolapple.refreshlayout.BGARefreshLayout
             android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
@@ -95,6 +104,38 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp" />
         </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+
+        <LinearLayout
+            android:id="@+id/hisLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:touchscreenBlocksFocus="true">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/lvHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <View style="@style/Item_split_horizontal" />
+
+            <TextView
+                android:id="@+id/tvDeleteHis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:text="删除历史"
+                android:textColor="@color/ui_theme"
+                android:textSize="14sp" />
+        </LinearLayout>
 
     </FrameLayout>
 </LinearLayout>

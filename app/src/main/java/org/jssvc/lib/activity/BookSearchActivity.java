@@ -5,11 +5,15 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,14 +23,17 @@ import com.umeng.analytics.MobclickAgent;
 
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.BookSearchAdapter;
+import org.jssvc.lib.adapter.BookSearchHisAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.BookSearchBean;
 import org.jssvc.lib.data.AccountPref;
+import org.jssvc.lib.data.AppPref;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -52,17 +59,28 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
     TextView tvType;
     @BindView(R.id.edtKey)
     EditText edtKey;
+    @BindView(R.id.ivSearch)
+    ImageView ivSearch;
     @BindView(R.id.rlEmpty)
     RelativeLayout rlEmpty;
 
+    @BindView(R.id.hisLayout)
+    LinearLayout hisLayout;//搜索记录
     @BindView(R.id.lvHistory)
-    RecyclerView lvHistory;//搜索记录
+    RecyclerView lvHistory;
+    @BindView(R.id.tvDeleteHis)
+    TextView tvDeleteHis;
 
     @BindView(refreshLayout)
     BGARefreshLayout mRefreshLayout;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;//查询数据
 
+    // 搜索记录
+    List<String> hislist = new ArrayList<String>();
+    BookSearchHisAdapter hislistAdapter;
+
+    // 搜索结果
     BookSearchAdapter bookSearchAdapter;
     List<BookSearchBean> booklists = new ArrayList<>();
 
@@ -80,7 +98,8 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
 
     @Override
     protected void initView() {
-        lvHistory.setVisibility(View.GONE);//搜索记录
+        ivSearch.setVisibility(View.GONE);
+        hisLayout.setVisibility(View.GONE);//搜索记录
 
         initRefreshLayout();
 
@@ -94,6 +113,7 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
                 if (actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                     searchText = edtKey.getText().toString().trim();
                     if (!TextUtils.isEmpty(searchText)) {
+                        saveKey2Local(searchText);
                         searchBookEngine(true);
                     }
                     return true;
@@ -102,11 +122,56 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
             }
         });
 
+        edtKey.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (TextUtils.isEmpty(s.toString())) {
+                    ivSearch.setVisibility(View.GONE);
+
+                    // 隐显
+                    rlEmpty.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.GONE);
+                    hisLayout.setVisibility(View.VISIBLE);
+                    reLoadSearchHis();
+                } else {
+                    ivSearch.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        // ============================================
+        lvHistory.setLayoutManager(new LinearLayoutManager(context));
+        lvHistory.setHasFixedSize(true);
+        hislistAdapter = new BookSearchHisAdapter(context, hislist);
+        lvHistory.setAdapter(hislistAdapter);
+
+        hislistAdapter.setOnItemClickListener(new BookSearchHisAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, String item) {
+                if (!TextUtils.isEmpty(item)) {
+                    searchText = item;
+                    edtKey.setText(item);
+                    saveKey2Local(searchText);
+                    searchBookEngine(true);
+                }
+            }
+        });
+        reLoadSearchHis();// 加载搜索记录
+
+        // ============================================
         //创建默认的线性LayoutManager
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
         recyclerView.setHasFixedSize(true);
-        //创建并设置Adapter
         bookSearchAdapter = new BookSearchAdapter(context, booklists);
         recyclerView.setAdapter(bookSearchAdapter);
 
@@ -121,6 +186,7 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
                 }
             }
         });
+
     }
 
     private void initRefreshLayout() {
@@ -132,7 +198,7 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
         mRefreshLayout.setRefreshViewHolder(moocStyleRefreshViewHolder);
     }
 
-    @OnClick({R.id.tvBack, R.id.tvType})
+    @OnClick({R.id.tvBack, R.id.tvType, R.id.ivSearch, R.id.tvDeleteHis})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvBack:
@@ -140,6 +206,19 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
                 break;
             case R.id.tvType:
                 showTypeDialog();
+                break;
+            case R.id.ivSearch:
+                // 搜索
+                searchText = edtKey.getText().toString().trim();
+                if (!TextUtils.isEmpty(searchText)) {
+                    saveKey2Local(searchText);
+                    searchBookEngine(true);
+                }
+                break;
+            case R.id.tvDeleteHis:
+                // 清空历史
+                AppPref.clearSearchKey(context);
+                reLoadSearchHis();
                 break;
         }
     }
@@ -153,6 +232,7 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
         }
 
         showProgressDialog("检索中...");
+        hisLayout.setVisibility(View.GONE);
 
         // 搜索事件统计
         Map<String, String> map = new HashMap<>();
@@ -177,25 +257,29 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
                         dissmissProgressDialog();
-                        if (isRefresh) {
-                            mRefreshLayout.endRefreshing();
-                        } else {
-                            mRefreshLayout.endLoadingMore();
+                        if (mRefreshLayout != null) {
+                            if (isRefresh) {
+                                mRefreshLayout.endRefreshing();
+                            } else {
+                                mRefreshLayout.endLoadingMore();
+                            }
+                            // s 即为所需要的结果
+                            parseHtml(isRefresh, s);
                         }
-                        // s 即为所需要的结果
-                        parseHtml(isRefresh, s);
                     }
 
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
                         dissmissProgressDialog();
-                        if (isRefresh) {
-                            mRefreshLayout.endRefreshing();
-                        } else {
-                            mRefreshLayout.endLoadingMore();
+                        if (mRefreshLayout != null) {
+                            if (isRefresh) {
+                                mRefreshLayout.endRefreshing();
+                            } else {
+                                mRefreshLayout.endLoadingMore();
+                            }
+                            dealNetError(e);
                         }
-                        dealNetError(e);
                     }
                 });
     }
@@ -269,5 +353,63 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
             }
         }
         return false;
+    }
+
+    // =================================================
+    // 加载搜索记录
+    private void reLoadSearchHis() {
+        hislist.clear();
+        String allkeys = AppPref.getSearchKey(context);
+        String[] hisArrays = allkeys.split(",");
+        for (int i = 0; i < hisArrays.length; i++) {
+            if (!TextUtils.isEmpty(hisArrays[i]))
+                hislist.add(hisArrays[i]);
+        }
+
+        if (hislist.size() > 0) {
+            hisLayout.setVisibility(View.VISIBLE);
+            Collections.reverse(hislist);
+            hislistAdapter.notifyDataSetChanged();
+        } else {
+            hisLayout.setVisibility(View.GONE);
+        }
+    }
+
+    // 保存关键字到本地
+    private void saveKey2Local(String key) {
+        if (!TextUtils.isEmpty(key)) {
+            // 1、读取本地数据
+            String allkeys = AppPref.getSearchKey(context);
+            // 2、重复性判断
+            int pos = 0;
+            int maxlong = 5;
+            boolean same = false;
+            String[] hisArrays = allkeys.split(",");
+            List<String> hisArr = new ArrayList<>();
+            for (int i = 0; i < hisArrays.length; i++) {
+                hisArr.add("" + hisArrays[i]);
+            }
+            for (int i = 0; i < hisArr.size(); i++) {
+                if (hisArr.get(i).equals(key)) {
+                    pos = i;
+                    same = true;
+                }
+            }
+            if (same) {
+                hisArr.remove(pos);
+            }
+            hisArr.add(key);
+            // 3、处理溢出
+            if (hisArr.size() > maxlong) {
+                hisArr.remove(0);
+            }
+
+            // 4、存储
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hisArr.size(); i++) {
+                sb.append(hisArr.get(i) + ",");
+            }
+            AppPref.saveSearchKey(context, sb.toString());
+        }
     }
 }
