@@ -38,8 +38,6 @@ public class LoginActivity extends BaseActivity {
     EditText edtPwd;
     @BindView(R.id.tvLoginType)
     TextView tvLoginType;
-    @BindView(R.id.textView)
-    TextView textView;
 
     String[] loginTypes = new String[]{"证件号", "条码号", "Email"};
     String[] loginTypesCode = new String[]{"cert_no", "bar_no", "email"};
@@ -52,7 +50,6 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        textView.setVisibility(View.GONE);
     }
 
     @Override

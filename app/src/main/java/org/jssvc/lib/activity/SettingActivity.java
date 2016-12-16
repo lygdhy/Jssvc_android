@@ -48,10 +48,14 @@ public class SettingActivity extends BaseActivity {
     RelativeLayout rlFeedback;
     @BindView(R.id.rlAbout)
     RelativeLayout rlAbout;
+
+    @BindView(R.id.rlPush)
+    RelativeLayout rlPush;
     @BindView(R.id.rlPwd)
     RelativeLayout rlPwd;
     @BindView(R.id.rlShare)
     RelativeLayout rlShare;
+
     @BindView(R.id.btnExit)
     Button btnExit;
     @BindView(R.id.tvCheck)
@@ -70,6 +74,8 @@ public class SettingActivity extends BaseActivity {
     protected void initView() {
         setCurrentRubbish();
         autoUpdateCheck();
+
+//        rlPush.setVisibility(View.GONE);
     }
 
     @Override

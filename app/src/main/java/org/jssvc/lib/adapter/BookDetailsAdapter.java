@@ -9,11 +9,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jssvc.lib.R;
 import org.jssvc.lib.bean.BookDetailsBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lygdh on 2016/11/17.
@@ -43,10 +43,10 @@ public class BookDetailsAdapter extends RecyclerView.Adapter<BookDetailsAdapter.
         BookDetailsBean item = menuList.get(position);
 
 //        if (item.getValue().length() > 20) {
-            holder.lageLayout.setVisibility(View.VISIBLE);
-            holder.smallLayout.setVisibility(View.GONE);
-            holder.tvKey2.setText(item.getKey());
-            holder.tvValue2.setText(item.getValue());
+        holder.lageLayout.setVisibility(View.VISIBLE);
+        holder.smallLayout.setVisibility(View.GONE);
+        holder.tvKey2.setText(item.getKey());
+        holder.tvValue2.setText(item.getValue());
 //        } else {
 //            holder.lageLayout.setVisibility(View.GONE);
 //            holder.smallLayout.setVisibility(View.VISIBLE);

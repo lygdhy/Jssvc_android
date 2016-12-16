@@ -33,6 +33,7 @@
             android:lineSpacingExtra="2dp"
             android:text="VALUE"
             android:textColor="@color/ui_text_body"
+            android:textIsSelectable="true"
             android:textSize="14sp" />
     </RelativeLayout>
 
@@ -58,6 +59,7 @@
             android:lineSpacingExtra="2dp"
             android:text="VALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUE"
             android:textColor="@color/ui_text_body"
+            android:textIsSelectable="true"
             android:textSize="14sp" />
     </LinearLayout>
 </LinearLayout>
