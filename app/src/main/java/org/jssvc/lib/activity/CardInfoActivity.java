@@ -1,5 +1,6 @@
 package org.jssvc.lib.activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -60,8 +61,29 @@ public class CardInfoActivity extends BaseActivity {
     @Override
     protected void initView() {
         scrollView.setVisibility(View.GONE);
-        showProgressDialog();
 
+        if (AccountPref.isLogon(context)) {
+            getUserInfoByNet();
+        } else {
+            startActivity(new Intent(context, LoginActivity.class));
+            finish();
+        }
+    }
+
+    @OnClick({R.id.tvBack, R.id.ivLevel})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tvBack:
+                finish();
+                break;
+            case R.id.ivLevel:
+                break;
+        }
+    }
+
+    // 获取个人信息
+    private void getUserInfoByNet() {
+        showProgressDialog();
         OkGo.post(HttpUrlParams.URL_LIB_ACCOUND)
                 .tag(this)
                 .execute(new StringCallback() {
@@ -79,17 +101,6 @@ public class CardInfoActivity extends BaseActivity {
                         dealNetError(e);
                     }
                 });
-    }
-
-    @OnClick({R.id.tvBack, R.id.ivLevel})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tvBack:
-                finish();
-                break;
-            case R.id.ivLevel:
-                break;
-        }
     }
 
     // 解析网页

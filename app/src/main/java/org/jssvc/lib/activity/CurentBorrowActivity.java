@@ -58,7 +58,12 @@ public class CurentBorrowActivity extends BaseActivity {
     protected void initView() {
         rlEmpty.setVisibility(View.GONE);
 
-        loadBookList();
+        if (AccountPref.isLogon(context)) {
+            loadBookList();
+        } else {
+            startActivity(new Intent(context, LoginActivity.class));
+            finish();
+        }
     }
 
     @OnClick({R.id.tvBack})

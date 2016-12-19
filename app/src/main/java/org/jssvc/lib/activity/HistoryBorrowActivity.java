@@ -15,6 +15,7 @@ import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.BookReturnAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.BookReadingBean;
+import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
 
@@ -49,7 +50,12 @@ public class HistoryBorrowActivity extends BaseActivity {
     protected void initView() {
         rlEmpty.setVisibility(View.GONE);
 
-        loadBookList();
+        if (AccountPref.isLogon(context)) {
+            loadBookList();
+        } else {
+            startActivity(new Intent(context, LoginActivity.class));
+            finish();
+        }
     }
 
     @OnClick({R.id.tvBack})
