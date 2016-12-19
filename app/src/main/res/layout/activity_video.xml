@@ -33,6 +33,21 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     app:uvv_scalable="true" />
+
+                <RelativeLayout
+                    android:id="@+id/platLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_cover_video"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/ivCover"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_video_play" />
+                </RelativeLayout>
+
             </FrameLayout>
 
             <LinearLayout

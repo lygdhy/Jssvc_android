@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
+
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.BookAccessAdapter;
 import org.jssvc.lib.base.BaseFragment;

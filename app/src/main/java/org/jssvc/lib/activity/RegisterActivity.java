@@ -82,7 +82,9 @@ public class RegisterActivity extends BaseActivity {
         String errorMsg = HtmlParseUtils.getErrMsgOnLogin(s);
         if (TextUtils.isEmpty(errorMsg)) {
             // 身份验证成功
-            startActivity(new Intent(context, ResetPwdActivity.class));
+            Intent intent = new Intent(context, ResetPwdActivity.class);
+            intent.putExtra("onlyReset", true);
+            startActivity(intent);
         } else {
             // 有错误提示
             showToast(errorMsg);

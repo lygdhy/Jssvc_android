@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rLayout"
+        style="@style/ActionBar_Whole_Style_1"
+        android:layout_alignParentTop="true">
+
+        <TextView
+            android:id="@+id/tvBack"
+            style="@style/ActionBar_Left_Style_1" />
+
+        <TextView
+            style="@style/ActionBar_Title_Style_1"
+            android:text="分享APP" />
+
+        <TextView
+            android:id="@+id/tvShare"
+            style="@style/ActionBar_Right_Style_1"
+            android:drawableLeft="@drawable/icon_share" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rLayout"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:src="@drawable/app_qr" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="面对面 · 分享知识 · 收获快乐"
+            android:textColor="@color/ui_text_tip"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/content_bottom"
+        android:scaleType="fitXY" />
+
+</RelativeLayout>

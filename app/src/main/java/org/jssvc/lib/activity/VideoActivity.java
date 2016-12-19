@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -51,6 +52,11 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
     UniversalVideoView mVideoView;
     @BindView(R.id.media_controller)
     UniversalMediaController mMediaController;
+
+    @BindView(R.id.platLayout)
+    RelativeLayout platLayout;
+    @BindView(R.id.ivCover)
+    ImageView ivCover;
 
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
@@ -97,9 +103,22 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
         //TabLayout加载viewpager
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(1);
+    }
 
+    @OnClick({R.id.tvBack, R.id.ivCover})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tvBack:
+                finish();
+                break;
+            case R.id.ivCover:
+                initPlayVideo();
+                break;
+        }
+    }
 
-        // 关于视频
+    // 初始化视频
+    private void initPlayVideo() {
         mVideoView.setMediaController(mMediaController);
         setVideoAreaSize();
         mVideoView.setVideoViewCallback(this);
@@ -131,17 +150,9 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
         }
     }
 
-    @OnClick({R.id.tvBack})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tvBack:
-                finish();
-                break;
-        }
-    }
-
     // 开始播放
     private void startPlayVideo() {
+        platLayout.setVisibility(View.GONE);
         if (mSeekPosition > 0) {
             mVideoView.seekTo(mSeekPosition);
         }

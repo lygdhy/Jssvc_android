@@ -88,22 +88,23 @@ public class HtmlParseUtils {
         Document doc = Jsoup.parse(result);
         doc.setBaseUri(HttpUrlParams.BASE_LIB_URL);
         Elements links = doc.select("table").select("tr");
+        if (links.size() > 1) {
+            for (int i = 1; i < links.size(); i++) {
+                BookReadingBean book = new BookReadingBean();
+                Elements els = links.get(i).select("td");
 
-        for (int i = 1; i < links.size(); i++) {
-            BookReadingBean book = new BookReadingBean();
-            Elements els = links.get(i).select("td");
+                book.setBarCode(els.get(0).text());// barCode
+                book.setBookName(els.get(1).text());// 名称+作者
+                book.setBorrowDate(els.get(2).text());
+                book.setReturnDate(els.get(3).select("font").text());
+                book.setTimes(els.get(4).text());
+                book.setPlace(els.get(5).text());
 
-            book.setBarCode(els.get(0).text());// barCode
-            book.setBookName(els.get(1).text());// 名称+作者
-            book.setBorrowDate(els.get(2).text());
-            book.setReturnDate(els.get(3).select("font").text());
-            book.setTimes(els.get(4).text());
-            book.setPlace(els.get(5).text());
+                Elements urls = els.get(1).select("a[href]");
+                book.setDetialUrl(urls.get(0).attr("abs:href"));
 
-            Elements urls = els.get(1).select("a[href]");
-            book.setDetialUrl(urls.get(0).attr("abs:href"));
-
-            bookList.add(book);
+                bookList.add(book);
+            }
         }
 
         return bookList;
@@ -116,21 +117,23 @@ public class HtmlParseUtils {
         Document doc = Jsoup.parse(result);
         doc.setBaseUri(HttpUrlParams.BASE_LIB_URL);
         Elements links = doc.select("table").select("tr");
-        for (int i = 1; i < links.size(); i++) {
-            BookReadingBean book = new BookReadingBean();
-            Elements els = links.get(i).select("td");
+        if (links.size() > 1) {
+            for (int i = 1; i < links.size(); i++) {
+                BookReadingBean book = new BookReadingBean();
+                Elements els = links.get(i).select("td");
 
-            book.setBarCode(els.get(1).text());// barCode
-            book.setBookName(els.get(2).text());// 名称
-            book.setBookAuthor(els.get(3).text());// 作者
-            book.setBorrowDate(els.get(4).text());
-            book.setReturnDate(els.get(5).text());
-            book.setPlace(els.get(6).text());
+                book.setBarCode(els.get(1).text());// barCode
+                book.setBookName(els.get(2).text());// 名称
+                book.setBookAuthor(els.get(3).text());// 作者
+                book.setBorrowDate(els.get(4).text());
+                book.setReturnDate(els.get(5).text());
+                book.setPlace(els.get(6).text());
 
-            Elements urls = els.get(2).select("a[href]");
-            book.setDetialUrl(urls.get(0).attr("abs:href"));
+                Elements urls = els.get(2).select("a[href]");
+                book.setDetialUrl(urls.get(0).attr("abs:href"));
 
-            bookList.add(book);
+                bookList.add(book);
+            }
         }
         return bookList;
     }
