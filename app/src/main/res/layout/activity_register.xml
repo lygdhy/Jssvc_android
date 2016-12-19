@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:lineSpacingExtra="10dp"
-                android:text="您尚未完成身份认证，请输入您的姓名进行认证。\n如果认证失败，您将无法使用掌上图书馆功能。"
+                android:text="您尚未完成身份认证，请输入您的姓名进行认证。\n如果认证失败，您将无法使用掌上图书馆定制功能。"
                 android:textColor="@color/ui_text_body"
                 android:textSize="14sp" />
 

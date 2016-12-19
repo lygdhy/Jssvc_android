@@ -43,6 +43,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/tvPwdTip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -50,6 +51,19 @@
                 android:text="为了您的账号安全，请修改登陆密码。"
                 android:textColor="@color/ui_text_body"
                 android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/edtOldPwd"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:background="#fff"
+                android:hint="请输入旧密码"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/ui_text_tip"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/edtPwd"

@@ -75,7 +75,7 @@ public class SettingActivity extends BaseActivity {
         setCurrentRubbish();
         autoUpdateCheck();
 
-//        rlPush.setVisibility(View.GONE);
+        rlPush.setVisibility(View.GONE);
     }
 
     @Override
@@ -127,23 +127,20 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.rlPwd:
                 // 修改密码
-                startActivity(new Intent(context, ResetPwdActivity.class));
+                Intent intent = new Intent(context, ResetPwdActivity.class);
+                intent.putExtra("onlyReset", false);
+                startActivity(intent);
                 break;
             case R.id.rlShare:
                 // 分享APP
-                Intent share_intent = new Intent();
-                share_intent.setAction(Intent.ACTION_SEND);//设置分享行为
-                share_intent.setType("text/plain");//设置分享内容的类型
-                share_intent.putExtra(Intent.EXTRA_SUBJECT, "掌上图书馆+");//添加分享内容标题
-                share_intent.putExtra(Intent.EXTRA_TEXT, "掌上图书馆+下载地址 https://www.pgyer.com/jssvclib2");//添加分享内容
-                share_intent = Intent.createChooser(share_intent, "分享");
-                startActivity(share_intent);
+                startActivity(new Intent(context, ShareActivity.class));
                 break;
             case R.id.btnExit:
                 // 注销
                 if (AccountPref.isLogon(context)) {
                     AccountPref.removeLogonAccoundPwd(context);
                     btnExit.setVisibility(View.GONE);
+                    rlPwd.setVisibility(View.GONE);
                     // 账号统计
                     MobclickAgent.onProfileSignOff();
                 }

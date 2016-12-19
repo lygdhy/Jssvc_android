@@ -34,6 +34,13 @@ public class ResetPwdActivity extends BaseActivity {
     @BindView(R.id.btnSubmit)
     Button btnSubmit;
 
+    @BindView(R.id.tvPwdTip)
+    TextView tvPwdTip;
+    @BindView(R.id.edtOldPwd)
+    EditText edtOldPwd;
+
+    boolean onlyReset;// 仅重置密码功能
+
     @Override
     protected int getContentViewId() {
         return R.layout.activity_reset_pwd;
@@ -41,8 +48,20 @@ public class ResetPwdActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        onlyReset = getIntent().getBooleanExtra("onlyReset", false);
+
 //        AccountPref.getLogonAccoundNumber(context)
         tvCurrentUser.setText("当前帐号为" + AccountPref.getLogonAccoundNumber(context));
+
+        if (onlyReset) {
+            // 仅重置密码
+            tvPwdTip.setVisibility(View.VISIBLE);
+            edtOldPwd.setVisibility(View.GONE);
+        } else {
+            // 要求输入旧密码才可以操作
+            tvPwdTip.setVisibility(View.GONE);
+            edtOldPwd.setVisibility(View.VISIBLE);
+        }
     }
 
     @OnClick({R.id.tvBack, R.id.btnSubmit})
@@ -54,35 +73,57 @@ public class ResetPwdActivity extends BaseActivity {
             case R.id.btnSubmit:
                 // 提交请求
                 String newpwd = edtPwd.getText().toString().trim();
+                String newoldpwd = edtOldPwd.getText().toString().trim();
+                String localpwd = AccountPref.getLogonAccoundPwd(context);
+
                 if (!TextUtils.isEmpty(newpwd)) {
-                    showProgressDialog("正在提交...");
-
-                    OkGo.post(HttpUrlParams.URL_LIB_CHANGE_PWD)
-                            .tag(this)
-                            .params("old_passwd", AccountPref.getLogonAccoundPwd(context))
-                            .params("new_passwd", newpwd)
-                            .params("chk_passwd", newpwd)
-                            .params("submit1", "%E7%A1%AE%E5%AE%9A")
-                            .execute(new StringCallback() {
-                                @Override
-                                public void onSuccess(String s, Call call, Response response) {
-                                    dissmissProgressDialog();
-                                    // s 即为所需要的结果
-                                    parseHtml(s);
-                                }
-
-                                @Override
-                                public void onError(Call call, Response response, Exception e) {
-                                    super.onError(call, response, e);
-                                    dissmissProgressDialog();
-                                    dealNetError(e);
-                                }
-
-                            });
+                    if (onlyReset) {
+                        go2Reset(newpwd);
+                    } else {
+                        if (TextUtils.isEmpty(newoldpwd)) {
+                            showToast("旧密码不能为空！");
+                        } else {
+                            if (newoldpwd.equals(localpwd)) {
+                                go2Reset(newpwd);
+                            } else {
+                                showToast("旧密码不符");
+                            }
+                        }
+                    }
                 }
                 break;
         }
     }
+
+
+    // 前往重置密码
+    private void go2Reset(String newpwd) {
+        showProgressDialog("正在提交...");
+
+        OkGo.post(HttpUrlParams.URL_LIB_CHANGE_PWD)
+                .tag(this)
+                .params("old_passwd", AccountPref.getLogonAccoundPwd(context))
+                .params("new_passwd", newpwd)
+                .params("chk_passwd", newpwd)
+                .params("submit1", "%E7%A1%AE%E5%AE%9A")
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        dissmissProgressDialog();
+                        // s 即为所需要的结果
+                        parseHtml(s);
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        dissmissProgressDialog();
+                        dealNetError(e);
+                    }
+
+                });
+    }
+
 
     // 解析网页
     private void parseHtml(String s) {
