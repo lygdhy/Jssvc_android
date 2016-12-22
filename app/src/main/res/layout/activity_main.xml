@@ -149,7 +149,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/btnCardInfo"
+                    android:id="@+id/btnBookShelf"
                     style="@style/home_menu_block"
                     android:layout_weight="1"
                     android:background="@drawable/bg_selector_menu_user"
@@ -159,8 +159,8 @@
                     <TextView
                         style="@style/home_menu_text"
                         android:drawablePadding="5dp"
-                        android:drawableTop="@drawable/icon_menu_mine"
-                        android:text="证件信息" />
+                        android:drawableTop="@drawable/icon_collect"
+                        android:text="我的书架" />
                 </LinearLayout>
 
                 <LinearLayout

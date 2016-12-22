@@ -7,10 +7,13 @@ import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.mylhyl.acp.Acp;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
@@ -21,14 +24,19 @@ import com.umeng.analytics.MobclickAgent;
 
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
+import org.jssvc.lib.bean.User;
 import org.jssvc.lib.data.AccountPref;
+import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.DataCleanManager;
+import org.jssvc.lib.utils.HtmlParseUtils;
 import org.jssvc.lib.view.CustomDialog;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Response;
 
 import static com.pgyersdk.update.UpdateManagerListener.getAppBeanFromString;
 import static com.pgyersdk.update.UpdateManagerListener.startDownloadTask;
@@ -51,6 +59,12 @@ public class SettingActivity extends BaseActivity {
 
     @BindView(R.id.rlPush)
     RelativeLayout rlPush;
+    @BindView(R.id.rlMine)
+    RelativeLayout rlMine;
+    @BindView(R.id.tvUserName)
+    TextView tvUserName;
+    @BindView(R.id.ivMine)
+    ImageView ivMine;
     @BindView(R.id.rlPwd)
     RelativeLayout rlPwd;
     @BindView(R.id.rlShare)
@@ -87,13 +101,27 @@ public class SettingActivity extends BaseActivity {
             btnExit.setText("注销" + AccountPref.getLogonAccoundNumber(context));
 
             rlPwd.setVisibility(View.VISIBLE);
+
+            loadUserInfo();
         } else {
             btnExit.setVisibility(View.GONE);
             rlPwd.setVisibility(View.GONE);
+
+            tvUserName.setText("个人中心");
+            ivMine.getDrawable().setLevel(0);
         }
     }
 
-    @OnClick({R.id.tvBack, R.id.rlCheck, R.id.rlClear, R.id.rlFeedback, R.id.rlAbout, R.id.btnExit, R.id.rlPwd, R.id.rlShare})
+    private void loadUserInfo() {
+        User user = AccountPref.getLogonUser(context);
+        if (user == null) {
+            getUserInfoByNet();
+        } else {
+            loadUserInfo2UI(user);
+        }
+    }
+
+    @OnClick({R.id.tvBack, R.id.rlCheck, R.id.rlClear, R.id.rlFeedback, R.id.rlAbout, R.id.btnExit, R.id.rlPwd, R.id.rlMine, R.id.rlShare})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvBack:
@@ -131,6 +159,14 @@ public class SettingActivity extends BaseActivity {
                 intent.putExtra("onlyReset", false);
                 startActivity(intent);
                 break;
+            case R.id.rlMine:
+                // 证件信息
+                if (AccountPref.isLogon(context)) {
+                    startActivity(new Intent(context, CardInfoActivity.class));
+                } else {
+                    startActivity(new Intent(context, LoginActivity.class));
+                }
+                break;
             case R.id.rlShare:
                 // 分享APP
                 startActivity(new Intent(context, ShareActivity.class));
@@ -139,12 +175,65 @@ public class SettingActivity extends BaseActivity {
                 // 注销
                 if (AccountPref.isLogon(context)) {
                     AccountPref.removeLogonAccoundPwd(context);
+                    AccountPref.removeLogonUser(context);
                     btnExit.setVisibility(View.GONE);
                     rlPwd.setVisibility(View.GONE);
+
+                    tvUserName.setText("个人中心");
+                    ivMine.getDrawable().setLevel(0);
+
                     // 账号统计
                     MobclickAgent.onProfileSignOff();
                 }
                 break;
+        }
+    }
+
+    // 获取个人信息
+    private void getUserInfoByNet() {
+        OkGo.post(HttpUrlParams.URL_LIB_ACCOUND)
+                .tag(this)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        // s 即为所需要的结果
+                        parseHtml(s);
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        dealNetError(e);
+                    }
+                });
+    }
+
+    // 解析网页
+    private void parseHtml(String s) {
+        User user = HtmlParseUtils.getUserInfo(s);
+        if (user != null) {
+            AccountPref.saveLogonUser(context, user);
+            loadUserInfo2UI(user);
+        } else {
+            showToast("解析失败");
+        }
+    }
+
+    // 加载数据到页面
+    private void loadUserInfo2UI(User user) {
+        tvUserName.setText(user.getUsername());
+
+        // 解析借阅次数
+        String timestr = user.getReadTimes().replaceAll("册次", "");
+        try {
+            int times = Integer.parseInt(timestr);
+            int level = CardInfoActivity.getLevelByTimes(times);
+            if (user.getSex().equals("男")) {
+                ivMine.getDrawable().setLevel(level);
+            } else {
+                ivMine.getDrawable().setLevel(level + 10);
+            }
+        } catch (Exception e) {
         }
     }
 

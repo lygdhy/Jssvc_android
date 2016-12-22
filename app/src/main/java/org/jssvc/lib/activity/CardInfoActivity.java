@@ -32,8 +32,10 @@ public class CardInfoActivity extends BaseActivity {
     ImageView ivLevel;
     @BindView(R.id.tvName)
     TextView tvName;
-    @BindView(R.id.tvLevel)
-    TextView tvLevel;
+    @BindView(R.id.tvLevel1)
+    TextView tvLevel1;
+    @BindView(R.id.tvLevel2)
+    TextView tvLevel2;
     @BindView(R.id.tvUserDepart)
     TextView tvUserDepart;
     @BindView(R.id.tvUserNum)
@@ -129,7 +131,8 @@ public class CardInfoActivity extends BaseActivity {
                 int times = Integer.parseInt(timestr);
                 setLevelHead(user.getSex(), times);
             } catch (Exception e) {
-                tvLevel.setText("共借阅" + user.getReadTimes());
+                tvLevel1.setText("" + user.getReadTimes());
+                tvLevel2.setText("null");
             }
         } else {
             showToast("解析失败");
@@ -174,11 +177,12 @@ public class CardInfoActivity extends BaseActivity {
         } else {
             ivLevel.getDrawable().setLevel(level + 10);
         }
-        tvLevel.setText("您累计借书达" + number + "册次\n获得\"" + levelname + "\"称号！"); // 等级信息
+        tvLevel1.setText("" + number); // 等级信息
+        tvLevel2.setText("\"" + levelname + "\""); // 等级信息
     }
 
     // 获取读者等级
-    private int getLevelByTimes(int number) {
+    public static int getLevelByTimes(int number) {
         int level = 1; // 对应的读者等级
         if (number == 0)
             level = 1;
