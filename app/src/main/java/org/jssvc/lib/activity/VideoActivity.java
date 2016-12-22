@@ -103,6 +103,11 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
         //TabLayout加载viewpager
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(1);
+
+        // 初始化
+        mVideoView.setMediaController(mMediaController);
+        setVideoAreaSize();
+        mVideoView.setVideoViewCallback(this);
     }
 
     @OnClick({R.id.tvBack, R.id.ivCover})
@@ -119,9 +124,6 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
 
     // 初始化视频
     private void initPlayVideo() {
-        mVideoView.setMediaController(mMediaController);
-        setVideoAreaSize();
-        mVideoView.setVideoViewCallback(this);
         if (NetworkUtils.isConnected(context)) {
             if (NetworkUtils.isWifiConnected(context)) {
                 showToast("已连接WIFI，请放心观看！");
