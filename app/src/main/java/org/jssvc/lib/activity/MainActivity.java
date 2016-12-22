@@ -30,8 +30,8 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.convenientBanner)
     ConvenientBanner convenientBanner;
-    @BindView(R.id.btnCardInfo)
-    LinearLayout btnCardInfo;
+    @BindView(R.id.btnBookShelf)
+    LinearLayout btnBookShelf;
     @BindView(R.id.btnCurentBorrow)
     LinearLayout btnCurentBorrow;
     @BindView(R.id.btnHistoryBorrow)
@@ -61,13 +61,13 @@ public class MainActivity extends BaseActivity {
         showAd();
     }
 
-    @OnClick({R.id.btnCardInfo, R.id.btnCurentBorrow, R.id.btnHistoryBorrow, R.id.btnBookSearch, R.id.btnMsg, R.id.btnHelp, R.id.btnVideo, R.id.btnSetting})
+    @OnClick({R.id.btnBookShelf, R.id.btnCurentBorrow, R.id.btnHistoryBorrow, R.id.btnBookSearch, R.id.btnMsg, R.id.btnHelp, R.id.btnVideo, R.id.btnSetting})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btnCardInfo:
-                // 证件信息
+            case R.id.btnBookShelf:
+                // 我的书架
                 if (AccountPref.isLogon(context)) {
-                    startActivity(new Intent(context, CardInfoActivity.class));
+                    startActivity(new Intent(context, BookShelfActivity.class));
                 } else {
                     startActivity(new Intent(context, LoginActivity.class));
                 }

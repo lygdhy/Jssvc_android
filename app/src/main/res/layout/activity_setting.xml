@@ -15,164 +15,204 @@
             android:text="设置" />
     </RelativeLayout>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/rlPush"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_selector_while">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                style="@style/list_menu_title"
-                android:layout_margin="10dp"
-                android:drawableLeft="@drawable/icon_menu_push"
-                android:text="消息通知" />
-
-            <ImageView
-                android:id="@+id/ivPushState"
-                android:layout_width="60dp"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/icon_switch_on" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rlPwd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0.5dp"
-            android:background="@drawable/bg_selector_while"
-            android:padding="10dp">
-
-            <TextView
-                style="@style/list_menu_title"
-                android:drawableLeft="@drawable/icon_menu_pwd"
-                android:text="修改密码" />
-
-            <TextView
-                style="@style/list_menu_value"
-                android:drawableRight="@drawable/icon_goto" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rlShare"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0.5dp"
-            android:background="@drawable/bg_selector_while"
-            android:padding="10dp">
-
-            <TextView
-                style="@style/list_menu_title"
-                android:drawableLeft="@drawable/icon_menu_share"
-                android:text="分享APP" />
-
-            <TextView
-                style="@style/list_menu_value"
-                android:drawableRight="@drawable/icon_goto" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rlCheck"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_selector_while"
-            android:padding="10dp">
-
-            <TextView
-                android:id="@+id/textView4"
-                style="@style/list_menu_title"
-                android:drawableLeft="@drawable/icon_menu_update"
-                android:text="版本升级" />
-
-            <TextView
-                android:id="@+id/tvCheck"
-                style="@style/list_menu_value"
-                android:drawableRight="@drawable/icon_goto" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rlClear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0.5dp"
-            android:background="@drawable/bg_selector_while"
-            android:padding="10dp">
-
-            <TextView
-                style="@style/list_menu_title"
-                android:drawableLeft="@drawable/icon_menu_cache"
-                android:text="清除缓存" />
-
-            <ProgressBar
-                android:id="@+id/barClear"
-                style="@android:style/Widget.ProgressBar.Small"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp" />
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvClear"
-                style="@style/list_menu_value"
-                android:drawableRight="@drawable/icon_goto"
-                android:text="0.0M" />
-        </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rlMine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_selector_while">
 
-        <RelativeLayout
-            android:id="@+id/rlFeedback"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0.5dp"
-            android:background="@drawable/bg_selector_while"
-            android:padding="10dp">
+                    <TextView
+                        android:id="@+id/tvUserName"
+                        style="@style/list_menu_title"
+                        android:layout_margin="10dp"
+                        android:drawableLeft="@drawable/icon_menu_mine_black"
+                        android:text="个人中心" />
 
-            <TextView
-                style="@style/list_menu_title"
-                android:drawableLeft="@drawable/icon_menu_feedback"
-                android:text="意见反馈" />
+                    <ImageView
+                        android:id="@+id/ivMine"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="10dp"
+                        android:layout_toLeftOf="@+id/tvmine"
+                        android:src="@drawable/level_list" />
 
-            <TextView
-                style="@style/list_menu_value"
-                android:drawableRight="@drawable/icon_goto" />
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tvmine"
+                        style="@style/list_menu_value"
+                        android:layout_marginRight="10dp"
+                        android:drawableRight="@drawable/icon_goto" />
+                </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/rlAbout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0.5dp"
-            android:background="@drawable/bg_selector_while"
-            android:padding="10dp">
+                <RelativeLayout
+                    android:id="@+id/rlPwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0.5dp"
+                    android:background="@drawable/bg_selector_while"
+                    android:padding="10dp">
 
-            <TextView
-                style="@style/list_menu_title"
-                android:drawableLeft="@drawable/icon_menu_about"
-                android:text="关于我们" />
+                    <TextView
+                        style="@style/list_menu_title"
+                        android:drawableLeft="@drawable/icon_menu_pwd"
+                        android:text="修改密码" />
 
-            <TextView
-                style="@style/list_menu_value"
-                android:drawableRight="@drawable/icon_goto" />
-        </RelativeLayout>
+                    <TextView
+                        style="@style/list_menu_value"
+                        android:drawableRight="@drawable/icon_goto" />
+                </RelativeLayout>
 
-    </LinearLayout>
+                <RelativeLayout
+                    android:id="@+id/rlShare"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_selector_while"
+                    android:padding="10dp">
 
-    <Button
-        android:id="@+id/btnExit"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_margin="20dp"
-        android:background="@drawable/bg_selector_red_circle"
-        android:text="退出账号"
-        android:textColor="@color/white"
-        android:textSize="14sp" />
+                    <TextView
+                        style="@style/list_menu_title"
+                        android:drawableLeft="@drawable/icon_menu_share"
+                        android:text="分享APP" />
+
+                    <TextView
+                        style="@style/list_menu_value"
+                        android:drawableRight="@drawable/icon_goto" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlPush"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_selector_while">
+
+                    <TextView
+                        style="@style/list_menu_title"
+                        android:layout_margin="10dp"
+                        android:drawableLeft="@drawable/icon_menu_push"
+                        android:text="消息通知" />
+
+                    <ImageView
+                        android:id="@+id/ivPushState"
+                        android:layout_width="60dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/icon_switch_on" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlCheck"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_selector_while"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        style="@style/list_menu_title"
+                        android:drawableLeft="@drawable/icon_menu_update"
+                        android:text="版本升级" />
+
+                    <TextView
+                        android:id="@+id/tvCheck"
+                        style="@style/list_menu_value"
+                        android:drawableRight="@drawable/icon_goto" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlClear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0.5dp"
+                    android:background="@drawable/bg_selector_while"
+                    android:padding="10dp">
+
+                    <TextView
+                        style="@style/list_menu_title"
+                        android:drawableLeft="@drawable/icon_menu_cache"
+                        android:text="清除缓存" />
+
+                    <ProgressBar
+                        android:id="@+id/barClear"
+                        style="@android:style/Widget.ProgressBar.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp" />
+
+                    <TextView
+                        android:id="@+id/tvClear"
+                        style="@style/list_menu_value"
+                        android:drawableRight="@drawable/icon_goto"
+                        android:text="0.0M" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlFeedback"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0.5dp"
+                    android:background="@drawable/bg_selector_while"
+                    android:padding="10dp">
+
+                    <TextView
+                        style="@style/list_menu_title"
+                        android:drawableLeft="@drawable/icon_menu_feedback"
+                        android:text="意见反馈" />
+
+                    <TextView
+                        style="@style/list_menu_value"
+                        android:drawableRight="@drawable/icon_goto" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlAbout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0.5dp"
+                    android:background="@drawable/bg_selector_while"
+                    android:padding="10dp">
+
+                    <TextView
+                        style="@style/list_menu_title"
+                        android:drawableLeft="@drawable/icon_menu_about"
+                        android:text="关于我们" />
+
+                    <TextView
+                        style="@style/list_menu_value"
+                        android:drawableRight="@drawable/icon_goto" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnExit"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/bg_selector_red_circle"
+                android:text="退出账号"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
