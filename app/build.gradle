@@ -16,7 +16,7 @@ android {
         multiDexEnabled true
 
         ndk {
-            abiFilters "armeabi","x86"
+            abiFilters "armeabi", "x86"
         }
     }
     buildTypes {

@@ -21,6 +21,8 @@ public class HttpUrlParams {
 
     public static final String URL_LIB_BOOK_SEARCH = BASE_LIB_URL + "opac/openlink.php";// 图书搜索
 
+    public static final String URL_LIB_BOOK_SHELF = BASE_LIB_URL + "reader/book_shelf_man.php";// 我的书架
+
     // 自有服务
     public static final String BASE_ORG_URL = "http://www.jssvc.org/";
 
