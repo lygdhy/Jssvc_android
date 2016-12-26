@@ -212,7 +212,7 @@ public class SettingActivity extends BaseActivity {
     // 解析网页
     private void parseHtml(String s) {
         User user = HtmlParseUtils.getUserInfo(s);
-        if (user != null) {
+        if (!TextUtils.isEmpty(user.getUserid())) {
             AccountPref.saveLogonUser(context, user);
             loadUserInfo2UI(user);
         } else {
@@ -222,19 +222,21 @@ public class SettingActivity extends BaseActivity {
 
     // 加载数据到页面
     private void loadUserInfo2UI(User user) {
-        tvUserName.setText(user.getUsername());
+        tvUserName.setText(user.getUsername() + "");
 
         // 解析借阅次数
-        String timestr = user.getReadTimes().replaceAll("册次", "");
-        try {
-            int times = Integer.parseInt(timestr);
-            int level = CardInfoActivity.getLevelByTimes(times);
-            if (user.getSex().equals("男")) {
-                ivMine.getDrawable().setLevel(level);
-            } else {
-                ivMine.getDrawable().setLevel(level + 10);
+        if (!TextUtils.isEmpty(user.getReadTimes())) {
+            String timestr = user.getReadTimes().replaceAll("册次", "");
+            try {
+                int times = Integer.parseInt(timestr);
+                int level = CardInfoActivity.getLevelByTimes(times);
+                if (user.getSex().equals("男")) {
+                    ivMine.getDrawable().setLevel(level);
+                } else {
+                    ivMine.getDrawable().setLevel(level + 10);
+                }
+            } catch (Exception e) {
             }
-        } catch (Exception e) {
         }
     }
 

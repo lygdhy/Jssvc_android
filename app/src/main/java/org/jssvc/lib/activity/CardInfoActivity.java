@@ -1,6 +1,7 @@
 package org.jssvc.lib.activity;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -108,7 +109,7 @@ public class CardInfoActivity extends BaseActivity {
     // 解析网页
     private void parseHtml(String s) {
         User user = HtmlParseUtils.getUserInfo(s);
-        if (user != null) {
+        if (!TextUtils.isEmpty(user.getUserid())) {
             AccountPref.saveLogonUser(context, user);
 
             scrollView.setVisibility(View.VISIBLE);
@@ -126,13 +127,15 @@ public class CardInfoActivity extends BaseActivity {
             tvArrearage.setText(user.getDebt());
 
             // 解析借阅次数
-            String timestr = user.getReadTimes().replaceAll("册次", "");
-            try {
-                int times = Integer.parseInt(timestr);
-                setLevelHead(user.getSex(), times);
-            } catch (Exception e) {
-                tvLevel1.setText("" + user.getReadTimes());
-                tvLevel2.setText("null");
+            if (!TextUtils.isEmpty(user.getReadTimes())) {
+                String timestr = user.getReadTimes().replaceAll("册次", "");
+                try {
+                    int times = Integer.parseInt(timestr);
+                    setLevelHead(user.getSex(), times);
+                } catch (Exception e) {
+                    tvLevel1.setText("" + user.getReadTimes());
+                    tvLevel2.setText("null");
+                }
             }
         } else {
             showToast("解析失败");
