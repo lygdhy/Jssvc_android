@@ -10,6 +10,8 @@ import org.jssvc.lib.bean.BookAccessBean;
 import org.jssvc.lib.bean.BookDetailsBean;
 import org.jssvc.lib.bean.BookReadingBean;
 import org.jssvc.lib.bean.BookSearchBean;
+import org.jssvc.lib.bean.BookShelfBean;
+import org.jssvc.lib.bean.BookShelfListBean;
 import org.jssvc.lib.bean.User;
 import org.jssvc.lib.data.HttpUrlParams;
 
@@ -244,6 +246,58 @@ public class HtmlParseUtils {
             book.setState(els.get(5).text());
 
             bookList.add(book);
+        }
+        return bookList;
+    }
+
+    // 我的书架===========================================================================
+    // 书架列表
+    public static List<BookShelfBean> getBookShelfList(String result) {
+        List<BookShelfBean> shelfList = new ArrayList<>();
+        Document doc = Jsoup.parse(result);
+        doc.setBaseUri(HttpUrlParams.BASE_LIB_URL + "reader/");
+        Elements links = doc.select("table").select("tr");
+        if (links.size() > 1) {
+            for (int i = 1; i < links.size(); i++) {
+                BookShelfBean shelf = new BookShelfBean();
+                Elements els = links.get(i).select("td");
+                if (els.size() == 6) {
+                    Elements urls = els.get(0).select("a[href]");
+                    shelf.setUrl(urls.get(0).attr("abs:href") + "");
+
+                    shelf.setName(els.get(0).text() + "");
+                    shelf.setCount(els.get(1).text() + "");
+                    shelf.setDate(els.get(2).text() + "");
+                    shelf.setRemark(els.get(3).text() + "");
+
+                    shelfList.add(shelf);
+                }
+            }
+        }
+        return shelfList;
+    }
+
+    // 书架里的图书
+    public static List<BookShelfListBean> getBookOnShelfList(String result) {
+        List<BookShelfListBean> bookList = new ArrayList<>();
+        Document doc = Jsoup.parse(result);
+        doc.setBaseUri(HttpUrlParams.BASE_LIB_URL);
+        Elements links = doc.select("table").select("tr");
+        if (links.size() > 1) {
+            for (int i = 1; i < links.size(); i++) {
+                BookShelfListBean book = new BookShelfListBean();
+                Elements els = links.get(i).select("td");
+
+                Elements urls = els.get(1).select("a[href]");
+                book.setUrl(urls.get(0).attr("abs:href") + "");
+
+                book.setName(els.get(1).text() + "");
+                book.setAuthor(els.get(2).text() + "");
+                book.setPublisher(els.get(3).text() + "");
+                book.setCode(els.get(5).text() + "");
+
+                bookList.add(book);
+            }
         }
         return bookList;
     }
