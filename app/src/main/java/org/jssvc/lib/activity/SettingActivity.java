@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -114,7 +115,7 @@ public class SettingActivity extends BaseActivity {
 
     private void loadUserInfo() {
         User user = AccountPref.getLogonUser(context);
-        if (user == null) {
+        if (TextUtils.isEmpty(user.getUserid())) {
             getUserInfoByNet();
         } else {
             loadUserInfo2UI(user);
