@@ -32,19 +32,9 @@
             android:name="UMENG_APPKEY"
             android:value="56cfc6bd67e58e91c1000cd0" />
         <!-- 友盟渠道 -->
-        <!--
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="yingyongbao" />
-        -->
-        <!--
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="360" />
-        -->
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="pugongying" />
+            android:value="${UMENG_CHANNEL_VALUE}" />
         <!-- 友盟推送 -->
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"

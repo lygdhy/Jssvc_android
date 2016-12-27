@@ -14,21 +14,51 @@ android {
 
         // Enabling multidex support.
         multiDexEnabled true
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "jssvcorg"]
 
         ndk {
             abiFilters "armeabi", "x86"
         }
     }
+
+    // 添加签名配置(需要定义在buildTypes前面)
+    signingConfigs {
+        debug {}
+
+        // release签名指令 gradlew assembleRelease
+        release {
+            storeFile file("keystore_jssvc_org.jks")
+            storePassword "dhy910710"
+            keyAlias "pro_jssvc_library"
+            keyPassword "dhy910710"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.release
         }
     }
+
+    // 渠道配置
+    productFlavors {
+        pugongying {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "pugongying"]
+            // resValue("string", "app_name", "图书馆蒲公英般")
+        }
+        qihu360 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "qihu360"]
+        }
+        yingyongbao {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "yingyongbao"]
+        }
+    }
+
     dexOptions {
         javaMaxHeapSize "4g"
-    }
-    productFlavors {
     }
 }
 
