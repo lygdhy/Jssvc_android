@@ -54,9 +54,11 @@ public class HtmlParseUtils {
         List<String> stringList = new ArrayList<>();
         Document doc = Jsoup.parse(result);
         Elements links = doc.select("TD");
-        for (Element link : links) {
-            String linkText = link.ownText() + "";
-            stringList.add(linkText.toString());
+        if (links != null) {
+            for (Element link : links) {
+                String linkText = link.ownText() + "";
+                stringList.add(linkText.toString());
+            }
         }
         return stringList;
     }
@@ -90,7 +92,7 @@ public class HtmlParseUtils {
         Document doc = Jsoup.parse(result);
         doc.setBaseUri(HttpUrlParams.BASE_LIB_URL);
         Elements links = doc.select("table").select("tr");
-        if (links.size() > 1) {
+        if (links != null && links.size() > 1) {
             for (int i = 1; i < links.size(); i++) {
                 BookReadingBean book = new BookReadingBean();
                 Elements els = links.get(i).select("td");
@@ -119,7 +121,7 @@ public class HtmlParseUtils {
         Document doc = Jsoup.parse(result);
         doc.setBaseUri(HttpUrlParams.BASE_LIB_URL);
         Elements links = doc.select("table").select("tr");
-        if (links.size() > 1) {
+        if (links != null && links.size() > 1) {
             for (int i = 1; i < links.size(); i++) {
                 BookReadingBean book = new BookReadingBean();
                 Elements els = links.get(i).select("td");
@@ -161,39 +163,41 @@ public class HtmlParseUtils {
         Document doc = Jsoup.parse(result);
         doc.setBaseUri(HttpUrlParams.BASE_LIB_URL + "opac/");
         Elements links = doc.getElementsByClass("list_books");
-        for (Element link : links) {
-            BookSearchBean book = new BookSearchBean();
-            Elements codes = link.select("h3");// CODE
-            book.setCode(codes.get(0).ownText());
+        if (links != null) {
+            for (Element link : links) {
+                BookSearchBean book = new BookSearchBean();
+                Elements codes = link.select("h3");// CODE
+                book.setCode(codes.get(0).ownText());
 
-            Elements types = link.select("h3>span");// 图书类型
-            book.setType(types.get(0).ownText());
+                Elements types = link.select("h3>span");// 图书类型
+                book.setType(types.get(0).ownText());
 
-            Elements titles = link.select("h3>a");// 书名
-            String namenum = titles.get(0).text();
-            String str[] = namenum.split("\\.");
-            String itemNo = str[0];
-            String name = namenum.substring(itemNo.length() + 1, namenum.length());
-            book.setNo(itemNo);// 提取标号
-            book.setTitle(name);// 提取书名全称
+                Elements titles = link.select("h3>a");// 书名
+                String namenum = titles.get(0).text();
+                String str[] = namenum.split("\\.");
+                String itemNo = str[0];
+                String name = namenum.substring(itemNo.length() + 1, namenum.length());
+                book.setNo(itemNo);// 提取标号
+                book.setTitle(name);// 提取书名全称
 
-            Elements copys = link.select("p>span");// 副本
-            String fuben = copys.get(0).text();
-            String f[] = fuben.split(" ");// 以空格为分割
-            book.setCopy_Total("" + (TextUtils.isEmpty(f[0]) ? "" : f[0]).replaceAll("馆藏复本：", ""));
-            book.setCopy_Remain("" + (TextUtils.isEmpty(f[1]) ? "" : f[1]).replaceAll("可借复本：", ""));
+                Elements copys = link.select("p>span");// 副本
+                String fuben = copys.get(0).text();
+                String f[] = fuben.split(" ");// 以空格为分割
+                book.setCopy_Total("" + (TextUtils.isEmpty(f[0]) ? "" : f[0]).replaceAll("馆藏复本：", ""));
+                book.setCopy_Remain("" + (TextUtils.isEmpty(f[1]) ? "" : f[1]).replaceAll("可借复本：", ""));
 
-            Elements urls = link.select("a[href]");
-            book.setDetialUrl(urls.get(0).attr("abs:href"));
+                Elements urls = link.select("a[href]");
+                book.setDetialUrl(urls.get(0).attr("abs:href"));
 
-            Elements authors = link.select("p");// 作者和出版社
-            authors.select("span").remove();// 移除馆藏信息
-            String linkInnerH = authors.html();
-            String a[] = linkInnerH.split("<br>");
-            book.setAuthor(TextUtils.isEmpty(a[0]) ? "" : a[0]);// 作者
-            book.setPublisher(TextUtils.isEmpty(a[1]) ? "" : a[1]);// 出版社&日期
+                Elements authors = link.select("p");// 作者和出版社
+                authors.select("span").remove();// 移除馆藏信息
+                String linkInnerH = authors.html();
+                String a[] = linkInnerH.split("<br>");
+                book.setAuthor(TextUtils.isEmpty(a[0]) ? "" : a[0]);// 作者
+                book.setPublisher(TextUtils.isEmpty(a[1]) ? "" : a[1]);// 出版社&日期
 
-            bookList.add(book);
+                bookList.add(book);
+            }
         }
         return bookList;
     }
@@ -203,7 +207,7 @@ public class HtmlParseUtils {
         String coverUrl = "";
         Document doc = Jsoup.parse(result);
         Elements links = doc.select("[width=95]");
-        if (links.size() > 0) {
+        if (links != null && links.size() > 0) {
             Elements media = links.get(0).select("[src]");
             coverUrl = media.attr("abs:src");
         }
@@ -216,13 +220,15 @@ public class HtmlParseUtils {
         List<BookDetailsBean> detailList = new ArrayList<>();
         Document doc = Jsoup.parse(result);
         Elements links = doc.getElementsByClass("booklist");
-        for (int i = 0; i < links.size(); i++) {
-            BookDetailsBean item = new BookDetailsBean();
-            item.setKey(links.get(i).select("dt").text());
-            item.setValue(links.get(i).select("dd").text());
+        if (links != null) {
+            for (int i = 0; i < links.size(); i++) {
+                BookDetailsBean item = new BookDetailsBean();
+                item.setKey(links.get(i).select("dt").text());
+                item.setValue(links.get(i).select("dd").text());
 
-            if (!TextUtils.isEmpty(item.getValue())) {
-                detailList.add(item);
+                if (!TextUtils.isEmpty(item.getValue())) {
+                    detailList.add(item);
+                }
             }
         }
         return detailList;
@@ -234,18 +240,20 @@ public class HtmlParseUtils {
         List<BookAccessBean> bookList = new ArrayList<>();
         Document doc = Jsoup.parse(result);
         Elements links = doc.select("table").select("tr");
-        for (int i = 1; i < links.size(); i++) {
-            BookAccessBean book = new BookAccessBean();
-            Elements els = links.get(i).select("td");
+        if (links != null) {
+            for (int i = 1; i < links.size(); i++) {
+                BookAccessBean book = new BookAccessBean();
+                Elements els = links.get(i).select("td");
 
-            book.setTpCode(els.get(0).text());
-            book.setBarCode(els.get(1).text());// barCode
-            book.setCell(els.get(2).text());
-            book.setArea(els.get(3).text());
-            book.setPlace(els.get(4).text());
-            book.setState(els.get(5).text());
+                book.setTpCode(els.get(0).text());
+                book.setBarCode(els.get(1).text());// barCode
+                book.setCell(els.get(2).text());
+                book.setArea(els.get(3).text());
+                book.setPlace(els.get(4).text());
+                book.setState(els.get(5).text());
 
-            bookList.add(book);
+                bookList.add(book);
+            }
         }
         return bookList;
     }
@@ -257,7 +265,7 @@ public class HtmlParseUtils {
         Document doc = Jsoup.parse(result);
         doc.setBaseUri(HttpUrlParams.BASE_LIB_URL + "reader/");
         Elements links = doc.select("table").select("tr");
-        if (links.size() > 1) {
+        if (links != null && links.size() > 1) {
             for (int i = 1; i < links.size(); i++) {
                 BookShelfBean shelf = new BookShelfBean();
                 Elements els = links.get(i).select("td");
@@ -283,7 +291,7 @@ public class HtmlParseUtils {
         Document doc = Jsoup.parse(result);
         doc.setBaseUri(HttpUrlParams.BASE_LIB_URL);
         Elements links = doc.select("table").select("tr");
-        if (links.size() > 1) {
+        if (links != null && links.size() > 1) {
             for (int i = 1; i < links.size(); i++) {
                 BookShelfListBean book = new BookShelfListBean();
                 Elements els = links.get(i).select("td");
