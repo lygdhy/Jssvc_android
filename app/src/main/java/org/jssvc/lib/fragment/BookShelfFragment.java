@@ -19,6 +19,7 @@ import org.jssvc.lib.activity.BookDetailsActivity;
 import org.jssvc.lib.adapter.BookShelfListAdapter;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.BookShelfListBean;
+import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
 import org.jssvc.lib.view.CustomDialog;
 import org.jssvc.lib.view.DividerItemDecoration;
@@ -135,17 +136,58 @@ public class BookShelfFragment extends BaseFragment {
 
             @Override
             public void onRemoveClick(View view, BookShelfListBean item) {
-                // 移除书架
+                // 移除图书
                 // classid
-                showToast("book_shelf = " + item.getBookcode());
-//                if (!TextUtils.isEmpty(item.getUrl())) {
-//                    Intent intent = new Intent(context, BookDetailsActivity.class);
-//                    intent.putExtra("title", item.getName());
-//                    intent.putExtra("url", item.getUrl());
-//                    startActivity(intent);
-//                }
+                String bookcode = item.getBookcode();
+                if (!TextUtils.isEmpty(bookcode)) {
+                    deleteAlertDialog(classid, bookcode);
+                }
             }
         });
+    }
+
+    // 删除书架
+    public void deleteAlertDialog(final String classid, final String bookcode) {
+        CustomDialog.Builder builder = new CustomDialog.Builder(context);
+        builder.setTitle("提示");
+        builder.setMessage("确认要从书架中删除吗?");
+        builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
+            public void onClick(final DialogInterface dialog, int which) {
+                dialog.dismiss();
+
+                removeBook(classid, bookcode);
+            }
+        });
+        builder.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
+    // 移除图书
+    private void removeBook(String classid, String bookcode) {
+        showProgressDialog();
+        OkGo.get(HttpUrlParams.URL_LIB_BOOK_DEL)
+                .params("classid", classid)
+                .params("marc_no", bookcode)
+                .params("time", System.currentTimeMillis())
+                .tag(this)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        dissmissProgressDialog();
+                        showAlertDialog(s);
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        dissmissProgressDialog();
+                        dealNetError(e);
+                    }
+                });
     }
 
     // 删除结果显示

@@ -19,7 +19,7 @@
         <ImageView
             android:id="@+id/tvCollect"
             style="@style/ActionBar_Right_Style_1"
-            android:src="@drawable/icon_collect_off" />
+            android:src="@drawable/icon_collect_on" />
     </RelativeLayout>
 
     <org.jssvc.lib.view.ScrollViewExtend

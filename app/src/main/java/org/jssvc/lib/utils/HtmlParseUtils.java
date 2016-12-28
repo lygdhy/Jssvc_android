@@ -302,6 +302,7 @@ public class HtmlParseUtils {
         Document doc = Jsoup.parse(result);
         doc.setBaseUri(HttpUrlParams.BASE_LIB_URL);
         Elements links = doc.select("table").select("tr");
+        Elements temp = doc.getElementsByAttribute("name");
         if (links != null && links.size() > 1) {
             for (int i = 1; i < links.size(); i++) {
                 BookShelfListBean book = new BookShelfListBean();
@@ -313,9 +314,8 @@ public class HtmlParseUtils {
                 book.setPublisher(els.get(3).text() + "");
                 book.setCode(els.get(5).text() + "");
 
-//                Elements temp = links.get(i).select("[name]");
-//                String value = temp.get(0) + "";
-//                book.setBookcode(value);
+                String value = temp.get(0).attr("name") + "";
+                book.setBookcode(value.replaceAll("del_", ""));
 
                 bookList.add(book);
             }
