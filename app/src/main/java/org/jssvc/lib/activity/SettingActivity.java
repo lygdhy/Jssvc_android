@@ -115,7 +115,7 @@ public class SettingActivity extends BaseActivity {
 
     private void loadUserInfo() {
         User user = AccountPref.getLogonUser(context);
-        if (TextUtils.isEmpty(user.getUserid())) {
+        if (user != null && TextUtils.isEmpty(user.getUserid())) {
             getUserInfoByNet();
         } else {
             loadUserInfo2UI(user);
@@ -212,7 +212,7 @@ public class SettingActivity extends BaseActivity {
     // 解析网页
     private void parseHtml(String s) {
         User user = HtmlParseUtils.getUserInfo(s);
-        if (!TextUtils.isEmpty(user.getUserid())) {
+        if (user != null && !TextUtils.isEmpty(user.getUserid())) {
             AccountPref.saveLogonUser(context, user);
             loadUserInfo2UI(user);
         } else {
