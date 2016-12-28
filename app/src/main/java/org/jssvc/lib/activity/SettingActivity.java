@@ -115,7 +115,7 @@ public class SettingActivity extends BaseActivity {
 
     private void loadUserInfo() {
         User user = AccountPref.getLogonUser(context);
-        if (user != null && TextUtils.isEmpty(user.getUserid())) {
+        if (user == null || TextUtils.isEmpty(user.getUserid())) {
             getUserInfoByNet();
         } else {
             loadUserInfo2UI(user);

@@ -15,7 +15,6 @@ import com.umeng.analytics.MobclickAgent;
 
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.bean.User;
 import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
@@ -115,13 +114,7 @@ public class LoginActivity extends BaseActivity {
             // 账号统计
             MobclickAgent.onProfileSignIn(AccountPref.getLogonType(context).toUpperCase(), AccountPref.getLogonAccoundNumber(context));
             // 登陆成功
-            User user = HtmlParseUtils.getUserInfo(s);
-            if (!TextUtils.isEmpty(user.getUserid())) {
-                AccountPref.saveLogonUser(context, user);
-                finish();
-            } else {
-                showToast("解析失败");
-            }
+            finish();
         } else {
             // 有错误提示
             if (errorMsg.contains("认证失败")) {
