@@ -7,11 +7,21 @@ import java.io.Serializable;
  */
 
 public class BookShelfBean implements Serializable {
+    private String id;
     private String url;
     private String name;
     private String count;
     private String date;
     private String remark;
+    private String deleteurl;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getUrl() {
         return url;
@@ -51,5 +61,13 @@ public class BookShelfBean implements Serializable {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getDeleteurl() {
+        return deleteurl;
+    }
+
+    public void setDeleteurl(String deleteurl) {
+        this.deleteurl = deleteurl;
     }
 }

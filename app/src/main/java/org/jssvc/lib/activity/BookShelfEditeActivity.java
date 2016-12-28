@@ -1,12 +1,12 @@
 package org.jssvc.lib.activity;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,12 +20,12 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
 import org.jssvc.lib.R;
-import org.jssvc.lib.adapter.ShowTabAdapter;
+import org.jssvc.lib.adapter.BookShelfEditeAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.BookShelfBean;
 import org.jssvc.lib.data.HttpUrlParams;
-import org.jssvc.lib.fragment.BookShelfFragment;
 import org.jssvc.lib.utils.HtmlParseUtils;
+import org.jssvc.lib.view.CustomDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,58 +35,40 @@ import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
-/**
- * 我的书架
- */
-public class BookShelfActivity extends BaseActivity {
+// 书架编辑列表
+public class BookShelfEditeActivity extends BaseActivity {
 
     @BindView(R.id.tvBack)
     TextView tvBack;
-    @BindView(R.id.ivEdite)
-    ImageView ivEdite;
+    @BindView(R.id.ivAdd)
+    ImageView ivAdd;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
     @BindView(R.id.emptyLayout)
     LinearLayout emptyLayout;
-    @BindView(R.id.dateLayout)
-    LinearLayout dateLayout;
-
-    @BindView(R.id.tabLayout)
-    TabLayout tabLayout;
-    @BindView(R.id.viewPager)
-    ViewPager viewPager;
-
-    private List<String> list_title;
-    private List<Fragment> list_fragment;
 
     List<BookShelfBean> shelfList = new ArrayList<>();
-    private ShowTabAdapter showTabAdapter;
+    BookShelfEditeAdapter bookShelfEditeAdapter;
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_book_shelf;
+        return R.layout.activity_book_shelf_edite;
     }
 
     @Override
     protected void initView() {
-        ivEdite.setVisibility(View.GONE);
-        emptyLayout.setVisibility(View.GONE);
-        dateLayout.setVisibility(View.GONE);
         getBookShelf();
     }
 
-    @OnClick({R.id.tvBack, R.id.ivEdite})
+    @OnClick({R.id.tvBack, R.id.ivAdd})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvBack:
-                finish();
+                onBackPressed();
                 break;
-            case R.id.ivEdite:
-                if (shelfList.size() == 0) {
-                    // 添加书架
-                    showInputAlert("0", "", "");
-                } else {
-                    // 编辑书架
-                    startActivityForResult(new Intent(context, BookShelfEditeActivity.class), 10086);
-                }
+            case R.id.ivAdd:
+                // 添加书架
+                showInputAlert("0", "", "");
                 break;
         }
     }
@@ -119,46 +101,80 @@ public class BookShelfActivity extends BaseActivity {
         shelfList.addAll(HtmlParseUtils.getBookShelfList(s));
 
         if (shelfList.size() > 0) {
-            ivEdite.setVisibility(View.VISIBLE);
-            ivEdite.setImageResource(R.drawable.icon_collect_edite);
             emptyLayout.setVisibility(View.GONE);
-            dateLayout.setVisibility(View.VISIBLE);
-
-            list_title = new ArrayList<>();
-            list_fragment = new ArrayList<>();
-            //设置TabLayout的模式
-            tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-
-            for (int i = 0; i < shelfList.size(); i++) {
-                //将名称加载tab名字列表
-                list_title.add(shelfList.get(i).getName() + "");
-
-                //初始化各fragment
-                BookShelfFragment shelfFragment = new BookShelfFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("url", shelfList.get(i).getUrl());
-                shelfFragment.setArguments(bundle);
-
-                //将fragment装进列表中
-                list_fragment.add(shelfFragment);
-
-                //为TabLayout添加tab名称
-                tabLayout.addTab(tabLayout.newTab().setText(list_title.get(i)));
-            }
-
-            showTabAdapter = new ShowTabAdapter(getSupportFragmentManager(), list_fragment, list_title);
-            viewPager.setAdapter(showTabAdapter);
-
-            //TabLayout加载viewpager
-            tabLayout.setupWithViewPager(viewPager);
+            recyclerView.setVisibility(View.VISIBLE);
         } else {
-            // 没有书架
-            ivEdite.setVisibility(View.VISIBLE);
-            ivEdite.setImageResource(R.drawable.icon_collect_off);
             emptyLayout.setVisibility(View.VISIBLE);
-            dateLayout.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
         }
 
+        //创建默认的线性LayoutManager
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
+        recyclerView.setHasFixedSize(true);
+        //创建并设置Adapter
+        bookShelfEditeAdapter = new BookShelfEditeAdapter(context, shelfList);
+        recyclerView.setAdapter(bookShelfEditeAdapter);
+
+        bookShelfEditeAdapter.setOnItemClickListener(new BookShelfEditeAdapter.IMyViewHolderClicks() {
+            @Override
+            public void onItemClick(View view, BookShelfBean item) {
+            }
+
+            @Override
+            public void onEditClick(View view, BookShelfBean item) {
+                // 编辑书架
+                showInputAlert("2", item.getId() + "", item.getName() + "");
+            }
+
+            @Override
+            public void onDeleteClick(View view, BookShelfBean item) {
+                // 删除书架
+                deleteAlertDialog(item);
+            }
+        });
+    }
+
+    // 删除书架
+    public void deleteAlertDialog(final BookShelfBean item) {
+        CustomDialog.Builder builder = new CustomDialog.Builder(context);
+        builder.setTitle("提示");
+        builder.setMessage("删除此类，将删除该类下所有数据。确认删除?");
+        builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
+            public void onClick(final DialogInterface dialog, int which) {
+                dialog.dismiss();
+
+                deleteBookShelf(item.getDeleteurl());
+            }
+        });
+        builder.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
+    // 删除书架
+    private void deleteBookShelf(String url) {
+        showProgressDialog();
+        OkGo.post(url)
+                .tag(this)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        dissmissProgressDialog();
+                        // s 即为所需要的结果
+                        parseHtml2List(s);
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        dissmissProgressDialog();
+                        dealNetError(e);
+                    }
+                });
     }
 
     // 编辑框
@@ -236,10 +252,22 @@ public class BookShelfActivity extends BaseActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 10086) {
-            getBookShelf();
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // 是否触发按键为back键
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            onBackPressed();
+            return true;
+        } else {// 如果不是back键正常响应
+            return super.onKeyDown(keyCode, event);
         }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent mIntent = new Intent();
+//        mIntent.putExtra("change02", "2000");
+        this.setResult(0, mIntent);
     }
 }

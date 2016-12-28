@@ -1,0 +1,50 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_content"
+    android:orientation="vertical">
+
+    <RelativeLayout style="@style/ActionBar_Whole_Style_1">
+
+        <TextView
+            android:id="@+id/tvBack"
+            style="@style/ActionBar_Left_Style_1" />
+
+        <TextView
+            style="@style/ActionBar_Title_Style_1"
+            android:text="编辑书架" />
+
+        <ImageView
+            android:id="@+id/ivAdd"
+            style="@style/ActionBar_Right_Style_1"
+            android:src="@drawable/icon_collect_off" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/emptyLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:drawableTop="@drawable/icon_404_start"
+            android:gravity="center"
+            android:text="暂无书架"
+            android:textColor="@color/ui_text_tip"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

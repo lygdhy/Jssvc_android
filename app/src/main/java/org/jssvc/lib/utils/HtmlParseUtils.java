@@ -240,7 +240,7 @@ public class HtmlParseUtils {
         List<BookAccessBean> bookList = new ArrayList<>();
         Document doc = Jsoup.parse(result);
         Elements links = doc.select("table").select("tr");
-        if (links != null) {
+        if (links != null && links.size() > 1) {
             for (int i = 1; i < links.size(); i++) {
                 BookAccessBean book = new BookAccessBean();
                 Elements els = links.get(i).select("td");
@@ -271,12 +271,23 @@ public class HtmlParseUtils {
                 Elements els = links.get(i).select("td");
                 if (els.size() == 6) {
                     Elements urls = els.get(0).select("a[href]");
-                    shelf.setUrl(urls.get(0).attr("abs:href") + "");
+                    String durl = urls.get(0).attr("abs:href") + "";
+                    shelf.setUrl(durl);
+
+                    String[] array = durl.split("classid=");
+                    if (array.length == 2) {
+                        shelf.setId("" + array[1]);
+                    } else {
+                        shelf.setId("");
+                    }
 
                     shelf.setName(els.get(0).text() + "");
                     shelf.setCount(els.get(1).text() + "");
                     shelf.setDate(els.get(2).text() + "");
                     shelf.setRemark(els.get(3).text() + "");
+
+                    Elements delurls = els.get(4).select("a[href]");
+                    shelf.setDeleteurl(delurls.get(0).attr("abs:href") + "");
 
                     shelfList.add(shelf);
                 }
@@ -295,14 +306,16 @@ public class HtmlParseUtils {
             for (int i = 1; i < links.size(); i++) {
                 BookShelfListBean book = new BookShelfListBean();
                 Elements els = links.get(i).select("td");
-
                 Elements urls = els.get(1).select("a[href]");
                 book.setUrl(urls.get(0).attr("abs:href") + "");
-
                 book.setName(els.get(1).text() + "");
                 book.setAuthor(els.get(2).text() + "");
                 book.setPublisher(els.get(3).text() + "");
                 book.setCode(els.get(5).text() + "");
+
+//                Elements temp = links.get(i).select("[name]");
+//                String value = temp.get(0) + "";
+//                book.setBookcode(value);
 
                 bookList.add(book);
             }

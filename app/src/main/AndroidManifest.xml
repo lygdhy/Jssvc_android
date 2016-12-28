@@ -105,7 +105,8 @@
             android:name=".activity.HelpDetailsActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.ShareActivity" />
-        <activity android:name=".activity.BookShelfActivity"></activity>
+        <activity android:name=".activity.BookShelfActivity" />
+        <activity android:name=".activity.BookShelfEditeActivity"></activity>
     </application>
 
 </manifest>
