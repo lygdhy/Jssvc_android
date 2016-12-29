@@ -1,6 +1,5 @@
 package org.jssvc.lib.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +9,8 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,12 +25,15 @@ import com.umeng.analytics.MobclickAgent;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.BookSearchAdapter;
 import org.jssvc.lib.adapter.BookSearchHisAdapter;
+import org.jssvc.lib.adapter.DialogListSelecterAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.BookSearchBean;
+import org.jssvc.lib.bean.ListSelecterBean;
 import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.AppPref;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
+import org.jssvc.lib.view.DividerItemDecoration;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -84,9 +88,9 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
     BookSearchAdapter bookSearchAdapter;
     List<BookSearchBean> booklists = new ArrayList<>();
 
-    String[] searchTypes = new String[]{"题名", "责任者", "主题词", "ISBN/ISSN", "索书号", "出版社"};
-    String[] searchTypesCode = new String[]{"title", "author", "keyword", "isbn", "callno", "publisher"};
-    int typePos = 0;
+    List<ListSelecterBean> searchTypeList = new ArrayList<>();
+    ListSelecterBean currentSearchType;
+
     int searchPage = 1;
     String searchText = "";
     int maxPageSize = 1;// 最大页数，根据返回值动态计算
@@ -105,8 +109,8 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
 
         rlEmpty.setVisibility(View.GONE);
 
-        tvType.setText(searchTypes[typePos]);
-        edtKey.setHint("请输入" + searchTypes[typePos]);
+        // 初始化搜索类型
+        initSearchType();
 
         edtKey.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -189,6 +193,21 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
 
     }
 
+    // 初始化搜索类型
+    private void initSearchType() {
+        searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "title", "题名", ""));
+        searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "author", "责任者", ""));
+        searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "keyword", "主题词", ""));
+        searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "isbn", "ISBN/ISSN", ""));
+        searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "callno", "索书号", ""));
+        searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "publisher", "出版社", ""));
+
+        // 默认选择第一个项目
+        currentSearchType = searchTypeList.get(0);
+        tvType.setText(currentSearchType.getTitle());
+        edtKey.setHint("请输入" + currentSearchType.getTitle());
+    }
+
     private void initRefreshLayout() {
         mRefreshLayout.setDelegate(this);
         BGAMoocStyleRefreshViewHolder moocStyleRefreshViewHolder = new BGAMoocStyleRefreshViewHolder(this, true);
@@ -205,6 +224,7 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
                 finish();
                 break;
             case R.id.tvType:
+                // 类型选择
                 showTypeDialog();
                 break;
             case R.id.ivSearch:
@@ -239,13 +259,13 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
         map.put("userName", AccountPref.getLogonAccoundNumber(context));
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         map.put("optDate", df.format(new Date()));
-        map.put("strSearchType", searchTypesCode[typePos]);
+        map.put("strSearchType", currentSearchType.getId());
         map.put("strText", searchText);
         MobclickAgent.onEvent(context, "book_search", map);
 
         OkGo.post(HttpUrlParams.URL_LIB_BOOK_SEARCH)
                 .tag(this)
-                .params("strSearchType", searchTypesCode[typePos])
+                .params("strSearchType", currentSearchType.getId())
                 .params("strText", searchText)
                 .params("page", String.valueOf(searchPage))
 
@@ -317,18 +337,37 @@ public class BookSearchActivity extends BaseActivity implements BGARefreshLayout
 
     // 方式选择
     private void showTypeDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("请选择搜索方式")
-                .setSingleChoiceItems(searchTypes, typePos,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                typePos = which;
-                                tvType.setText(searchTypes[typePos]);
-                                edtKey.setHint("请输入" + searchTypes[typePos]);
-                                dialog.dismiss();
-                            }
-                        }
-                ).show();
+        final AlertDialog dlg = new AlertDialog.Builder(context).create();
+        dlg.show();
+        dlg.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        dlg.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        Window window = dlg.getWindow();
+        window.setContentView(R.layout.dialog_list_select_layout);
+
+        TextView tvDialogTitle = (TextView) window.findViewById(R.id.tvDialogTitle);
+        TextView tvDialogSubTitle = (TextView) window.findViewById(R.id.tvDialogSubTitle);
+        tvDialogTitle.setText("请选择搜索方式");
+        tvDialogSubTitle.setVisibility(View.GONE);
+
+        DialogListSelecterAdapter selecterAdapter;
+        RecyclerView recyclerView = (RecyclerView) window.findViewById(R.id.recyclerView);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST));
+        selecterAdapter = new DialogListSelecterAdapter(context, searchTypeList);
+        recyclerView.setAdapter(selecterAdapter);
+
+        selecterAdapter.setOnItemClickListener(new DialogListSelecterAdapter.IMyViewHolderClicks() {
+            @Override
+            public void onItemClick(View view, ListSelecterBean item) {
+                currentSearchType = item;
+                tvType.setText(currentSearchType.getTitle());
+                edtKey.setHint("请输入" + currentSearchType.getTitle());
+                dlg.dismiss();
+            }
+        });
     }
 
     @Override

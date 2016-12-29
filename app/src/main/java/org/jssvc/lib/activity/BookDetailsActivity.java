@@ -141,7 +141,7 @@ public class BookDetailsActivity extends BaseActivity {
             // 显示书架列表
             List<ListSelecterBean> dataList = new ArrayList<>();
             for (int i = 0; i < shelfList.size(); i++) {
-                dataList.add(new ListSelecterBean(R.drawable.icon_book_shelf, shelfList.get(i).getId(), shelfList.get(i).getName(), ""));
+                dataList.add(new ListSelecterBean(R.drawable.icon_book_collect, shelfList.get(i).getId(), shelfList.get(i).getName(), ""));
             }
             bookShelifListDialog("请选择书架", dataList);
         }
