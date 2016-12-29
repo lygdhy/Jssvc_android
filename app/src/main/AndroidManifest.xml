@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 获取MAC地址 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 读写sdcard，storage等等 -->
 
-
     <!-- 可选 -->
     <!-- 获取logcat日志 -->
     <uses-permission android:name="android.permission.READ_LOGS" />
@@ -35,10 +34,6 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}" />
-        <!-- 友盟推送 -->
-        <meta-data
-            android:name="UMENG_MESSAGE_SECRET"
-            android:value="b8e3c15f6490a2126ce6df9c41340e27" />
 
         <activity
             android:name=".activity.SplashActivity"
@@ -104,8 +99,15 @@
         <activity
             android:name=".activity.HelpDetailsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.ShareActivity" />
-        <activity android:name=".activity.BookShelfActivity"></activity>
+        <activity
+            android:name=".activity.ShareActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BookShelfActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BookShelfEditeActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -12,6 +12,7 @@ public class BookShelfListBean implements Serializable {
     private String author;
     private String code;
     private String publisher;
+    private String bookcode;
 
     public String getUrl() {
         return url;
@@ -51,5 +52,13 @@ public class BookShelfListBean implements Serializable {
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
+    }
+
+    public String getBookcode() {
+        return bookcode;
+    }
+
+    public void setBookcode(String bookcode) {
+        this.bookcode = bookcode;
     }
 }

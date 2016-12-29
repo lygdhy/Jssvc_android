@@ -1,7 +1,6 @@
 package org.jssvc.lib.base;
 
 import android.support.multidex.MultiDexApplication;
-import android.util.Log;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.lzy.okgo.OkGo;
@@ -12,8 +11,6 @@ import com.lzy.okgo.model.HttpHeaders;
 import com.lzy.okgo.model.HttpParams;
 import com.pgyersdk.crash.PgyCrashManager;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.message.IUmengRegisterCallback;
-import com.umeng.message.PushAgent;
 
 /**
  * Created by lygdh on 2016/11/15.
@@ -38,9 +35,6 @@ public class BaseApplication extends MultiDexApplication {
 
         // 友盟错误统计
         MobclickAgent.setCatchUncaughtExceptions(true);
-
-        // 友盟推送
-        initPushAgent();
 
         // 初始化OkGo
         initOkGo();
@@ -90,23 +84,6 @@ public class BaseApplication extends MultiDexApplication {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    // 友盟推送
-    private void initPushAgent() {
-        PushAgent mPushAgent = PushAgent.getInstance(this);
-        //注册推送服务 每次调用register都会回调该接口
-        mPushAgent.register(new IUmengRegisterCallback() {
-            @Override
-            public void onSuccess(String deviceToken) {
-                Log.d("deviceToken", "device token: " + deviceToken);
-            }
-
-            @Override
-            public void onFailure(String s, String s1) {
-                Log.d("deviceToken", "register failed: " + s + " " + s1);
-            }
-        });
     }
 
 }

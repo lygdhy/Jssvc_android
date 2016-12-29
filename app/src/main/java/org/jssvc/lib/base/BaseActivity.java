@@ -40,9 +40,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         // 蒲公英错误日志收集
         PgyCrashManager.register(this);
-
-//        // 友盟推送-统计应用启动数据
-//        PushAgent.getInstance(context).onAppStart();
     }
 
     @Override
