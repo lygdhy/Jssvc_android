@@ -91,14 +91,13 @@ public class LoginActivity extends BaseActivity {
             case R.id.btnLogin:
                 // 登陆
                 String loginname = edtName.getText().toString().trim();
-                String loginpwd = edtPwd.getText().toString().trim();
+                final String loginpwd = edtPwd.getText().toString().trim();
                 if (TextUtils.isEmpty(loginname) || TextUtils.isEmpty(loginpwd)) {
                     showToast("登陆信息不能为空");
                 } else {
                     showProgressDialog("登录中...");
 
                     AccountPref.saveLoginAccoundNumber(context, loginname);
-                    AccountPref.saveLoginAccoundPwd(context, loginpwd);
                     AccountPref.saveLoginType(context, currentLoginType.getId());
                     OkGo.post(HttpUrlParams.URL_LIB_LOGIN)
                             .tag(this)
@@ -110,7 +109,7 @@ public class LoginActivity extends BaseActivity {
                                 public void onSuccess(String s, Call call, Response response) {
                                     dissmissProgressDialog();
                                     // s 即为所需要的结果
-                                    parseHtml(s);
+                                    parseHtml(s, loginpwd);
                                 }
 
                                 @Override
@@ -127,9 +126,11 @@ public class LoginActivity extends BaseActivity {
     }
 
     // 解析网页
-    private void parseHtml(String s) {
+    private void parseHtml(String s, String loginpwd) {
         String errorMsg = HtmlParseUtils.getErrMsgOnLogin(s);
         if (TextUtils.isEmpty(errorMsg)) {
+            // 保存密码
+            AccountPref.saveLoginAccoundPwd(context, loginpwd);
             // 账号统计
             MobclickAgent.onProfileSignIn(AccountPref.getLogonType(context).toUpperCase(), AccountPref.getLogonAccoundNumber(context));
             // 登陆成功
