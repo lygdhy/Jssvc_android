@@ -1,9 +1,6 @@
 package org.jssvc.lib.activity;
 
-import android.Manifest;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -12,27 +9,20 @@ import android.widget.TextView;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
-import com.mylhyl.acp.Acp;
-import com.mylhyl.acp.AcpListener;
-import com.mylhyl.acp.AcpOptions;
-
-import butterknife.BindView;
-import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Response;
 
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
-import org.jssvc.lib.utils.AppUtils;
 import org.jssvc.lib.view.CustomDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
-import static com.pgyersdk.update.UpdateManagerListener.startDownloadTask;
+import butterknife.BindView;
+import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * 意见反馈
@@ -122,23 +112,4 @@ public class FeedbackActivity extends BaseActivity {
         builder.create().show();
     }
 
-    private void callQQCell(String qqNum) {
-        // 手机QQ com.tencent.mqq
-        // 手机QQ2012 com.tencent.mobileqq
-        // QQ轻聊版 com.tencent.qqlite
-        // QQ国际版 com.tencent.mobileqqi
-        // QQHD com.tencent.minihd.qq
-        // 企业QQ com.tencent.eim
-        if (AppUtils.isInstallApp(context, "com.tencent.mqq") ||
-                AppUtils.isInstallApp(context, "com.tencent.mobileqq") ||
-                AppUtils.isInstallApp(context, "com.tencent.qqlite") ||
-                AppUtils.isInstallApp(context, "com.tencent.mobileqqi") ||
-                AppUtils.isInstallApp(context, "com.tencent.minihd.qq") ||
-                AppUtils.isInstallApp(context, "com.tencent.eim")) {
-            String url = "mqqwpa://im/chat?chat_type=wpa&uin=" + qqNum;
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-        } else {
-            showToast("暂未安装QQ相关软件无法发起聊天");
-        }
-    }
 }
