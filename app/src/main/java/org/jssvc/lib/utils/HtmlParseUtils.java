@@ -239,7 +239,7 @@ public class HtmlParseUtils {
     public static List<BookAccessBean> getBookAccessList(String result) {
         List<BookAccessBean> bookList = new ArrayList<>();
         Document doc = Jsoup.parse(result);
-        Elements links = doc.select("table").select("tr");
+        Elements links = doc.select("table").select("[width=\"670\"]").select("tr");
         if (links != null && links.size() > 1) {
             for (int i = 1; i < links.size(); i++) {
                 BookAccessBean book = new BookAccessBean();
