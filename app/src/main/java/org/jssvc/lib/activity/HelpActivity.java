@@ -1,26 +1,28 @@
 package org.jssvc.lib.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.jssvc.lib.R;
+import org.jssvc.lib.adapter.DialogListSelecterAdapter;
 import org.jssvc.lib.adapter.QleftAdapter;
 import org.jssvc.lib.adapter.QrightAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.CategoryBean;
+import org.jssvc.lib.bean.ListSelecterBean;
 import org.jssvc.lib.bean.QuestionBean;
 import org.jssvc.lib.data.AppPref;
-import org.jssvc.lib.utils.AppUtils;
+import org.jssvc.lib.view.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,16 +138,24 @@ public class HelpActivity extends BaseActivity implements
                 finish();
                 break;
             case R.id.tvChat:
-                qqCheckDialog();
+                // 客服弹框
+                List<ListSelecterBean> dataList = new ArrayList<>();
+                dataList.add(new ListSelecterBean(R.drawable.icon_chat_qq, "1872237872", "图多多", "QQ 1872237872"));
+                dataList.add(new ListSelecterBean(R.drawable.icon_chat_qq, "897457690", "图小小", "QQ 897457690"));
+                dataList.add(new ListSelecterBean(R.drawable.icon_chat_qq, "893196521", "图妹妹", "QQ 893196521"));
+                dataList.add(new ListSelecterBean(R.drawable.icon_chat_qq, "149553453", "图姐姐", "QQ 149553453"));
+                qqCheckDialog("在线服务", "正常工作日9:00~16:30", dataList);
                 break;
             case R.id.ivClose:
+                // 关闭滚动提示
                 AppPref.setHelpClose(context);
                 rlTip.setVisibility(View.GONE);
                 break;
         }
     }
 
-    private void qqCheckDialog() {
+    // 客服弹框
+    private void qqCheckDialog(String dTitle, String dSubTitle, List<ListSelecterBean> dataList) {
         final AlertDialog dlg = new AlertDialog.Builder(context).create();
         dlg.show();
         dlg.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
@@ -154,59 +164,27 @@ public class HelpActivity extends BaseActivity implements
         Window window = dlg.getWindow();
         window.setContentView(R.layout.dialog_list_select_layout);
 
-        LinearLayout layout1 = (LinearLayout) window.findViewById(R.id.layout1);
-        LinearLayout layout2 = (LinearLayout) window.findViewById(R.id.layout2);
-        LinearLayout layout3 = (LinearLayout) window.findViewById(R.id.layout3);
-        LinearLayout layout4 = (LinearLayout) window.findViewById(R.id.layout4);
+        TextView tvDialogTitle = (TextView) window.findViewById(R.id.tvDialogTitle);
+        TextView tvDialogSubTitle = (TextView) window.findViewById(R.id.tvDialogSubTitle);
+        tvDialogTitle.setText(dTitle);
+        tvDialogSubTitle.setText(dSubTitle);
 
-        layout1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callQQCell("1872237872");
-                dlg.dismiss();
-            }
-        });
-        layout2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callQQCell("897457690");
-                dlg.dismiss();
-            }
-        });
-        layout3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callQQCell("893196521");
-                dlg.dismiss();
-            }
-        });
-        layout4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callQQCell("149553453");
-                dlg.dismiss();
-            }
-        });
-    }
+        DialogListSelecterAdapter selecterAdapter;
+        RecyclerView recyclerView = (RecyclerView) window.findViewById(R.id.recyclerView);
 
-    private void callQQCell(String qqNum) {
-        // 手机QQ com.tencent.mqq
-        // 手机QQ2012 com.tencent.mobileqq
-        // QQ轻聊版 com.tencent.qqlite
-        // QQ国际版 com.tencent.mobileqqi
-        // QQHD com.tencent.minihd.qq
-        // 企业QQ com.tencent.eim
-        if (AppUtils.isInstallApp(context, "com.tencent.mqq") ||
-                AppUtils.isInstallApp(context, "com.tencent.mobileqq") ||
-                AppUtils.isInstallApp(context, "com.tencent.qqlite") ||
-                AppUtils.isInstallApp(context, "com.tencent.mobileqqi") ||
-                AppUtils.isInstallApp(context, "com.tencent.minihd.qq") ||
-                AppUtils.isInstallApp(context, "com.tencent.eim")) {
-            String url = "mqqwpa://im/chat?chat_type=wpa&uin=" + qqNum;
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-        } else {
-            showToast("暂未安装QQ相关软件无法发起聊天");
-        }
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST));
+        selecterAdapter = new DialogListSelecterAdapter(context, dataList);
+        recyclerView.setAdapter(selecterAdapter);
+
+        selecterAdapter.setOnItemClickListener(new DialogListSelecterAdapter.IMyViewHolderClicks() {
+            @Override
+            public void onItemClick(View view, ListSelecterBean item) {
+                callQQCell(item.getId());
+                dlg.dismiss();
+            }
+        });
     }
 
     @Override

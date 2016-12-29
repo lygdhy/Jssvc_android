@@ -6,8 +6,12 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,17 +20,20 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
 import org.jssvc.lib.R;
+import org.jssvc.lib.adapter.DialogListSelecterAdapter;
 import org.jssvc.lib.adapter.ShowTabAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.BookAccessBean;
 import org.jssvc.lib.bean.BookDetailsBean;
 import org.jssvc.lib.bean.BookShelfBean;
+import org.jssvc.lib.bean.ListSelecterBean;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.fragment.BookDetailInfoFragment;
 import org.jssvc.lib.fragment.BookDetailInlibFragment;
 import org.jssvc.lib.utils.HtmlParseUtils;
 import org.jssvc.lib.view.CustomDialog;
 import org.jssvc.lib.view.CustomViewPager;
+import org.jssvc.lib.view.DividerItemDecoration;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -131,20 +138,46 @@ public class BookDetailsActivity extends BaseActivity {
         if (shelfList.size() == 1) {
             add2Shelf(shelfList.get(0).getId());
         } else {
-            String[] bookshelfArr = new String[shelfList.size()];
+            // 显示书架列表
+            List<ListSelecterBean> dataList = new ArrayList<>();
             for (int i = 0; i < shelfList.size(); i++) {
-                bookshelfArr[i] = shelfList.get(i).getName() + "";
+                dataList.add(new ListSelecterBean(R.drawable.icon_book_collect, shelfList.get(i).getId(), shelfList.get(i).getName(), ""));
             }
-            new AlertDialog.Builder(this)
-                    .setTitle("请选择书架")
-                    .setItems(bookshelfArr, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            add2Shelf(shelfList.get(which).getId());
-                        }
-                    })
-                    .show();
+            bookShelifListDialog("请选择书架", dataList);
         }
+    }
+
+    // 书架列表
+    private void bookShelifListDialog(String dTitle, List<ListSelecterBean> dataList) {
+        final AlertDialog dlg = new AlertDialog.Builder(context).create();
+        dlg.show();
+        dlg.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        dlg.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        Window window = dlg.getWindow();
+        window.setContentView(R.layout.dialog_list_select_layout);
+
+        TextView tvDialogTitle = (TextView) window.findViewById(R.id.tvDialogTitle);
+        TextView tvDialogSubTitle = (TextView) window.findViewById(R.id.tvDialogSubTitle);
+        tvDialogTitle.setText(dTitle);
+        tvDialogSubTitle.setVisibility(View.GONE);
+
+        DialogListSelecterAdapter selecterAdapter;
+        RecyclerView recyclerView = (RecyclerView) window.findViewById(R.id.recyclerView);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST));
+        selecterAdapter = new DialogListSelecterAdapter(context, dataList);
+        recyclerView.setAdapter(selecterAdapter);
+
+        selecterAdapter.setOnItemClickListener(new DialogListSelecterAdapter.IMyViewHolderClicks() {
+            @Override
+            public void onItemClick(View view, ListSelecterBean item) {
+                add2Shelf(item.getId());
+                dlg.dismiss();
+            }
+        });
     }
 
     // 调用服务添加图书

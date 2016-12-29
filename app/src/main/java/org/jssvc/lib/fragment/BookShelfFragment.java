@@ -22,7 +22,6 @@ import org.jssvc.lib.bean.BookShelfListBean;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
 import org.jssvc.lib.view.CustomDialog;
-import org.jssvc.lib.view.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,8 +113,6 @@ public class BookShelfFragment extends BaseFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
         recyclerView.setHasFixedSize(true);
-        //添加分割线divider
-        recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST));
         //解决滑动冲突
         recyclerView.setNestedScrollingEnabled(false);
         //创建并设置Adapter
