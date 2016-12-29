@@ -314,7 +314,7 @@ public class HtmlParseUtils {
                 book.setPublisher(els.get(3).text() + "");
                 book.setCode(els.get(5).text() + "");
 
-                String value = temp.get(0).attr("name") + "";
+                String value = temp.get(i - 1).attr("name") + "";
                 book.setBookcode(value.replaceAll("del_", ""));
 
                 bookList.add(book);

@@ -1,9 +1,12 @@
 package org.jssvc.lib.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,6 +25,7 @@ import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.fragment.BookDetailInfoFragment;
 import org.jssvc.lib.fragment.BookDetailInlibFragment;
 import org.jssvc.lib.utils.HtmlParseUtils;
+import org.jssvc.lib.view.CustomDialog;
 import org.jssvc.lib.view.CustomViewPager;
 
 import java.io.Serializable;
@@ -56,6 +60,7 @@ public class BookDetailsActivity extends BaseActivity {
     private List<Fragment> list_fragment;
     private ShowTabAdapter showTabAdapter;
 
+    String marc_no = "";
     String detialUrl = "";
     List<BookShelfBean> shelfList = new ArrayList<>();
 
@@ -69,6 +74,13 @@ public class BookDetailsActivity extends BaseActivity {
 
         tvBookName.setText(getIntent().getStringExtra("title") + "");
         detialUrl = getIntent().getStringExtra("url");
+
+        String[] array = detialUrl.split("marc_no=");
+        if (array.length == 2) {
+            marc_no = array[1] + "";
+        } else {
+            marc_no = "";
+        }
 
         showProgressDialog();
         OkGo.post(detialUrl)
@@ -116,7 +128,47 @@ public class BookDetailsActivity extends BaseActivity {
     // 添加图书到书架
     private void add2BookShelf() {
         // 已经去到了shelfList
-        showToast("弹框选择书架并添加");
+        if (shelfList.size() == 1) {
+            add2Shelf(shelfList.get(0).getId());
+        } else {
+            String[] bookshelfArr = new String[shelfList.size()];
+            for (int i = 0; i < shelfList.size(); i++) {
+                bookshelfArr[i] = shelfList.get(i).getName() + "";
+            }
+            new AlertDialog.Builder(this)
+                    .setTitle("请选择书架")
+                    .setItems(bookshelfArr, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            add2Shelf(shelfList.get(which).getId());
+                        }
+                    })
+                    .show();
+        }
+    }
+
+    // 调用服务添加图书
+    private void add2Shelf(String classid) {
+        showProgressDialog();
+        OkGo.get(HttpUrlParams.URL_LIB_BOOK_ADD)
+                .params("classid", classid)
+                .params("marc_no", marc_no)
+                .params("time", System.currentTimeMillis())
+                .tag(this)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        dissmissProgressDialog();
+                        showAlertDialog(s);
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        dissmissProgressDialog();
+                        dealNetError(e);
+                    }
+                });
     }
 
     // 获取书架目录
@@ -206,4 +258,17 @@ public class BookDetailsActivity extends BaseActivity {
         }
     }
 
+
+    // 添加结果显示
+    public void showAlertDialog(final String str) {
+        CustomDialog.Builder builder = new CustomDialog.Builder(context);
+        builder.setTitle("提示");
+        builder.setMessage(Html.fromHtml(str) + "");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            public void onClick(final DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
 }
