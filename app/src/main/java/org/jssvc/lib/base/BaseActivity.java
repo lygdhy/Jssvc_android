@@ -48,7 +48,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbinder.unbind();
+        // unbinder.unbind();
         PgyCrashManager.unregister();
     }
 
