@@ -197,7 +197,7 @@
                         style="@style/home_menu_text"
                         android:drawablePadding="5dp"
                         android:drawableTop="@drawable/icon_menu_msg"
-                        android:text="消息中心" />
+                        android:text="新闻通知" />
                 </LinearLayout>
 
                 <LinearLayout
