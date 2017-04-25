@@ -93,7 +93,7 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(context, BookSearchActivity.class));
                 break;
             case R.id.btnMsg:
-                // 消息中心
+                // 新闻通知
                 startActivity(new Intent(context, MsgActivity.class));
                 break;
             case R.id.btnHelp:
