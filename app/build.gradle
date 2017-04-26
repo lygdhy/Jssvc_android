@@ -8,7 +8,7 @@ android {
     applicationId "org.jssvc.lib"
     minSdkVersion 15
     targetSdkVersion 24
-    versionCode 12
+    versionCode 13
     versionName '2.1.5'
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
