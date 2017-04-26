@@ -16,27 +16,22 @@ import butterknife.OnClick;
  * 新闻详情
  */
 public class MsgBrowseActivity extends BaseActivity {
-    @BindView(R.id.tvBack)
-    TextView tvBack;
-    @BindView(R.id.webView)
-    BridgeWebView webView;
+  @BindView(R.id.tvBack) TextView tvBack;
+  @BindView(R.id.webView) BridgeWebView webView;
 
-    @Override
-    protected int getContentViewId() {
-        return R.layout.activity_msg_browse;
-    }
+  @Override protected int getContentViewId() {
+    return R.layout.activity_msg_browse;
+  }
 
-    @Override
-    protected void initView() {
-        MsgBean item = (MsgBean) getIntent().getSerializableExtra("item");
-    }
+  @Override protected void initView() {
+    MsgBean item = (MsgBean) getIntent().getSerializableExtra("item");
+  }
 
-    @OnClick({R.id.tvBack})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tvBack:
-                finish();
-                break;
-        }
+  @OnClick({ R.id.tvBack }) public void onClick(View view) {
+    switch (view.getId()) {
+      case R.id.tvBack:
+        finish();
+        break;
     }
+  }
 }

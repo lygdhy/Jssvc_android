@@ -50,263 +50,245 @@ import okhttp3.Response;
  */
 public class BookDetailsActivity extends BaseActivity {
 
-    @BindView(R.id.tvBack)
-    TextView tvBack;
-    @BindView(R.id.tvCollect)
-    ImageView tvCollect;
-    @BindView(R.id.bookView)
-    SimpleDraweeView bookView;
-    @BindView(R.id.tvBookName)
-    TextView tvBookName;
+  @BindView(R.id.tvBack) TextView tvBack;
+  @BindView(R.id.tvCollect) ImageView tvCollect;
+  @BindView(R.id.bookView) SimpleDraweeView bookView;
+  @BindView(R.id.tvBookName) TextView tvBookName;
 
-    @BindView(R.id.tabLayout)
-    TabLayout tabLayout;
-    @BindView(R.id.viewPager)
-    CustomViewPager viewPager;
+  @BindView(R.id.tabLayout) TabLayout tabLayout;
+  @BindView(R.id.viewPager) CustomViewPager viewPager;
 
-    private List<String> list_title;
-    private List<Fragment> list_fragment;
-    private ShowTabAdapter showTabAdapter;
+  private List<String> list_title;
+  private List<Fragment> list_fragment;
+  private ShowTabAdapter showTabAdapter;
 
-    String marc_no = "";
-    String detialUrl = "";
-    List<BookShelfBean> shelfList = new ArrayList<>();
+  String marc_no = "";
+  String detialUrl = "";
+  List<BookShelfBean> shelfList = new ArrayList<>();
 
-    @Override
-    protected int getContentViewId() {
-        return R.layout.activity_book_details;
+  @Override protected int getContentViewId() {
+    return R.layout.activity_book_details;
+  }
+
+  @Override protected void initView() {
+
+    tvBookName.setText(getIntent().getStringExtra("title") + "");
+    detialUrl = getIntent().getStringExtra("url");
+
+    String[] array = detialUrl.split("marc_no=");
+    if (array.length == 2) {
+      marc_no = array[1] + "";
+    } else {
+      marc_no = "";
     }
 
-    @Override
-    protected void initView() {
+    showProgressDialog();
+    OkGo.post(detialUrl).tag(this).execute(new StringCallback() {
+      @Override public void onSuccess(String s, Call call, Response response) {
+        dissmissProgressDialog();
+        // s 即为所需要的结果
+        parseHtml(s);
+      }
 
-        tvBookName.setText(getIntent().getStringExtra("title") + "");
-        detialUrl = getIntent().getStringExtra("url");
+      @Override public void onError(Call call, Response response, Exception e) {
+        super.onError(call, response, e);
+        dissmissProgressDialog();
+        dealNetError(e);
+      }
+    });
+  }
 
-        String[] array = detialUrl.split("marc_no=");
-        if (array.length == 2) {
-            marc_no = array[1] + "";
+  @OnClick({ R.id.tvBack, R.id.tvCollect }) public void onClick(View view) {
+    switch (view.getId()) {
+      case R.id.tvBack:
+        finish();
+        break;
+      case R.id.tvCollect:
+        if (AccountPref.isLogon(context)) {
+          // 添加到书架
+          collectBook();
         } else {
-            marc_no = "";
+          startActivity(new Intent(context, LoginActivity.class));
         }
-
-        showProgressDialog();
-        OkGo.post(detialUrl)
-                .tag(this)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        dissmissProgressDialog();
-                        // s 即为所需要的结果
-                        parseHtml(s);
-                    }
-
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        super.onError(call, response, e);
-                        dissmissProgressDialog();
-                        dealNetError(e);
-                    }
-                });
+        break;
     }
+  }
 
-    @OnClick({R.id.tvBack, R.id.tvCollect})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tvBack:
-                finish();
-                break;
-            case R.id.tvCollect:
-                if (AccountPref.isLogon(context)) {
-                    // 添加到书架
-                    collectBook();
-                } else {
-                    startActivity(new Intent(context, LoginActivity.class));
-                }
-                break;
-        }
+  // 添加图书
+  private void collectBook() {
+    if (shelfList.size() > 0) {
+      add2BookShelf();
+    } else {
+      // 获取当前可用书架列表
+      getBookShelf();
     }
+  }
 
-    // 添加图书
-    private void collectBook() {
-        if (shelfList.size() > 0) {
-            add2BookShelf();
-        } else {
-            // 获取当前可用书架列表
-            getBookShelf();
-        }
+  // 添加图书到书架
+  private void add2BookShelf() {
+    // 已经去到了shelfList
+    if (shelfList.size() == 1) {
+      add2Shelf(shelfList.get(0).getId());
+    } else {
+      // 显示书架列表
+      List<ListSelecterBean> dataList = new ArrayList<>();
+      for (int i = 0; i < shelfList.size(); i++) {
+        dataList.add(new ListSelecterBean(R.drawable.icon_book_collect, shelfList.get(i).getId(),
+            shelfList.get(i).getName(), ""));
+      }
+      bookShelifListDialog("请选择书架", dataList);
     }
+  }
 
-    // 添加图书到书架
-    private void add2BookShelf() {
-        // 已经去到了shelfList
-        if (shelfList.size() == 1) {
-            add2Shelf(shelfList.get(0).getId());
-        } else {
-            // 显示书架列表
-            List<ListSelecterBean> dataList = new ArrayList<>();
-            for (int i = 0; i < shelfList.size(); i++) {
-                dataList.add(new ListSelecterBean(R.drawable.icon_book_collect, shelfList.get(i).getId(), shelfList.get(i).getName(), ""));
-            }
-            bookShelifListDialog("请选择书架", dataList);
-        }
-    }
+  // 书架列表
+  private void bookShelifListDialog(String dTitle, List<ListSelecterBean> dataList) {
+    final AlertDialog dlg = new AlertDialog.Builder(context).create();
+    dlg.show();
+    dlg.getWindow()
+        .clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+            | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+    dlg.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-    // 书架列表
-    private void bookShelifListDialog(String dTitle, List<ListSelecterBean> dataList) {
-        final AlertDialog dlg = new AlertDialog.Builder(context).create();
-        dlg.show();
-        dlg.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        dlg.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+    Window window = dlg.getWindow();
+    window.setContentView(R.layout.dialog_list_select_layout);
 
-        Window window = dlg.getWindow();
-        window.setContentView(R.layout.dialog_list_select_layout);
+    TextView tvDialogTitle = (TextView) window.findViewById(R.id.tvDialogTitle);
+    TextView tvDialogSubTitle = (TextView) window.findViewById(R.id.tvDialogSubTitle);
+    tvDialogTitle.setText(dTitle);
+    tvDialogSubTitle.setVisibility(View.GONE);
 
-        TextView tvDialogTitle = (TextView) window.findViewById(R.id.tvDialogTitle);
-        TextView tvDialogSubTitle = (TextView) window.findViewById(R.id.tvDialogSubTitle);
-        tvDialogTitle.setText(dTitle);
-        tvDialogSubTitle.setVisibility(View.GONE);
+    DialogListSelecterAdapter selecterAdapter;
+    RecyclerView recyclerView = (RecyclerView) window.findViewById(R.id.recyclerView);
 
-        DialogListSelecterAdapter selecterAdapter;
-        RecyclerView recyclerView = (RecyclerView) window.findViewById(R.id.recyclerView);
+    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+    recyclerView.setHasFixedSize(true);
+    recyclerView.addItemDecoration(
+        new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST));
+    selecterAdapter = new DialogListSelecterAdapter(context, dataList);
+    recyclerView.setAdapter(selecterAdapter);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST));
-        selecterAdapter = new DialogListSelecterAdapter(context, dataList);
-        recyclerView.setAdapter(selecterAdapter);
+    selecterAdapter.setOnItemClickListener(new DialogListSelecterAdapter.IMyViewHolderClicks() {
+      @Override public void onItemClick(View view, ListSelecterBean item) {
+        add2Shelf(item.getId());
+        dlg.dismiss();
+      }
+    });
+  }
 
-        selecterAdapter.setOnItemClickListener(new DialogListSelecterAdapter.IMyViewHolderClicks() {
-            @Override
-            public void onItemClick(View view, ListSelecterBean item) {
-                add2Shelf(item.getId());
-                dlg.dismiss();
-            }
+  // 调用服务添加图书
+  private void add2Shelf(String classid) {
+    showProgressDialog();
+    OkGo.get(HttpUrlParams.URL_LIB_BOOK_ADD)
+        .params("classid", classid)
+        .params("marc_no", marc_no)
+        .params("time", System.currentTimeMillis())
+        .tag(this)
+        .execute(new StringCallback() {
+          @Override public void onSuccess(String s, Call call, Response response) {
+            dissmissProgressDialog();
+            showAlertDialog(s);
+          }
+
+          @Override public void onError(Call call, Response response, Exception e) {
+            super.onError(call, response, e);
+            dissmissProgressDialog();
+            dealNetError(e);
+          }
         });
+  }
+
+  // 获取书架目录
+  private void getBookShelf() {
+    showProgressDialog();
+    OkGo.post(HttpUrlParams.URL_LIB_BOOK_SHELF).tag(this).execute(new StringCallback() {
+      @Override public void onSuccess(String s, Call call, Response response) {
+        dissmissProgressDialog();
+        // s 即为所需要的结果
+        parseHtml2List(s);
+      }
+
+      @Override public void onError(Call call, Response response, Exception e) {
+        super.onError(call, response, e);
+        dissmissProgressDialog();
+        dealNetError(e);
+      }
+    });
+  }
+
+  // 解析网页
+  private void parseHtml2List(String s) {
+    shelfList.clear();
+    shelfList.addAll(HtmlParseUtils.getBookShelfList(s));
+
+    if (shelfList.size() > 0) {
+      add2BookShelf();
+    } else {
+      // 没有书架
+      showToast("您需要先创建一个书架");
+      startActivity(new Intent(context, BookShelfEditeActivity.class));
     }
+  }
 
-    // 调用服务添加图书
-    private void add2Shelf(String classid) {
-        showProgressDialog();
-        OkGo.get(HttpUrlParams.URL_LIB_BOOK_ADD)
-                .params("classid", classid)
-                .params("marc_no", marc_no)
-                .params("time", System.currentTimeMillis())
-                .tag(this)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        dissmissProgressDialog();
-                        showAlertDialog(s);
-                    }
+  // 解析网页
+  private void parseHtml(String s) {
+    // 解析图片
+    String coverUrl = HtmlParseUtils.getBookCoverUrl(s);
+    bookView.setImageURI(coverUrl);
 
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        super.onError(call, response, e);
-                        dissmissProgressDialog();
-                        dealNetError(e);
-                    }
-                });
+    // 解析详情
+    List<BookDetailsBean> detailList = new ArrayList<>();
+    detailList = HtmlParseUtils.getBookDetailsList(s);
+    // 解析藏书详情
+    List<BookAccessBean> accessList = new ArrayList<>();
+    accessList = HtmlParseUtils.getBookAccessList(s);
+
+    // 显示
+    if (detailList != null) {
+      //初始化各fragment
+      BookDetailInlibFragment fragmentInlib = new BookDetailInlibFragment();
+      BookDetailInfoFragment fragmentInfo = new BookDetailInfoFragment();
+      Bundle bundle = new Bundle();
+      bundle.putSerializable("accessList", (Serializable) accessList);
+      bundle.putSerializable("detailList", (Serializable) detailList);
+      fragmentInlib.setArguments(bundle);
+      fragmentInfo.setArguments(bundle);
+
+      //将fragment装进列表中
+      list_fragment = new ArrayList<>();
+      list_fragment.add(fragmentInlib);
+      list_fragment.add(fragmentInfo);
+
+      //将名称加载tab名字列表
+      list_title = new ArrayList<>();
+      list_title.add("在馆状态");
+      list_title.add("书目信息");
+
+      //设置TabLayout的模式
+      tabLayout.setTabMode(TabLayout.MODE_FIXED);
+      //为TabLayout添加tab名称
+      tabLayout.addTab(tabLayout.newTab().setText(list_title.get(0)));
+      tabLayout.addTab(tabLayout.newTab().setText(list_title.get(1)));
+
+      showTabAdapter = new ShowTabAdapter(getSupportFragmentManager(), list_fragment, list_title);
+      viewPager.setAdapter(showTabAdapter);
+
+      //TabLayout加载viewpager
+      tabLayout.setupWithViewPager(viewPager);
+    } else {
+      showToast("解析失败");
     }
+  }
 
-    // 获取书架目录
-    private void getBookShelf() {
-        showProgressDialog();
-        OkGo.post(HttpUrlParams.URL_LIB_BOOK_SHELF)
-                .tag(this)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        dissmissProgressDialog();
-                        // s 即为所需要的结果
-                        parseHtml2List(s);
-                    }
-
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        super.onError(call, response, e);
-                        dissmissProgressDialog();
-                        dealNetError(e);
-                    }
-                });
-    }
-
-    // 解析网页
-    private void parseHtml2List(String s) {
-        shelfList.clear();
-        shelfList.addAll(HtmlParseUtils.getBookShelfList(s));
-
-        if (shelfList.size() > 0) {
-            add2BookShelf();
-        } else {
-            // 没有书架
-            showToast("您需要先创建一个书架");
-            startActivity(new Intent(context, BookShelfEditeActivity.class));
-        }
-    }
-
-    // 解析网页
-    private void parseHtml(String s) {
-        // 解析图片
-        String coverUrl = HtmlParseUtils.getBookCoverUrl(s);
-        bookView.setImageURI(coverUrl);
-
-        // 解析详情
-        List<BookDetailsBean> detailList = new ArrayList<>();
-        detailList = HtmlParseUtils.getBookDetailsList(s);
-        // 解析藏书详情
-        List<BookAccessBean> accessList = new ArrayList<>();
-        accessList = HtmlParseUtils.getBookAccessList(s);
-
-        // 显示
-        if (detailList != null) {
-            //初始化各fragment
-            BookDetailInlibFragment fragmentInlib = new BookDetailInlibFragment();
-            BookDetailInfoFragment fragmentInfo = new BookDetailInfoFragment();
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("accessList", (Serializable) accessList);
-            bundle.putSerializable("detailList", (Serializable) detailList);
-            fragmentInlib.setArguments(bundle);
-            fragmentInfo.setArguments(bundle);
-
-            //将fragment装进列表中
-            list_fragment = new ArrayList<>();
-            list_fragment.add(fragmentInlib);
-            list_fragment.add(fragmentInfo);
-
-            //将名称加载tab名字列表
-            list_title = new ArrayList<>();
-            list_title.add("在馆状态");
-            list_title.add("书目信息");
-
-            //设置TabLayout的模式
-            tabLayout.setTabMode(TabLayout.MODE_FIXED);
-            //为TabLayout添加tab名称
-            tabLayout.addTab(tabLayout.newTab().setText(list_title.get(0)));
-            tabLayout.addTab(tabLayout.newTab().setText(list_title.get(1)));
-
-            showTabAdapter = new ShowTabAdapter(getSupportFragmentManager(), list_fragment, list_title);
-            viewPager.setAdapter(showTabAdapter);
-
-            //TabLayout加载viewpager
-            tabLayout.setupWithViewPager(viewPager);
-
-        } else {
-            showToast("解析失败");
-        }
-    }
-
-
-    // 添加结果显示
-    public void showAlertDialog(final String str) {
-        CustomDialog.Builder builder = new CustomDialog.Builder(context);
-        builder.setTitle("提示");
-        builder.setMessage(Html.fromHtml(str) + "");
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            public void onClick(final DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.create().show();
-    }
+  // 添加结果显示
+  public void showAlertDialog(final String str) {
+    CustomDialog.Builder builder = new CustomDialog.Builder(context);
+    builder.setTitle("提示");
+    builder.setMessage(Html.fromHtml(str) + "");
+    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+      public void onClick(final DialogInterface dialog, int which) {
+        dialog.dismiss();
+      }
+    });
+    builder.create().show();
+  }
 }

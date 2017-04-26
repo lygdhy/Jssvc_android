@@ -22,42 +22,40 @@ import org.jssvc.lib.bean.BookAccessBean;
  */
 
 public class BookDetailInlibFragment extends BaseFragment {
-    @BindView(R.id.inLibRecyclerView)
-    RecyclerView inLibRecyclerView;
+  @BindView(R.id.inLibRecyclerView) RecyclerView inLibRecyclerView;
 
-    BookAccessAdapter bookAccessAdapter;
+  BookAccessAdapter bookAccessAdapter;
 
-    @Override
-    protected int getContentViewId() {
-        return R.layout.pager_book_detail_inlib;
+  @Override protected int getContentViewId() {
+    return R.layout.pager_book_detail_inlib;
+  }
+
+  @Override protected void initView() {
+    Bundle bundle = getArguments();//从activity传过来的Bundle
+    if (bundle != null) {
+      List<BookAccessBean> accessList = new ArrayList<>();
+      accessList.addAll(
+          (Collection<? extends BookAccessBean>) bundle.getSerializable("accessList"));
+      loadAccessList(accessList);
     }
+  }
 
-    @Override
-    protected void initView() {
-        Bundle bundle = getArguments();//从activity传过来的Bundle
-        if (bundle != null) {
-            List<BookAccessBean> accessList = new ArrayList<>();
-            accessList.addAll((Collection<? extends BookAccessBean>) bundle.getSerializable("accessList"));
-            loadAccessList(accessList);
-        }
-    }
+  // 加载藏书列表
+  private void loadAccessList(List<BookAccessBean> accessList) {
+    //创建默认的线性LayoutManager
+    inLibRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+    //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
+    inLibRecyclerView.setHasFixedSize(true);
+    //解决滑动冲突
+    inLibRecyclerView.setNestedScrollingEnabled(false);
+    //创建并设置Adapter
+    bookAccessAdapter = new BookAccessAdapter(context, accessList);
+    inLibRecyclerView.setAdapter(bookAccessAdapter);
 
-    // 加载藏书列表
-    private void loadAccessList(List<BookAccessBean> accessList) {
-        //创建默认的线性LayoutManager
-        inLibRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
-        inLibRecyclerView.setHasFixedSize(true);
-        //解决滑动冲突
-        inLibRecyclerView.setNestedScrollingEnabled(false);
-        //创建并设置Adapter
-        bookAccessAdapter = new BookAccessAdapter(context, accessList);
-        inLibRecyclerView.setAdapter(bookAccessAdapter);
-
-        bookAccessAdapter.setOnItemClickListener(new BookAccessAdapter.OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, BookAccessBean item) {
-            }
+    bookAccessAdapter.setOnItemClickListener(
+        new BookAccessAdapter.OnRecyclerViewItemClickListener() {
+          @Override public void onItemClick(View view, BookAccessBean item) {
+          }
         });
-    }
+  }
 }

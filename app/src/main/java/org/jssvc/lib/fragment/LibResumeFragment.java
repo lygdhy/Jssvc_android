@@ -8,14 +8,11 @@ import org.jssvc.lib.base.BaseFragment;
  */
 public class LibResumeFragment extends BaseFragment {
 
-    @Override
-    protected int getContentViewId() {
-        return R.layout.fragment_lib_resume;
-    }
+  @Override protected int getContentViewId() {
+    return R.layout.fragment_lib_resume;
+  }
 
-    @Override
-    protected void initView() {
+  @Override protected void initView() {
 
-    }
-
+  }
 }

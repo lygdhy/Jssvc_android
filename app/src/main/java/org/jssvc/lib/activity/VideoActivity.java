@@ -36,229 +36,205 @@ import butterknife.OnClick;
  * 图书馆宣传片
  */
 public class VideoActivity extends BaseActivity implements UniversalVideoView.VideoViewCallback {
-    private static final String SEEK_POSITION_KEY = "SEEK_POSITION_KEY";
-    private static final String VIDEO_TITLE = "苏州市职业大学图书馆宣传片";
-    private static final String VIDEO_URL = "http://www.hydong.me/app/libadvertisingvideo2.mp4";
+  private static final String SEEK_POSITION_KEY = "SEEK_POSITION_KEY";
+  private static final String VIDEO_TITLE = "苏州市职业大学图书馆宣传片";
+  private static final String VIDEO_URL = "http://www.hydong.me/app/libadvertisingvideo2.mp4";
 
-    @BindView(R.id.tvBack)
-    TextView tvBack;
-    @BindView(R.id.rlTop)
-    RelativeLayout rlTop;
-    @BindView(R.id.llbody)
-    LinearLayout llbody;
-    @BindView(R.id.video_layout)
-    FrameLayout mVideoLayout;
-    @BindView(R.id.videoView)
-    UniversalVideoView mVideoView;
-    @BindView(R.id.media_controller)
-    UniversalMediaController mMediaController;
+  @BindView(R.id.tvBack) TextView tvBack;
+  @BindView(R.id.rlTop) RelativeLayout rlTop;
+  @BindView(R.id.llbody) LinearLayout llbody;
+  @BindView(R.id.video_layout) FrameLayout mVideoLayout;
+  @BindView(R.id.videoView) UniversalVideoView mVideoView;
+  @BindView(R.id.media_controller) UniversalMediaController mMediaController;
 
-    @BindView(R.id.platLayout)
-    RelativeLayout platLayout;
-    @BindView(R.id.ivCover)
-    ImageView ivCover;
+  @BindView(R.id.platLayout) RelativeLayout platLayout;
+  @BindView(R.id.ivCover) ImageView ivCover;
 
-    @BindView(R.id.tabLayout)
-    TabLayout tabLayout;
-    @BindView(R.id.viewPager)
-    ViewPager viewPager;
+  @BindView(R.id.tabLayout) TabLayout tabLayout;
+  @BindView(R.id.viewPager) ViewPager viewPager;
 
-    private List<String> list_title;
-    private List<Fragment> list_fragment;
-    private ShowTabAdapter showTabAdapter;
+  private List<String> list_title;
+  private List<Fragment> list_fragment;
+  private ShowTabAdapter showTabAdapter;
 
-    private int mSeekPosition;
-    private int cachedHeight;
-    private boolean isFullscreen;
+  private int mSeekPosition;
+  private int cachedHeight;
+  private boolean isFullscreen;
 
-    @Override
-    protected int getContentViewId() {
-        return R.layout.activity_video;
+  @Override protected int getContentViewId() {
+    return R.layout.activity_video;
+  }
+
+  @Override protected void initView() {
+    //将fragment装进列表中
+    list_fragment = new ArrayList<>();
+    list_fragment.add(new LibResumeFragment());
+    list_fragment.add(new LibScheduleFragment());
+    list_fragment.add(new LibYellowPagesFragment());
+
+    //将名称加载tab名字列表
+    list_title = new ArrayList<>();
+    list_title.add("概况");
+    list_title.add("开馆时间");
+    list_title.add("黄页");
+
+    //设置TabLayout的模式
+    tabLayout.setTabMode(TabLayout.MODE_FIXED);
+    //为TabLayout添加tab名称
+    tabLayout.addTab(tabLayout.newTab().setText(list_title.get(0)));
+    tabLayout.addTab(tabLayout.newTab().setText(list_title.get(1)));
+    tabLayout.addTab(tabLayout.newTab().setText(list_title.get(2)));
+
+    showTabAdapter = new ShowTabAdapter(getSupportFragmentManager(), list_fragment, list_title);
+    viewPager.setAdapter(showTabAdapter);
+
+    //TabLayout加载viewpager
+    tabLayout.setupWithViewPager(viewPager);
+    viewPager.setCurrentItem(1);
+
+    // 初始化
+    mVideoView.setMediaController(mMediaController);
+    setVideoAreaSize();
+    mVideoView.setVideoViewCallback(this);
+  }
+
+  @OnClick({ R.id.tvBack, R.id.ivCover }) public void onClick(View view) {
+    switch (view.getId()) {
+      case R.id.tvBack:
+        finish();
+        break;
+      case R.id.ivCover:
+        initPlayVideo();
+        break;
     }
+  }
 
-    @Override
-    protected void initView() {
-        //将fragment装进列表中
-        list_fragment = new ArrayList<>();
-        list_fragment.add(new LibResumeFragment());
-        list_fragment.add(new LibScheduleFragment());
-        list_fragment.add(new LibYellowPagesFragment());
-
-        //将名称加载tab名字列表
-        list_title = new ArrayList<>();
-        list_title.add("概况");
-        list_title.add("开馆时间");
-        list_title.add("黄页");
-
-        //设置TabLayout的模式
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        //为TabLayout添加tab名称
-        tabLayout.addTab(tabLayout.newTab().setText(list_title.get(0)));
-        tabLayout.addTab(tabLayout.newTab().setText(list_title.get(1)));
-        tabLayout.addTab(tabLayout.newTab().setText(list_title.get(2)));
-
-        showTabAdapter = new ShowTabAdapter(getSupportFragmentManager(), list_fragment, list_title);
-        viewPager.setAdapter(showTabAdapter);
-
-        //TabLayout加载viewpager
-        tabLayout.setupWithViewPager(viewPager);
-        viewPager.setCurrentItem(1);
-
-        // 初始化
-        mVideoView.setMediaController(mMediaController);
-        setVideoAreaSize();
-        mVideoView.setVideoViewCallback(this);
-    }
-
-    @OnClick({R.id.tvBack, R.id.ivCover})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tvBack:
-                finish();
-                break;
-            case R.id.ivCover:
-                initPlayVideo();
-                break;
-        }
-    }
-
-    // 初始化视频
-    private void initPlayVideo() {
-        if (NetworkUtils.isConnected(context)) {
-            if (NetworkUtils.isWifiConnected(context)) {
-                showToast("已连接WIFI，请放心观看！");
-                // 开始播放
-                startPlayVideo();
-            } else {
-                CustomDialog.Builder builder = new CustomDialog.Builder(context);
-                builder.setTitle("提示");
-                builder.setMessage("WIFI已断开，确定要播放吗？");
-                builder.setPositiveButton("哥不差钱", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        // 开始播放
-                        startPlayVideo();
-                    }
-                });
-                builder.setNegativeButton("冷静冷静", new android.content.DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.create().show();
-            }
-        } else {
-            showToast("暂无网络连接");
-        }
-    }
-
-    // 开始播放
-    private void startPlayVideo() {
-        platLayout.setVisibility(View.GONE);
-        if (mSeekPosition > 0) {
-            mVideoView.seekTo(mSeekPosition);
-        }
-        mVideoView.start();
-        mMediaController.setTitle(VIDEO_TITLE);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (mVideoView != null && mVideoView.isPlaying()) {
-            mSeekPosition = mVideoView.getCurrentPosition();
-            mVideoView.pause();
-        }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(SEEK_POSITION_KEY, mSeekPosition);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle outState) {
-        super.onRestoreInstanceState(outState);
-        mSeekPosition = outState.getInt(SEEK_POSITION_KEY);
-    }
-
-    /**
-     * 置视频区域大小
-     */
-    private void setVideoAreaSize() {
-        mVideoLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                int width = mVideoLayout.getWidth();
-                cachedHeight = (int) (width * 405f / 720f);
-//                cachedHeight = (int) (width * 3f / 4f);
-//                cachedHeight = (int) (width * 9f / 16f);
-                ViewGroup.LayoutParams videoLayoutParams = mVideoLayout.getLayoutParams();
-                videoLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                videoLayoutParams.height = cachedHeight;
-                mVideoLayout.setLayoutParams(videoLayoutParams);
-                mVideoView.setVideoPath(VIDEO_URL);
-                mVideoView.requestFocus();
-            }
+  // 初始化视频
+  private void initPlayVideo() {
+    if (NetworkUtils.isConnected(context)) {
+      if (NetworkUtils.isWifiConnected(context)) {
+        showToast("已连接WIFI，请放心观看！");
+        // 开始播放
+        startPlayVideo();
+      } else {
+        CustomDialog.Builder builder = new CustomDialog.Builder(context);
+        builder.setTitle("提示");
+        builder.setMessage("WIFI已断开，确定要播放吗？");
+        builder.setPositiveButton("哥不差钱", new DialogInterface.OnClickListener() {
+          public void onClick(final DialogInterface dialog, int which) {
+            dialog.dismiss();
+            // 开始播放
+            startPlayVideo();
+          }
         });
+        builder.setNegativeButton("冷静冷静", new android.content.DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int which) {
+            dialog.dismiss();
+          }
+        });
+        builder.create().show();
+      }
+    } else {
+      showToast("暂无网络连接");
     }
+  }
 
-    @Override
-    public void onScaleChange(boolean isFullscreen) {
-        this.isFullscreen = isFullscreen;
-        if (isFullscreen) {
-            ViewGroup.LayoutParams layoutParams = mVideoLayout.getLayoutParams();
-            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-            layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
-            mVideoLayout.setLayoutParams(layoutParams);
-            rlTop.setVisibility(View.GONE);
-            llbody.setVisibility(View.GONE);
-
-        } else {
-            ViewGroup.LayoutParams layoutParams = mVideoLayout.getLayoutParams();
-            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-            layoutParams.height = this.cachedHeight;
-            mVideoLayout.setLayoutParams(layoutParams);
-            rlTop.setVisibility(View.VISIBLE);
-            llbody.setVisibility(View.VISIBLE);
-        }
-        switchTitleBar(!isFullscreen);
+  // 开始播放
+  private void startPlayVideo() {
+    platLayout.setVisibility(View.GONE);
+    if (mSeekPosition > 0) {
+      mVideoView.seekTo(mSeekPosition);
     }
+    mVideoView.start();
+    mMediaController.setTitle(VIDEO_TITLE);
+  }
 
-    private void switchTitleBar(boolean show) {
-        android.support.v7.app.ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar != null) {
-            if (show) {
-                supportActionBar.show();
-            } else {
-                supportActionBar.hide();
-            }
-        }
+  @Override public void onPause() {
+    super.onPause();
+    if (mVideoView != null && mVideoView.isPlaying()) {
+      mSeekPosition = mVideoView.getCurrentPosition();
+      mVideoView.pause();
     }
+  }
 
-    @Override
-    public void onPause(MediaPlayer mediaPlayer) {
-    }
+  @Override protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putInt(SEEK_POSITION_KEY, mSeekPosition);
+  }
 
-    @Override
-    public void onStart(MediaPlayer mediaPlayer) {
-    }
+  @Override protected void onRestoreInstanceState(Bundle outState) {
+    super.onRestoreInstanceState(outState);
+    mSeekPosition = outState.getInt(SEEK_POSITION_KEY);
+  }
 
-    @Override
-    public void onBufferingStart(MediaPlayer mediaPlayer) {
-    }
+  /**
+   * 置视频区域大小
+   */
+  private void setVideoAreaSize() {
+    mVideoLayout.post(new Runnable() {
+      @Override public void run() {
+        int width = mVideoLayout.getWidth();
+        cachedHeight = (int) (width * 405f / 720f);
+        //                cachedHeight = (int) (width * 3f / 4f);
+        //                cachedHeight = (int) (width * 9f / 16f);
+        ViewGroup.LayoutParams videoLayoutParams = mVideoLayout.getLayoutParams();
+        videoLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        videoLayoutParams.height = cachedHeight;
+        mVideoLayout.setLayoutParams(videoLayoutParams);
+        mVideoView.setVideoPath(VIDEO_URL);
+        mVideoView.requestFocus();
+      }
+    });
+  }
 
-    @Override
-    public void onBufferingEnd(MediaPlayer mediaPlayer) {
+  @Override public void onScaleChange(boolean isFullscreen) {
+    this.isFullscreen = isFullscreen;
+    if (isFullscreen) {
+      ViewGroup.LayoutParams layoutParams = mVideoLayout.getLayoutParams();
+      layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+      layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+      mVideoLayout.setLayoutParams(layoutParams);
+      rlTop.setVisibility(View.GONE);
+      llbody.setVisibility(View.GONE);
+    } else {
+      ViewGroup.LayoutParams layoutParams = mVideoLayout.getLayoutParams();
+      layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+      layoutParams.height = this.cachedHeight;
+      mVideoLayout.setLayoutParams(layoutParams);
+      rlTop.setVisibility(View.VISIBLE);
+      llbody.setVisibility(View.VISIBLE);
     }
+    switchTitleBar(!isFullscreen);
+  }
 
-    @Override
-    public void onBackPressed() {
-        if (this.isFullscreen) {
-            mVideoView.setFullscreen(false);
-        } else {
-            super.onBackPressed();
-        }
+  private void switchTitleBar(boolean show) {
+    android.support.v7.app.ActionBar supportActionBar = getSupportActionBar();
+    if (supportActionBar != null) {
+      if (show) {
+        supportActionBar.show();
+      } else {
+        supportActionBar.hide();
+      }
     }
+  }
+
+  @Override public void onPause(MediaPlayer mediaPlayer) {
+  }
+
+  @Override public void onStart(MediaPlayer mediaPlayer) {
+  }
+
+  @Override public void onBufferingStart(MediaPlayer mediaPlayer) {
+  }
+
+  @Override public void onBufferingEnd(MediaPlayer mediaPlayer) {
+  }
+
+  @Override public void onBackPressed() {
+    if (this.isFullscreen) {
+      mVideoView.setFullscreen(false);
+    } else {
+      super.onBackPressed();
+    }
+  }
 }
