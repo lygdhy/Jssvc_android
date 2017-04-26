@@ -3,12 +3,10 @@ package org.jssvc.lib.activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
-
-import org.jssvc.lib.R;
-import org.jssvc.lib.base.BaseActivity;
-
 import butterknife.BindView;
 import butterknife.OnClick;
+import org.jssvc.lib.R;
+import org.jssvc.lib.base.BaseActivity;
 
 /**
  * 分享APP
@@ -36,8 +34,8 @@ public class ShareActivity extends BaseActivity {
         share_intent.setAction(Intent.ACTION_SEND);//设置分享行为
         share_intent.setType("text/plain");//设置分享内容的类型
         share_intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));//添加分享内容标题
-        share_intent.putExtra(Intent.EXTRA_TEXT,
-            getString(R.string.app_name) + "下载地址 https://www.pgyer.com/jssvclib2");//添加分享内容
+        share_intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.app_name)
+            + "下载地址 http://www.jssvc.org/download/libapp.html");//添加分享内容
         share_intent = Intent.createChooser(share_intent, "分享");
         startActivity(share_intent);
         break;

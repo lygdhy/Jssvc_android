@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="20dp"
-            android:text="苏州市职业大学计算机工程学院安卓工作室\n「掌上图书馆」研发小组\n©2016 Jssvc.org"
+            android:text="苏州市职业大学计算机工程学院安卓工作室\n「掌上图书馆」研发小组\n©2017 Jssvc.org"
             android:textColor="@color/ui_text_tip"
             android:textSize="10sp" />
     </RelativeLayout>
