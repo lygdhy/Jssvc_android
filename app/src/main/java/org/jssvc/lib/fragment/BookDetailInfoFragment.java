@@ -22,44 +22,43 @@ import org.jssvc.lib.view.DividerItemDecoration;
  */
 
 public class BookDetailInfoFragment extends BaseFragment {
-    @BindView(R.id.detailsRecyclerView)
-    RecyclerView detailsRecyclerView;
+  @BindView(R.id.detailsRecyclerView) RecyclerView detailsRecyclerView;
 
-    BookDetailsAdapter bookDetailsAdapter;
+  BookDetailsAdapter bookDetailsAdapter;
 
-    @Override
-    protected int getContentViewId() {
-        return R.layout.pager_book_detail_info;
+  @Override protected int getContentViewId() {
+    return R.layout.pager_book_detail_info;
+  }
+
+  @Override protected void initView() {
+    Bundle bundle = getArguments();//从activity传过来的Bundle
+    if (bundle != null) {
+      List<BookDetailsBean> detailList = new ArrayList<>();
+      detailList.addAll(
+          (Collection<? extends BookDetailsBean>) bundle.getSerializable("detailList"));
+      loadDetailsList(detailList);
     }
+  }
 
-    @Override
-    protected void initView() {
-        Bundle bundle = getArguments();//从activity传过来的Bundle
-        if (bundle != null) {
-            List<BookDetailsBean> detailList = new ArrayList<>();
-            detailList.addAll((Collection<? extends BookDetailsBean>) bundle.getSerializable("detailList"));
-            loadDetailsList(detailList);
-        }
-    }
+  // 加载详情
+  private void loadDetailsList(List<BookDetailsBean> detailsList) {
+    //创建默认的线性LayoutManager
+    detailsRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+    //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
+    detailsRecyclerView.setHasFixedSize(true);
+    //添加分割线divider
+    detailsRecyclerView.addItemDecoration(
+        new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST));
+    //解决滑动冲突
+    detailsRecyclerView.setNestedScrollingEnabled(false);
+    //创建并设置Adapter
+    bookDetailsAdapter = new BookDetailsAdapter(context, detailsList);
+    detailsRecyclerView.setAdapter(bookDetailsAdapter);
 
-    // 加载详情
-    private void loadDetailsList(List<BookDetailsBean> detailsList) {
-        //创建默认的线性LayoutManager
-        detailsRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
-        detailsRecyclerView.setHasFixedSize(true);
-        //添加分割线divider
-        detailsRecyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST));
-        //解决滑动冲突
-        detailsRecyclerView.setNestedScrollingEnabled(false);
-        //创建并设置Adapter
-        bookDetailsAdapter = new BookDetailsAdapter(context, detailsList);
-        detailsRecyclerView.setAdapter(bookDetailsAdapter);
-
-        bookDetailsAdapter.setOnItemClickListener(new BookDetailsAdapter.OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, BookDetailsBean item) {
-            }
+    bookDetailsAdapter.setOnItemClickListener(
+        new BookDetailsAdapter.OnRecyclerViewItemClickListener() {
+          @Override public void onItemClick(View view, BookDetailsBean item) {
+          }
         });
-    }
+  }
 }

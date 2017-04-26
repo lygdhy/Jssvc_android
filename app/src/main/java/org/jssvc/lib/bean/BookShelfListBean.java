@@ -7,58 +7,58 @@ import java.io.Serializable;
  */
 
 public class BookShelfListBean implements Serializable {
-    private String url;
-    private String name;
-    private String author;
-    private String code;
-    private String publisher;
-    private String bookcode;
+  private String url;
+  private String name;
+  private String author;
+  private String code;
+  private String publisher;
+  private String bookcode;
 
-    public String getUrl() {
-        return url;
-    }
+  public String getUrl() {
+    return url;
+  }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getAuthor() {
-        return author;
-    }
+  public String getAuthor() {
+    return author;
+  }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
+  public void setAuthor(String author) {
+    this.author = author;
+  }
 
-    public String getCode() {
-        return code;
-    }
+  public String getCode() {
+    return code;
+  }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+  public void setCode(String code) {
+    this.code = code;
+  }
 
-    public String getPublisher() {
-        return publisher;
-    }
+  public String getPublisher() {
+    return publisher;
+  }
 
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
+  public void setPublisher(String publisher) {
+    this.publisher = publisher;
+  }
 
-    public String getBookcode() {
-        return bookcode;
-    }
+  public String getBookcode() {
+    return bookcode;
+  }
 
-    public void setBookcode(String bookcode) {
-        this.bookcode = bookcode;
-    }
+  public void setBookcode(String bookcode) {
+    this.bookcode = bookcode;
+  }
 }

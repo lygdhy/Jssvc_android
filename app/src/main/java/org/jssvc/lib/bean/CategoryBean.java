@@ -6,8 +6,8 @@ package org.jssvc.lib.bean;
 
 public class CategoryBean {
 
-    public long id;
-    public String name;
-    public boolean isSelected;
+  public long id;
+  public String name;
+  public boolean isSelected;
 }
 

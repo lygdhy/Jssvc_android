@@ -1,6 +1,5 @@
 package org.jssvc.lib.fragment;
 
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,169 +34,156 @@ import okhttp3.Response;
  */
 public class BookShelfFragment extends BaseFragment {
 
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
-    @BindView(R.id.emptyLayout)
-    LinearLayout emptyLayout;
+  @BindView(R.id.recyclerView) RecyclerView recyclerView;
+  @BindView(R.id.emptyLayout) LinearLayout emptyLayout;
 
-    BookShelfListAdapter bookShelfListAdapter;
-    List<BookShelfListBean> bookList = new ArrayList<>();
+  BookShelfListAdapter bookShelfListAdapter;
+  List<BookShelfListBean> bookList = new ArrayList<>();
 
-    String baseUrl = "";
-    String classid = "";// 书架ID
+  String baseUrl = "";
+  String classid = "";// 书架ID
 
-    public BookShelfFragment() {
+  public BookShelfFragment() {
+  }
+
+  @Override protected int getContentViewId() {
+    return R.layout.fragment_book_shelf;
+  }
+
+  @Override protected void initView() {
+    emptyLayout.setVisibility(View.GONE);
+    recyclerView.setVisibility(View.GONE);
+
+    Bundle bundle = getArguments();//从activity传过来的Bundle
+    if (bundle != null) {
+      baseUrl = bundle.getString("url");
+
+      String[] array = baseUrl.split("classid=");
+      if (array.length == 2) {
+        classid = "" + array[1];
+      } else {
+        classid = "";
+      }
+      loadBookList();
     }
+  }
 
-    @Override
-    protected int getContentViewId() {
-        return R.layout.fragment_book_shelf;
+  private void loadBookList() {
+    OkGo.post(baseUrl).tag(this).execute(new StringCallback() {
+      @Override public void onSuccess(String s, Call call, Response response) {
+        // s 即为所需要的结果
+        parseHtml(s);
+      }
+
+      @Override public void onError(Call call, Response response, Exception e) {
+        super.onError(call, response, e);
+        dealNetError(e);
+      }
+    });
+  }
+
+  // 解析网页
+  private void parseHtml(String s) {
+    bookList.clear();
+    bookList = HtmlParseUtils.getBookOnShelfList(s);
+
+    if (bookList.size() > 0) {
+      emptyLayout.setVisibility(View.GONE);
+      recyclerView.setVisibility(View.VISIBLE);
+      loadBookList(bookList);
+    } else {
+      // 书架没有图书
+      emptyLayout.setVisibility(View.VISIBLE);
+      recyclerView.setVisibility(View.GONE);
     }
+  }
 
-    @Override
-    protected void initView() {
-        emptyLayout.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.GONE);
+  private void loadBookList(List<BookShelfListBean> bookList) {
+    //创建默认的线性LayoutManager
+    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+    //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
+    recyclerView.setHasFixedSize(true);
+    //解决滑动冲突
+    recyclerView.setNestedScrollingEnabled(false);
+    //创建并设置Adapter
+    bookShelfListAdapter = new BookShelfListAdapter(context, bookList);
+    recyclerView.setAdapter(bookShelfListAdapter);
 
-        Bundle bundle = getArguments();//从activity传过来的Bundle
-        if (bundle != null) {
-            baseUrl = bundle.getString("url");
-
-            String[] array = baseUrl.split("classid=");
-            if (array.length == 2) {
-                classid = "" + array[1];
-            } else {
-                classid = "";
-            }
-            loadBookList();
+    bookShelfListAdapter.setOnItemClickListener(new BookShelfListAdapter.IMyViewHolderClicks() {
+      @Override public void onItemClick(View view, BookShelfListBean item) {
+        // 查看详情
+        if (!TextUtils.isEmpty(item.getUrl())) {
+          Intent intent = new Intent(context, BookDetailsActivity.class);
+          intent.putExtra("title", item.getName());
+          intent.putExtra("url", item.getUrl());
+          startActivity(intent);
         }
-    }
+      }
 
-    private void loadBookList() {
-        OkGo.post(baseUrl)
-                .tag(this)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        // s 即为所需要的结果
-                        parseHtml(s);
-                    }
-
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        super.onError(call, response, e);
-                        dealNetError(e);
-                    }
-                });
-    }
-
-    // 解析网页
-    private void parseHtml(String s) {
-        bookList.clear();
-        bookList = HtmlParseUtils.getBookOnShelfList(s);
-
-        if (bookList.size() > 0) {
-            emptyLayout.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-            loadBookList(bookList);
-        } else {
-            // 书架没有图书
-            emptyLayout.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
+      @Override public void onRemoveClick(View view, BookShelfListBean item) {
+        // 移除图书
+        // classid
+        String bookcode = item.getBookcode();
+        if (!TextUtils.isEmpty(bookcode)) {
+          deleteAlertDialog(classid, bookcode);
         }
+      }
+    });
+  }
 
-    }
+  // 删除书架
+  public void deleteAlertDialog(final String classid, final String bookcode) {
+    CustomDialog.Builder builder = new CustomDialog.Builder(context);
+    builder.setTitle("提示");
+    builder.setMessage("确认要从书架中删除吗?");
+    builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
+      public void onClick(final DialogInterface dialog, int which) {
+        dialog.dismiss();
 
-    private void loadBookList(List<BookShelfListBean> bookList) {
-        //创建默认的线性LayoutManager
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
-        recyclerView.setHasFixedSize(true);
-        //解决滑动冲突
-        recyclerView.setNestedScrollingEnabled(false);
-        //创建并设置Adapter
-        bookShelfListAdapter = new BookShelfListAdapter(context, bookList);
-        recyclerView.setAdapter(bookShelfListAdapter);
+        removeBook(classid, bookcode);
+      }
+    });
+    builder.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int which) {
+        dialog.dismiss();
+      }
+    });
+    builder.create().show();
+  }
 
-        bookShelfListAdapter.setOnItemClickListener(new BookShelfListAdapter.IMyViewHolderClicks() {
-            @Override
-            public void onItemClick(View view, BookShelfListBean item) {
-                // 查看详情
-                if (!TextUtils.isEmpty(item.getUrl())) {
-                    Intent intent = new Intent(context, BookDetailsActivity.class);
-                    intent.putExtra("title", item.getName());
-                    intent.putExtra("url", item.getUrl());
-                    startActivity(intent);
-                }
-            }
+  // 移除图书
+  private void removeBook(String classid, String bookcode) {
+    showProgressDialog();
+    OkGo.get(HttpUrlParams.URL_LIB_BOOK_DEL)
+        .params("classid", classid)
+        .params("marc_no", bookcode)
+        .params("time", System.currentTimeMillis())
+        .tag(this)
+        .execute(new StringCallback() {
+          @Override public void onSuccess(String s, Call call, Response response) {
+            dissmissProgressDialog();
+            showAlertDialog(s);
+          }
 
-            @Override
-            public void onRemoveClick(View view, BookShelfListBean item) {
-                // 移除图书
-                // classid
-                String bookcode = item.getBookcode();
-                if (!TextUtils.isEmpty(bookcode)) {
-                    deleteAlertDialog(classid, bookcode);
-                }
-            }
+          @Override public void onError(Call call, Response response, Exception e) {
+            super.onError(call, response, e);
+            dissmissProgressDialog();
+            dealNetError(e);
+          }
         });
-    }
+  }
 
-    // 删除书架
-    public void deleteAlertDialog(final String classid, final String bookcode) {
-        CustomDialog.Builder builder = new CustomDialog.Builder(context);
-        builder.setTitle("提示");
-        builder.setMessage("确认要从书架中删除吗?");
-        builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
-            public void onClick(final DialogInterface dialog, int which) {
-                dialog.dismiss();
-
-                removeBook(classid, bookcode);
-            }
-        });
-        builder.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.create().show();
-    }
-
-    // 移除图书
-    private void removeBook(String classid, String bookcode) {
-        showProgressDialog();
-        OkGo.get(HttpUrlParams.URL_LIB_BOOK_DEL)
-                .params("classid", classid)
-                .params("marc_no", bookcode)
-                .params("time", System.currentTimeMillis())
-                .tag(this)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        dissmissProgressDialog();
-                        showAlertDialog(s);
-                    }
-
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        super.onError(call, response, e);
-                        dissmissProgressDialog();
-                        dealNetError(e);
-                    }
-                });
-    }
-
-    // 删除结果显示
-    public void showAlertDialog(final String str) {
-        CustomDialog.Builder builder = new CustomDialog.Builder(context);
-        builder.setTitle("提示");
-        builder.setMessage(Html.fromHtml(str) + "");
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            public void onClick(final DialogInterface dialog, int which) {
-                dialog.dismiss();
-                loadBookList();
-            }
-        });
-        builder.create().show();
-    }
+  // 删除结果显示
+  public void showAlertDialog(final String str) {
+    CustomDialog.Builder builder = new CustomDialog.Builder(context);
+    builder.setTitle("提示");
+    builder.setMessage(Html.fromHtml(str) + "");
+    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+      public void onClick(final DialogInterface dialog, int which) {
+        dialog.dismiss();
+        loadBookList();
+      }
+    });
+    builder.create().show();
+  }
 }

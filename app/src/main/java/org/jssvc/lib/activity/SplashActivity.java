@@ -29,84 +29,77 @@ import qiu.niorgai.StatusBarCompat;
  */
 public class SplashActivity extends BaseActivity {
 
-    @Override
-    protected int getContentViewId() {
-        return R.layout.activity_splash;
-    }
+  @Override protected int getContentViewId() {
+    return R.layout.activity_splash;
+  }
 
-    @Override
-    protected void initView() {
-        StatusBarCompat.translucentStatusBar(this, false);
+  @Override protected void initView() {
+    StatusBarCompat.translucentStatusBar(this, false);
 
-        Handler handler = new Handler();
-        handler.postDelayed(new splashhandler(), 1000);//静态启动页
-    }
+    Handler handler = new Handler();
+    handler.postDelayed(new splashhandler(), 1000);//静态启动页
+  }
 
-    class splashhandler implements Runnable {
-        public void run() {
-            if (AccountPref.isLogon(context)) {
-                if (NetworkUtils.isConnected(context)) {
-                    Acp.getInstance(context).request(new AcpOptions.Builder()
-                                    .setPermissions(Manifest.permission.INTERNET)
-                                    .build(),
-                            new AcpListener() {
-                                @Override
-                                public void onGranted() {
-                                    // 登录
-                                    autoLogin();
-                                }
+  class splashhandler implements Runnable {
+    public void run() {
+      if (AccountPref.isLogon(context)) {
+        if (NetworkUtils.isConnected(context)) {
+          Acp.getInstance(context)
+              .request(
+                  new AcpOptions.Builder().setPermissions(Manifest.permission.INTERNET).build(),
+                  new AcpListener() {
+                    @Override public void onGranted() {
+                      // 登录
+                      autoLogin();
+                    }
 
-                                @Override
-                                public void onDenied(List<String> permissions) {
-                                    showToast(permissions.toString() + "权限拒绝");
-                                }
-                            });
-                } else {
-                    showToast("无法连接网络");
-                    AccountPref.removeLogonAccoundPwd(context);
-                    startActivity(new Intent(context, MainActivity.class));
-                    finish();
-                }
-            } else {
-                // 用户名密码不全，不登陆直接进入
-                AccountPref.removeLogonAccoundPwd(context);
-                startActivity(new Intent(context, MainActivity.class));
-                finish();
-            }
+                    @Override public void onDenied(List<String> permissions) {
+                      showToast(permissions.toString() + "权限拒绝");
+                    }
+                  });
+        } else {
+          showToast("无法连接网络");
+          AccountPref.removeLogonAccoundPwd(context);
+          startActivity(new Intent(context, MainActivity.class));
+          finish();
         }
+      } else {
+        // 用户名密码不全，不登陆直接进入
+        AccountPref.removeLogonAccoundPwd(context);
+        startActivity(new Intent(context, MainActivity.class));
+        finish();
+      }
     }
+  }
 
-    // 自动登录
-    private void autoLogin() {
-        // 用户名和密码都在，静默登陆
-        OkGo.post(HttpUrlParams.URL_LIB_LOGIN)
-                .tag(this)
-                .params("number", AccountPref.getLogonAccoundNumber(context))
-                .params("passwd", AccountPref.getLogonAccoundPwd(context))
-                .params("select", AccountPref.getLogonType(context))
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        super.onError(call, response, e);
-                        dealNetError(e);
-                        // 登陆失败
-                        AccountPref.removeLogonAccoundPwd(context);
-                    }
+  // 自动登录
+  private void autoLogin() {
+    // 用户名和密码都在，静默登陆
+    OkGo.post(HttpUrlParams.URL_LIB_LOGIN)
+        .tag(this)
+        .params("number", AccountPref.getLogonAccoundNumber(context))
+        .params("passwd", AccountPref.getLogonAccoundPwd(context))
+        .params("select", AccountPref.getLogonType(context))
+        .execute(new StringCallback() {
+          @Override public void onError(Call call, Response response, Exception e) {
+            super.onError(call, response, e);
+            dealNetError(e);
+            // 登陆失败
+            AccountPref.removeLogonAccoundPwd(context);
+          }
 
-                    @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        // 账号统计
-                        MobclickAgent.onProfileSignIn(AccountPref.getLogonType(context).toUpperCase(), AccountPref.getLogonAccoundNumber(context));
-                    }
+          @Override public void onSuccess(String s, Call call, Response response) {
+            // 账号统计
+            MobclickAgent.onProfileSignIn(AccountPref.getLogonType(context).toUpperCase(),
+                AccountPref.getLogonAccoundNumber(context));
+          }
 
-                    @Override
-                    public void onAfter(@Nullable String s, @Nullable Exception e) {
-                        super.onAfter(s, e);
-                        // 完成跳转
-                        startActivity(new Intent(context, MainActivity.class));
-                        finish();
-                    }
-                });
-    }
-
+          @Override public void onAfter(@Nullable String s, @Nullable Exception e) {
+            super.onAfter(s, e);
+            // 完成跳转
+            startActivity(new Intent(context, MainActivity.class));
+            finish();
+          }
+        });
+  }
 }

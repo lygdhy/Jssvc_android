@@ -5,49 +5,49 @@ package org.jssvc.lib.bean;
  */
 
 public class QuestionBean {
-    public long id;
-    public String category;
-    public String title;
-    public String content;
-    public String tip;
+  public long id;
+  public String category;
+  public String title;
+  public String content;
+  public String tip;
 
-    public long getId() {
-        return id;
-    }
+  public long getId() {
+    return id;
+  }
 
-    public void setId(long id) {
-        this.id = id;
-    }
+  public void setId(long id) {
+    this.id = id;
+  }
 
-    public String getCategory() {
-        return category;
-    }
+  public String getCategory() {
+    return category;
+  }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
+  public void setCategory(String category) {
+    this.category = category;
+  }
 
-    public String getTitle() {
-        return title;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-    public String getContent() {
-        return content;
-    }
+  public String getContent() {
+    return content;
+  }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+  public void setContent(String content) {
+    this.content = content;
+  }
 
-    public String getTip() {
-        return tip;
-    }
+  public String getTip() {
+    return tip;
+  }
 
-    public void setTip(String tip) {
-        this.tip = tip;
-    }
+  public void setTip(String tip) {
+    this.tip = tip;
+  }
 }
