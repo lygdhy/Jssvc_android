@@ -8,8 +8,8 @@ android {
     applicationId "org.jssvc.lib"
     minSdkVersion 15
     targetSdkVersion 24
-    versionCode 12
-    versionName '2.1.4'
+    versionCode 13
+    versionName '2.1.5'
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     // Enabling multidex support.
@@ -47,7 +47,7 @@ android {
   productFlavors {
     pugongying {
       manifestPlaceholders = [UMENG_CHANNEL_VALUE: "pugongying"]
-      // resValue("string", "app_name", "图书馆蒲公英般")
+      // resValue("string", "app_name", "图书馆蒲公英版")
     }
     qihu360 {
       manifestPlaceholders = [UMENG_CHANNEL_VALUE: "qihu360"]
