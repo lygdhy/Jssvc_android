@@ -50,10 +50,13 @@ public class FeedbackActivity extends BaseActivity {
         break;
       case R.id.btnSubFeed:
         String feedStr = edtFeed.getText().toString().trim();
+        String emailStr = edtEmail.getText().toString().trim();
         if (TextUtils.isEmpty(feedStr)) {
           showToast("先写一些意见吧~");
+        } else if (TextUtils.isEmpty(emailStr)) {
+          showToast("请留下您的联系方式，方面我们及时反馈！");
         } else {
-          submintFeedback(feedStr, edtEmail.getText().toString().trim());
+          submintFeedback(feedStr, emailStr);
         }
         break;
       case R.id.tvChat:
