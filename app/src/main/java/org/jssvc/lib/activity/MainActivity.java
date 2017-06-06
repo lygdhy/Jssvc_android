@@ -1,32 +1,32 @@
 package org.jssvc.lib.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.OnClick;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.facebook.drawee.view.SimpleDraweeView;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.AdsBean;
 import org.jssvc.lib.data.AccountPref;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.OnClick;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * 主程序
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
+  private static final int REQUEST_CODE_STORAGE = 1;
 
   @BindView(R.id.convenientBanner) ConvenientBanner convenientBanner;
   @BindView(R.id.btnBookShelf) LinearLayout btnBookShelf;
@@ -47,6 +47,9 @@ public class MainActivity extends BaseActivity {
     tvPoint.setVisibility(View.GONE);
 
     showAd();
+
+    // 请求存储权限
+    requestStoragePermissions();
   }
 
   @OnClick({
@@ -138,10 +141,10 @@ public class MainActivity extends BaseActivity {
       simpleDraweeView.setImageURI(adsBean.getPic());
       simpleDraweeView.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View view) {
-          //                    Intent intent = new Intent(context, WebActivity.class);
-          //                    intent.putExtra("url", adsBean.getUrl());
-          //                    intent.putExtra("title", adsBean.getTitle());
-          //                    startActivity(intent);
+          //Intent intent = new Intent(context, WebActivity.class);
+          //intent.putExtra("url", adsBean.getUrl());
+          //intent.putExtra("title", adsBean.getTitle());
+          //startActivity(intent);
         }
       });
     }
@@ -175,5 +178,29 @@ public class MainActivity extends BaseActivity {
       return true;
     }
     return super.onKeyDown(keyCode, event);
+  }
+
+  // ================================================
+  // =============================权限==========================
+  @Override public void onRequestPermissionsResult(int requestCode, String[] permissions,
+      int[] grantResults) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+  }
+
+  @Override public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+  }
+
+  @Override public void onPermissionsDenied(int requestCode, List<String> perms) {
+
+  }
+
+  @AfterPermissionGranted(REQUEST_CODE_STORAGE) private void requestStoragePermissions() {
+    String[] perms = { Manifest.permission.WRITE_EXTERNAL_STORAGE };
+    if (!EasyPermissions.hasPermissions(this, perms)) {
+      EasyPermissions.requestPermissions(this, "为保证应用功能完整，请务必授予存储卡读写权限!", REQUEST_CODE_STORAGE,
+          perms);
+    }
   }
 }

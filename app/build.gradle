@@ -8,8 +8,8 @@ android {
     applicationId "org.jssvc.lib"
     minSdkVersion 15
     targetSdkVersion 24
-    versionCode 13
-    versionName '2.1.5'
+    versionCode 12
+    versionName '2.1.4'
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     // Enabling multidex support.
@@ -91,11 +91,11 @@ dependencies {
   // 播放器控件UniversalVideoView
   compile 'com.linsea:universalvideoview:1.1.0@aar'
   // 蒲公英
-  compile 'com.pgyersdk:sdk:2.4.0'
+  compile 'com.pgyersdk:sdk:2.5.6'
   // stickylist
   compile 'se.emilsjolander:stickylistheaders:2.7.0'
   // 权限管理
-  compile 'com.mylhyl:acp:1.1.7'
+  compile 'pub.devrel:easypermissions:0.4.0'
   // 下拉刷新
   compile 'com.nineoldandroids:library:2.4.0'
   compile 'cn.bingoogolapple:bga-refreshlayout:1.1.6@aar'
@@ -103,4 +103,6 @@ dependencies {
   compile 'com.umeng.analytics:analytics:6.0.4'
   // JsBridge
   compile 'com.github.lzyzsd:jsbridge:1.0.4'
+  // 常用工具类
+  compile 'com.blankj:utilcode:1.5.1'
 }

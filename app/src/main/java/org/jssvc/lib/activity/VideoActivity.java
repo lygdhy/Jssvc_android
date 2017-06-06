@@ -13,24 +13,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.OnClick;
+import com.blankj.utilcode.util.NetworkUtils;
 import com.universalvideoview.UniversalMediaController;
 import com.universalvideoview.UniversalVideoView;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.ShowTabAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.fragment.LibResumeFragment;
 import org.jssvc.lib.fragment.LibScheduleFragment;
 import org.jssvc.lib.fragment.LibYellowPagesFragment;
-import org.jssvc.lib.utils.NetworkUtils;
 import org.jssvc.lib.view.CustomDialog;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * 图书馆宣传片
@@ -111,8 +107,8 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
 
   // 初始化视频
   private void initPlayVideo() {
-    if (NetworkUtils.isConnected(context)) {
-      if (NetworkUtils.isWifiConnected(context)) {
+    if (NetworkUtils.isConnected()) {
+      if (NetworkUtils.isWifiConnected()) {
         showToast("已连接WIFI，请放心观看！");
         // 开始播放
         startPlayVideo();

@@ -1,7 +1,8 @@
 package org.jssvc.lib.base;
 
 import android.support.multidex.MultiDexApplication;
-
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.Utils;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
@@ -17,14 +18,20 @@ import com.umeng.analytics.MobclickAgent;
  */
 
 public class BaseApplication extends MultiDexApplication {
-  private static final String TAG = BaseApplication.class.getName();
-  public static final String UPDATE_STATUS_ACTION = "org.jssvc.lib.action.UPDATE_STATUS";
+
+  public static SPUtils spUtils;
+  private static final String FILE_NAME = "sp_jssvc_lib";
 
   BaseApplication appContext;
 
   @Override public void onCreate() {
     super.onCreate();
     appContext = this;
+
+    Utils.init(appContext);
+    //if (spUtils == null) {
+    //  spUtils = new SPUtils(FILE_NAME);// 实例化SharePreferenceUtils
+    //}
 
     // 初始化Fresco
     Fresco.initialize(this);

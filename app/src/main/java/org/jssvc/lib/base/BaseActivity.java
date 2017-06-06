@@ -6,17 +6,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
-
-import com.pgyersdk.crash.PgyCrashManager;
-import com.umeng.analytics.MobclickAgent;
-
-import org.jssvc.lib.utils.AppUtils;
-import org.jssvc.lib.utils.KeyboardUtils;
-import org.jssvc.lib.utils.NetworkUtils;
-import org.jssvc.lib.view.pDialog.XProgressDialog;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.KeyboardUtils;
+import com.blankj.utilcode.util.NetworkUtils;
+import com.pgyersdk.crash.PgyCrashManager;
+import com.umeng.analytics.MobclickAgent;
+import org.jssvc.lib.view.pDialog.XProgressDialog;
 
 /**
  * Activity 基类
@@ -109,7 +106,7 @@ public abstract class BaseActivity extends AppCompatActivity {
    * 网络错误处理
    */
   protected void dealNetError(Exception e) {
-    if (!NetworkUtils.isConnected(context)) {
+    if (!NetworkUtils.isConnected()) {
       showToast("无法连接网络");
     } else if (e.getMessage().contains("No address associated with hostname")) {
       // Unable to resolve host "opac.jssvc.edu.cn": No address associated with hostname
@@ -126,12 +123,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     // QQ国际版 com.tencent.mobileqqi
     // QQHD com.tencent.minihd.qq
     // 企业QQ com.tencent.eim
-    if (AppUtils.isInstallApp(context, "com.tencent.mqq")
-        || AppUtils.isInstallApp(context, "com.tencent.mobileqq")
-        || AppUtils.isInstallApp(context, "com.tencent.qqlite")
-        || AppUtils.isInstallApp(context, "com.tencent.mobileqqi")
-        || AppUtils.isInstallApp(context, "com.tencent.minihd.qq")
-        || AppUtils.isInstallApp(context, "com.tencent.eim")) {
+    if (AppUtils.isInstallApp("com.tencent.mqq")
+        || AppUtils.isInstallApp("com.tencent.mobileqq")
+        || AppUtils.isInstallApp("com.tencent.qqlite")
+        || AppUtils.isInstallApp("com.tencent.mobileqqi")
+        || AppUtils.isInstallApp("com.tencent.minihd.qq")
+        || AppUtils.isInstallApp("com.tencent.eim")) {
       String url = "mqqwpa://im/chat?chat_type=wpa&uin=" + qqNum;
       startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     } else {
