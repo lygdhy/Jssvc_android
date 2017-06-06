@@ -1,6 +1,5 @@
 package org.jssvc.lib.activity;
 
-import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
@@ -12,17 +11,16 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
-import com.mylhyl.acp.Acp;
-import com.mylhyl.acp.AcpListener;
-import com.mylhyl.acp.AcpOptions;
 import com.pgyersdk.javabean.AppBean;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
 import com.umeng.analytics.MobclickAgent;
-
+import okhttp3.Call;
+import okhttp3.Response;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.User;
@@ -31,13 +29,6 @@ import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.DataCleanManager;
 import org.jssvc.lib.utils.HtmlParseUtils;
 import org.jssvc.lib.view.CustomDialog;
-
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Response;
 
 import static com.pgyersdk.update.UpdateManagerListener.getAppBeanFromString;
 import static com.pgyersdk.update.UpdateManagerListener.startDownloadTask;
@@ -71,6 +62,7 @@ public class SettingActivity extends BaseActivity {
 
   @Override protected void initView() {
     setCurrentRubbish();
+
     autoUpdateCheck();
 
     rlPush.setVisibility(View.GONE);
@@ -114,8 +106,8 @@ public class SettingActivity extends BaseActivity {
         break;
       case R.id.rlCheck:
         // 版本检查
-        PgyUpdateManager.register(SettingActivity.this, new UpdateManagerListener() {
-          @Override public void onUpdateAvailable(final String result) {
+        PgyUpdateManager.register(this, "org.jssvc.lib.provider", new UpdateManagerListener() {
+          @Override public void onUpdateAvailable(String result) {
             findNewVer(result);
           }
 
@@ -227,19 +219,8 @@ public class SettingActivity extends BaseActivity {
     builder.setMessage(appBean.getReleaseNote());
     builder.setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
       public void onClick(final DialogInterface dialog, int which) {
-        Acp.getInstance(context)
-            .request(
-                new AcpOptions.Builder().setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    .build(), new AcpListener() {
-                  @Override public void onGranted() {
-                    dialog.dismiss();
-                    startDownloadTask(SettingActivity.this, appBean.getDownloadURL());
-                  }
-
-                  @Override public void onDenied(List<String> permissions) {
-                    showToast(permissions.toString() + "权限拒绝");
-                  }
-                });
+        dialog.dismiss();
+        startDownloadTask(SettingActivity.this, appBean.getDownloadURL());
       }
     });
     builder.setNegativeButton("稍后再说", new android.content.DialogInterface.OnClickListener() {
@@ -252,8 +233,8 @@ public class SettingActivity extends BaseActivity {
 
   // 版本自动检查
   private void autoUpdateCheck() {
-    PgyUpdateManager.register(SettingActivity.this, new UpdateManagerListener() {
-      @Override public void onUpdateAvailable(final String result) {
+    PgyUpdateManager.register(this, "org.jssvc.lib.provider", new UpdateManagerListener() {
+      @Override public void onUpdateAvailable(String result) {
         if (tvCheck != null) {
           tvCheck.setText("发现新版本");
           tvCheck.setTextColor(ContextCompat.getColor(context, R.color.red));

@@ -2,12 +2,11 @@ package org.jssvc.lib.activity;
 
 import android.view.View;
 import android.widget.TextView;
-
 import butterknife.BindView;
 import butterknife.OnClick;
+import com.blankj.utilcode.util.AppUtils;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.utils.AppUtils;
 
 /**
  * 关于我们
@@ -22,7 +21,7 @@ public class AboutActivity extends BaseActivity {
   }
 
   @Override protected void initView() {
-    tvVer.setText("Ver " + AppUtils.getAppVersionName(context));
+    tvVer.setText("Ver " + AppUtils.getAppVersionName());
   }
 
   @OnClick({ R.id.tvBack }) public void onClick(View view) {
