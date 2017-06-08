@@ -1,6 +1,7 @@
 package org.jssvc.lib.base;
 
 import android.support.multidex.MultiDexApplication;
+import cn.smssdk.SMSSDK;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -44,6 +45,9 @@ public class BaseApplication extends MultiDexApplication {
 
     // 初始化OkGo
     initOkGo();
+
+    // Mob SDK
+    SMSSDK.initSDK(this, "1e85bf08b2f08", "7d2ed9146830fca64601549ca9f87c93");
   }
 
   // 初始化OkGo

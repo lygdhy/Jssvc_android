@@ -40,7 +40,7 @@ public class HomeActivity extends BaseActivity implements EasyPermissions.Permis
   @BindView(R.id.tvPoint) TextView tvPoint;
 
   @Override protected int getContentViewId() {
-    return R.layout.activity_main;
+    return R.layout.activity_home;
   }
 
   @Override protected void initView() {
