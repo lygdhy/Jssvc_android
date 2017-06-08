@@ -1,220 +1,50 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:background="@color/ui_content"
+    android:orientation="vertical"
+    >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/actionbar_height"
-        android:background="@color/colorPrimary"
-        android:orientation="horizontal">
+  <RelativeLayout
+      style="@style/ActionBar_Whole_Style_1"
+      >
 
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:gravity="center_vertical"
-            android:src="@drawable/icon_logo" />
+    <TextView
+        android:text="Mob Test"
+        style="@style/ActionBar_Title_Style_1"
+        />
+  </RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/icon"
-            android:gravity="center_vertical"
-            android:text="@string/app_name"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+  <EditText
+      android:id="@+id/edt_phone"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="输入手机号码"
+      android:inputType="number"
+      android:textColor="@color/ui_theme"
+      android:textColorHint="@color/colorAccent"
+      />
+  <Button
+      android:id="@+id/btn_get"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="请求"
+      />
+  <EditText
+      android:id="@+id/edt_code"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="输入验证码"
+      android:inputType="number"
+      android:textColor="@color/ui_theme"
+      android:textColorHint="@color/colorAccent"
+      />
+  <Button
+      android:id="@+id/btn_submit"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="验证"
+      />
 
-        <TextView
-            android:id="@+id/tvPoint"
-            style="@style/ActionBar_Right_Style_1"
-            android:drawableLeft="@drawable/icon_menu_point" />
-    </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:orientation="vertical">
-
-        <com.bigkoo.convenientbanner.ConvenientBanner
-            android:id="@+id/convenientBanner"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:canLoop="true" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:padding="3dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:id="@+id/btnHistoryBorrow"
-                style="@style/home_menu_block"
-                android:layout_weight="2"
-                android:background="@drawable/bg_selector_menu_history"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView3"
-                    style="@style/home_menu_text"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="5dp"
-                    android:drawableTop="@drawable/icon_menu_history"
-                    android:text="借阅历史" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/btnCurentBorrow"
-                    style="@style/home_menu_block"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_selector_menu_current"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/home_menu_text"
-                        android:drawableLeft="@drawable/icon_menu_borrow"
-                        android:drawablePadding="5dp"
-                        android:text="催还续借"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/btnBookSearch"
-                    style="@style/home_menu_block"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_selector_menu_search"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/home_menu_text"
-                        android:drawableLeft="@drawable/icon_menu_search"
-                        android:drawablePadding="5dp"
-                        android:text="图书搜索"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:id="@+id/btnHelp"
-                style="@style/home_menu_block"
-                android:layout_weight="1"
-                android:background="@drawable/bg_selector_menu_help"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/home_menu_text"
-                    android:drawablePadding="5dp"
-                    android:drawableTop="@drawable/icon_menu_help"
-                    android:text="帮助指南" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/btnBookShelf"
-                    style="@style/home_menu_block"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_selector_menu_user"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/home_menu_text"
-                        android:drawablePadding="5dp"
-                        android:drawableTop="@drawable/icon_collect"
-                        android:text="我的书架" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/btnVideo"
-                    style="@style/home_menu_block"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_selector_menu_introduce"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/home_menu_text"
-                        android:drawablePadding="5dp"
-                        android:drawableTop="@drawable/icon_menu_lib"
-                        android:text="图书馆简介" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/btnMsg"
-                    style="@style/home_menu_block"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_selector_menu_message"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/home_menu_text"
-                        android:drawablePadding="5dp"
-                        android:drawableTop="@drawable/icon_menu_msg"
-                        android:text="新闻通知" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/btnSetting"
-                    style="@style/home_menu_block"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_selector_menu_setting"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/home_menu_text"
-                        android:drawablePadding="5dp"
-                        android:drawableTop="@drawable/icon_menu_set"
-                        android:text="设置" />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
 </LinearLayout>

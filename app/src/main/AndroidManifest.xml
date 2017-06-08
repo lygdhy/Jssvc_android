@@ -10,7 +10,14 @@
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> <!-- 读写sdcard，storage等等 -->
 
   <!-- 可选 -->
-  <uses-permission android:name="android.permission.READ_LOGS"/><!-- 获取logcat日志 -->
+  <uses-permission android:name="android.permission.READ_LOGS"/>
+
+  <!--Mob SDK-->
+  <uses-permission android:name="android.permission.READ_CONTACTS"/>
+  <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+  <uses-permission android:name="android.permission.READ_SMS"/>
+  <uses-permission android:name="android.permission.GET_TASKS"/>
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
   <application
       android:name=".base.BaseApplication"
@@ -45,6 +52,12 @@
     </provider>
 
     <activity
+        android:name="com.mob.tools.MobUIShell"
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar"
+        android:windowSoftInputMode="stateHidden|adjustResize"/>
+    
+    <activity
         android:name=".activity.SplashActivity"
         android:screenOrientation="portrait"
         android:theme="@style/StartAppTheme"/>
@@ -52,6 +65,15 @@
         android:name=".activity.EmptySplashActivity"
         android:screenOrientation="portrait"
         android:theme="@style/StartAppTheme">
+      <!--<intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>-->
+    </activity>
+    <activity
+        android:name=".activity.MainActivity"
+        android:screenOrientation="portrait">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
