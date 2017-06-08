@@ -45,6 +45,15 @@
       android:layout_height="wrap_content"
       android:text="验证"
       />
+  <TextView
+      android:id="@+id/textView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:lineSpacingExtra="5dp"
+      android:padding="10dp"
+      android:text="状态"
+      android:textColor="@color/ui_theme"
+      />
 
 
 </LinearLayout>
