@@ -12,7 +12,7 @@ public class HttpUrlParams {
     public static final String URL_LIB_USER_REGISTER = BASE_LIB_URL + "reader/redr_con_result.php";// 账号激活
     public static final String URL_LIB_CHANGE_PWD = BASE_LIB_URL + "reader/change_passwd_result.php";// 修改密码
 
-    public static final String URL_LIB_LOGIN = BASE_LIB_URL + "reader/redr_verify.php";// 图书馆登陆
+    public static final String URL_LIB_LOGIN = BASE_LIB_URL + "reader/redr_verify.php";// 图书馆登录
     public static final String URL_LIB_ACCOUND = BASE_LIB_URL + "reader/redr_info.php";// 个人详情
 
     public static final String URL_LIB_CURRENT_BORROW = BASE_LIB_URL + "reader/book_lst.php";// 当前借阅

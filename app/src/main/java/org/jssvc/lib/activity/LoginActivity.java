@@ -34,7 +34,7 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 /**
- * 登陆页面
+ * 登录页面
  */
 public class LoginActivity extends BaseActivity {
   @BindView(R.id.tvBack) TextView tvBack;
@@ -76,15 +76,15 @@ public class LoginActivity extends BaseActivity {
         finish();
         break;
       case R.id.tvLoginType:
-        // 登陆方式
+        // 登录方式
         showLoginTypeDialog();
         break;
       case R.id.btnLogin:
-        // 登陆
+        // 登录
         String loginname = edtName.getText().toString().trim();
         final String loginpwd = edtPwd.getText().toString().trim();
         if (TextUtils.isEmpty(loginname) || TextUtils.isEmpty(loginpwd)) {
-          showToast("登陆信息不能为空");
+          showToast("登录信息不能为空");
         } else {
           showProgressDialog("登录中...");
 
@@ -122,13 +122,13 @@ public class LoginActivity extends BaseActivity {
       // 账号统计
       MobclickAgent.onProfileSignIn(AccountPref.getLogonType(context).toUpperCase(),
           AccountPref.getLogonAccoundNumber(context));
-      // 登陆成功
+      // 登录成功
       finish();
     } else {
       // 有错误提示
       if (errorMsg.contains("认证失败")) {
         // “如果认证失败，您将不能使用我的图书馆功能”
-        startActivity(new Intent(context, RegisterActivity.class));
+        startActivity(new Intent(context, BoundAccountActivity.class));
       } else {
         showToast(errorMsg);
         AccountPref.removeLogonAccoundPwd(context);
@@ -136,7 +136,7 @@ public class LoginActivity extends BaseActivity {
     }
   }
 
-  // 登陆方式选择
+  // 登录方式选择
   private void showLoginTypeDialog() {
     final AlertDialog dlg = new AlertDialog.Builder(context).create();
     dlg.show();
@@ -150,7 +150,7 @@ public class LoginActivity extends BaseActivity {
 
     TextView tvDialogTitle = (TextView) window.findViewById(R.id.tvDialogTitle);
     TextView tvDialogSubTitle = (TextView) window.findViewById(R.id.tvDialogSubTitle);
-    tvDialogTitle.setText("请选择登陆方式");
+    tvDialogTitle.setText("请选择登录方式");
     tvDialogSubTitle.setVisibility(View.GONE);
 
     DialogListSelecterAdapter selecterAdapter;

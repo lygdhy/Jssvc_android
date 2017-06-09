@@ -24,8 +24,8 @@ import java.util.List;
 
 public class HtmlParseUtils {
 
-    // 登陆/激活错误信息获取===========================================================================
-    // 查找验证失败提示（[color=red]）信息，若返回结果为空则说明登陆成功
+    // 登录/激活错误信息获取===========================================================================
+    // 查找验证失败提示（[color=red]）信息，若返回结果为空则说明登录成功
     public static String getErrMsgOnLogin(String result) {
         String errorMsg = "";
         Document doc = Jsoup.parse(result);

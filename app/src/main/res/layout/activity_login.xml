@@ -12,7 +12,7 @@
 
         <TextView
             style="@style/ActionBar_Title_Style_1"
-            android:text="读者登陆" />
+            android:text="读者登录" />
 
     </RelativeLayout>
 
@@ -112,7 +112,7 @@
                 android:layout_height="45dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/bg_selector_blue_circle"
-                android:text="登陆"
+                android:text="登录"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>

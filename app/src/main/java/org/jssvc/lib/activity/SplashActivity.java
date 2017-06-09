@@ -36,7 +36,7 @@ public class SplashActivity extends BaseActivity {
         // 自动登录
         autoLogin();
       } else {
-        // 用户名密码不全，不登陆直接进入
+        // 用户名密码不全，不登录直接进入
         AccountPref.removeLogonAccoundPwd(context);
         startActivity(new Intent(context, HomeActivity.class));
         finish();
@@ -46,7 +46,7 @@ public class SplashActivity extends BaseActivity {
 
   // 自动登录
   private void autoLogin() {
-    // 用户名和密码都在，静默登陆
+    // 用户名和密码都在，静默登录
     OkGo.post(HttpUrlParams.URL_LIB_LOGIN)
         .tag(this)
         .params("number", AccountPref.getLogonAccoundNumber(context))
@@ -56,7 +56,7 @@ public class SplashActivity extends BaseActivity {
           @Override public void onError(Call call, Response response, Exception e) {
             super.onError(call, response, e);
             dealNetError(e);
-            // 登陆失败
+            // 登录失败
             AccountPref.removeLogonAccoundPwd(context);
           }
 
