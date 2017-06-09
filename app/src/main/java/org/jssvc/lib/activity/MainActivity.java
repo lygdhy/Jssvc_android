@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.smssdk.EventHandler;
@@ -21,6 +22,7 @@ public class MainActivity extends BaseActivity {
 
   @BindView(R.id.edt_phone) EditText edtPhone;
   @BindView(R.id.edt_code) EditText edtCode;
+  @BindView(R.id.textView) TextView textView;
 
   EventHandler eh;
   String str_phone = "";
@@ -30,6 +32,8 @@ public class MainActivity extends BaseActivity {
   }
 
   @Override protected void initView() {
+    Log.d("DHY", "初始化EventHandler.....");
+
     eh = new EventHandler() {
       @Override public void afterEvent(int event, int result, Object data) {
         if (result == SMSSDK.RESULT_COMPLETE) {
@@ -37,16 +41,16 @@ public class MainActivity extends BaseActivity {
           if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
             //提交验证码成功
             HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
-            showToast("验证成功！！！！！！！！！！！！！");
+            Log.d("DHY", "验证成功！！！！！！！！！！！！！");
           } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
             //获取验证码成功,true为智能验证，false为普通下发短信
             boolean smart = (Boolean) data;
             if (smart) {
               //通过智能验证
-              Log.d("DHY", "发送成功！Tip：智能验证");
+              Log.d("DHY", "请求成功！Tip：智能验证");
             } else {
               //依然走短信验证
-              Log.d("DHY", "发送成功！Tip：依然走短信验证");
+              Log.d("DHY", "请求成功！Tip：依然走短信验证");
             }
           } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
             //返回支持发送验证码的国家列表
@@ -80,6 +84,8 @@ public class MainActivity extends BaseActivity {
           showToast("号码不能为空");
           break;
         }
+        Log.d("DHY", "获取验证码.....");
+        showToast("获取验证码.....");
         SMSSDK.getVerificationCode("+86", str_phone, new OnSendMessageHandler() {
           @Override public boolean onSendMessage(String country, String phone) {
             /**
@@ -98,6 +104,7 @@ public class MainActivity extends BaseActivity {
           showToast("验证码不能为空");
           break;
         }
+        Log.d("DHY", "提交验证.....");
         SMSSDK.submitVerificationCode("+86", str_phone, code);
 
         break;
