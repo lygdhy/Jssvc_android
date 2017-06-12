@@ -3,7 +3,6 @@ package org.jssvc.lib.activity;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -22,7 +21,6 @@ import org.jssvc.lib.utils.HtmlParseUtils;
  * 登录页面
  */
 public class LoginActivity extends BaseActivity {
-  @BindView(R.id.btn_login) Button btnLogin;
   @BindView(R.id.edt_username) EditText edtUsername;
   @BindView(R.id.edt_pwd) EditText edtPwd;
 
@@ -43,17 +41,23 @@ public class LoginActivity extends BaseActivity {
     edtPwd.setText(AccountPref.getLogonAccoundPwd(context));
   }
 
-  @OnClick({ R.id.tv_back, R.id.tv_register, R.id.btnLogin }) public void onClick(View view) {
+  @OnClick({ R.id.tv_back, R.id.tv_register, R.id.tv_forget, R.id.btn_login })
+  public void onClick(View view) {
     switch (view.getId()) {
       case R.id.tv_back:
         finish();
         break;
-      case R.id.tv_register:
-        // 账户注册
-        startActivity(new Intent(context, RegisterActivity.class));
+      case R.id.tv_register:// 账户注册
+        Intent resetInt = new Intent(context, AccountResetActivity.class);
+        resetInt.putExtra(AccountResetActivity.ARG_OPT_CODE, 0);//0注册1找回密码
+        startActivity(resetInt);
         break;
-      case R.id.btnLogin:
-        // 登录
+      case R.id.tv_forget:// 忘记密码
+        Intent forgetInt = new Intent(context, AccountResetActivity.class);
+        forgetInt.putExtra(AccountResetActivity.ARG_OPT_CODE, 1);
+        startActivity(forgetInt);
+        break;
+      case R.id.btn_login:// 登录
         String loginname = edtUsername.getText().toString().trim();
         final String loginpwd = edtPwd.getText().toString().trim();
         if (TextUtils.isEmpty(loginname) || TextUtils.isEmpty(loginpwd)) {

@@ -15,7 +15,7 @@
     <!--listview Divider-->
     <item name="android:listDivider">@drawable/divider_bg</item>
     <!--背景颜色-->
-    <item name="android:windowBackground">@color/color_white</item>
+    <item name="android:windowBackground">@android:color/white</item>
     <item name="android:windowIsTranslucent">true</item>
   </style>
 
@@ -43,7 +43,7 @@
 
   <!-- actionbar_whole_style_white -->
   <style name="actionbar_whole_style_white" parent="actionbar_whole_style_base">
-    <item name="android:background">@color/color_white</item>
+    <item name="android:background">@android:color/white</item>
   </style>
 
   <!-- actionbar_title_style_base -->
@@ -54,7 +54,7 @@
     <item name="android:layout_centerVertical">true</item>
     <item name="android:gravity">center_horizontal</item>
     <item name="android:textSize">@dimen/actionbar_textsize_title</item>
-    <item name="android:textColor">@color/color_white</item>
+    <item name="android:textColor">@android:color/white</item>
     <item name="android:singleLine">true</item>
     <item name="android:ellipsize">end</item>
   </style>
@@ -74,7 +74,7 @@
     <item name="android:padding">10dp</item>
     <item name="android:drawableLeft">@drawable/arrow_left_white</item>
     <item name="android:textSize">@dimen/actionbar_textsize_left</item>
-    <item name="android:textColor">@color/color_white</item>
+    <item name="android:textColor">@android:color/white</item>
   </style>
 
   <!-- actionbar_left_style_white -->
@@ -92,7 +92,7 @@
     <item name="android:gravity">center_vertical</item>
     <item name="android:padding">10dp</item>
     <item name="android:textSize">@dimen/actionbar_textsize_right</item>
-    <item name="android:textColor">@color/color_white</item>
+    <item name="android:textColor">@android:color/white</item>
   </style>
 
   <!-- actionbar_right_style_white -->
@@ -139,7 +139,7 @@
   <style name="style_text_title_white" parent="style_text_base">
     <item name="android:gravity">center</item>
     <item name="android:textSize">14sp</item>
-    <item name="android:textColor">@color/color_white</item>
+    <item name="android:textColor">@android:color/white</item>
   </style>
 
   <!--列表菜单1-1-->
@@ -178,7 +178,7 @@
     <item name="android:textColor">@color/color_text_content</item>
     <item name="android:textColorHint">@color/color_text_hint</item>
     <item name="android:textSize">14sp</item>
-    <item name="android:background">@color/color_white</item>
+    <item name="android:background">@android:color/white</item>
     <item name="android:padding">10dp</item>
     <item name="android:lines">1</item>
   </style>
@@ -187,7 +187,7 @@
   <style name="style_button_base">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">42dp</item>
-    <item name="android:textColor">@color/color_white</item>
+    <item name="android:textColor">@android:color/white</item>
     <item name="android:textSize">14sp</item>
   </style>
 

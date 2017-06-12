@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ui_content"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout style="@style/actionbar_whole_style_white">
+    <TextView
+        android:id="@+id/tv_back"
+        style="@style/actionbar_left_style_white"
+        />
+    <TextView
+        android:id="@+id/tv_title"
+        android:text="快速注册"
+        style="@style/actionbar_title_style_white"
+        />
+    <View style="@style/item_split_horizontal"/>
+  </RelativeLayout>
+
+  <FrameLayout
+      android:id="@+id/main_container"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
+</LinearLayout>

@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_white"
+    android:background="@android:color/white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -78,7 +78,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="您累计借书达"
-                                    android:textColor="@color/color_white"
+                                    android:textColor="@android:color/white"
                                     android:textSize="12sp" />
 
                                 <TextView
@@ -87,14 +87,14 @@
                                     android:layout_height="wrap_content"
                                     android:layout_margin="3dp"
                                     android:text="XX"
-                                    android:textColor="@color/color_white"
+                                    android:textColor="@android:color/white"
                                     android:textSize="20sp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="册次"
-                                    android:textColor="@color/color_white"
+                                    android:textColor="@android:color/white"
                                     android:textSize="12sp" />
                             </LinearLayout>
 
@@ -108,7 +108,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="获得"
-                                    android:textColor="@color/color_white"
+                                    android:textColor="@android:color/white"
                                     android:textSize="12sp" />
 
                                 <TextView
@@ -117,14 +117,14 @@
                                     android:layout_height="wrap_content"
                                     android:layout_margin="3dp"
                                     android:text="XXXX"
-                                    android:textColor="@color/color_white"
+                                    android:textColor="@android:color/white"
                                     android:textSize="20sp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="称号！"
-                                    android:textColor="@color/color_white"
+                                    android:textColor="@android:color/white"
                                     android:textSize="12sp" />
                             </LinearLayout>
                         </LinearLayout>

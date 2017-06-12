@@ -235,7 +235,7 @@
           android:layout_margin="20dp"
           android:background="@drawable/bg_selector_danger_circle"
           android:text="退出账号"
-          android:textColor="@color/color_white"
+          android:textColor="@android:color/white"
           android:textSize="14sp"
           />
     </LinearLayout>
