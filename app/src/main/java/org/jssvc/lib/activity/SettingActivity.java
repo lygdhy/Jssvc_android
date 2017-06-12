@@ -50,6 +50,7 @@ public class SettingActivity extends BaseActivity {
   @BindView(R.id.ivMine) ImageView ivMine;
   @BindView(R.id.rlPwd) RelativeLayout rlPwd;
   @BindView(R.id.rlShare) RelativeLayout rlShare;
+  @BindView(R.id.rlBound) RelativeLayout rlBound;
 
   @BindView(R.id.btnExit) Button btnExit;
   @BindView(R.id.tvCheck) TextView tvCheck;
@@ -98,7 +99,7 @@ public class SettingActivity extends BaseActivity {
 
   @OnClick({
       R.id.tvBack, R.id.rlCheck, R.id.rlClear, R.id.rlFeedback, R.id.rlAbout, R.id.btnExit,
-      R.id.rlPwd, R.id.rlMine, R.id.rlShare
+      R.id.rlPwd, R.id.rlMine, R.id.rlShare, R.id.rlBound
   }) public void onClick(View view) {
     switch (view.getId()) {
       case R.id.tvBack:
@@ -160,6 +161,10 @@ public class SettingActivity extends BaseActivity {
           // 账号统计
           MobclickAgent.onProfileSignOff();
         }
+        break;
+      case R.id.rlBound:
+        // =================
+        startActivity(new Intent(context, AccountBoundActivity.class));
         break;
     }
   }

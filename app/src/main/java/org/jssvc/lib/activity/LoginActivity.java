@@ -8,14 +8,12 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
-import com.umeng.analytics.MobclickAgent;
 import okhttp3.Call;
 import okhttp3.Response;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
-import org.jssvc.lib.utils.HtmlParseUtils;
 
 /**
  * 登录页面
@@ -72,7 +70,7 @@ public class LoginActivity extends BaseActivity {
   }
 
   // 账户登录
-  private void doLogin(String loginname, final String loginpwd) {
+  private void doLogin(String loginname, String loginpwd) {
     OkGo.post(HttpUrlParams.URL_USER_LOGIN)
         .tag(this)
         .params("number", loginname)
@@ -81,7 +79,7 @@ public class LoginActivity extends BaseActivity {
           @Override public void onSuccess(String s, Call call, Response response) {
             dissmissProgressDialog();
             // s 即为所需要的结果
-            parseHtml(s, loginpwd);
+            showToast(s);
           }
 
           @Override public void onError(Call call, Response response, Exception e) {
@@ -90,28 +88,5 @@ public class LoginActivity extends BaseActivity {
             dealNetError(e);
           }
         });
-  }
-
-  // 解析网页
-  private void parseHtml(String s, String loginpwd) {
-    String errorMsg = HtmlParseUtils.getErrMsgOnLogin(s);
-    if (TextUtils.isEmpty(errorMsg)) {
-      // 保存密码
-      AccountPref.saveLoginAccoundPwd(context, loginpwd);
-      // 账号统计
-      MobclickAgent.onProfileSignIn(AccountPref.getLogonType(context).toUpperCase(),
-          AccountPref.getLogonAccoundNumber(context));
-      // 登录成功
-      finish();
-    } else {
-      // 有错误提示
-      if (errorMsg.contains("认证失败")) {
-        // “如果认证失败，您将不能使用我的图书馆功能”
-        startActivity(new Intent(context, AccountActivateActivity.class));
-      } else {
-        showToast(errorMsg);
-        AccountPref.removeLogonAccoundPwd(context);
-      }
-    }
   }
 }
