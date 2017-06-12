@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/color_white"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -18,7 +18,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:text="KEY"
-            android:textColor="@color/ui_theme"
+            android:textColor="@color/color_ui_theme"
             android:textSize="14sp" />
 
         <TextView
@@ -32,7 +32,7 @@
             android:gravity="right"
             android:lineSpacingExtra="2dp"
             android:text="VALUE"
-            android:textColor="@color/ui_text_body"
+            android:textColor="@color/color_text_content"
             android:textIsSelectable="true"
             android:textSize="14sp" />
     </RelativeLayout>
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="KEY"
-            android:textColor="@color/ui_theme"
+            android:textColor="@color/color_ui_theme"
             android:textSize="14sp" />
 
         <TextView
@@ -58,7 +58,7 @@
             android:layout_marginTop="3dp"
             android:lineSpacingExtra="2dp"
             android:text="VALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUE"
-            android:textColor="@color/ui_text_body"
+            android:textColor="@color/color_text_content"
             android:textIsSelectable="true"
             android:textSize="14sp" />
     </LinearLayout>

@@ -3,7 +3,7 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/color_white"
     android:orientation="horizontal"
     android:padding="10dp">
 
@@ -30,7 +30,7 @@
             android:lineSpacingExtra="2dp"
             android:maxLines="3"
             android:text="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-            android:textColor="@color/ui_text_title"
+            android:textColor="@color/color_text_title"
             android:textSize="14sp" />
 
         <LinearLayout
@@ -48,7 +48,7 @@
                 android:ellipsize="end"
                 android:lines="1"
                 android:text="XXX"
-                android:textColor="@color/ui_text_tip"
+                android:textColor="@color/color_text_hint"
                 android:textSize="10sp" />
 
             <TextView
@@ -58,7 +58,7 @@
                 android:ellipsize="end"
                 android:lines="1"
                 android:text="yyyy/MM/dd"
-                android:textColor="@color/ui_text_tip"
+                android:textColor="@color/color_text_hint"
                 android:textSize="10sp" />
         </LinearLayout>
 

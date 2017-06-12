@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="类型"
-        android:textColor="@color/ui_theme"
+        android:textColor="@color/color_ui_theme"
         android:textSize="12sp" />
 
 </LinearLayout>

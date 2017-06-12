@@ -1,17 +1,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ui_content"
+    android:background="@color/color_ui_content"
     android:orientation="vertical">
 
-    <RelativeLayout style="@style/ActionBar_Whole_Style_1">
+    <RelativeLayout style="@style/actionbar_whole_style_base">
 
         <TextView
             android:id="@+id/tvBack"
-            style="@style/ActionBar_Left_Style_1" />
+            style="@style/actionbar_left_style_base" />
 
         <TextView
-            style="@style/ActionBar_Title_Style_1"
+            style="@style/actionbar_title_style_base"
             android:text="图书搜索" />
     </RelativeLayout>
 
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_gravity="bottom"
-        android:background="@color/white"
+        android:background="@color/color_white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="10dp">
@@ -33,12 +33,12 @@
             android:drawableRight="@drawable/icon_footer_red"
             android:gravity="center"
             android:text="证件号"
-            android:textColor="@color/ui_text_body"
+            android:textColor="@color/color_text_content"
             android:textSize="14sp" />
 
         <View
             android:id="@+id/split"
-            style="@style/Item_split_vertical"
+            style="@style/item_split_vertical"
             android:layout_margin="10dp"
             android:layout_toRightOf="@+id/tvType" />
 
@@ -55,8 +55,8 @@
             android:inputType="text"
             android:padding="3dp"
             android:text=""
-            android:textColor="@color/ui_text_body"
-            android:textColorHint="@color/ui_text_tip"
+            android:textColor="@color/color_text_content"
+            android:textColorHint="@color/color_text_hint"
             android:textSize="14sp" />
 
         <ImageView
@@ -69,7 +69,7 @@
             android:src="@drawable/icon_search" />
     </RelativeLayout>
 
-    <View style="@style/Item_split_horizontal" />
+    <View style="@style/item_split_horizontal" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -109,7 +109,7 @@
             android:id="@+id/hisLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/color_white"
             android:orientation="vertical">
 
             <LinearLayout
@@ -124,7 +124,7 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <View style="@style/Item_split_horizontal" />
+            <View style="@style/item_split_horizontal" />
 
             <TextView
                 android:id="@+id/tvDeleteHis"
@@ -133,7 +133,7 @@
                 android:gravity="center_horizontal"
                 android:padding="10dp"
                 android:text="删除历史"
-                android:textColor="@color/ui_theme"
+                android:textColor="@color/color_ui_theme"
                 android:textSize="14sp" />
         </LinearLayout>
 

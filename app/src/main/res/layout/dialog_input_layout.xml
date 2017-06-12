@@ -16,23 +16,23 @@
             android:id="@+id/title"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:background="@color/white"
+            android:background="@color/color_white"
             android:gravity="center_vertical|left"
             android:maxLines="1"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:text="Dialog Title"
-            android:textColor="@color/ui_theme"
+            android:textColor="@color/color_ui_theme"
             android:textSize="18sp"
             android:visibility="visible" />
 
-        <View style="@style/Item_split_horizontal" />
+        <View style="@style/item_split_horizontal" />
 
         <LinearLayout
             android:id="@+id/content"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/color_white"
             android:gravity="center">
 
             <EditText
@@ -47,18 +47,18 @@
                 android:paddingRight="20dp"
                 android:paddingTop="15dp"
                 android:text=""
-                android:textColor="@color/ui_text_title"
-                android:textColorHint="@color/ui_text_tip"
+                android:textColor="@color/color_text_title"
+                android:textColorHint="@color/color_text_hint"
                 android:textSize="16sp" />
         </LinearLayout>
 
-        <View style="@style/Item_split_horizontal" />
+        <View style="@style/item_split_horizontal" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_gravity="bottom"
-            android:background="@color/white"
+            android:background="@color/color_white"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -77,13 +77,13 @@
                     android:background="@drawable/btn_selector_while"
                     android:gravity="center"
                     android:text="Positive"
-                    android:textColor="@color/ui_text_title"
+                    android:textColor="@color/color_text_title"
                     android:textSize="14sp" />
             </LinearLayout>
 
             <View
                 android:id="@+id/negativeLine"
-                style="@style/Item_split_vertical" />
+                style="@style/item_split_vertical" />
 
             <LinearLayout
                 android:id="@+id/negativeLayout"
@@ -101,7 +101,7 @@
                     android:background="@drawable/btn_selector_while"
                     android:gravity="center"
                     android:text="Negative"
-                    android:textColor="@color/ui_text_title"
+                    android:textColor="@color/color_text_title"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>

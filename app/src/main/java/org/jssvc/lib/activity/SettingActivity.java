@@ -237,14 +237,14 @@ public class SettingActivity extends BaseActivity {
       @Override public void onUpdateAvailable(String result) {
         if (tvCheck != null) {
           tvCheck.setText("发现新版本");
-          tvCheck.setTextColor(ContextCompat.getColor(context, R.color.red));
+          tvCheck.setTextColor(ContextCompat.getColor(context, R.color.color_text_warn));
         }
       }
 
       @Override public void onNoUpdateAvailable() {
         if (tvCheck != null) {
           tvCheck.setText("已经是最新版");
-          tvCheck.setTextColor(ContextCompat.getColor(context, R.color.ui_text_tip));
+          tvCheck.setTextColor(ContextCompat.getColor(context, R.color.color_text_hint));
         }
       }
     });

@@ -11,7 +11,7 @@
         android:layout_gravity="start|left"
         android:padding="8dp"
         android:text="header"
-        android:textColor="@android:color/white"
+        android:textColor="@color/color_white"
         android:textSize="14sp" />
 
 </RelativeLayout>

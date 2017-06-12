@@ -20,7 +20,7 @@
             android:drawableTop="@drawable/icon_404_start"
             android:gravity="center"
             android:text="书架空空如也"
-            android:textColor="@color/ui_text_tip"
+            android:textColor="@color/color_text_hint"
             android:textSize="14sp" />
 
     </LinearLayout>

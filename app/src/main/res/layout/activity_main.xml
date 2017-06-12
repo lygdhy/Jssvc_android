@@ -1,17 +1,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ui_content"
+    android:background="@color/color_ui_content"
     android:orientation="vertical"
     >
 
   <RelativeLayout
-      style="@style/ActionBar_Whole_Style_1"
+      style="@style/actionbar_whole_style_base"
       >
 
     <TextView
         android:text="Mob Test"
-        style="@style/ActionBar_Title_Style_1"
+        style="@style/actionbar_title_style_base"
         />
   </RelativeLayout>
 
@@ -21,7 +21,7 @@
       android:layout_height="wrap_content"
       android:hint="输入手机号码"
       android:inputType="number"
-      android:textColor="@color/ui_theme"
+      android:textColor="@color/color_ui_theme"
       android:textColorHint="@color/colorAccent"
       />
   <Button
@@ -36,7 +36,7 @@
       android:layout_height="wrap_content"
       android:hint="输入验证码"
       android:inputType="number"
-      android:textColor="@color/ui_theme"
+      android:textColor="@color/color_ui_theme"
       android:textColorHint="@color/colorAccent"
       />
   <Button
@@ -52,7 +52,7 @@
       android:lineSpacingExtra="5dp"
       android:padding="10dp"
       android:text="状态"
-      android:textColor="@color/ui_theme"
+      android:textColor="@color/color_ui_theme"
       />
 
 

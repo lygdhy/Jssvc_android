@@ -1,17 +1,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ui_content"
+    android:background="@color/color_ui_content"
     android:orientation="vertical">
 
-    <RelativeLayout style="@style/ActionBar_Whole_Style_1">
+    <RelativeLayout style="@style/actionbar_whole_style_base">
 
         <TextView
             android:id="@+id/tvBack"
-            style="@style/ActionBar_Left_Style_1" />
+            style="@style/actionbar_left_style_base" />
 
         <TextView
-            style="@style/ActionBar_Title_Style_1"
+            style="@style/actionbar_title_style_base"
             android:text="账户激活" />
     </RelativeLayout>
 
@@ -38,7 +38,7 @@
                 android:layout_margin="10dp"
                 android:lineSpacingExtra="10dp"
                 android:text="您尚未完成身份认证，请输入您的姓名进行认证。\n如果认证失败，您将无法使用掌上图书馆定制功能。"
-                android:textColor="@color/ui_text_body"
+                android:textColor="@color/color_text_content"
                 android:textSize="14sp" />
 
             <EditText
@@ -49,8 +49,8 @@
                 android:background="#fff"
                 android:hint="请输入您图书证上的姓名"
                 android:padding="10dp"
-                android:textColor="@color/ui_text_body"
-                android:textColorHint="@color/ui_text_tip"
+                android:textColor="@color/color_text_content"
+                android:textColorHint="@color/color_text_hint"
                 android:textSize="16sp" />
 
             <Button
@@ -60,7 +60,7 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/bg_selector_blue_circle"
                 android:text="提交验证"
-                android:textColor="@color/white"
+                android:textColor="@color/color_white"
                 android:textSize="14sp" />
 
         </LinearLayout>

@@ -1,30 +1,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/color_white"
     android:orientation="vertical"
     >
 
   <RelativeLayout
       android:id="@+id/rLayout"
       android:layout_alignParentTop="true"
-      style="@style/ActionBar_Whole_Style_1"
+      style="@style/actionbar_whole_style_base"
       >
 
     <TextView
         android:id="@+id/tvBack"
-        style="@style/ActionBar_Left_Style_1"
+        style="@style/actionbar_left_style_base"
         />
 
     <TextView
         android:text="分享APP"
-        style="@style/ActionBar_Title_Style_1"
+        style="@style/actionbar_title_style_base"
         />
 
     <TextView
         android:id="@+id/tvShare"
         android:drawableLeft="@drawable/icon_share"
-        style="@style/ActionBar_Right_Style_1"
+        style="@style/actionbar_right_style_base"
         />
   </RelativeLayout>
 
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="面对面 · 分享知识 · 收获快乐"
-        android:textColor="@color/ui_text_tip"
+        android:textColor="@color/color_text_hint"
         android:textSize="14sp"
         />
   </LinearLayout>

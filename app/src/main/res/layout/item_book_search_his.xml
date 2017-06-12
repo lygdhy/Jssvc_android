@@ -15,12 +15,12 @@
         android:padding="10dp"
         android:singleLine="true"
         android:text="tvName"
-        android:textColor="@color/ui_text_body"
+        android:textColor="@color/color_text_content"
         android:textSize="14sp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginLeft="30dp"
-        android:background="@color/ui_content" />
+        android:background="@color/color_ui_content" />
 </LinearLayout>

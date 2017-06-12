@@ -198,7 +198,7 @@ public class BookSearchActivity extends BaseActivity
     mRefreshLayout.setDelegate(this);
     BGAMoocStyleRefreshViewHolder moocStyleRefreshViewHolder =
         new BGAMoocStyleRefreshViewHolder(this, true);
-    moocStyleRefreshViewHolder.setUltimateColor(R.color.ui_theme);
+    moocStyleRefreshViewHolder.setUltimateColor(R.color.color_ui_theme);
     moocStyleRefreshViewHolder.setOriginalImage(R.drawable.icon_book_open);
     moocStyleRefreshViewHolder.setSpringDistanceScale(0.2f);
     mRefreshLayout.setRefreshViewHolder(moocStyleRefreshViewHolder);
