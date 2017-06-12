@@ -2,93 +2,107 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ui_content"
-    android:orientation="vertical">
+    android:background="@color/color_ui_content"
+    android:orientation="vertical"
+    >
 
-    <FrameLayout
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+      <FrameLayout
+          android:id="@+id/video_layout"
+          android:layout_width="fill_parent"
+          android:layout_height="200dp"
+          android:background="@color/color_black"
+          >
 
-            <FrameLayout
-                android:id="@+id/video_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="200dp"
-                android:background="@android:color/black">
+        <com.universalvideoview.UniversalVideoView
+            android:id="@+id/videoView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            app:uvv_autoRotation="true"
+            app:uvv_fitXY="false"
+            />
 
-                <com.universalvideoview.UniversalVideoView
-                    android:id="@+id/videoView"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_gravity="center"
-                    app:uvv_autoRotation="true"
-                    app:uvv_fitXY="false" />
-
-                <com.universalvideoview.UniversalMediaController
-                    android:id="@+id/media_controller"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    app:uvv_scalable="true" />
-
-                <RelativeLayout
-                    android:id="@+id/platLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_cover_video"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/ivCover"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/icon_video_play" />
-                </RelativeLayout>
-
-            </FrameLayout>
-
-            <LinearLayout
-                android:id="@+id/llbody"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/tabLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    app:tabBackground="@color/white"
-                    app:tabIndicatorColor="@color/colorAccent"
-                    app:tabIndicatorHeight="2dp"
-                    app:tabMode="fixed"
-                    app:tabPaddingEnd="12dp"
-                    app:tabPaddingStart="12dp"
-                    app:tabSelectedTextColor="@color/colorAccent"
-                    app:tabTextColor="@color/ui_text_title" />
-
-                <View
-                    style="@style/Item_split_horizontal"
-                    android:background="@color/ui_content" />
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/viewPager"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-        </LinearLayout>
+        <com.universalvideoview.UniversalMediaController
+            android:id="@+id/media_controller"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            app:uvv_scalable="true"
+            />
 
         <RelativeLayout
-            android:id="@+id/rlTop"
-            style="@style/ActionBar_Whole_Style_1"
-            android:background="@null">
+            android:id="@+id/platLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_cover_video"
+            android:gravity="center"
+            >
 
-            <TextView
-                android:id="@+id/tvBack"
-                style="@style/ActionBar_Left_Style_1" />
+          <ImageView
+              android:id="@+id/ivCover"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:src="@drawable/icon_video_play"
+              />
         </RelativeLayout>
 
-    </FrameLayout>
+      </FrameLayout>
+
+      <LinearLayout
+          android:id="@+id/llbody"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
+          >
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:tabBackground="@color/color_white"
+            app:tabIndicatorColor="@color/colorAccent"
+            app:tabIndicatorHeight="2dp"
+            app:tabMode="fixed"
+            app:tabPaddingEnd="12dp"
+            app:tabPaddingStart="12dp"
+            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabTextColor="@color/color_text_title"
+            />
+
+        <View
+            android:background="@color/color_ui_content"
+            style="@style/item_split_horizontal"
+            />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+      </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlTop"
+        android:background="@null"
+        style="@style/actionbar_whole_style_base"
+        >
+
+      <TextView
+          android:id="@+id/tvBack"
+          style="@style/actionbar_left_style_base"
+          />
+    </RelativeLayout>
+
+  </FrameLayout>
 </LinearLayout>

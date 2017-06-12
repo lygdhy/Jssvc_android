@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/white"
+        android:background="@color/color_white"
         android:orientation="vertical">
 
         <LinearLayout
@@ -27,7 +27,7 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="10dp"
                 android:text="tvDialogTitle"
-                android:textColor="@color/ui_theme"
+                android:textColor="@color/color_ui_theme"
                 android:textSize="18sp" />
 
             <TextView
@@ -36,11 +36,11 @@
                 android:layout_height="wrap_content"
                 android:gravity="left|center"
                 android:text="tvDialogSubTitle"
-                android:textColor="@color/ui_text_body"
+                android:textColor="@color/color_text_content"
                 android:textSize="10sp" />
         </LinearLayout>
 
-        <View style="@style/Item_split_horizontal" />
+        <View style="@style/item_split_horizontal" />
 
         <LinearLayout
             android:layout_width="fill_parent"

@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Title"
-            android:textColor="@color/ui_text_title"
+            android:textColor="@color/color_text_title"
             android:textSize="14sp" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:padding="2dp"
             android:text="SubTitle"
-            android:textColor="@color/ui_text_title"
+            android:textColor="@color/color_text_title"
             android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>

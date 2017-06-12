@@ -14,7 +14,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
-        card_view:cardBackgroundColor="@android:color/white"
+        card_view:cardBackgroundColor="@color/color_white"
         card_view:cardCornerRadius="6dp"
         card_view:cardElevation="1dp">
 
@@ -40,7 +40,7 @@
                         android:layout_marginRight="5dp"
                         android:gravity="center"
                         android:text="00"
-                        android:textColor="@color/ui_theme"
+                        android:textColor="@color/color_ui_theme"
                         android:textSize="16sp"
                         android:textStyle="italic|bold" />
 
@@ -53,7 +53,7 @@
                         android:lineSpacingExtra="2dp"
                         android:maxLines="2"
                         android:text="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-                        android:textColor="@color/ui_text_title"
+                        android:textColor="@color/color_text_title"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:text="分类号：TP000000"
-                    android:textColor="@color/ui_text_tip"
+                    android:textColor="@color/color_text_hint"
                     android:textSize="10sp" />
 
                 <TextView
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:text="责任者：XXX"
-                    android:textColor="@color/ui_text_tip"
+                    android:textColor="@color/color_text_hint"
                     android:textSize="10sp" />
 
                 <TextView
@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:text="出版社：XXXXXX出版"
-                    android:textColor="@color/ui_text_tip"
+                    android:textColor="@color/color_text_hint"
                     android:textSize="10sp" />
 
                 <TextView
@@ -90,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:text="图书类型：XXX"
-                    android:textColor="@color/ui_text_tip"
+                    android:textColor="@color/color_text_hint"
                     android:textSize="10sp" />
 
             </LinearLayout>
@@ -112,7 +112,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="3"
-                        android:textColor="@color/ui_text_body"
+                        android:textColor="@color/color_text_content"
                         android:textSize="18sp" />
 
                     <TextView
@@ -120,7 +120,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" / 3"
-                        android:textColor="@color/ui_text_body"
+                        android:textColor="@color/color_text_content"
                         android:textSize="12sp" />
                 </LinearLayout>
 

@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 设置整个屏幕背景为白色 -->
     <item>
-        <color android:color="@color/white" />
+        <color android:color="@color/color_white" />
     </item>
 
     <!-- 中间logo -->

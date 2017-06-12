@@ -1,55 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#00a359</color>
-    <color name="colorPrimaryDark">#009551</color>
-    <color name="colorAccent">#236fd6</color>
+  <color name="colorPrimary">#00a359</color>
+  <color name="colorPrimaryDark">#009551</color>
+  <color name="colorAccent">#236fd6</color>
 
-    <!-- 主题色 #15a9a7-->
-    <color name="ui_theme">#00a359</color>
-    <!--ActionBar背景色-->
-    <color name="ui_head">#00a359</color>
-    <!-- 页面底色(背景色) -->
-    <color name="ui_content">#f6f6f6</color>
-    <!-- 分割线/表格分割线 -->
-    <color name="ui_split">#efefef</color>
+  <!-- 主题色-->
+  <color name="color_ui_theme">#00a359</color>
+  <!--ActionBar背景色-->
+  <color name="color_ui_head">#00a359</color>
+  <!-- 页面底色(背景色) -->
+  <color name="color_ui_content">#f7f7f7</color>
 
-    <!-- 文本颜色 -->
-    <!--正文主色，用于标题和正文-->
-    <color name="ui_text_title">#313131</color>
-    <!--正文辅助色-->
-    <color name="ui_text_body">#313131</color>
-    <!--文本提示色-->
-    <color name="ui_text_tip">#aaaaaa</color>
+  <!-- 文本颜色 -->
+  <!--标题-->
+  <color name="color_text_title">#010101</color>
+  <!--子标题-->
+  <color name="color_text_title_sub">#313131</color>
+  <!--正文（标准）-->
+  <color name="color_text_content">#010101</color>
+  <!--正文（偏浅）-->
+  <color name="color_text_content_light">#9a9a9a</color>
+  <!--提示-->
+  <color name="color_text_hint">#aaaaaa</color>
+  <!--Error文本-->
+  <color name="color_text_warn">#e86643</color>
 
-    <!--纯色-->
-    <!--黄-->
-    <color name="ui_yellow">#fad502</color>
-    <!--蓝-->
-    <color name="ui_blue">#266cdf</color>
-    <!--橙-->
-    <color name="ui_orange">#f66039</color>
-    <!--紫-->
-    <color name="ui_purple">#bd2b8c</color>
-    <!--白 -->
-    <color name="white">#ffffff</color>
-    <!--黑 -->
-    <color name="black">#000000</color>
-    <!--紅 -->
-    <color name="red">#ff0000</color>
+  <!-- 分割线 -->
+  <color name="color_divider">#eeeeee</color>
+
+  <!--按钮-->
+  <color name="color_primary">#00aaff</color>
+  <color name="color_primary_pressed">#00aaff</color>
+  <color name="color_danger">#d9534f</color>
+  <color name="color_danger_pressed">#d9534f</color>
+
+  <!--纯色-->
+  <!--黄-->
+  <color name="color_yellow">#fad502</color>
+  <!--蓝-->
+  <color name="color_blue">#266cdf</color>
+  <!--橙-->
+  <color name="color_orange">#f66039</color>
+  <!--紫-->
+  <color name="color_purple">#bd2b8c</color>
+  <!--白 -->
+  <color name="color_white">#ffffff</color>
+  <!--黑 -->
+  <color name="color_black">#000000</color>
+  <!--紅 -->
+  <color name="color_red">#ff0000</color>
 
 
-    <color name="header_normal">#ffe74c3c</color>
-    <color name="header_pressed">#ffc0392b</color>
-    <color name="menu_section_header">#FFDDDDDD</color>
-    <color name="left_adapter_normal">#1571FA</color>
-    <color name="left_adapter_selected">#202020</color>
-    <color name="transparent">#00000000</color>
+  <color name="header_normal">#ffe74c3c</color>
+  <color name="header_pressed">#ffc0392b</color>
+  <color name="menu_section_header">#FFDDDDDD</color>
+  <color name="left_adapter_normal">#1571FA</color>
+  <color name="left_adapter_selected">#202020</color>
+  <color name="transparent">#00000000</color>
 
-    <color name="ll_coachback">#EFEFEF</color>
-    <color name="text">#37454F</color>
-    <color name="text_green">#88c057</color>
-    <color name="text_deep">#36444E</color>
-    <color name="text_bule">#4BA0DC</color>
-    <color name="text_light">#99A7AF</color>
-    <color name="text_red">#EC5C4A</color>
+  <color name="ll_coachback">#EFEFEF</color>
+  <color name="text">#37454F</color>
+  <color name="text_green">#88c057</color>
+  <color name="text_deep">#36444E</color>
+  <color name="text_bule">#4BA0DC</color>
+  <color name="text_light">#99A7AF</color>
+  <color name="text_red">#EC5C4A</color>
 </resources>

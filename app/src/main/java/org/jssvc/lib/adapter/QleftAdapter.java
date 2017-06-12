@@ -59,11 +59,11 @@ public class QleftAdapter extends BaseAdapter {
     if (categoryBeanList.get(position).isSelected) {
       holder.text.setBackgroundColor(Color.WHITE);
       holder.view.setVisibility(View.VISIBLE);
-      holder.text.setTextColor(ContextCompat.getColor(context, R.color.ui_theme));
+      holder.text.setTextColor(ContextCompat.getColor(context, R.color.color_ui_theme));
     } else {
-      holder.text.setBackgroundColor(ContextCompat.getColor(context, R.color.ui_split));
+      holder.text.setBackgroundColor(ContextCompat.getColor(context, R.color.color_divider));
       holder.view.setVisibility(View.INVISIBLE);
-      holder.text.setTextColor(ContextCompat.getColor(context, R.color.ui_text_body));
+      holder.text.setTextColor(ContextCompat.getColor(context, R.color.color_text_content));
     }
 
     holder.text.setText(categoryBeanList.get(position).name);

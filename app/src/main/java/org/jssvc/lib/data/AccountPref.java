@@ -23,7 +23,7 @@ public class AccountPref {
         .getSharedPreferences("account_preference", Context.MODE_PRIVATE);
   }
 
-  // 登陆账号
+  // 登录账号
   public static void saveLoginAccoundNumber(Context context, String loginToken) {
     getPreference(context).edit().putString(KEY_LOGIN_ACCOUNT_NUMBER, loginToken).apply();
   }
@@ -32,7 +32,7 @@ public class AccountPref {
     return getPreference(context).getString(KEY_LOGIN_ACCOUNT_NUMBER, "");
   }
 
-  // 登陆方式
+  // 登录方式
   public static void saveLoginType(Context context, String loginToken) {
     getPreference(context).edit().putString(KEY_LOGIN_TYPE, loginToken).apply();
   }
@@ -41,7 +41,7 @@ public class AccountPref {
     return getPreference(context).getString(KEY_LOGIN_TYPE, "");
   }
 
-  // 登陆密码
+  // 登录密码
   public static void saveLoginAccoundPwd(Context context, String loginToken) {
     getPreference(context).edit().putString(KEY_LOGIN_ACCOUNT_PWD, loginToken).apply();
   }
@@ -73,7 +73,7 @@ public class AccountPref {
     return user;
   }
 
-  // 判断登陆的依据
+  // 判断登录的依据
   public static boolean isLogon(Context context) {
     return !TextUtils.isEmpty(getLogonAccoundNumber(context)) && !TextUtils.isEmpty(
         getLogonAccoundPwd(context));

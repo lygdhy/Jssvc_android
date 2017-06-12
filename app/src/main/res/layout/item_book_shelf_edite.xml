@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    android:background="@color/white"
+    android:background="@color/color_white"
     android:gravity="center_vertical"
     android:padding="10dp">
 
@@ -19,7 +19,7 @@
         android:gravity="center_vertical"
         android:maxLines="2"
         android:text="XXXXXXXXX"
-        android:textColor="@color/ui_text_title"
+        android:textColor="@color/color_text_title"
         android:textSize="16sp" />
 
     <ImageView

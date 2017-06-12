@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/color_white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -21,15 +21,15 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout style="@style/ActionBar_Whole_Style_1">
+        <RelativeLayout style="@style/actionbar_whole_style_base">
 
             <TextView
                 android:id="@+id/tvBack"
-                style="@style/ActionBar_Left_Style_1" />
+                style="@style/actionbar_left_style_base" />
 
             <TextView
                 android:id="@+id/tvName"
-                style="@style/ActionBar_Title_Style_1"
+                style="@style/actionbar_title_style_base"
                 android:text="证件信息" />
         </RelativeLayout>
 
@@ -78,7 +78,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="您累计借书达"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/color_white"
                                     android:textSize="12sp" />
 
                                 <TextView
@@ -87,14 +87,14 @@
                                     android:layout_height="wrap_content"
                                     android:layout_margin="3dp"
                                     android:text="XX"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/color_white"
                                     android:textSize="20sp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="册次"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/color_white"
                                     android:textSize="12sp" />
                             </LinearLayout>
 
@@ -108,7 +108,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="获得"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/color_white"
                                     android:textSize="12sp" />
 
                                 <TextView
@@ -117,14 +117,14 @@
                                     android:layout_height="wrap_content"
                                     android:layout_margin="3dp"
                                     android:text="XXXX"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/color_white"
                                     android:textSize="20sp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="称号！"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/color_white"
                                     android:textSize="12sp" />
                             </LinearLayout>
                         </LinearLayout>
@@ -137,7 +137,7 @@
                     android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
-                    <View style="@style/Item_split_horizontal" />
+                    <View style="@style/item_split_horizontal" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -145,16 +145,16 @@
                         android:padding="10dp">
 
                         <TextView
-                            style="@style/itemThemeKey"
+                            style="@style/style_text_key_content"
                             android:text="工作单位" />
 
                         <TextView
                             android:id="@+id/tvUserDepart"
-                            style="@style/itemThemeValue"
+                            style="@style/style_text_value_content"
                             android:text="" />
                     </RelativeLayout>
 
-                    <View style="@style/Item_split_horizontal" />
+                    <View style="@style/item_split_horizontal" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -162,19 +162,19 @@
                         android:padding="10dp">
 
                         <TextView
-                            style="@style/itemThemeKey"
+                            style="@style/style_text_key_content"
                             android:text="读者证件号" />
 
                         <TextView
                             android:id="@+id/tvUserNum"
-                            style="@style/itemThemeValue"
+                            style="@style/style_text_value_content"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentTop="true"
                             android:text="" />
                     </RelativeLayout>
 
-                    <View style="@style/Item_split_horizontal" />
+                    <View style="@style/item_split_horizontal" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -182,16 +182,16 @@
                         android:padding="10dp">
 
                         <TextView
-                            style="@style/itemThemeKey"
+                            style="@style/style_text_key_content"
                             android:text="读者类型" />
 
                         <TextView
                             android:id="@+id/tvUserType"
-                            style="@style/itemThemeValue"
+                            style="@style/style_text_value_content"
                             android:text="" />
                     </RelativeLayout>
 
-                    <View style="@style/Item_split_horizontal" />
+                    <View style="@style/item_split_horizontal" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -199,17 +199,17 @@
                         android:padding="10dp">
 
                         <TextView
-                            style="@style/itemThemeKey"
+                            style="@style/style_text_key_content"
                             android:text="借阅等级" />
 
                         <TextView
                             android:id="@+id/tvUserLevel"
-                            style="@style/itemThemeValue"
+                            style="@style/style_text_value_content"
                             android:text="" />
                     </RelativeLayout>
 
 
-                    <View style="@style/Item_split_horizontal" />
+                    <View style="@style/item_split_horizontal" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -217,16 +217,16 @@
                         android:padding="10dp">
 
                         <TextView
-                            style="@style/itemThemeKey"
+                            style="@style/style_text_key_content"
                             android:text="违章状态" />
 
                         <TextView
                             android:id="@+id/tvRules"
-                            style="@style/itemThemeValue"
+                            style="@style/style_text_value_content"
                             android:text="" />
                     </RelativeLayout>
 
-                    <View style="@style/Item_split_horizontal" />
+                    <View style="@style/item_split_horizontal" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -234,16 +234,16 @@
                         android:padding="10dp">
 
                         <TextView
-                            style="@style/itemThemeKey"
+                            style="@style/style_text_key_content"
                             android:text="欠费状态" />
 
                         <TextView
                             android:id="@+id/tvArrearage"
-                            style="@style/itemThemeValue"
+                            style="@style/style_text_value_content"
                             android:text="" />
                     </RelativeLayout>
 
-                    <View style="@style/Item_split_horizontal" />
+                    <View style="@style/item_split_horizontal" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -251,16 +251,16 @@
                         android:padding="10dp">
 
                         <TextView
-                            style="@style/itemThemeKey"
+                            style="@style/style_text_key_content"
                             android:text="生效日期" />
 
                         <TextView
                             android:id="@+id/tvCardStart"
-                            style="@style/itemThemeValue"
+                            style="@style/style_text_value_content"
                             android:text="" />
                     </RelativeLayout>
 
-                    <View style="@style/Item_split_horizontal" />
+                    <View style="@style/item_split_horizontal" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -268,16 +268,16 @@
                         android:padding="10dp">
 
                         <TextView
-                            style="@style/itemThemeKey"
+                            style="@style/style_text_key_content"
                             android:text="失效日期" />
 
                         <TextView
                             android:id="@+id/tvCardEnd"
-                            style="@style/itemThemeValue"
+                            style="@style/style_text_value_content"
                             android:text="" />
                     </RelativeLayout>
 
-                    <View style="@style/Item_split_horizontal" />
+                    <View style="@style/item_split_horizontal" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

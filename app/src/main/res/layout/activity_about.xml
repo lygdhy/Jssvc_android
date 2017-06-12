@@ -1,151 +1,160 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ui_content"
-    android:orientation="vertical">
+    android:background="@color/color_ui_content"
+    android:orientation="vertical"
+    >
 
-    <RelativeLayout
-        android:id="@+id/rlTop"
-        style="@style/ActionBar_Whole_Style_1">
+  <RelativeLayout
+      android:id="@+id/rlTop"
+      style="@style/actionbar_whole_style_base"
+      >
 
-        <TextView
-            android:id="@+id/tvBack"
-            style="@style/ActionBar_Left_Style_1" />
+    <TextView
+        android:id="@+id/tvBack"
+        style="@style/actionbar_left_style_base"
+        />
 
-        <TextView
-            style="@style/ActionBar_Title_Style_1"
-            android:text="关于我们" />
-    </RelativeLayout>
+    <TextView
+        android:text="关于我们"
+        style="@style/actionbar_title_style_base"
+        />
+  </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/rlBottom"
+  <RelativeLayout
+      android:id="@+id/rlBottom"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      >
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="苏州市职业大学计算机工程学院安卓工作室\n「掌上图书馆」研发小组\n©2017 Jssvc.org"
+        android:textColor="@color/color_text_hint"
+        android:textSize="10sp"
+        />
+  </RelativeLayout>
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_above="@+id/rlBottom"
+      android:layout_below="@+id/rlTop"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:gravity="center_horizontal"
+          android:orientation="vertical"
+          android:padding="20dp"
+          >
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:padding="5dp"
+            android:text="@string/app_name"
+            android:textColor="@color/color_text_title"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/tvVer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ver 1.0"
+            android:textColor="@color/color_text_title"
+            android:textSize="12sp"
+            />
+      </LinearLayout>
+
+      <ImageView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:scaleType="fitXY"
+          android:src="@drawable/icon_stress_top_border"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="10dp"
+          >
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="20dp"
-            android:text="苏州市职业大学计算机工程学院安卓工作室\n「掌上图书馆」研发小组\n©2017 Jssvc.org"
-            android:textColor="@color/ui_text_tip"
-            android:textSize="10sp" />
-    </RelativeLayout>
+            android:layout_marginTop="10dp"
+            android:text="资源支持"
+            android:textColor="@color/color_ui_theme"
+            android:textSize="16sp"
+            />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/rlBottom"
-        android:layout_below="@+id/rlTop">
+        <TextView
+            android:layout_marginTop="10dp"
+            android:text="馆长信箱：zny@jssvc.edu.cn"
+            style="@style/style_text_body"
+            />
 
-        <LinearLayout
+        <TextView
+            android:layout_marginTop="5dp"
+            android:text="藏馆主站：http://lib.jssvc.edu.cn/"
+            style="@style/style_text_body"
+            />
+
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="10dp"
+          >
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="技术支持"
+            android:textColor="@color/color_ui_theme"
+            android:textSize="16sp"
+            />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:padding="20dp">
+        <TextView
+            android:layout_marginTop="10dp"
+            android:text="网易信箱：jssvcdev@126.com"
+            style="@style/style_text_body"
+            />
 
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_launcher" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_marginTop="5dp"
+            android:text="腾讯信箱：jssvcdev@qq.com"
+            style="@style/style_text_body"
+            />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:padding="5dp"
-                    android:text="@string/app_name"
-                    android:textColor="@color/ui_text_title"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tvVer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ver 1.0"
-                    android:textColor="@color/ui_text_title"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:src="@drawable/icon_stress_top_border" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="资源支持"
-                    android:textColor="@color/ui_theme"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="馆长信箱：zny@jssvc.edu.cn"
-                    android:textColor="@color/ui_text_body"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="藏馆主站：http://lib.jssvc.edu.cn/"
-                    android:textColor="@color/ui_text_body"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="技术支持"
-                    android:textColor="@color/ui_theme"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="网易信箱：jssvcdev@126.com"
-                    android:textColor="@color/ui_text_body"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="腾讯信箱：jssvcdev@qq.com"
-                    android:textColor="@color/ui_text_body"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+      </LinearLayout>
+    </LinearLayout>
+  </ScrollView>
 </RelativeLayout>

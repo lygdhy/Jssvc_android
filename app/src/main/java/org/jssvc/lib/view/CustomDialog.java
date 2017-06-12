@@ -105,7 +105,7 @@ public class CustomDialog extends Dialog {
         public CustomDialog create() {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             // instantiate the dialog with the custom Theme
-            final CustomDialog dialog = new CustomDialog(context, R.style.Dialog);
+            final CustomDialog dialog = new CustomDialog(context, R.style.style_dialog);
             View layout = inflater.inflate(R.layout.dialog_normal_layout, null);
             dialog.addContentView(layout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             // set the dialog title
