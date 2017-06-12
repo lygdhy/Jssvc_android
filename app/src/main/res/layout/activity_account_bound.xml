@@ -1,0 +1,153 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ui_content"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout style="@style/actionbar_whole_style_base">
+
+    <TextView
+        android:id="@+id/tvBack"
+        style="@style/actionbar_left_style_base"
+        />
+
+    <TextView
+        android:text="读者绑定"
+        style="@style/actionbar_title_style_base"
+        />
+
+  </RelativeLayout>
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        >
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="45dp"
+          android:layout_gravity="bottom"
+          android:background="@color/color_white"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:paddingLeft="10dp"
+          android:paddingRight="10dp"
+          >
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="院    校   "
+            android:textColor="@color/color_text_content"
+            android:textSize="14sp"
+            />
+
+        <View
+            android:layout_margin="10dp"
+            style="@style/item_split_vertical"
+            />
+
+        <EditText
+            android:editable="false"
+            android:text="苏州市职业大学"
+            style="@style/style_edit_text"
+            />
+      </LinearLayout>
+      <View style="@style/item_split_horizontal"/>
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="45dp"
+          android:layout_gravity="bottom"
+          android:background="@color/color_white"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:paddingLeft="10dp"
+          android:paddingRight="10dp"
+          >
+
+        <TextView
+            android:id="@+id/tvLoginType"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:drawableRight="@drawable/icon_footer_red"
+            android:gravity="center"
+            android:text="证件号"
+            android:textColor="@color/color_text_content"
+            android:textSize="14sp"
+            />
+
+        <View
+            android:layout_margin="10dp"
+            style="@style/item_split_vertical"
+            />
+
+        <EditText
+            android:id="@+id/edtName"
+            android:layout_centerVertical="true"
+            android:hint="请输入证件号"
+            android:text=""
+            style="@style/style_edit_text"
+            />
+      </LinearLayout>
+
+      <View style="@style/item_split_horizontal"/>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="45dp"
+          android:layout_gravity="bottom"
+          android:background="@color/color_white"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:paddingLeft="10dp"
+          android:paddingRight="10dp"
+          >
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="密    码   "
+            android:textColor="@color/color_text_content"
+            android:textSize="14sp"
+            />
+
+        <View
+            android:layout_margin="10dp"
+            style="@style/item_split_vertical"
+            />
+
+        <EditText
+            android:id="@+id/edtPwd"
+            android:hint="请输入密码"
+            android:inputType="textPassword"
+            android:text=""
+            style="@style/style_edit_text"
+            />
+      </LinearLayout>
+
+      <Button
+          android:id="@+id/btnLogin"
+          android:layout_width="match_parent"
+          android:layout_height="45dp"
+          android:layout_marginTop="20dp"
+          android:background="@drawable/bg_selector_primary_circle"
+          android:text="绑定"
+          android:textColor="@color/color_white"
+          android:textSize="14sp"
+          />
+    </LinearLayout>
+  </ScrollView>
+</LinearLayout>

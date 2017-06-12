@@ -2,140 +2,150 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_ui_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
-    <RelativeLayout style="@style/actionbar_whole_style_base">
+  <RelativeLayout style="@style/actionbar_whole_style_base">
 
-        <TextView
-            android:id="@+id/tvBack"
-            style="@style/actionbar_left_style_base" />
+    <TextView
+        android:id="@+id/tvBack"
+        style="@style/actionbar_left_style_base"
+        />
 
-        <TextView
-            style="@style/actionbar_title_style_base"
-            android:text="图书搜索" />
-    </RelativeLayout>
+    <TextView
+        android:text="图书搜索"
+        style="@style/actionbar_title_style_base"
+        />
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="45dp"
+      android:layout_gravity="bottom"
+      android:background="@color/color_white"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="10dp"
+      >
+
+    <TextView
+        android:id="@+id/tvType"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:drawableRight="@drawable/icon_footer_red"
+        android:gravity="center"
+        android:text="证件号"
+        style="@style/style_text_body"
+        />
+
+    <View
+        android:id="@+id/split"
+        android:layout_margin="10dp"
+        android:layout_toRightOf="@+id/tvType"
+        style="@style/item_split_vertical"
+        />
+
+    <EditText
+        android:id="@+id/edtKey"
+        android:layout_toLeftOf="@+id/ivSearch"
+        android:layout_toRightOf="@+id/split"
+        android:hint="请输入关键字"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:padding="3dp"
+        android:text=""
+        style="@style/style_edit_text"
+        />
+
+    <ImageView
+        android:id="@+id/ivSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="13dp"
+        android:src="@drawable/icon_search"
+        />
+  </RelativeLayout>
+
+  <View style="@style/item_split_horizontal"/>
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
 
     <RelativeLayout
+        android:id="@+id/rlEmpty"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_gravity="bottom"
-        android:background="@color/color_white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp">
+        android:layout_height="match_parent"
+        >
 
-        <TextView
-            android:id="@+id/tvType"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:drawableRight="@drawable/icon_footer_red"
-            android:gravity="center"
-            android:text="证件号"
-            android:textColor="@color/color_text_content"
-            android:textSize="14sp" />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true"
+          android:drawablePadding="10dp"
+          android:drawableTop="@drawable/icon_404_drown"
+          android:paddingBottom="100dp"
+          android:text="抱歉，未能找到你需要的图书"
+          android:textColor="#cdcdcd"
+          android:textSize="14sp"
+          />
 
-        <View
-            android:id="@+id/split"
-            style="@style/item_split_vertical"
-            android:layout_margin="10dp"
-            android:layout_toRightOf="@+id/tvType" />
-
-        <EditText
-            android:id="@+id/edtKey"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/ivSearch"
-            android:layout_toRightOf="@+id/split"
-            android:background="@null"
-            android:hint="请输入关键字"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:padding="3dp"
-            android:text=""
-            android:textColor="@color/color_text_content"
-            android:textColorHint="@color/color_text_hint"
-            android:textSize="14sp" />
-
-        <ImageView
-            android:id="@+id/ivSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:padding="13dp"
-            android:src="@drawable/icon_search" />
     </RelativeLayout>
 
-    <View style="@style/item_split_horizontal" />
-
-    <FrameLayout
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
-        <RelativeLayout
-            android:id="@+id/rlEmpty"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/recyclerView"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="5dp"
+          />
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:drawablePadding="10dp"
-                android:drawableTop="@drawable/icon_404_drown"
-                android:paddingBottom="100dp"
-                android:text="抱歉，未能找到你需要的图书"
-                android:textColor="#cdcdcd"
-                android:textSize="14sp" />
+    <LinearLayout
+        android:id="@+id/hisLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white"
+        android:orientation="vertical"
+        >
 
-        </RelativeLayout>
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:touchscreenBlocksFocus="true"
+          >
 
-        <cn.bingoogolapple.refreshlayout.BGARefreshLayout
-            android:id="@+id/refreshLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp" />
-        </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
-
-        <LinearLayout
-            android:id="@+id/hisLayout"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/lvHistory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_white"
-            android:orientation="vertical">
+            />
+      </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:touchscreenBlocksFocus="true">
+      <View style="@style/item_split_horizontal"/>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/lvHistory"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+      <TextView
+          android:id="@+id/tvDeleteHis"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_horizontal"
+          android:padding="10dp"
+          android:text="删除历史"
+          android:textColor="@color/color_ui_theme"
+          android:textSize="14sp"
+          />
+    </LinearLayout>
 
-            <View style="@style/item_split_horizontal" />
-
-            <TextView
-                android:id="@+id/tvDeleteHis"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:padding="10dp"
-                android:text="删除历史"
-                android:textColor="@color/color_ui_theme"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-    </FrameLayout>
+  </FrameLayout>
 </LinearLayout>

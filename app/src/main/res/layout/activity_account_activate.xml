@@ -13,7 +13,7 @@
         />
 
     <TextView
-        android:text="修改密码"
+        android:text="账户激活"
         style="@style/actionbar_title_style_base"
         />
   </RelativeLayout>
@@ -35,60 +35,34 @@
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
           android:layout_margin="10dp"
-          android:src="@drawable/icon_default_key"
+          android:src="@drawable/icon_default_avatar"
           />
 
       <TextView
-          android:id="@+id/tvCurrentUser"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
           android:layout_margin="10dp"
           android:lineSpacingExtra="10dp"
-          android:text="当前帐号为XXXXXXX"
-          android:textColor="@color/color_text_content"
-          android:textSize="14sp"
-          />
-
-      <TextView
-          android:id="@+id/tvPwdTip"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="10dp"
-          android:lineSpacingExtra="10dp"
-          android:text="为了您的账号安全，请修改登录密码。"
-          android:textColor="@color/color_text_content"
-          android:textSize="14sp"
+          android:text="您尚未完成身份认证，请输入您的姓名进行认证。\n如果认证失败，您将无法使用掌上图书馆定制功能。"
+          style="@style/style_text_body"
           />
 
       <EditText
-          android:id="@+id/edtOldPwd"
+          android:id="@+id/edtRealName"
           android:layout_margin="10dp"
-          android:hint="请输入旧密码"
-          android:inputType="textPassword"
-          style="@style/style_edit_text"
-          />
-
-      <EditText
-          android:id="@+id/edtPwd"
-          android:layout_margin="10dp"
-          android:hint="请输入新密码"
-          android:inputType="textPassword"
+          android:hint="请输入您图书证上的姓名"
           style="@style/style_edit_text"
           />
 
       <Button
-          android:id="@+id/btnSubmit"
+          android:id="@+id/btnRegister"
           android:layout_width="match_parent"
           android:layout_height="45dp"
           android:layout_margin="10dp"
           android:background="@drawable/bg_selector_primary_circle"
-          android:text="提交"
+          android:text="提交验证"
           android:textColor="@color/color_white"
           android:textSize="14sp"
           />
 
     </LinearLayout>
   </ScrollView>
-
-
 </LinearLayout>

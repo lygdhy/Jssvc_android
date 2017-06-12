@@ -73,11 +73,13 @@
 
       <LinearLayout
           android:id="@+id/btnHistoryBorrow"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_margin="3dp"
           android:layout_weight="2"
           android:background="@drawable/bg_selector_menu_history"
           android:gravity="center"
           android:orientation="vertical"
-          style="@style/home_menu_block"
           >
 
         <TextView
@@ -99,11 +101,13 @@
 
         <LinearLayout
             android:id="@+id/btnCurentBorrow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@drawable/bg_selector_menu_current"
             android:gravity="center"
             android:orientation="vertical"
-            style="@style/home_menu_block"
             >
 
           <TextView
@@ -117,11 +121,13 @@
 
         <LinearLayout
             android:id="@+id/btnBookSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@drawable/bg_selector_menu_search"
             android:gravity="center"
             android:orientation="vertical"
-            style="@style/home_menu_block"
             >
 
           <TextView
@@ -145,11 +151,13 @@
 
       <LinearLayout
           android:id="@+id/btnHelp"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_margin="3dp"
           android:layout_weight="1"
           android:background="@drawable/bg_selector_menu_help"
           android:gravity="center"
           android:orientation="vertical"
-          style="@style/home_menu_block"
           >
 
         <TextView
@@ -170,11 +178,13 @@
 
         <LinearLayout
             android:id="@+id/btnBookShelf"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@drawable/bg_selector_menu_user"
             android:gravity="center"
             android:orientation="vertical"
-            style="@style/home_menu_block"
             >
 
           <TextView
@@ -187,11 +197,13 @@
 
         <LinearLayout
             android:id="@+id/btnVideo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@drawable/bg_selector_menu_introduce"
             android:gravity="center"
             android:orientation="vertical"
-            style="@style/home_menu_block"
             >
 
           <TextView
@@ -212,11 +224,13 @@
 
         <LinearLayout
             android:id="@+id/btnMsg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@drawable/bg_selector_menu_message"
             android:gravity="center"
             android:orientation="vertical"
-            style="@style/home_menu_block"
             >
 
           <TextView
@@ -229,11 +243,13 @@
 
         <LinearLayout
             android:id="@+id/btnSetting"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@drawable/bg_selector_menu_setting"
             android:gravity="center"
             android:orientation="vertical"
-            style="@style/home_menu_block"
             >
 
           <TextView

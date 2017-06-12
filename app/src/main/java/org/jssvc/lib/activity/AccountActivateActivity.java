@@ -23,13 +23,13 @@ import okhttp3.Response;
 /**
  * 账户激活-身份验证
  */
-public class BoundAccountActivity extends BaseActivity {
+public class AccountActivateActivity extends BaseActivity {
   @BindView(R.id.tvBack) TextView tvBack;
   @BindView(R.id.edtRealName) EditText edtRealName;
   @BindView(R.id.btnRegister) Button btnRegister;
 
   @Override protected int getContentViewId() {
-    return R.layout.activity_bound_account;
+    return R.layout.activity_account_activate;
   }
 
   @Override protected void initView() {

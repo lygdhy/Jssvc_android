@@ -105,6 +105,7 @@
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">0.5dp</item>
     <item name="android:background">@color/color_divider</item>
+    <item name="android:layout_alignParentBottom">true</item>
   </style>
   <!-- 菜单Item_分割线 -->
   <style name="item_split_vertical">
@@ -113,19 +114,25 @@
     <item name="android:background">@color/color_divider</item>
   </style>
 
-
-  <!-- 菜单Block -->
-  <style name="home_menu_block">
-    <item name="android:layout_width">match_parent</item>
-    <item name="android:layout_height">match_parent</item>
-    <item name="android:layout_margin">3dp</item>
-  </style>
-
   <style name="style_text_base">
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_centerVertical">true</item>
     <item name="android:gravity">center_vertical</item>
+    <item name="android:layout_gravity">center_vertical</item>
+  </style>
+
+  <style name="style_text_body" parent="style_text_base">
+    <item name="android:textSize">14sp</item>
+    <item name="android:textColor">@color/color_text_content</item>
+  </style>
+
+  <style name="style_text_body_light" parent="style_text_body">
+    <item name="android:textColor">@color/color_text_content_light</item>
+  </style>
+
+  <style name="style_text_theme" parent="style_text_body">
+    <item name="android:textColor">@color/color_ui_theme</item>
   </style>
 
   <!--首页菜单文字-->
@@ -135,7 +142,7 @@
     <item name="android:textColor">@color/color_white</item>
   </style>
 
-  <!--列表菜单文字-->
+  <!--列表菜单1-1-->
   <style name="style_text_key_menu" parent="style_text_base">
     <item name="android:layout_alignParentLeft">true</item>
     <item name="android:drawablePadding">10dp</item>
@@ -143,20 +150,53 @@
     <item name="android:textColor">@color/color_text_title</item>
   </style>
 
+  <!--列表菜单1-2-->
   <style name="style_text_value_menu" parent="style_text_base">
     <item name="android:layout_alignParentRight">true</item>
     <item name="android:textSize">14sp</item>
     <item name="android:textColor">@color/color_text_hint</item>
   </style>
 
+  <!--列表菜单2-1-->
   <style name="style_text_key_content" parent="style_text_key_menu">
     <item name="android:textSize">14sp</item>
     <item name="android:textColor">@color/color_ui_theme</item>
   </style>
 
+  <!--列表菜单2-2-->
   <style name="style_text_value_content" parent="style_text_value_menu">
     <item name="android:textSize">14sp</item>
     <item name="android:textColor">@color/color_text_content</item>
+  </style>
+
+  <!--EditText-->
+  <style name="style_edit_text" parent="style_text_body">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">46dp</item>
+    <item name="android:layout_centerVertical">true</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:textColor">@color/color_text_content</item>
+    <item name="android:textColorHint">@color/color_text_hint</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:background">@color/color_white</item>
+    <item name="android:padding">10dp</item>
+    <item name="android:lines">1</item>
+  </style>
+
+  <!--Button base-->
+  <style name="style_button_base">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">42dp</item>
+    <item name="android:textColor">@color/color_white</item>
+    <item name="android:textSize">14sp</item>
+  </style>
+
+  <style name="style_button_primary" parent="style_button_base">
+    <item name="android:background">@drawable/bg_selector_primary</item>
+  </style>
+
+  <style name="style_button_danger" parent="style_button_base">
+    <item name="android:background">@drawable/bg_selector_danger</item>
   </style>
 
   <!--自定义对话框-->

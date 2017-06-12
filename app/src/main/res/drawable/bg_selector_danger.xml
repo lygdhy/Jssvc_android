@@ -5,16 +5,16 @@
         <shape>
 
             <!-- 填充 -->
-            <solid android:color="#ea4235" />
+            <solid android:color="@color/color_danger" />
 
             <!-- 颜色渐变：渐变方向、开始颜色、结束颜色 -->
-            <gradient android:angle="90" android:endColor="#ea4235" android:startColor="#ea4235" android:type="linear" />
+            <gradient android:angle="90" android:endColor="@color/color_danger" android:startColor="@color/color_danger" android:type="linear" />
 
             <!-- 按钮边缘：边缘宽、边缘颜色 -->
-            <stroke android:width="0dp" android:color="#ea4235" />
+            <stroke android:width="0dp" android:color="@color/color_danger" />
 
             <!-- 按钮四个圆角：半径 -->
-            <corners android:radius="6dp" />
+            <corners android:radius="0dp" />
 
             <!-- 按钮文字和边缘距离(内边距) -->
             <padding android:bottom="0dp" android:left="0dp" android:right="0dp" android:top="0dp" />
@@ -24,16 +24,16 @@
         <shape>
 
             <!-- 填充 -->
-            <solid android:color="#e3382b" />
+            <solid android:color="@color/color_danger_pressed" />
 
             <!-- 颜色渐变：渐变方向、开始颜色、结束颜色 -->
-            <gradient android:angle="90" android:endColor="#e3382b" android:startColor="#e3382b" android:type="linear" />
+            <gradient android:angle="90" android:endColor="@color/color_danger_pressed" android:startColor="@color/color_danger_pressed" android:type="linear" />
 
             <!-- 按钮边缘 -->
-            <stroke android:width="0dp" android:color="#e3382b" />
+            <stroke android:width="0dp" android:color="@color/color_danger_pressed" />
 
             <!-- 按钮四个圆角：半径 -->
-            <corners android:radius="6dp" />
+            <corners android:radius="0dp" />
 
             <!-- 按钮文字和边缘距离(内边距) -->
             <padding android:bottom="0dp" android:left="0dp" android:right="0dp" android:top="0dp" />

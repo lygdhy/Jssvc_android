@@ -9,18 +9,14 @@
 
     <TextView
         android:id="@+id/tv_back"
-        android:drawableLeft="@drawable/icon_colse_theme"
         style="@style/actionbar_left_style_white"
         />
     <TextView
-        android:text="登录"
+        android:text="注册"
         style="@style/actionbar_title_style_white"
         />
-    <TextView
-        android:id="@+id/tv_register"
-        android:text="注册"
-        style="@style/actionbar_right_style_white"
-        />
+    />
+    <View style="@style/item_split_horizontal"/>
   </RelativeLayout>
 
   <ScrollView
@@ -37,16 +33,10 @@
 
       <EditText
           android:id="@+id/edt_phone"
-          android:layout_width="match_parent"
-          android:layout_height="50dp"
           android:layout_margin="10dp"
-          android:background="#fff"
           android:hint="请输入手机号码"
           android:inputType="number"
-          android:padding="10dp"
-          android:textColor="@color/color_text_content"
-          android:textColorHint="@color/color_text_hint"
-          android:textSize="16sp"
+          style="@style/style_edit_text"
           />
 
       <Button
@@ -54,7 +44,7 @@
           android:layout_width="match_parent"
           android:layout_height="45dp"
           android:layout_margin="10dp"
-          android:background="@drawable/bg_selector_blue_circle"
+          android:background="@drawable/bg_selector_primary_circle"
           android:text="下一步"
           android:textColor="@color/color_white"
           android:textSize="14sp"

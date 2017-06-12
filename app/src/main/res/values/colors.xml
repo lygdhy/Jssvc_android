@@ -9,7 +9,7 @@
   <!--ActionBar背景色-->
   <color name="color_ui_head">#00a359</color>
   <!-- 页面底色(背景色) -->
-  <color name="color_ui_content">#f6f6f6</color>
+  <color name="color_ui_content">#f7f7f7</color>
 
   <!-- 文本颜色 -->
   <!--标题-->
@@ -26,7 +26,13 @@
   <color name="color_text_warn">#e86643</color>
 
   <!-- 分割线 -->
-  <color name="color_divider">#efefef</color>
+  <color name="color_divider">#eeeeee</color>
+
+  <!--按钮-->
+  <color name="color_primary">#00aaff</color>
+  <color name="color_primary_pressed">#00aaff</color>
+  <color name="color_danger">#d9534f</color>
+  <color name="color_danger_pressed">#d9534f</color>
 
   <!--纯色-->
   <!--黄-->

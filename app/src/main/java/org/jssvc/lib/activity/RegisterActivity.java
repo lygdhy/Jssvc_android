@@ -4,7 +4,7 @@ import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 
 /**
- * 账户注册/登录
+ * 账户注册
  */
 public class RegisterActivity extends BaseActivity {
 
