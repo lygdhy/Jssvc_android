@@ -1,53 +1,36 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_ui_content"
     android:orientation="vertical"
     >
-
-  <RelativeLayout
-      style="@style/actionbar_whole_style_base"
+  <android.support.v4.view.ViewPager
+      android:id="@+id/view_pager"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_above="@+id/ll_bottom"
+      />
+  <LinearLayout
+      android:id="@+id/ll_bottom"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:orientation="vertical"
       >
 
-    <TextView
-        android:text="Mob Test"
-        style="@style/actionbar_title_style_base"
+    <View
+        style="@style/item_split_horizontal"
         />
-  </RelativeLayout>
-
-  <EditText
-      android:id="@+id/edt_phone"
-      android:hint="输入手机号码"
-      android:inputType="number"
-      style="@style/style_edit_text"
-      />
-  <Button
-      android:id="@+id/btn_get"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="请求"
-      />
-  <EditText
-      android:id="@+id/edt_code"
-      android:hint="输入验证码"
-      android:inputType="number"
-      style="@style/style_edit_text"
-      />
-  <Button
-      android:id="@+id/btn_submit"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="验证"
-      />
-  <TextView
-      android:id="@+id/textView"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:lineSpacingExtra="5dp"
-      android:padding="10dp"
-      android:text="状态"
-      android:textColor="@color/color_ui_theme"
-      />
-
-
-</LinearLayout>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@android:color/white"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="fixed"
+        app:tabPaddingEnd="12dp"
+        app:tabPaddingStart="12dp"
+        />
+  </LinearLayout>
+</RelativeLayout>

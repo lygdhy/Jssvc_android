@@ -7,13 +7,15 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.fragment.AccountPhoneCheckFragment;
-import org.jssvc.lib.fragment.AccountResetPwdFragment;
+import org.jssvc.lib.fragment.PlatformAccountPhoneCheckFragment;
+import org.jssvc.lib.fragment.PlatformAccountResetPwdFragment;
 
 /**
- * 账户注册/密码找回
+ * 平台账户管理AccountPlatformManagerActivity
+ * 1、PlatformAccountPhoneCheckFragment	手机号码验证
+ * 2、PlatformAccountResetPwdFragment	账户找回/注册
  */
-public class AccountResetActivity extends BaseActivity {
+public class AccountPlatformManagerActivity extends BaseActivity {
   public static final String ARG_OPT_CODE = "opt_code";
   public static final String ARG_OPT_PHONE = "opt_phone";
 
@@ -22,7 +24,7 @@ public class AccountResetActivity extends BaseActivity {
   int opt_code = 0;//0注册1找回密码
 
   @Override protected int getContentViewId() {
-    return R.layout.activity_account_reset;
+    return R.layout.activity_account_platform_manager;
   }
 
   @Override protected void initView() {
@@ -42,24 +44,24 @@ public class AccountResetActivity extends BaseActivity {
   }
 
   /**
-   * 初始化页面
+   * 输入手机号码页面
    */
   public void initPhoneCheckFragment() {
     Bundle arguments = new Bundle();
     arguments.putInt(ARG_OPT_CODE, opt_code);
-    AccountPhoneCheckFragment myFragment = new AccountPhoneCheckFragment();
+    PlatformAccountPhoneCheckFragment myFragment = new PlatformAccountPhoneCheckFragment();
     myFragment.setArguments(arguments);
     getSupportFragmentManager().beginTransaction().add(R.id.main_container, myFragment).commit();
   }
 
   /**
-   * 初始化页面
+   * 重置密码页面
    */
   public void resetPwdFragment(String phone) {
     Bundle arguments = new Bundle();
     arguments.putInt(ARG_OPT_CODE, opt_code);
     arguments.putString(ARG_OPT_PHONE, phone);
-    AccountResetPwdFragment myFragment = new AccountResetPwdFragment();
+    PlatformAccountResetPwdFragment myFragment = new PlatformAccountResetPwdFragment();
     myFragment.setArguments(arguments);
     getSupportFragmentManager().beginTransaction()
         .add(R.id.main_container, myFragment)

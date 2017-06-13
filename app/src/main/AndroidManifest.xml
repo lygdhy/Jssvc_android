@@ -64,11 +64,11 @@
         android:name=".activity.EmptySplashActivity"
         android:screenOrientation="portrait"
         android:theme="@style/StartAppTheme">
-      <intent-filter>
+      <!--<intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
         <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
+      </intent-filter>-->
     </activity>
     <activity
         android:name=".activity.HomeActivity"
@@ -77,7 +77,22 @@
         android:name=".activity.LoginActivity"
         android:screenOrientation="portrait"/>
     <activity
-        android:name=".activity.AccountBoundActivity"
+        android:name=".activity.MainActivity"
+        android:screenOrientation="portrait">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+    <activity
+        android:name=".activity.AccountLibManagerActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".activity.AccountThirdManagerActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".activity.AccountPlatformManagerActivity"
         android:screenOrientation="portrait"/>
     <activity
         android:name=".activity.CardInfoActivity"
@@ -108,12 +123,6 @@
         android:name=".activity.AboutActivity"
         android:screenOrientation="portrait"/>
     <activity
-        android:name=".activity.AccountActivateActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.ResetPwdActivity"
-        android:screenOrientation="portrait"/>
-    <activity
         android:name=".activity.BookDetailsActivity"
         android:screenOrientation="portrait"/>
     <activity
@@ -136,14 +145,6 @@
         android:name=".activity.MsgBrowseActivity"
         android:screenOrientation="portrait"/>
 
-
-    <activity
-        android:name=".activity.AccountResetActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.MainActivity"
-        android:screenOrientation="portrait">
-    </activity>
   </application>
 
 </manifest>

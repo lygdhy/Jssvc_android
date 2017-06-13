@@ -1,0 +1,62 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ui_content"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout style="@style/actionbar_whole_style_white">
+    <TextView
+        android:id="@+id/tv_back"
+        style="@style/actionbar_left_style_white"
+        />
+    <TextView
+        android:text="帐号绑定"
+        style="@style/actionbar_title_style_white"
+        />
+    <View style="@style/item_split_horizontal"/>
+  </RelativeLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:background="@android:color/white"
+      android:orientation="vertical"
+      >
+    <View style="@style/item_split_horizontal"/>
+    <RelativeLayout
+        android:id="@+id/rl_lib"
+        style="@style/style_menu_list"
+        >
+      <TextView
+          android:text="图书馆绑定"
+          style="@style/style_text_key_menu"
+          />
+      <TextView
+          android:drawableRight="@drawable/icon_goto"
+          style="@style/style_text_value_menu"
+          />
+    </RelativeLayout>
+    <View
+        android:layout_marginLeft="10dp"
+        style="@style/item_split_horizontal"
+        />
+    <RelativeLayout
+        android:id="@+id/rl_jw"
+        style="@style/style_menu_list"
+        >
+
+      <TextView
+          android:text="教务系统绑定"
+          style="@style/style_text_key_menu"
+          />
+
+      <TextView
+          android:drawableRight="@drawable/icon_goto"
+          style="@style/style_text_value_menu"
+          />
+    </RelativeLayout>
+    <View style="@style/item_split_horizontal"/>
+  </LinearLayout>
+</LinearLayout>

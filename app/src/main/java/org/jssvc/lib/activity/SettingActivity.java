@@ -7,9 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -38,24 +35,9 @@ import static com.pgyersdk.update.UpdateManagerListener.startDownloadTask;
  */
 public class SettingActivity extends BaseActivity {
 
-  @BindView(R.id.tvBack) TextView tvBack;
-  @BindView(R.id.rlCheck) RelativeLayout rlCheck;
-  @BindView(R.id.rlClear) RelativeLayout rlClear;
-  @BindView(R.id.rlFeedback) RelativeLayout rlFeedback;
-  @BindView(R.id.rlAbout) RelativeLayout rlAbout;
-
-  @BindView(R.id.rlPush) RelativeLayout rlPush;
-  @BindView(R.id.rlMine) RelativeLayout rlMine;
-  @BindView(R.id.tvUserName) TextView tvUserName;
-  @BindView(R.id.ivMine) ImageView ivMine;
-  @BindView(R.id.rlPwd) RelativeLayout rlPwd;
-  @BindView(R.id.rlShare) RelativeLayout rlShare;
-  @BindView(R.id.rlBound) RelativeLayout rlBound;
-
-  @BindView(R.id.btnExit) Button btnExit;
-  @BindView(R.id.tvCheck) TextView tvCheck;
-  @BindView(R.id.barClear) ProgressBar barClear;
-  @BindView(R.id.tvClear) TextView tvClear;
+  @BindView(R.id.btn_exit) Button btnExit;
+  @BindView(R.id.tv_version) TextView tvVersion;
+  @BindView(R.id.tv_cache) TextView tvCache;
 
   @Override protected int getContentViewId() {
     return R.layout.activity_setting;
@@ -65,8 +47,6 @@ public class SettingActivity extends BaseActivity {
     setCurrentRubbish();
 
     autoUpdateCheck();
-
-    rlPush.setVisibility(View.GONE);
   }
 
   @Override public void onResume() {
@@ -76,15 +56,9 @@ public class SettingActivity extends BaseActivity {
       btnExit.setVisibility(View.VISIBLE);
       btnExit.setText("注销" + AccountPref.getLogonAccoundNumber(context));
 
-      rlPwd.setVisibility(View.VISIBLE);
-
       loadUserInfo();
     } else {
       btnExit.setVisibility(View.GONE);
-      rlPwd.setVisibility(View.GONE);
-
-      tvUserName.setText("个人中心");
-      ivMine.getDrawable().setLevel(0);
     }
   }
 
@@ -98,14 +72,14 @@ public class SettingActivity extends BaseActivity {
   }
 
   @OnClick({
-      R.id.tvBack, R.id.rlCheck, R.id.rlClear, R.id.rlFeedback, R.id.rlAbout, R.id.btnExit,
-      R.id.rlPwd, R.id.rlMine, R.id.rlShare, R.id.rlBound
+      R.id.tv_back, R.id.rl_update, R.id.rl_clear, R.id.rl_feedback, R.id.rl_about, R.id.btn_exit,
+      R.id.rl_appraise, R.id.rl_invitation
   }) public void onClick(View view) {
     switch (view.getId()) {
-      case R.id.tvBack:
+      case R.id.tv_back:
         finish();
         break;
-      case R.id.rlCheck:
+      case R.id.rl_update:
         // 版本检查
         PgyUpdateManager.register(this, "org.jssvc.lib.provider", new UpdateManagerListener() {
           @Override public void onUpdateAvailable(String result) {
@@ -117,54 +91,43 @@ public class SettingActivity extends BaseActivity {
           }
         });
         break;
-      case R.id.rlClear:
+      case R.id.rl_clear:
         // 清除缓存
         clearAlertDialog();
         break;
-      case R.id.rlFeedback:
+      case R.id.rl_feedback:
         // 意见反馈
         startActivity(new Intent(context, FeedbackActivity.class));
         break;
-      case R.id.rlAbout:
+      case R.id.rl_about:
         // 关于我们
         startActivity(new Intent(context, AboutActivity.class));
         break;
-      case R.id.rlPwd:
-        // 修改密码
-        Intent intent = new Intent(context, ResetPwdActivity.class);
-        intent.putExtra("onlyReset", false);
-        startActivity(intent);
+      //case R.id.rlMine:
+      //  // 证件信息=============================
+      //  if (AccountPref.isLogon(context)) {
+      //    startActivity(new Intent(context, CardInfoActivity.class));
+      //  } else {
+      //    startActivity(new Intent(context, LoginActivity.class));
+      //  }
+      //  break;
+      case R.id.rl_appraise:
+        // 给我们点个赞
         break;
-      case R.id.rlMine:
-        // 证件信息
-        if (AccountPref.isLogon(context)) {
-          startActivity(new Intent(context, CardInfoActivity.class));
-        } else {
-          startActivity(new Intent(context, LoginActivity.class));
-        }
-        break;
-      case R.id.rlShare:
-        // 分享APP
+      case R.id.rl_invitation:
+        // 邀请好友使用
         startActivity(new Intent(context, ShareActivity.class));
         break;
-      case R.id.btnExit:
+      case R.id.btn_exit:
         // 注销
         if (AccountPref.isLogon(context)) {
           AccountPref.removeLogonAccoundPwd(context);
           AccountPref.removeLogonUser(context);
           btnExit.setVisibility(View.GONE);
-          rlPwd.setVisibility(View.GONE);
-
-          tvUserName.setText("个人中心");
-          ivMine.getDrawable().setLevel(0);
 
           // 账号统计
           MobclickAgent.onProfileSignOff();
         }
-        break;
-      case R.id.rlBound:
-        // =================
-        startActivity(new Intent(context, AccountBoundActivity.class));
         break;
     }
   }
@@ -197,7 +160,6 @@ public class SettingActivity extends BaseActivity {
 
   // 加载数据到页面
   private void loadUserInfo2UI(User user) {
-    tvUserName.setText(user.getUsername() + "");
 
     // 解析借阅次数
     if (!TextUtils.isEmpty(user.getReadTimes())) {
@@ -205,11 +167,6 @@ public class SettingActivity extends BaseActivity {
       try {
         int times = Integer.parseInt(timestr);
         int level = CardInfoActivity.getLevelByTimes(times);
-        if (user.getSex().equals("男")) {
-          ivMine.getDrawable().setLevel(level);
-        } else {
-          ivMine.getDrawable().setLevel(level + 10);
-        }
       } catch (Exception e) {
       }
     }
@@ -240,16 +197,16 @@ public class SettingActivity extends BaseActivity {
   private void autoUpdateCheck() {
     PgyUpdateManager.register(this, "org.jssvc.lib.provider", new UpdateManagerListener() {
       @Override public void onUpdateAvailable(String result) {
-        if (tvCheck != null) {
-          tvCheck.setText("发现新版本");
-          tvCheck.setTextColor(ContextCompat.getColor(context, R.color.color_text_warn));
+        if (tvVersion != null) {
+          tvVersion.setText("发现新版本");
+          tvVersion.setTextColor(ContextCompat.getColor(context, R.color.color_text_warn));
         }
       }
 
       @Override public void onNoUpdateAvailable() {
-        if (tvCheck != null) {
-          tvCheck.setText("已经是最新版");
-          tvCheck.setTextColor(ContextCompat.getColor(context, R.color.color_text_hint));
+        if (tvVersion != null) {
+          tvVersion.setText("已经是最新版");
+          tvVersion.setTextColor(ContextCompat.getColor(context, R.color.color_text_hint));
         }
       }
     });
@@ -267,10 +224,8 @@ public class SettingActivity extends BaseActivity {
   private void setCurrentRubbish() {
     String sizeStr = "0.0M";
     try {
-      barClear.setVisibility(View.GONE);
-      tvClear.setVisibility(View.VISIBLE);
       sizeStr = DataCleanManager.getTotalCacheSize(getApplicationContext());
-      tvClear.setText(sizeStr);
+      tvCache.setText(sizeStr);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -284,9 +239,6 @@ public class SettingActivity extends BaseActivity {
     builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
       public void onClick(final DialogInterface dialog, int which) {
         dialog.dismiss();
-
-        barClear.setVisibility(View.VISIBLE);
-        tvClear.setVisibility(View.GONE);
 
         DataCleanManager.clearAllCache(getApplicationContext());
         showToast("清理中...");

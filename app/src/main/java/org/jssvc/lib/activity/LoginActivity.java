@@ -12,7 +12,6 @@ import okhttp3.Call;
 import okhttp3.Response;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
 
 /**
@@ -27,16 +26,6 @@ public class LoginActivity extends BaseActivity {
   }
 
   @Override protected void initView() {
-    initLoginType();
-  }
-
-  private void initLoginType() {
-  }
-
-  @Override public void onResume() {
-    super.onResume();
-    edtUsername.setText(AccountPref.getLogonAccoundNumber(context));
-    edtPwd.setText(AccountPref.getLogonAccoundPwd(context));
   }
 
   @OnClick({ R.id.tv_back, R.id.tv_register, R.id.tv_forget, R.id.btn_login })
@@ -46,14 +35,10 @@ public class LoginActivity extends BaseActivity {
         finish();
         break;
       case R.id.tv_register:// 账户注册
-        Intent resetInt = new Intent(context, AccountResetActivity.class);
-        resetInt.putExtra(AccountResetActivity.ARG_OPT_CODE, 0);//0注册1找回密码
-        startActivity(resetInt);
+        goAccountReset(0);
         break;
       case R.id.tv_forget:// 忘记密码
-        Intent forgetInt = new Intent(context, AccountResetActivity.class);
-        forgetInt.putExtra(AccountResetActivity.ARG_OPT_CODE, 1);
-        startActivity(forgetInt);
+        goAccountReset(1);
         break;
       case R.id.btn_login:// 登录
         String loginname = edtUsername.getText().toString().trim();
@@ -67,6 +52,13 @@ public class LoginActivity extends BaseActivity {
         }
         break;
     }
+  }
+
+  // //0注册1找回密码
+  private void goAccountReset(int code) {
+    Intent intent = new Intent(context, AccountPlatformManagerActivity.class);
+    intent.putExtra(AccountPlatformManagerActivity.ARG_OPT_CODE, code);//0注册1找回密码
+    startActivity(intent);
   }
 
   // 账户登录
