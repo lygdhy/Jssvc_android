@@ -1,4 +1,4 @@
-package org.jssvc.lib.activity;
+package org.jssvc.lib.fragment;
 
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -34,10 +34,11 @@ import java.util.Map;
 import okhttp3.Call;
 import okhttp3.Response;
 import org.jssvc.lib.R;
+import org.jssvc.lib.activity.BookDetailsActivity;
 import org.jssvc.lib.adapter.BookSearchAdapter;
 import org.jssvc.lib.adapter.BookSearchHisAdapter;
 import org.jssvc.lib.adapter.DialogListSelecterAdapter;
-import org.jssvc.lib.base.BaseActivity;
+import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.BookSearchBean;
 import org.jssvc.lib.bean.ListSelecterBean;
 import org.jssvc.lib.data.AccountPref;
@@ -47,23 +48,26 @@ import org.jssvc.lib.utils.HtmlParseUtils;
 import org.jssvc.lib.view.DividerItemDecoration;
 
 /**
- * 图书搜索
+ * <pre>
+ *     author : TOC_010
+ *     time   : 2017/06/13
+ *     desc   : 图书搜索
+ *     version: 1.0
+ * </pre>
  */
-public class BookSearchActivity extends BaseActivity
+public class BookSearchFragment extends BaseFragment
     implements BGARefreshLayout.BGARefreshLayoutDelegate {
+  @BindView(R.id.tv_type) TextView tvType;
+  @BindView(R.id.edt_key) EditText edtKey;
+  @BindView(R.id.iv_search) ImageView ivSearch;
+  @BindView(R.id.rl_empty) RelativeLayout rlEmpty;
 
-  @BindView(R.id.tvBack) TextView tvBack;
-  @BindView(R.id.tvType) TextView tvType;
-  @BindView(R.id.edtKey) EditText edtKey;
-  @BindView(R.id.ivSearch) ImageView ivSearch;
-  @BindView(R.id.rlEmpty) RelativeLayout rlEmpty;
+  @BindView(R.id.his_layout) LinearLayout hisLayout;//搜索记录
+  @BindView(R.id.lv_history) RecyclerView lvHistory;
+  @BindView(R.id.tv_delete_his) TextView tvDeleteHis;
 
-  @BindView(R.id.hisLayout) LinearLayout hisLayout;//搜索记录
-  @BindView(R.id.lvHistory) RecyclerView lvHistory;
-  @BindView(R.id.tvDeleteHis) TextView tvDeleteHis;
-
-  @BindView(R.id.refreshLayout) BGARefreshLayout mRefreshLayout;
-  @BindView(R.id.recyclerView) RecyclerView recyclerView;//查询数据
+  @BindView(R.id.refresh_layout) BGARefreshLayout mRefreshLayout;
+  @BindView(R.id.recycler_view) RecyclerView recyclerView;//查询数据
 
   // 搜索记录
   List<String> hislist = new ArrayList<String>();
@@ -81,7 +85,7 @@ public class BookSearchActivity extends BaseActivity
   int maxPageSize = 1;// 最大页数，根据返回值动态计算
 
   @Override protected int getContentViewId() {
-    return R.layout.activity_book_search;
+    return R.layout.fragment_book_search;
   }
 
   @Override protected void initView() {
@@ -175,6 +179,7 @@ public class BookSearchActivity extends BaseActivity
 
   // 初始化搜索类型
   private void initSearchType() {
+    searchTypeList.clear();
     searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "title", "题名", ""));
     searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "author", "责任者", ""));
     searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "keyword", "主题词", ""));
@@ -191,24 +196,20 @@ public class BookSearchActivity extends BaseActivity
   private void initRefreshLayout() {
     mRefreshLayout.setDelegate(this);
     BGAMoocStyleRefreshViewHolder moocStyleRefreshViewHolder =
-        new BGAMoocStyleRefreshViewHolder(this, true);
+        new BGAMoocStyleRefreshViewHolder(getActivity(), true);
     moocStyleRefreshViewHolder.setUltimateColor(R.color.color_ui_theme);
     moocStyleRefreshViewHolder.setOriginalImage(R.drawable.icon_book_open);
     moocStyleRefreshViewHolder.setSpringDistanceScale(0.2f);
     mRefreshLayout.setRefreshViewHolder(moocStyleRefreshViewHolder);
   }
 
-  @OnClick({ R.id.tvBack, R.id.tvType, R.id.ivSearch, R.id.tvDeleteHis })
-  public void onClick(View view) {
+  @OnClick({ R.id.tv_type, R.id.iv_search, R.id.tv_delete_his }) public void onClick(View view) {
     switch (view.getId()) {
-      case R.id.tvBack:
-        finish();
-        break;
-      case R.id.tvType:
+      case R.id.tv_type:
         // 类型选择
         showTypeDialog();
         break;
-      case R.id.ivSearch:
+      case R.id.iv_search:
         // 搜索
         searchText = edtKey.getText().toString().trim();
         if (!TextUtils.isEmpty(searchText)) {
@@ -216,7 +217,7 @@ public class BookSearchActivity extends BaseActivity
           searchBookEngine(true);
         }
         break;
-      case R.id.tvDeleteHis:
+      case R.id.tv_delete_his:
         // 清空历史
         AppPref.clearSearchKey(context);
         reLoadSearchHis();

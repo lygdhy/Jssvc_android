@@ -88,8 +88,6 @@ dependencies {
   compile 'org.jsoup:jsoup:1.10.1'
   // 轮播广告
   compile 'com.bigkoo:convenientbanner:2.0.5'
-  // 播放器控件UniversalVideoView
-  compile 'com.linsea:universalvideoview:1.1.0@aar'
   // 蒲公英
   compile 'com.pgyersdk:sdk:2.5.6'
   // stickylist
@@ -98,7 +96,8 @@ dependencies {
   compile 'pub.devrel:easypermissions:0.4.0'
   // 下拉刷新
   compile 'com.nineoldandroids:library:2.4.0'
-  compile 'cn.bingoogolapple:bga-refreshlayout:1.1.6@aar'
+  compile 'cn.bingoogolapple:bga-adapter:1.1.8@aar'
+  compile 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar'
   // 友盟统计
   compile 'com.umeng.analytics:analytics:6.0.4'
   // JsBridge

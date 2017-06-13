@@ -24,9 +24,6 @@
   <color name="color_text_hint">#aaaaaa</color>
   <!--Error文本-->
   <color name="color_text_warn">#e86643</color>
-  <!--底部菜单按钮颜色-->
-  <color name="color_text_tab">#716e69</color>
-  <color name="color_text_tab_pressed">#70a336</color>
 
   <!-- 分割线 -->
   <color name="color_divider">#eeeeee</color>

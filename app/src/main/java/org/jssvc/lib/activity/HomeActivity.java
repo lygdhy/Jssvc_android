@@ -95,7 +95,7 @@ public class HomeActivity extends BaseActivity implements EasyPermissions.Permis
         break;
       case R.id.btnVideo:
         // 图书馆简介
-        startActivity(new Intent(context, VideoActivity.class));
+        startActivity(new Intent(context, AboutSchoolActivity.class));
         break;
       case R.id.btnSetting:
         // 设置

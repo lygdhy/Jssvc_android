@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.fragment.BookCategoryFragment;
+import org.jssvc.lib.fragment.BookSearchFragment;
 import org.jssvc.lib.fragment.DiscussFragment;
 import org.jssvc.lib.fragment.HomeFragment;
 import org.jssvc.lib.fragment.MineFragment;
@@ -45,25 +45,26 @@ public class MainActivity extends BaseActivity {
     //将fragment装进列表中
     tabFragments = new ArrayList<>();
     tabFragments.add(new HomeFragment());
-    tabFragments.add(new BookCategoryFragment());
+    tabFragments.add(new BookSearchFragment());
     tabFragments.add(new DiscussFragment());
     tabFragments.add(new MineFragment());
 
     //将名称加载tab名字列表
     tabIndicators = new ArrayList<>();
     tabIndicators.add("首页");
-    tabIndicators.add("分类");
+    tabIndicators.add("搜书");
     tabIndicators.add("交流");
     tabIndicators.add("我的");
 
     tabPics = new ArrayList<>();
     tabPics.add(R.drawable.icon_selector_menu_home);
-    tabPics.add(R.drawable.icon_selector_menu_category);
+    tabPics.add(R.drawable.icon_selector_menu_search);
     tabPics.add(R.drawable.icon_selector_menu_discuss);
     tabPics.add(R.drawable.icon_selector_menu_mine);
 
     contentAdapter = new ContentPagerAdapter(getSupportFragmentManager());
     viewPager.setAdapter(contentAdapter);
+    viewPager.setOffscreenPageLimit(4);
   }
 
   private void initTab() {

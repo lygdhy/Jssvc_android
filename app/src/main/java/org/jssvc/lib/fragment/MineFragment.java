@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.view.View;
 import butterknife.OnClick;
 import org.jssvc.lib.R;
+import org.jssvc.lib.activity.AboutSchoolActivity;
 import org.jssvc.lib.activity.AccountThirdManagerActivity;
 import org.jssvc.lib.activity.SettingActivity;
-import org.jssvc.lib.activity.VideoActivity;
 import org.jssvc.lib.base.BaseFragment;
 
 /**
@@ -47,7 +47,7 @@ public class MineFragment extends BaseFragment {
         break;
       case R.id.rl_about_lib:
         // 关于图书馆
-        startActivity(new Intent(context, VideoActivity.class));
+        startActivity(new Intent(context, AboutSchoolActivity.class));
         break;
       case R.id.rl_setting:
         // 设置
