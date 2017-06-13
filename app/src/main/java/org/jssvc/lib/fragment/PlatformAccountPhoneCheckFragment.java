@@ -51,7 +51,7 @@ public class PlatformAccountPhoneCheckFragment extends BaseFragment {
           showToast("请先输入手机号码");
         } else {
           // 验证
-          showToast("===验证号码===");
+          showToast("===验证号码，假设是新号码===");
           AccountPlatformManagerActivity activity = (AccountPlatformManagerActivity) getActivity();
           activity.resetPwdFragment(phone);
         }

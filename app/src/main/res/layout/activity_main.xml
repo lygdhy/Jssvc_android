@@ -15,39 +15,5 @@
         />
   </RelativeLayout>
 
-  <EditText
-      android:id="@+id/edt_phone"
-      android:hint="输入手机号码"
-      android:inputType="number"
-      style="@style/style_edit_text"
-      />
-  <Button
-      android:id="@+id/btn_get"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="请求"
-      />
-  <EditText
-      android:id="@+id/edt_code"
-      android:hint="输入验证码"
-      android:inputType="number"
-      style="@style/style_edit_text"
-      />
-  <Button
-      android:id="@+id/btn_submit"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="验证"
-      />
-  <TextView
-      android:id="@+id/textView"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:lineSpacingExtra="5dp"
-      android:padding="10dp"
-      android:text="状态"
-      android:textColor="@color/color_ui_theme"
-      />
-
 
 </LinearLayout>
