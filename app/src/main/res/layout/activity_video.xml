@@ -21,7 +21,7 @@
           android:id="@+id/video_layout"
           android:layout_width="fill_parent"
           android:layout_height="200dp"
-          android:background="@color/color_black"
+          android:background="@android:color/black"
           >
 
         <com.universalvideoview.UniversalVideoView
@@ -69,7 +69,7 @@
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            app:tabBackground="@color/color_white"
+            app:tabBackground="@android:color/white"
             app:tabIndicatorColor="@color/colorAccent"
             app:tabIndicatorHeight="2dp"
             app:tabMode="fixed"

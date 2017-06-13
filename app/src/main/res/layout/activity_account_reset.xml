@@ -11,7 +11,8 @@
         style="@style/actionbar_left_style_white"
         />
     <TextView
-        android:text="读者绑定"
+        android:id="@+id/tv_title"
+        android:text="快速注册"
         style="@style/actionbar_title_style_white"
         />
     <View style="@style/item_split_horizontal"/>

@@ -138,7 +138,7 @@
 
 
     <activity
-        android:name=".activity.RegisterActivity"
+        android:name=".activity.AccountResetActivity"
         android:screenOrientation="portrait"/>
     <activity
         android:name=".activity.MainActivity"

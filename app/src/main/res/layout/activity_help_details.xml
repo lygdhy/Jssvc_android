@@ -45,7 +45,7 @@
               android:id="@+id/textView1"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@color/color_white"
+              android:background="@android:color/white"
               android:drawableLeft="@drawable/icon_question_48"
               android:drawablePadding="10dp"
               android:gravity="center_vertical"
