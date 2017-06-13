@@ -69,26 +69,6 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rlPwd"
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:layout_marginTop="0.5dp"
-            android:background="@drawable/bg_selector_while"
-            android:padding="10dp"
-            >
-
-          <TextView
-              android:text="修改密码"
-              style="@style/style_text_key_menu"
-              />
-
-          <TextView
-              android:drawableRight="@drawable/icon_goto"
-              style="@style/style_text_value_menu"
-              />
-        </RelativeLayout>
-
-        <RelativeLayout
             android:id="@+id/rlBound"
             android:layout_width="match_parent"
             android:layout_height="46dp"

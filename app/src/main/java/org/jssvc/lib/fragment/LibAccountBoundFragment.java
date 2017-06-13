@@ -1,6 +1,5 @@
 package org.jssvc.lib.fragment;
 
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +19,7 @@ import java.util.List;
 import okhttp3.Call;
 import okhttp3.Response;
 import org.jssvc.lib.R;
-import org.jssvc.lib.activity.AccountActivateActivity;
+import org.jssvc.lib.activity.AccountLibManagerActivity;
 import org.jssvc.lib.adapter.DialogListSelecterAdapter;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.ListSelecterBean;
@@ -37,7 +36,7 @@ import org.jssvc.lib.view.DividerItemDecoration;
  *     version: 1.0
  * </pre>
  */
-public class AccountBoundFragment extends BaseFragment {
+public class LibAccountBoundFragment extends BaseFragment {
 
   @BindView(R.id.tv_school) TextView tvSchool;
   @BindView(R.id.tv_type) TextView tvType;
@@ -49,11 +48,11 @@ public class AccountBoundFragment extends BaseFragment {
   ListSelecterBean currentLoginType;
   ListSelecterBean currentSchool;
 
-  public AccountBoundFragment() {
+  public LibAccountBoundFragment() {
   }
 
   @Override protected int getContentViewId() {
-    return R.layout.fragment_account_bound;
+    return R.layout.fragment_lib_account_bound;
   }
 
   @Override protected void initView() {
@@ -74,7 +73,7 @@ public class AccountBoundFragment extends BaseFragment {
         if (TextUtils.isEmpty(loginname) || TextUtils.isEmpty(loginpwd)) {
           showToast("登录信息不能为空");
         } else {
-          showProgressDialog("登录中...");
+          showProgressDialog("绑定中...");
 
           AccountPref.saveLoginAccoundNumber(context, loginname);
           AccountPref.saveLoginType(context, currentLoginType.getId());
@@ -117,7 +116,8 @@ public class AccountBoundFragment extends BaseFragment {
       // 有错误提示
       if (errorMsg.contains("认证失败")) {
         // “如果认证失败，您将不能使用我的图书馆功能”
-        startActivity(new Intent(context, AccountActivateActivity.class));
+        AccountLibManagerActivity activity = (AccountLibManagerActivity) getActivity();
+        activity.accountActivateFragment();
       } else {
         showToast(errorMsg);
         AccountPref.removeLogonAccoundPwd(context);

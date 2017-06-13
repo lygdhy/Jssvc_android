@@ -77,7 +77,16 @@
         android:name=".activity.LoginActivity"
         android:screenOrientation="portrait"/>
     <activity
-        android:name=".activity.AccountBoundActivity"
+        android:name=".activity.MainActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".activity.AccountLibManagerActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".activity.AccountThirdManagerActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".activity.AccountPlatformManagerActivity"
         android:screenOrientation="portrait"/>
     <activity
         android:name=".activity.CardInfoActivity"
@@ -108,12 +117,6 @@
         android:name=".activity.AboutActivity"
         android:screenOrientation="portrait"/>
     <activity
-        android:name=".activity.AccountActivateActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.ResetPwdActivity"
-        android:screenOrientation="portrait"/>
-    <activity
         android:name=".activity.BookDetailsActivity"
         android:screenOrientation="portrait"/>
     <activity
@@ -136,14 +139,6 @@
         android:name=".activity.MsgBrowseActivity"
         android:screenOrientation="portrait"/>
 
-
-    <activity
-        android:name=".activity.AccountResetActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.MainActivity"
-        android:screenOrientation="portrait">
-    </activity>
   </application>
 
 </manifest>

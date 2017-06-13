@@ -1,55 +1,54 @@
-package org.jssvc.lib.activity;
+package org.jssvc.lib.fragment;
 
-import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
-
+import okhttp3.Call;
+import okhttp3.Response;
 import org.jssvc.lib.R;
-import org.jssvc.lib.base.BaseActivity;
+import org.jssvc.lib.activity.AccountLibManagerActivity;
+import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Response;
-
 /**
- * 账户激活-身份验证
+ * <pre>
+ *     author : lygdh
+ *     time   : 2017/06/12
+ *     desc   : 图书馆账户激活
+ *     version: 1.0
+ * </pre>
  */
-public class AccountActivateActivity extends BaseActivity {
-  @BindView(R.id.tvBack) TextView tvBack;
-  @BindView(R.id.edtRealName) EditText edtRealName;
-  @BindView(R.id.btnRegister) Button btnRegister;
+public class LibAccountActivateFragment extends BaseFragment {
+
+  @BindView(R.id.edt_real_name) EditText edtRealName;
+
+  public LibAccountActivateFragment() {
+  }
 
   @Override protected int getContentViewId() {
-    return R.layout.activity_account_activate;
+    return R.layout.fragment_lib_account_activate;
   }
 
   @Override protected void initView() {
-    //        AccountPref.getLogonAccoundNumber(context)
   }
 
-  @OnClick({ R.id.tvBack, R.id.btnRegister }) public void onClick(View view) {
+  @OnClick({ R.id.btn_submit }) public void onViewClicked(View view) {
     switch (view.getId()) {
-      case R.id.tvBack:
-        finish();
-        break;
-      case R.id.btnRegister:
-        // 激活
-        String realname = edtRealName.getText().toString().trim();
-        if (!TextUtils.isEmpty(realname)) {
+      case R.id.btn_submit:
+        String realName = edtRealName.getText().toString().trim();
+        if (TextUtils.isEmpty(realName)) {
+          showToast("请输入您图书证上的姓名");
+        } else {
           showProgressDialog("正在提交...");
 
           OkGo.post(HttpUrlParams.URL_LIB_USER_REGISTER)
               .tag(this)
-              .params("name", realname)
+              .params("name", realName)
               .execute(new StringCallback() {
                 @Override public void onSuccess(String s, Call call, Response response) {
                   dissmissProgressDialog();
@@ -72,10 +71,9 @@ public class AccountActivateActivity extends BaseActivity {
   private void parseHtml(String s) {
     String errorMsg = HtmlParseUtils.getErrMsgOnLogin(s);
     if (TextUtils.isEmpty(errorMsg)) {
-      // 身份验证成功
-      Intent intent = new Intent(context, ResetPwdActivity.class);
-      intent.putExtra("onlyReset", true);
-      startActivity(intent);
+      // 身份验证成功，重置密码
+      AccountLibManagerActivity activity = (AccountLibManagerActivity) getActivity();
+      activity.accountResetPwdFragment();
     } else {
       // 有错误提示
       showToast(errorMsg);

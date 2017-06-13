@@ -48,7 +48,6 @@ public class SettingActivity extends BaseActivity {
   @BindView(R.id.rlMine) RelativeLayout rlMine;
   @BindView(R.id.tvUserName) TextView tvUserName;
   @BindView(R.id.ivMine) ImageView ivMine;
-  @BindView(R.id.rlPwd) RelativeLayout rlPwd;
   @BindView(R.id.rlShare) RelativeLayout rlShare;
   @BindView(R.id.rlBound) RelativeLayout rlBound;
 
@@ -76,12 +75,9 @@ public class SettingActivity extends BaseActivity {
       btnExit.setVisibility(View.VISIBLE);
       btnExit.setText("注销" + AccountPref.getLogonAccoundNumber(context));
 
-      rlPwd.setVisibility(View.VISIBLE);
-
       loadUserInfo();
     } else {
       btnExit.setVisibility(View.GONE);
-      rlPwd.setVisibility(View.GONE);
 
       tvUserName.setText("个人中心");
       ivMine.getDrawable().setLevel(0);
@@ -99,7 +95,7 @@ public class SettingActivity extends BaseActivity {
 
   @OnClick({
       R.id.tvBack, R.id.rlCheck, R.id.rlClear, R.id.rlFeedback, R.id.rlAbout, R.id.btnExit,
-      R.id.rlPwd, R.id.rlMine, R.id.rlShare, R.id.rlBound
+      R.id.rlMine, R.id.rlShare, R.id.rlBound
   }) public void onClick(View view) {
     switch (view.getId()) {
       case R.id.tvBack:
@@ -129,12 +125,6 @@ public class SettingActivity extends BaseActivity {
         // 关于我们
         startActivity(new Intent(context, AboutActivity.class));
         break;
-      case R.id.rlPwd:
-        // 修改密码
-        Intent intent = new Intent(context, ResetPwdActivity.class);
-        intent.putExtra("onlyReset", false);
-        startActivity(intent);
-        break;
       case R.id.rlMine:
         // 证件信息
         if (AccountPref.isLogon(context)) {
@@ -153,7 +143,6 @@ public class SettingActivity extends BaseActivity {
           AccountPref.removeLogonAccoundPwd(context);
           AccountPref.removeLogonUser(context);
           btnExit.setVisibility(View.GONE);
-          rlPwd.setVisibility(View.GONE);
 
           tvUserName.setText("个人中心");
           ivMine.getDrawable().setLevel(0);
@@ -163,8 +152,8 @@ public class SettingActivity extends BaseActivity {
         }
         break;
       case R.id.rlBound:
-        // =================
-        startActivity(new Intent(context, AccountBoundActivity.class));
+        // 第三方账户绑定
+        startActivity(new Intent(context, AccountThirdManagerActivity.class));
         break;
     }
   }

@@ -8,34 +8,34 @@ import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.OnClick;
 import org.jssvc.lib.R;
-import org.jssvc.lib.activity.AccountResetActivity;
+import org.jssvc.lib.activity.AccountPlatformManagerActivity;
 import org.jssvc.lib.base.BaseFragment;
 
 /**
  * <pre>
  *     author : lygdh
  *     time   : 2017/06/12
- *     desc   : 账号验证（用于注册和找回密码）
+ *     desc   : 平台账号验证（用于注册和找回密码）
  *     version: 1.0
  * </pre>
  */
-public class AccountPhoneCheckFragment extends BaseFragment {
+public class PlatformAccountPhoneCheckFragment extends BaseFragment {
 
   @BindView(R.id.edt_username) EditText edtUsername;
 
   int opt_code = 0;//0注册1找回密码
 
-  public AccountPhoneCheckFragment() {
+  public PlatformAccountPhoneCheckFragment() {
   }
 
   @Override protected int getContentViewId() {
-    return R.layout.fragment_account_phone_check;
+    return R.layout.fragment_platform_account_phone_check;
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    if (getArguments().containsKey(AccountResetActivity.ARG_OPT_CODE)) {
-      opt_code = getArguments().getInt(AccountResetActivity.ARG_OPT_CODE);
+    if (getArguments().containsKey(AccountPlatformManagerActivity.ARG_OPT_CODE)) {
+      opt_code = getArguments().getInt(AccountPlatformManagerActivity.ARG_OPT_CODE);
     }
   }
 
@@ -52,7 +52,7 @@ public class AccountPhoneCheckFragment extends BaseFragment {
         } else {
           // 验证
           showToast("===验证号码===");
-          AccountResetActivity activity = (AccountResetActivity) getActivity();
+          AccountPlatformManagerActivity activity = (AccountPlatformManagerActivity) getActivity();
           activity.resetPwdFragment(phone);
         }
         break;

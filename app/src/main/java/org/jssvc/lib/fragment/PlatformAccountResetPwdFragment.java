@@ -10,21 +10,19 @@ import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.OnClick;
 import org.jssvc.lib.R;
-import org.jssvc.lib.activity.AccountResetActivity;
+import org.jssvc.lib.activity.AccountPlatformManagerActivity;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.view.TimeCountDown;
-
-import static org.jssvc.lib.activity.AccountResetActivity.ARG_OPT_PHONE;
 
 /**
  * <pre>
  *     author : lygdh
  *     time   : 2017/06/12
- *     desc   : 重置账号密码（用于注册和找回密码）
+ *     desc   : 平台账号重置密码（用于注册和找回密码）
  *     version: 1.0
  * </pre>
  */
-public class AccountResetPwdFragment extends BaseFragment
+public class PlatformAccountResetPwdFragment extends BaseFragment
     implements TimeCountDown.OnTimerCountDownListener {
 
   @BindView(R.id.edt_phone) EditText edtPhone;
@@ -36,18 +34,18 @@ public class AccountResetPwdFragment extends BaseFragment
   int opt_code = 0;//0注册1找回密码
   String opt_phone = "";
 
-  public AccountResetPwdFragment() {
+  public PlatformAccountResetPwdFragment() {
   }
 
   @Override protected int getContentViewId() {
-    return R.layout.fragment_account_reset_pwd;
+    return R.layout.fragment_platform_account_reset_pwd;
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    if (getArguments().containsKey(AccountResetActivity.ARG_OPT_CODE)) {
-      opt_code = getArguments().getInt(AccountResetActivity.ARG_OPT_CODE);
-      opt_phone = getArguments().getString(AccountResetActivity.ARG_OPT_PHONE);
+    if (getArguments().containsKey(AccountPlatformManagerActivity.ARG_OPT_CODE)) {
+      opt_code = getArguments().getInt(AccountPlatformManagerActivity.ARG_OPT_CODE);
+      opt_phone = getArguments().getString(AccountPlatformManagerActivity.ARG_OPT_PHONE);
     }
   }
 
