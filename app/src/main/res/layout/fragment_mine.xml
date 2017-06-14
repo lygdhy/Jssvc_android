@@ -8,7 +8,6 @@
   <RelativeLayout
       style="@style/actionbar_whole_style_base"
       >
-
     <TextView
         android:text="个人中心"
         style="@style/actionbar_title_style_base"
@@ -17,8 +16,42 @@
 
   <LinearLayout
       android:layout_width="match_parent"
+      android:layout_height="140dp"
+      android:background="@android:color/white"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      >
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="20dp"
+        android:src="@drawable/icon_logo"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical"
+        >
+      <TextView
+          android:text="张三丰"
+          android:textSize="18sp"
+          style="@style/style_text_title"
+          />
+      <TextView
+          android:layout_marginTop="5dp"
+          android:lineSpacingExtra="2dp"
+          android:text="书籍是朋友，虽然没有热情，但是非常忠实。——雨果"
+          android:textSize="12sp"
+          style="@style/style_text_body_light"
+          />
+      />
+    </LinearLayout>
+  </LinearLayout>
+  <LinearLayout
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="20dp"
+      android:layout_marginTop="10dp"
       android:background="@android:color/white"
       android:orientation="vertical"
       >
@@ -44,7 +77,7 @@
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="20dp"
+      android:layout_marginTop="10dp"
       android:background="@android:color/white"
       android:orientation="vertical"
       >
@@ -108,7 +141,7 @@
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="20dp"
+      android:layout_marginTop="10dp"
       android:background="@android:color/white"
       android:orientation="vertical"
       >
