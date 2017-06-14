@@ -91,6 +91,26 @@
           />
     </RelativeLayout>
     <View style="@style/item_split_horizontal"/>
+    <View
+        android:layout_marginLeft="10dp"
+        style="@style/item_split_horizontal"
+        />
+    <RelativeLayout
+        android:id="@+id/rl_app"
+        style="@style/style_menu_list"
+        >
+
+      <TextView
+          android:text="精品应用推荐"
+          style="@style/style_text_key_menu"
+          />
+
+      <TextView
+          android:drawableRight="@drawable/icon_goto"
+          style="@style/style_text_value_menu"
+          />
+    </RelativeLayout>
+    <View style="@style/item_split_horizontal"/>
   </LinearLayout>
 
   <LinearLayout

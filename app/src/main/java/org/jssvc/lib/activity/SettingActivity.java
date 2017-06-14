@@ -73,7 +73,7 @@ public class SettingActivity extends BaseActivity {
 
   @OnClick({
       R.id.tv_back, R.id.rl_update, R.id.rl_clear, R.id.rl_feedback, R.id.rl_about, R.id.btn_exit,
-      R.id.rl_appraise, R.id.rl_invitation
+      R.id.rl_appraise, R.id.rl_invitation, R.id.rl_app
   }) public void onClick(View view) {
     switch (view.getId()) {
       case R.id.tv_back:
@@ -117,6 +117,9 @@ public class SettingActivity extends BaseActivity {
       case R.id.rl_invitation:
         // 邀请好友使用
         startActivity(new Intent(context, ShareActivity.class));
+        break;
+      case R.id.rl_app:
+        // 精品应用推荐
         break;
       case R.id.btn_exit:
         // 注销
