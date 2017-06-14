@@ -90,7 +90,6 @@
           style="@style/style_text_value_menu"
           />
     </RelativeLayout>
-    <View style="@style/item_split_horizontal"/>
     <View
         android:layout_marginLeft="10dp"
         style="@style/item_split_horizontal"
