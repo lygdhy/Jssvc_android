@@ -55,6 +55,9 @@ android {
     yingyongbao {
       manifestPlaceholders = [UMENG_CHANNEL_VALUE: "yingyongbao"]
     }
+    xiaomi {
+      manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
+    }
   }
 
   dexOptions {
