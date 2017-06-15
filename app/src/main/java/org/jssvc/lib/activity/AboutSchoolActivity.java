@@ -57,7 +57,7 @@ public class AboutSchoolActivity extends BaseActivity {
     list_title.add("概况");
     list_title.add("楼层分布");
     list_title.add("开馆时间");
-    list_title.add("部门电话");
+    list_title.add("联系方式");
 
     //设置TabLayout的模式
     tabLayout.setTabMode(TabLayout.MODE_FIXED);

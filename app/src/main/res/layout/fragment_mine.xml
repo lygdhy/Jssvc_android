@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_ui_content"
@@ -14,173 +15,197 @@
         />
   </RelativeLayout>
 
-  <LinearLayout
+  <ScrollView
       android:layout_width="match_parent"
-      android:layout_height="140dp"
-      android:background="@android:color/white"
-      android:gravity="center_vertical"
-      android:orientation="horizontal"
+      android:layout_height="match_parent"
+      android:scrollbars="none"
       >
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_margin="20dp"
-        android:src="@drawable/icon_logo"
-        />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         >
-      <TextView
-          android:text="张三丰"
-          android:textSize="18sp"
-          style="@style/style_text_title"
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="140dp"
+          android:background="@android:color/white"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          >
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_avatar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="20dp"
+            fresco:backgroundImage="@drawable/icon_logo"
+            fresco:placeholderImage="@drawable/icon_logo"
+            fresco:placeholderImageScaleType="centerCrop"
+            fresco:roundAsCircle="true"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical"
+            >
+          <TextView
+              android:text="张三丰"
+              android:textSize="18sp"
+              style="@style/style_text_title"
+              />
+          <TextView
+              android:layout_marginTop="5dp"
+              android:lineSpacingExtra="2dp"
+              android:text="书籍是朋友，虽然没有热情，但是非常忠实。——雨果"
+              android:textSize="12sp"
+              style="@style/style_text_body_light"
+              />
           />
-      <TextView
-          android:layout_marginTop="5dp"
-          android:lineSpacingExtra="2dp"
-          android:text="书籍是朋友，虽然没有热情，但是非常忠实。——雨果"
-          android:textSize="12sp"
-          style="@style/style_text_body_light"
-          />
-      />
+        </LinearLayout>
+      </LinearLayout>
+      <View style="@style/item_split_horizontal"/>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:background="@android:color/white"
+          android:orientation="vertical"
+          >
+        <View style="@style/item_split_horizontal"/>
+        <RelativeLayout
+            android:id="@+id/rl_account"
+            style="@style/style_menu_list"
+            >
+
+          <TextView
+              android:drawableLeft="@drawable/icon_menu_bound"
+              android:text="帐号绑定"
+              style="@style/style_text_key_menu"
+              />
+
+          <TextView
+              android:drawableRight="@drawable/icon_goto"
+              style="@style/style_text_value_menu"
+              />
+        </RelativeLayout>
+        <View style="@style/item_split_horizontal"/>
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:background="@android:color/white"
+          android:orientation="vertical"
+          >
+        <View style="@style/item_split_horizontal"/>
+        <RelativeLayout
+            android:id="@+id/rl_borrow"
+            style="@style/style_menu_list"
+            >
+
+          <TextView
+              android:drawableLeft="@drawable/icon_menu_borrowed"
+              android:text="我的借阅"
+              style="@style/style_text_key_menu"
+              />
+
+          <TextView
+              android:drawableRight="@drawable/icon_goto"
+              style="@style/style_text_value_menu"
+              />
+        </RelativeLayout>
+        <View
+            android:layout_marginLeft="10dp"
+            style="@style/item_split_horizontal"
+            />
+        <RelativeLayout
+            android:id="@+id/rl_bookrack"
+            style="@style/style_menu_list"
+            >
+
+          <TextView
+              android:drawableLeft="@drawable/icon_menu_bookrack"
+              android:text="我的书架"
+              style="@style/style_text_key_menu"
+              />
+
+          <TextView
+              android:drawableRight="@drawable/icon_goto"
+              style="@style/style_text_value_menu"
+              />
+        </RelativeLayout>
+        <View
+            android:layout_marginLeft="10dp"
+            style="@style/item_split_horizontal"
+            />
+        <RelativeLayout
+            android:id="@+id/rl_appraise"
+            style="@style/style_menu_list"
+            >
+
+          <TextView
+              android:drawableLeft="@drawable/icon_menu_appraise"
+              android:text="我的书评"
+              style="@style/style_text_key_menu"
+              />
+
+          <TextView
+              android:drawableRight="@drawable/icon_goto"
+              style="@style/style_text_value_menu"
+              />
+        </RelativeLayout>
+        <View style="@style/item_split_horizontal"/>
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:background="@android:color/white"
+          android:orientation="vertical"
+          >
+        <View style="@style/item_split_horizontal"/>
+        <RelativeLayout
+            android:id="@+id/rl_about_lib"
+            style="@style/style_menu_list"
+            >
+
+          <TextView
+              android:drawableLeft="@drawable/icon_menu_about_lib"
+              android:text="关于图书馆"
+              style="@style/style_text_key_menu"
+              />
+
+          <TextView
+              android:drawableRight="@drawable/icon_goto"
+              style="@style/style_text_value_menu"
+              />
+        </RelativeLayout>
+        <View
+            android:layout_marginLeft="10dp"
+            style="@style/item_split_horizontal"
+            />
+        <RelativeLayout
+            android:id="@+id/rl_setting"
+            style="@style/style_menu_list"
+            >
+
+          <TextView
+              android:drawableLeft="@drawable/icon_menu_setting"
+              android:text="设置"
+              style="@style/style_text_key_menu"
+              />
+
+          <TextView
+              android:drawableRight="@drawable/icon_goto"
+              style="@style/style_text_value_menu"
+              />
+        </RelativeLayout>
+        <View style="@style/item_split_horizontal"/>
+      </LinearLayout>
+
     </LinearLayout>
-  </LinearLayout>
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="10dp"
-      android:background="@android:color/white"
-      android:orientation="vertical"
-      >
-    <View style="@style/item_split_horizontal"/>
-    <RelativeLayout
-        android:id="@+id/rl_account"
-        style="@style/style_menu_list"
-        >
-
-      <TextView
-          android:text="帐号绑定"
-          style="@style/style_text_key_menu"
-          />
-
-      <TextView
-          android:drawableRight="@drawable/icon_goto"
-          style="@style/style_text_value_menu"
-          />
-    </RelativeLayout>
-    <View style="@style/item_split_horizontal"/>
-  </LinearLayout>
-
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="10dp"
-      android:background="@android:color/white"
-      android:orientation="vertical"
-      >
-    <View style="@style/item_split_horizontal"/>
-    <RelativeLayout
-        android:id="@+id/rl_borrow"
-        style="@style/style_menu_list"
-        >
-
-      <TextView
-          android:text="我的借阅"
-          style="@style/style_text_key_menu"
-          />
-
-      <TextView
-          android:drawableRight="@drawable/icon_goto"
-          style="@style/style_text_value_menu"
-          />
-    </RelativeLayout>
-    <View
-        android:layout_marginLeft="10dp"
-        style="@style/item_split_horizontal"
-        />
-    <RelativeLayout
-        android:id="@+id/rl_bookrack"
-        style="@style/style_menu_list"
-        >
-
-      <TextView
-          android:text="我的书架"
-          style="@style/style_text_key_menu"
-          />
-
-      <TextView
-          android:drawableRight="@drawable/icon_goto"
-          style="@style/style_text_value_menu"
-          />
-    </RelativeLayout>
-    <View
-        android:layout_marginLeft="10dp"
-        style="@style/item_split_horizontal"
-        />
-    <RelativeLayout
-        android:id="@+id/rl_appraise"
-        style="@style/style_menu_list"
-        >
-
-      <TextView
-          android:text="我的书评"
-          style="@style/style_text_key_menu"
-          />
-
-      <TextView
-          android:drawableRight="@drawable/icon_goto"
-          style="@style/style_text_value_menu"
-          />
-    </RelativeLayout>
-    <View style="@style/item_split_horizontal"/>
-  </LinearLayout>
-
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="10dp"
-      android:background="@android:color/white"
-      android:orientation="vertical"
-      >
-    <View style="@style/item_split_horizontal"/>
-    <RelativeLayout
-        android:id="@+id/rl_about_lib"
-        style="@style/style_menu_list"
-        >
-
-      <TextView
-          android:text="关于图书馆"
-          style="@style/style_text_key_menu"
-          />
-
-      <TextView
-          android:drawableRight="@drawable/icon_goto"
-          style="@style/style_text_value_menu"
-          />
-    </RelativeLayout>
-    <View
-        android:layout_marginLeft="10dp"
-        style="@style/item_split_horizontal"
-        />
-    <RelativeLayout
-        android:id="@+id/rl_setting"
-        style="@style/style_menu_list"
-        >
-
-      <TextView
-          android:text="设置"
-          style="@style/style_text_key_menu"
-          />
-
-      <TextView
-          android:drawableRight="@drawable/icon_goto"
-          style="@style/style_text_value_menu"
-          />
-    </RelativeLayout>
-    <View style="@style/item_split_horizontal"/>
-  </LinearLayout>
-
+  </ScrollView>
 </LinearLayout>
