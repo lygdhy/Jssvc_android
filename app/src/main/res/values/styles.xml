@@ -164,8 +164,15 @@
   <style name="style_text_key_menu" parent="style_text_base">
     <item name="android:layout_alignParentLeft">true</item>
     <item name="android:drawablePadding">10dp</item>
-    <item name="android:textSize">15sp</item>
+    <item name="android:textSize">16sp</item>
     <item name="android:textColor">@color/color_text_title</item>
+  </style>
+
+  <style name="style_text_key_menu_sub" parent="style_text_base">
+    <item name="android:layout_alignParentLeft">true</item>
+    <item name="android:drawablePadding">10dp</item>
+    <item name="android:textSize">12sp</item>
+    <item name="android:textColor">@color/color_text_content_light</item>
   </style>
 
   <!--列表菜单1-2-->

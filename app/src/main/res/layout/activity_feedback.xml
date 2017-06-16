@@ -27,6 +27,7 @@
   <ScrollView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:scrollbars="none"
       >
 
     <LinearLayout
@@ -38,6 +39,7 @@
 
       <EditText
           android:id="@+id/edtFeed"
+          android:layout_height="wrap_content"
           android:layout_margin="5dp"
           android:gravity="start"
           android:hint="您的宝贵意见是我们进步最大的动力！"

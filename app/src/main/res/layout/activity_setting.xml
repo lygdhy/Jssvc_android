@@ -100,7 +100,7 @@
         >
 
       <TextView
-          android:text="精品应用推荐"
+          android:text="应用推荐"
           style="@style/style_text_key_menu"
           />
 

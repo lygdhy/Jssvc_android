@@ -27,30 +27,73 @@
     <View style="@style/item_split_horizontal"/>
     <RelativeLayout
         android:id="@+id/rl_lib"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         style="@style/style_menu_list"
         >
-      <TextView
-          android:text="图书馆绑定"
-          style="@style/style_text_key_menu"
-          />
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:orientation="vertical"
+          >
+        <TextView
+            android:text="图书馆绑定"
+            style="@style/style_text_key_menu"
+            />
+        <TextView
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="5dp"
+            android:text="绑定后即可开启图书续借、收藏、评论等功能"
+            style="@style/style_text_key_menu_sub"
+            />
+      </LinearLayout>
+
       <TextView
           android:drawableRight="@drawable/icon_goto"
           style="@style/style_text_value_menu"
           />
     </RelativeLayout>
     <View
-        android:layout_marginLeft="10dp"
+        style="@style/item_split_horizontal"
+        />
+  </LinearLayout>
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp"
+      android:background="@android:color/white"
+      android:orientation="vertical"
+      >
+    <View
         style="@style/item_split_horizontal"
         />
     <RelativeLayout
         android:id="@+id/rl_jw"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         style="@style/style_menu_list"
         >
 
-      <TextView
-          android:text="教务系统绑定"
-          style="@style/style_text_key_menu"
-          />
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:orientation="vertical"
+          >
+        <TextView
+            android:text="教务系统绑定"
+            style="@style/style_text_key_menu"
+            />
+        <TextView
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="5dp"
+            android:text="绑定后即可开启查看课表、成绩等功能"
+            style="@style/style_text_key_menu_sub"
+            />
+      </LinearLayout>
 
       <TextView
           android:drawableRight="@drawable/icon_goto"
