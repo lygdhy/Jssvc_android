@@ -15,7 +15,6 @@ import com.lzy.okgo.callback.StringCallback;
 import com.pgyersdk.javabean.AppBean;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
-import com.umeng.analytics.MobclickAgent;
 import okhttp3.Call;
 import okhttp3.Response;
 import org.jssvc.lib.R;
@@ -58,7 +57,7 @@ public class SettingActivity extends BaseActivity {
 
       loadUserInfo();
     } else {
-      btnExit.setVisibility(View.GONE);
+      //btnExit.setVisibility(View.GONE);
     }
   }
 
@@ -123,14 +122,15 @@ public class SettingActivity extends BaseActivity {
         break;
       case R.id.btn_exit:
         // 注销
-        if (AccountPref.isLogon(context)) {
-          AccountPref.removeLogonAccoundPwd(context);
-          AccountPref.removeLogonUser(context);
-          btnExit.setVisibility(View.GONE);
-
-          // 账号统计
-          MobclickAgent.onProfileSignOff();
-        }
+        //if (AccountPref.isLogon(context)) {
+        //  AccountPref.removeLogonAccoundPwd(context);
+        //  AccountPref.removeLogonUser(context);
+        //  btnExit.setVisibility(View.GONE);
+        //
+        //  // 账号统计
+        //  MobclickAgent.onProfileSignOff();
+        //}
+        startActivity(new Intent(context, LoginActivity.class));
         break;
     }
   }
