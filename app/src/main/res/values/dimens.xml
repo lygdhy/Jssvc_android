@@ -6,6 +6,9 @@
     <!-- 标题栏-高度 -->
     <dimen name="actionbar_height">50dp</dimen>
 
+    <!--menu height-->
+    <dimen name="opt_menu_height">46dp</dimen>
+
     <!-- 首页菜单栏-高度 -->
     <dimen name="tabhost_height">50dp</dimen>
 

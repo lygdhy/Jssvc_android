@@ -153,7 +153,7 @@
       <TextView
           android:id="@+id/tv_cache"
           android:drawableRight="@drawable/icon_goto"
-          android:text="0.0M"
+          android:hint="0.0M"
           style="@style/style_text_value_menu"
           />
     </RelativeLayout>
@@ -199,14 +199,23 @@
     <View style="@style/item_split_horizontal"/>
   </LinearLayout>
 
-  <Button
-      android:id="@+id/btn_exit"
-      android:layout_width="match_parent"
-      android:layout_height="45dp"
-      android:layout_margin="20dp"
-      android:background="@drawable/bg_selector_danger"
-      android:text="退出账号"
-      android:textColor="@android:color/white"
-      android:textSize="14sp"
-      />
+  <RelativeLayout
+      android:id="@+id/rl_exit"
+      android:layout_marginTop="20dp"
+      style="@style/style_menu_base"
+      >
+    <View
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentTop="true"
+        style="@style/item_split_horizontal"
+        />
+    <TextView
+        android:layout_centerInParent="true"
+        android:text="退出登录"
+        android:textColor="@color/color_danger"
+        android:textSize="16sp"
+        style="@style/style_text_body"
+        />
+    <View style="@style/item_split_horizontal"/>
+  </RelativeLayout>
 </LinearLayout>

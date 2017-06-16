@@ -2,11 +2,15 @@ package org.jssvc.lib.fragment;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.TextView;
+import butterknife.BindView;
 import butterknife.OnClick;
+import com.facebook.drawee.view.SimpleDraweeView;
 import org.jssvc.lib.R;
 import org.jssvc.lib.activity.AboutSchoolActivity;
 import org.jssvc.lib.activity.AccountThirdManagerActivity;
 import org.jssvc.lib.activity.SettingActivity;
+import org.jssvc.lib.activity.UserResumeActivity;
 import org.jssvc.lib.base.BaseFragment;
 
 /**
@@ -19,6 +23,10 @@ import org.jssvc.lib.base.BaseFragment;
  */
 public class MineFragment extends BaseFragment {
 
+  @BindView(R.id.iv_avatar) SimpleDraweeView ivAvatar;
+  @BindView(R.id.tv_user_name) TextView tvUserName;
+  @BindView(R.id.tv_user_sign) TextView tvUserSign;
+
   @Override protected int getContentViewId() {
     return R.layout.fragment_mine;
   }
@@ -28,10 +36,14 @@ public class MineFragment extends BaseFragment {
   }
 
   @OnClick({
-      R.id.rl_borrow, R.id.rl_bookrack, R.id.rl_appraise, R.id.rl_account, R.id.rl_about_lib,
-      R.id.rl_setting
+      R.id.ll_user, R.id.rl_borrow, R.id.rl_bookrack, R.id.rl_appraise, R.id.rl_account,
+      R.id.rl_about_lib, R.id.rl_setting
   }) public void onViewClicked(View view) {
     switch (view.getId()) {
+      case R.id.ll_user:
+        // 登录/查看详情
+        startActivity(new Intent(context, UserResumeActivity.class));
+        break;
       case R.id.rl_borrow:
         // 我的借阅
         break;
