@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_ui_content"
+    android:background="@android:color/white"
     android:orientation="vertical"
     >
   <RelativeLayout
@@ -28,7 +28,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@android:color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         >
