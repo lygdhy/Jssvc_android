@@ -117,8 +117,8 @@
 
   </LinearLayout>
   <View style="@style/item_split_horizontal"/>
-  <Spinner
+  <View
       android:layout_width="match_parent"
       android:layout_height="10dp"
-      ></Spinner>
+      />
 </LinearLayout>
