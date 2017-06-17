@@ -6,7 +6,7 @@ import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -15,7 +15,6 @@ import com.lzy.okgo.callback.StringCallback;
 import com.pgyersdk.javabean.AppBean;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
-import com.umeng.analytics.MobclickAgent;
 import okhttp3.Call;
 import okhttp3.Response;
 import org.jssvc.lib.R;
@@ -35,7 +34,7 @@ import static com.pgyersdk.update.UpdateManagerListener.startDownloadTask;
  */
 public class SettingActivity extends BaseActivity {
 
-  @BindView(R.id.btn_exit) Button btnExit;
+  @BindView(R.id.rl_exit) RelativeLayout rlExit;
   @BindView(R.id.tv_version) TextView tvVersion;
   @BindView(R.id.tv_cache) TextView tvCache;
 
@@ -53,12 +52,11 @@ public class SettingActivity extends BaseActivity {
     super.onResume();
     if (AccountPref.isLogon(context)) {
       // 用户名和密码都在
-      btnExit.setVisibility(View.VISIBLE);
-      btnExit.setText("注销" + AccountPref.getLogonAccoundNumber(context));
+      rlExit.setVisibility(View.VISIBLE);
 
       loadUserInfo();
     } else {
-      btnExit.setVisibility(View.GONE);
+      //rlExit.setVisibility(View.GONE);
     }
   }
 
@@ -72,7 +70,7 @@ public class SettingActivity extends BaseActivity {
   }
 
   @OnClick({
-      R.id.tv_back, R.id.rl_update, R.id.rl_clear, R.id.rl_feedback, R.id.rl_about, R.id.btn_exit,
+      R.id.tv_back, R.id.rl_update, R.id.rl_clear, R.id.rl_feedback, R.id.rl_about, R.id.rl_exit,
       R.id.rl_appraise, R.id.rl_invitation, R.id.rl_app
   }) public void onClick(View view) {
     switch (view.getId()) {
@@ -121,16 +119,17 @@ public class SettingActivity extends BaseActivity {
       case R.id.rl_app:
         // 精品应用推荐
         break;
-      case R.id.btn_exit:
+      case R.id.rl_exit:
         // 注销
-        if (AccountPref.isLogon(context)) {
-          AccountPref.removeLogonAccoundPwd(context);
-          AccountPref.removeLogonUser(context);
-          btnExit.setVisibility(View.GONE);
-
-          // 账号统计
-          MobclickAgent.onProfileSignOff();
-        }
+        //if (AccountPref.isLogon(context)) {
+        //  AccountPref.removeLogonAccoundPwd(context);
+        //  AccountPref.removeLogonUser(context);
+        //  rlExit.setVisibility(View.GONE);
+        //
+        //  // 账号统计
+        //  MobclickAgent.onProfileSignOff();
+        //}
+        startActivity(new Intent(context, LoginActivity.class));
         break;
     }
   }
@@ -228,7 +227,7 @@ public class SettingActivity extends BaseActivity {
     String sizeStr = "0.0M";
     try {
       sizeStr = DataCleanManager.getTotalCacheSize(getApplicationContext());
-      tvCache.setText(sizeStr);
+      tvCache.setHint(sizeStr);
     } catch (Exception e) {
       e.printStackTrace();
     }

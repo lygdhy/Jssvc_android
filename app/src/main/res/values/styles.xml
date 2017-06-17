@@ -1,6 +1,6 @@
 <resources>
 
-  <style name="AppTheme.Base" parent="Theme.AppCompat">
+  <style name="AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
   </style>
@@ -120,6 +120,8 @@
     <item name="android:layout_centerVertical">true</item>
     <item name="android:gravity">center_vertical</item>
     <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:lines">1</item>
+    <item name="android:ellipsize">end</item>
   </style>
 
   <style name="style_text_body" parent="style_text_base">
@@ -148,16 +150,15 @@
   </style>
 
   <!--菜单列表样式-->
-  <style name="style_menu_list">
+  <style name="style_menu_base">
     <item name="android:layout_width">match_parent</item>
-    <item name="android:layout_height">46dp</item>
-    <item name="android:layout_centerVertical">true</item>
-    <item name="android:gravity">center_vertical</item>
-    <item name="android:layout_gravity">center_vertical</item>
-
+    <item name="android:layout_height">@dimen/opt_menu_height</item>
     <item name="android:background">@drawable/bg_selector_while</item>
+  </style>
+
+  <style name="style_menu_list" parent="style_menu_base">
     <item name="android:paddingLeft">20dp</item>
-    <item name="android:paddingRight">20dp</item>
+    <item name="android:paddingRight">15dp</item>
   </style>
 
   <!--列表菜单1-1-->
@@ -179,7 +180,8 @@
   <style name="style_text_value_menu" parent="style_text_base">
     <item name="android:layout_alignParentRight">true</item>
     <item name="android:textSize">14sp</item>
-    <item name="android:textColor">@color/color_text_hint</item>
+    <item name="android:textColor">@color/color_text_content</item>
+    <item name="android:textColorHint">@color/color_text_hint</item>
   </style>
 
   <!--列表菜单2-1-->
@@ -197,7 +199,7 @@
   <!--EditText-->
   <style name="style_edit_text" parent="style_text_body">
     <item name="android:layout_width">match_parent</item>
-    <item name="android:layout_height">46dp</item>
+    <item name="android:layout_height">@dimen/opt_menu_height</item>
     <item name="android:layout_centerVertical">true</item>
     <item name="android:gravity">center_vertical</item>
     <item name="android:textColor">@color/color_text_content</item>

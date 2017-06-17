@@ -7,12 +7,17 @@
     android:orientation="vertical"
     >
   <RelativeLayout
-      style="@style/actionbar_whole_style_base"
+      style="@style/actionbar_whole_style_white"
       >
     <TextView
-        android:text="我的"
-        style="@style/actionbar_title_style_base"
+        android:id="@+id/tv_back"
+        style="@style/actionbar_left_style_white"
         />
+    <TextView
+        android:text="个人中心"
+        style="@style/actionbar_title_style_white"
+        />
+    <View style="@style/item_split_horizontal"/>
   </RelativeLayout>
 
   <ScrollView
@@ -25,70 +30,62 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
+
       <LinearLayout
-          android:id="@+id/ll_user"
           android:layout_width="match_parent"
-          android:layout_height="140dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="20dp"
           android:background="@android:color/white"
-          android:gravity="center_vertical"
-          android:orientation="horizontal"
+          android:orientation="vertical"
           >
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/iv_avatar"
-            android:layout_width="80dp"
+        <View style="@style/item_split_horizontal"/>
+        <RelativeLayout
+            android:id="@+id/rl_avatar"
             android:layout_height="80dp"
-            android:layout_margin="20dp"
-            fresco:backgroundImage="@drawable/icon_logo"
-            fresco:placeholderImage="@drawable/icon_logo"
-            fresco:placeholderImageScaleType="centerCrop"
-            fresco:roundAsCircle="true"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:orientation="vertical"
-            >
-          <TextView
-              android:id="@+id/tv_user_name"
-              android:text="张三丰"
-              android:textSize="18sp"
-              style="@style/style_text_title"
-              />
-          <TextView
-              android:id="@+id/tv_user_sign"
-              android:layout_marginTop="5dp"
-              android:lineSpacingExtra="2dp"
-              android:text="书籍是朋友，虽然没有热情，但是非常忠实。——雨果"
-              android:textSize="14sp"
-              style="@style/style_text_body_light"
-              />
-          />
-        </LinearLayout>
-      </LinearLayout>
-      <View style="@style/item_split_horizontal"/>
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="10dp"
-          android:background="@android:color/white"
-          android:orientation="vertical"
-          >
-        <View style="@style/item_split_horizontal"/>
-        <RelativeLayout
-            android:id="@+id/rl_account"
             style="@style/style_menu_list"
             >
 
           <TextView
-              android:drawableLeft="@drawable/icon_menu_bound"
-              android:text="帐号绑定"
+              android:text="头像"
               style="@style/style_text_key_menu"
+              />
+
+          <com.facebook.drawee.view.SimpleDraweeView
+              android:id="@+id/iv_avatar"
+              android:layout_width="50dp"
+              android:layout_height="50dp"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:layout_marginRight="20dp"
+              fresco:backgroundImage="@drawable/icon_default_avatar"
+              fresco:placeholderImage="@drawable/icon_default_avatar"
+              fresco:placeholderImageScaleType="centerCrop"
+              fresco:roundAsCircle="true"
               />
 
           <TextView
               android:drawableRight="@drawable/icon_goto"
+              style="@style/style_text_value_menu"
+              />
+        </RelativeLayout>
+        <View
+            android:layout_marginLeft="10dp"
+            style="@style/item_split_horizontal"
+            />
+        <RelativeLayout
+            android:id="@+id/rl_nick_name"
+            style="@style/style_menu_list"
+            >
+
+          <TextView
+              android:text="昵称"
+              style="@style/style_text_key_menu"
+              />
+
+          <TextView
+              android:id="@+id/tv_nick_name"
+              android:drawableRight="@drawable/icon_goto"
+              android:text="七星岩"
               style="@style/style_text_value_menu"
               />
         </RelativeLayout>
@@ -104,18 +101,19 @@
           >
         <View style="@style/item_split_horizontal"/>
         <RelativeLayout
-            android:id="@+id/rl_borrow"
+            android:id="@+id/rl_real_name"
             style="@style/style_menu_list"
             >
 
           <TextView
-              android:drawableLeft="@drawable/icon_menu_borrowed"
-              android:text="我的借阅"
+              android:text="真实姓名"
               style="@style/style_text_key_menu"
               />
 
           <TextView
+              android:id="@+id/tv_real_name"
               android:drawableRight="@drawable/icon_goto"
+              android:text="董洪逾"
               style="@style/style_text_value_menu"
               />
         </RelativeLayout>
@@ -124,18 +122,19 @@
             style="@style/item_split_horizontal"
             />
         <RelativeLayout
-            android:id="@+id/rl_bookrack"
+            android:id="@+id/rl_sex"
             style="@style/style_menu_list"
             >
 
           <TextView
-              android:drawableLeft="@drawable/icon_menu_bookrack"
-              android:text="我的书架"
+              android:text="性别"
               style="@style/style_text_key_menu"
               />
 
           <TextView
+              android:id="@+id/tv_sex"
               android:drawableRight="@drawable/icon_goto"
+              android:text="男"
               style="@style/style_text_value_menu"
               />
         </RelativeLayout>
@@ -144,18 +143,19 @@
             style="@style/item_split_horizontal"
             />
         <RelativeLayout
-            android:id="@+id/rl_appraise"
+            android:id="@+id/rl_birth"
             style="@style/style_menu_list"
             >
 
           <TextView
-              android:drawableLeft="@drawable/icon_menu_appraise"
-              android:text="我的书评"
+              android:text="生日"
               style="@style/style_text_key_menu"
               />
 
           <TextView
+              android:id="@+id/tv_birth"
               android:drawableRight="@drawable/icon_goto"
+              android:text="1991-07-10"
               style="@style/style_text_value_menu"
               />
         </RelativeLayout>
@@ -171,18 +171,19 @@
           >
         <View style="@style/item_split_horizontal"/>
         <RelativeLayout
-            android:id="@+id/rl_about_lib"
+            android:id="@+id/rl_tel"
             style="@style/style_menu_list"
             >
 
           <TextView
-              android:drawableLeft="@drawable/icon_menu_about_lib"
-              android:text="关于图书馆"
+              android:text="手机"
               style="@style/style_text_key_menu"
               />
 
           <TextView
+              android:id="@+id/tv_tel"
               android:drawableRight="@drawable/icon_goto"
+              android:hint="18862396732"
               style="@style/style_text_value_menu"
               />
         </RelativeLayout>
@@ -191,18 +192,40 @@
             style="@style/item_split_horizontal"
             />
         <RelativeLayout
-            android:id="@+id/rl_setting"
+            android:id="@+id/rl_qq"
             style="@style/style_menu_list"
             >
 
           <TextView
-              android:drawableLeft="@drawable/icon_menu_setting"
-              android:text="设置"
+              android:text="QQ"
               style="@style/style_text_key_menu"
               />
 
           <TextView
+              android:id="@+id/tv_qq"
               android:drawableRight="@drawable/icon_goto"
+              android:text="1262166651"
+              style="@style/style_text_value_menu"
+              />
+        </RelativeLayout>
+        <View
+            android:layout_marginLeft="10dp"
+            style="@style/item_split_horizontal"
+            />
+        <RelativeLayout
+            android:id="@+id/rl_email"
+            style="@style/style_menu_list"
+            >
+
+          <TextView
+              android:text="邮箱"
+              style="@style/style_text_key_menu"
+              />
+
+          <TextView
+              android:id="@+id/tv_email"
+              android:drawableRight="@drawable/icon_goto"
+              android:text="window2004@126.com"
               style="@style/style_text_value_menu"
               />
         </RelativeLayout>
