@@ -4,15 +4,16 @@
     android:background="@color/color_ui_content"
     android:orientation="vertical">
 
-    <RelativeLayout style="@style/actionbar_whole_style_base">
+    <RelativeLayout style="@style/actionbar_whole_style_white">
 
         <TextView
             android:id="@+id/tvBack"
-            style="@style/actionbar_left_style_base" />
+            style="@style/actionbar_left_style_white" />
 
         <TextView
-            style="@style/actionbar_title_style_base"
+            style="@style/actionbar_title_style_white"
             android:text="正文" />
+        <View style="@style/item_split_horizontal"/>
     </RelativeLayout>
 
     <com.github.lzyzsd.jsbridge.BridgeWebView
