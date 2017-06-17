@@ -7,25 +7,25 @@
 
   <RelativeLayout
       android:id="@+id/rLayout"
-      android:layout_alignParentTop="true"
-      style="@style/actionbar_whole_style_base"
+      style="@style/actionbar_whole_style_white"
       >
 
     <TextView
         android:id="@+id/tvBack"
-        style="@style/actionbar_left_style_base"
+        style="@style/actionbar_left_style_white"
         />
 
     <TextView
         android:text="分享APP"
-        style="@style/actionbar_title_style_base"
+        style="@style/actionbar_title_style_white"
         />
 
     <TextView
         android:id="@+id/tvShare"
         android:drawableLeft="@drawable/icon_share"
-        style="@style/actionbar_right_style_base"
+        style="@style/actionbar_right_style_white"
         />
+    <View style="@style/item_split_horizontal"/>
   </RelativeLayout>
 
 

@@ -5,20 +5,21 @@
     android:background="@color/color_ui_content"
     android:orientation="vertical">
 
-    <RelativeLayout style="@style/actionbar_whole_style_base">
+    <RelativeLayout style="@style/actionbar_whole_style_white">
 
         <TextView
             android:id="@+id/tvBack"
-            style="@style/actionbar_left_style_base" />
+            style="@style/actionbar_left_style_white" />
 
         <TextView
-            style="@style/actionbar_title_style_base"
+            style="@style/actionbar_title_style_white"
             android:text="编辑书架" />
 
         <ImageView
             android:id="@+id/ivAdd"
-            style="@style/actionbar_right_style_base"
+            style="@style/actionbar_right_style_white"
             android:src="@drawable/icon_collect_off" />
+        <View style="@style/item_split_horizontal"/>
     </RelativeLayout>
 
     <LinearLayout

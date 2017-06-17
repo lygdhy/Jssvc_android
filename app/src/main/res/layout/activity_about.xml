@@ -7,18 +7,19 @@
 
   <RelativeLayout
       android:id="@+id/rlTop"
-      style="@style/actionbar_whole_style_base"
+      style="@style/actionbar_whole_style_white"
       >
 
     <TextView
         android:id="@+id/tvBack"
-        style="@style/actionbar_left_style_base"
+        style="@style/actionbar_left_style_white"
         />
 
     <TextView
         android:text="关于我们"
-        style="@style/actionbar_title_style_base"
+        style="@style/actionbar_title_style_white"
         />
+    <View style="@style/item_split_horizontal"/>
   </RelativeLayout>
 
   <RelativeLayout
