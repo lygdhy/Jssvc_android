@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_ui_content"
@@ -31,32 +32,53 @@
           android:background="@android:color/white"
           android:gravity="center"
           >
-        <TextView
-            android:text="广告墙"
-            style="@style/style_text_body_light"
+        <com.bigkoo.convenientbanner.ConvenientBanner
+            android:id="@+id/convenientBanner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:canLoop="true"
             />
       </LinearLayout>
       <View
           style="@style/item_split_horizontal"
           />
-
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="200dp"
           android:orientation="horizontal"
           >
         <LinearLayout
+            android:id="@+id/ll_help"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:background="@android:color/white"
+            android:background="@drawable/bg_selector_while"
             android:gravity="center"
             android:orientation="vertical"
+            android:padding="10dp"
             >
-          <TextView
-              android:text="功能1"
-              style="@style/style_text_body_light"
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:src="@drawable/icon_menu_b"
               />
+          <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp"
+              android:orientation="vertical"
+              >
+            <TextView
+                android:text="帮助中心"
+                style="@style/style_text_title"
+                />
+            <TextView
+                android:layout_marginTop="2dp"
+                android:text="牧童遥指杏花村"
+                android:textSize="12sp"
+                style="@style/style_text_body_light"
+                />
+          </LinearLayout>
         </LinearLayout>
         <View
             style="@style/item_split_vertical"
@@ -68,53 +90,91 @@
             android:orientation="vertical"
             >
           <LinearLayout
+              android:id="@+id/ll_renew"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:layout_weight="1"
-              android:background="@android:color/white"
+              android:background="@drawable/bg_selector_while"
               android:gravity="center"
-              android:orientation="vertical"
+              android:orientation="horizontal"
               >
-            <TextView
-                android:text="功能2"
-                style="@style/style_text_body_light"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical"
+                >
+              <TextView
+                  android:text="在线续借"
+                  style="@style/style_text_title"
+                  />
+              <TextView
+                  android:layout_marginTop="2dp"
+                  android:text="任尔东西南北风"
+                  android:textSize="12sp"
+                  style="@style/style_text_body_light"
+                  />
+            </LinearLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_menu_b"
                 />
           </LinearLayout>
           <View
               style="@style/item_split_horizontal"
               />
           <LinearLayout
+              android:id="@+id/ll_search"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:layout_weight="1"
-              android:background="@android:color/white"
+              android:background="@drawable/bg_selector_while"
               android:gravity="center"
-              android:orientation="vertical"
+              android:orientation="horizontal"
               >
-            <TextView
-                android:text="功能3"
-                style="@style/style_text_body_light"
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_menu_b"
                 />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical"
+                >
+              <TextView
+                  android:text="图书搜索"
+                  style="@style/style_text_title"
+                  />
+              <TextView
+                  android:layout_marginTop="2dp"
+                  android:text="莫愁前路无知知己"
+                  android:textSize="12sp"
+                  style="@style/style_text_body_light"
+                  />
+            </LinearLayout>
           </LinearLayout>
         </LinearLayout>
       </LinearLayout>
       <View
           style="@style/item_split_horizontal"
           />
-
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="10dp"
           android:background="@android:color/white"
           android:orientation="vertical"
+          android:visibility="gone"
           >
         <View
             style="@style/item_split_horizontal"
             />
         <TextView
             android:layout_margin="10dp"
-            android:text="Tip"
+            android:text="Tip部分，暂时隐藏"
             style="@style/style_text_body_light"
             />
         <View
@@ -122,7 +182,6 @@
             />
       </LinearLayout>
 
-
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -135,8 +194,8 @@
             />
         <TextView
             android:layout_margin="10dp"
-            android:text="模块1"
-            style="@style/style_text_body_light"
+            android:text="新书上架"
+            style="@style/style_text_title"
             />
         <LinearLayout
             android:layout_width="match_parent"
@@ -159,8 +218,8 @@
             />
         <TextView
             android:layout_margin="10dp"
-            android:text="模块2"
-            style="@style/style_text_body_light"
+            android:text="图书推荐"
+            style="@style/style_text_title"
             />
         <LinearLayout
             android:layout_width="match_parent"
@@ -183,8 +242,8 @@
             />
         <TextView
             android:layout_margin="10dp"
-            android:text="模块3"
-            style="@style/style_text_body_light"
+            android:text="经典图书"
+            style="@style/style_text_title"
             />
         <LinearLayout
             android:layout_width="match_parent"
