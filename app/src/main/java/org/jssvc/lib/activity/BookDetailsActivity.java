@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,11 +15,16 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.OnClick;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
-
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import okhttp3.Call;
+import okhttp3.Response;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.DialogListSelecterAdapter;
 import org.jssvc.lib.adapter.ShowTabAdapter;
@@ -30,20 +36,10 @@ import org.jssvc.lib.bean.ListSelecterBean;
 import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.fragment.BookDetailInfoFragment;
-import org.jssvc.lib.fragment.BookDetailInlibFragment;
+import org.jssvc.lib.fragment.BookDetailQtyFragment;
 import org.jssvc.lib.utils.HtmlParseUtils;
 import org.jssvc.lib.view.CustomDialog;
-import org.jssvc.lib.view.CustomViewPager;
 import org.jssvc.lib.view.DividerItemDecoration;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Response;
 
 /**
  * 图书详情
@@ -56,7 +52,7 @@ public class BookDetailsActivity extends BaseActivity {
   @BindView(R.id.tvBookName) TextView tvBookName;
 
   @BindView(R.id.tabLayout) TabLayout tabLayout;
-  @BindView(R.id.viewPager) CustomViewPager viewPager;
+  @BindView(R.id.viewPager) ViewPager viewPager;
 
   private List<String> list_title;
   private List<Fragment> list_fragment;
@@ -245,7 +241,7 @@ public class BookDetailsActivity extends BaseActivity {
     // 显示
     if (detailList != null) {
       //初始化各fragment
-      BookDetailInlibFragment fragmentInlib = new BookDetailInlibFragment();
+      BookDetailQtyFragment fragmentInlib = new BookDetailQtyFragment();
       BookDetailInfoFragment fragmentInfo = new BookDetailInfoFragment();
       Bundle bundle = new Bundle();
       bundle.putSerializable("accessList", (Serializable) accessList);

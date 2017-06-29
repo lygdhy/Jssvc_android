@@ -27,7 +27,7 @@ public class BookDetailInfoFragment extends BaseFragment {
   BookDetailsAdapter bookDetailsAdapter;
 
   @Override protected int getContentViewId() {
-    return R.layout.pager_book_detail_info;
+    return R.layout.fragment_book_detail_info;
   }
 
   @Override protected void initView() {

@@ -21,13 +21,13 @@ import org.jssvc.lib.bean.BookAccessBean;
  * Created by lygdh on 2016/11/21.
  */
 
-public class BookDetailInlibFragment extends BaseFragment {
+public class BookDetailQtyFragment extends BaseFragment {
   @BindView(R.id.inLibRecyclerView) RecyclerView inLibRecyclerView;
 
   BookAccessAdapter bookAccessAdapter;
 
   @Override protected int getContentViewId() {
-    return R.layout.pager_book_detail_inlib;
+    return R.layout.fragment_book_detail_qty;
   }
 
   @Override protected void initView() {
