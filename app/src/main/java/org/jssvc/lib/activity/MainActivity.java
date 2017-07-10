@@ -67,6 +67,10 @@ public class MainActivity extends BaseActivity {
     viewPager.setOffscreenPageLimit(4);
   }
 
+  public void turnPage(int page) {
+    viewPager.setCurrentItem(page);
+  }
+
   private void initTab() {
     tabLayout.setTabMode(TabLayout.MODE_FIXED);
     tabLayout.setupWithViewPager(viewPager);
