@@ -98,10 +98,15 @@
               android:gravity="center"
               android:orientation="horizontal"
               >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_menu_b"
+                />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
                 android:orientation="vertical"
                 >
               <TextView
@@ -115,11 +120,7 @@
                   style="@style/style_text_body_light"
                   />
             </LinearLayout>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_menu_b"
-                />
+
           </LinearLayout>
           <View
               style="@style/item_split_horizontal"
