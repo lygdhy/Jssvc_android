@@ -38,7 +38,8 @@ public class SplashActivity extends BaseActivity {
       } else {
         // 用户名密码不全，不登录直接进入
         AccountPref.removeLogonAccoundPwd(context);
-        startActivity(new Intent(context, HomeActivity.class));
+        startActivity(new Intent(context, MainActivity.class));
+        //startActivity(new Intent(context, HomeActivity.class));
         finish();
       }
     }
@@ -69,7 +70,8 @@ public class SplashActivity extends BaseActivity {
           @Override public void onAfter(@Nullable String s, @Nullable Exception e) {
             super.onAfter(s, e);
             // 完成跳转
-            startActivity(new Intent(context, HomeActivity.class));
+            startActivity(new Intent(context, MainActivity.class));
+            //startActivity(new Intent(context, HomeActivity.class));
             finish();
           }
         });
