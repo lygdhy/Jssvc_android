@@ -9,7 +9,6 @@
   <uses-permission android:name="android.permission.READ_PHONE_STATE"/> <!-- 获取设备信息 -->
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> <!-- 读写sdcard，storage等等 -->
 
-
   <!-- 可选 -->
   <uses-permission android:name="android.permission.READ_LOGS"/>
 
@@ -65,14 +64,11 @@
         android:name=".activity.EmptySplashActivity"
         android:screenOrientation="portrait"
         android:theme="@style/StartAppTheme">
-
-      <!--
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
-            -->
     </activity>
     <activity
         android:name=".activity.HomeActivity"
@@ -84,11 +80,6 @@
         android:name=".activity.MainActivity"
         android:screenOrientation="portrait"
         android:windowSoftInputMode="adjustPan|stateHidden">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
-
-        <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
     </activity>
     <activity
         android:name=".activity.AccountLibManagerActivity"

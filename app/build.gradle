@@ -88,7 +88,6 @@ dependencies {
   compile 'com.pgyersdk:sdk:2.5.6' // 蒲公英
   compile 'se.emilsjolander:stickylistheaders:2.7.0' // stickylist
   compile 'pub.devrel:easypermissions:0.4.0' // 权限管理
-  compile 'com.nineoldandroids:library:2.4.0' // bga
   compile 'cn.bingoogolapple:bga-adapter:1.1.8@aar' // bga
   compile 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar' // bga
   compile 'com.umeng.analytics:analytics:6.0.4' // 友盟统计
