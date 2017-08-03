@@ -17,7 +17,7 @@ public class HttpUrlParams {
 
   // ==========图书馆服务=============
   // 图书馆服务器地址
-  public static final String BASE_LIB_URL = "http://opac.jssvc.edu.cn:8080/";
+  public static final String BASE_LIB_URL = "http://opac.jssvc.edu.cn/";
 
   // 账号激活
   public static final String URL_LIB_USER_REGISTER = BASE_LIB_URL + "reader/redr_con_result.php";
