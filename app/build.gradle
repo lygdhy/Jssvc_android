@@ -93,5 +93,5 @@ dependencies {
   compile 'com.umeng.analytics:analytics:6.0.4' // 友盟统计
   compile 'com.github.lzyzsd:jsbridge:1.0.4' // JsBridge
   compile 'com.blankj:utilcode:1.5.1' // 常用工具类
-  compile name: 'SMSSDK-2.1.4', ext: 'aar' // Mob SDK
+  compile name: 'SMSSDK-3.0.0', ext: 'aar' // Mob SDK
 }

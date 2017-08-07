@@ -1,7 +1,6 @@
 package org.jssvc.lib.base;
 
 import android.support.multidex.MultiDexApplication;
-import cn.smssdk.SMSSDK;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -11,6 +10,7 @@ import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.store.PersistentCookieStore;
 import com.lzy.okgo.model.HttpHeaders;
 import com.lzy.okgo.model.HttpParams;
+import com.mob.MobSDK;
 import com.pgyersdk.crash.PgyCrashManager;
 import com.umeng.analytics.MobclickAgent;
 
@@ -47,7 +47,8 @@ public class BaseApplication extends MultiDexApplication {
     initOkGo();
 
     // Mob SDK
-    SMSSDK.initSDK(this, "1e85bf08b2f08", "7d2ed9146830fca64601549ca9f87c93");
+    //SMSSDK.initSDK(this, "1e85bf08b2f08", "7d2ed9146830fca64601549ca9f87c93");
+    MobSDK.init(this, null, null);
   }
 
   // 初始化OkGo
