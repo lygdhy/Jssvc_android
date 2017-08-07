@@ -41,6 +41,13 @@
         android:name="UMENG_CHANNEL"
         android:value="${UMENG_CHANNEL_VALUE}"/>
 
+    <meta-data
+        android:name="Mob-AppKey"
+        android:value="1e85bf08b2f08"/>
+    <meta-data
+        android:name="Mob-AppSecret"
+        android:value="7d2ed9146830fca64601549ca9f87c93"/>
+
     <provider
         android:name="android.support.v4.content.FileProvider"
         android:authorities="org.jssvc.lib.provider"
