@@ -11,7 +11,7 @@
       >
 
     <TextView
-        android:text="掌上图书馆"
+        android:text="@string/app_name"
         style="@style/actionbar_title_style_base"
         />
   </RelativeLayout>

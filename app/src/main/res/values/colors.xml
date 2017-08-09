@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#00a359</color>
-  <color name="colorPrimaryDark">#009551</color>
+  <color name="colorPrimary">#507aa3</color>
+  <color name="colorPrimaryDark">#3f6c98</color>
   <color name="colorAccent">#236fd6</color>
 
   <!-- 主题色-->
-  <color name="color_ui_theme">#00a359</color>
+  <color name="color_ui_theme">#507aa3</color>
   <!--ActionBar背景色-->
-  <color name="color_ui_head">#00a359</color>
+  <color name="color_ui_head">#507aa3</color>
   <!-- 页面底色(背景色) -->
   <color name="color_ui_content">#f7f7f7</color>
 
