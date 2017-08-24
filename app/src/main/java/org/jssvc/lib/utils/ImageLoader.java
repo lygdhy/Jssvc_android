@@ -17,6 +17,11 @@ public class ImageLoader {
 
   public static void with(Context context, ImageView view, String url) {
     Uri uri = Uri.parse(url);
-    Glide.with(context).load(uri).into(view);
+    Glide.with(context).load(uri)
+        //.fitCenter()
+        //.diskCacheStrategy()
+        //.placeholder(R.drawable.icon_wait)
+        //.error(R.drawable.icon_wait)
+        .into(view);
   }
 }
