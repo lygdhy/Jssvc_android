@@ -5,15 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.facebook.drawee.view.SimpleDraweeView;
-
-import org.jssvc.lib.R;
-import org.jssvc.lib.bean.MsgBean;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.jssvc.lib.R;
+import org.jssvc.lib.bean.MsgBean;
+import org.jssvc.lib.utils.ImageLoader;
 
 /**
  * Created by lygdh on 2016/11/14.
@@ -40,7 +38,7 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>
   //将数据与界面进行绑定的操作
   @Override public void onBindViewHolder(ViewHolder holder, int position) {
     MsgBean item = menuList.get(position);
-    holder.msgCover.setImageURI(item.getAvatar() + "");
+    ImageLoader.with(context, holder.msgCover, item.getAvatar() + "");
 
     holder.tvTitle.setText(item.getTitle() + "");
     holder.tvAuthor.setText(item.getAuthor() + "");
@@ -57,11 +55,11 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>
   //自定义的ViewHolder，持有每个Item的的所有界面元素
   class ViewHolder extends RecyclerView.ViewHolder {
     TextView tvTitle, tvAuthor, tvDate;
-    SimpleDraweeView msgCover;
+    ImageView msgCover;
 
     public ViewHolder(View view) {
       super(view);
-      msgCover = (SimpleDraweeView) view.findViewById(R.id.msgCover);
+      msgCover = (ImageView) view.findViewById(R.id.msgCover);
       tvTitle = (TextView) view.findViewById(R.id.tvTitle);
       tvAuthor = (TextView) view.findViewById(R.id.tvAuthor);
       tvDate = (TextView) view.findViewById(R.id.tvDate);

@@ -3,12 +3,12 @@ package org.jssvc.lib.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
-import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.ArrayList;
 import java.util.List;
 import org.jssvc.lib.R;
@@ -19,6 +19,7 @@ import org.jssvc.lib.activity.MainActivity;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.AdsBean;
 import org.jssvc.lib.data.AccountPref;
+import org.jssvc.lib.utils.ImageLoader;
 
 /**
  * <pre>
@@ -87,18 +88,18 @@ public class HomeFragment extends BaseFragment {
   }
 
   public class LocalImageHolderView implements Holder<AdsBean> {
-    private SimpleDraweeView simpleDraweeView;
+    private ImageView imageView;
 
     @Override public View createView(Context context) {
-      simpleDraweeView = new SimpleDraweeView(context);
-      simpleDraweeView.setScaleType(SimpleDraweeView.ScaleType.CENTER_CROP);
-      return simpleDraweeView;
+      imageView = new ImageView(context);
+      imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+      return imageView;
     }
 
     @Override
     public void UpdateUI(final Context context, final int position, final AdsBean adsBean) {
-      simpleDraweeView.setImageURI(adsBean.getPic());
-      simpleDraweeView.setOnClickListener(new View.OnClickListener() {
+      ImageLoader.with(context, imageView, adsBean.getPic());
+      imageView.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View view) {
           //Intent intent = new Intent(context, WebActivity.class);
           //intent.putExtra("url", adsBean.getUrl());

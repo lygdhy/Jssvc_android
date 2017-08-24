@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_ui_content"
     android:orientation="vertical"
     >
   <RelativeLayout
+      android:visibility="gone"
       style="@style/actionbar_whole_style_base"
       >
     <TextView
@@ -25,48 +25,41 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-      <LinearLayout
-          android:id="@+id/ll_user"
+
+      <FrameLayout
           android:layout_width="match_parent"
-          android:layout_height="140dp"
-          android:background="@android:color/white"
-          android:gravity="center_vertical"
-          android:orientation="horizontal"
+          android:layout_height="wrap_content"
           >
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/iv_avatar"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_margin="20dp"
-            fresco:backgroundImage="@drawable/icon_logo"
-            fresco:placeholderImage="@drawable/icon_logo"
-            fresco:placeholderImageScaleType="centerCrop"
-            fresco:roundAsCircle="true"
+        <org.jssvc.lib.view.WaveView
+            android:id="@+id/waveView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             />
         <LinearLayout
+            android:id="@+id/ll_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
+            android:gravity="center"
             android:orientation="vertical"
+            android:paddingBottom="40dp"
+            android:paddingTop="20dp"
             >
+          <ImageView
+              android:id="@+id/iv_avatar"
+              android:layout_width="80dp"
+              android:layout_height="80dp"
+              android:layout_margin="10dp"
+              android:src="@drawable/icon_logo"
+              />
           <TextView
               android:id="@+id/tv_user_name"
               android:text="张三丰"
+              android:textColor="@android:color/white"
               android:textSize="18sp"
               style="@style/style_text_title"
               />
-          <TextView
-              android:id="@+id/tv_user_sign"
-              android:layout_marginTop="5dp"
-              android:lineSpacingExtra="2dp"
-              android:text="书籍是朋友，虽然没有热情，但是非常忠实。——雨果"
-              android:textSize="14sp"
-              style="@style/style_text_body_light"
-              />
-          />
         </LinearLayout>
-      </LinearLayout>
-      <View style="@style/item_split_horizontal"/>
+      </FrameLayout>
 
       <LinearLayout
           android:layout_width="match_parent"
