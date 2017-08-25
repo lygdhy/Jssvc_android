@@ -177,6 +177,10 @@
   <style name="style_text_value_menu" parent="style_text_base">
     <item name="android:layout_alignParentRight">true</item>
     <item name="android:textSize">14sp</item>
+    <item name="android:gravity">right</item>
+    <item name="android:lines">1</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:layout_marginLeft">100dp</item>
     <item name="android:textColor">@color/color_text_content</item>
     <item name="android:textColorHint">@color/color_text_hint</item>
   </style>
