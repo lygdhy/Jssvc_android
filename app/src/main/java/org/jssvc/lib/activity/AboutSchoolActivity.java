@@ -1,11 +1,11 @@
 package org.jssvc.lib.activity;
 
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.bingoogolapple.bgaindicator.BGAFixedIndicator;
 import java.util.ArrayList;
 import java.util.List;
 import org.jssvc.lib.R;
@@ -21,11 +21,11 @@ import org.jssvc.lib.fragment.LibYellowPagesFragment;
  */
 public class AboutSchoolActivity extends BaseActivity {
 
-  @BindView(R.id.tabLayout) TabLayout tabLayout;
+  @BindView(R.id.indicator) BGAFixedIndicator mIndicator;
   @BindView(R.id.viewPager) ViewPager viewPager;
 
-  private List<String> list_title;
-  private List<Fragment> list_fragment;
+  private List<String> mTitles;
+  private List<Fragment> mFragments;
   private ShowTabAdapter showTabAdapter;
 
   @Override protected int getContentViewId() {
@@ -46,32 +46,21 @@ public class AboutSchoolActivity extends BaseActivity {
 
   private void initContent() {
     //将fragment装进列表中
-    list_fragment = new ArrayList<>();
-    list_fragment.add(new LibResumeFragment());
-    list_fragment.add(new LibPlanFragment());
-    list_fragment.add(new LibScheduleFragment());
-    list_fragment.add(new LibYellowPagesFragment());
+    mFragments = new ArrayList<>();
+    mFragments.add(new LibResumeFragment());
+    mFragments.add(new LibPlanFragment());
+    mFragments.add(new LibScheduleFragment());
+    mFragments.add(new LibYellowPagesFragment());
 
     //将名称加载tab名字列表
-    list_title = new ArrayList<>();
-    list_title.add("概况");
-    list_title.add("楼层分布");
-    list_title.add("开馆时间");
-    list_title.add("联系方式");
+    mTitles = new ArrayList<>();
+    mTitles.add("概况");
+    mTitles.add("楼层分布");
+    mTitles.add("开馆时间");
+    mTitles.add("联系方式");
 
-    //设置TabLayout的模式
-    tabLayout.setTabMode(TabLayout.MODE_FIXED);
-    //为TabLayout添加tab名称
-    tabLayout.addTab(tabLayout.newTab().setText(list_title.get(0)));
-    tabLayout.addTab(tabLayout.newTab().setText(list_title.get(1)));
-    tabLayout.addTab(tabLayout.newTab().setText(list_title.get(2)));
-    tabLayout.addTab(tabLayout.newTab().setText(list_title.get(3)));
-
-    showTabAdapter = new ShowTabAdapter(getSupportFragmentManager(), list_fragment, list_title);
+    showTabAdapter = new ShowTabAdapter(getSupportFragmentManager(), mFragments, mTitles);
     viewPager.setAdapter(showTabAdapter);
-
-    //TabLayout加载viewpager
-    tabLayout.setupWithViewPager(viewPager);
-    viewPager.setCurrentItem(0);
+    mIndicator.initData(0, viewPager);
   }
 }

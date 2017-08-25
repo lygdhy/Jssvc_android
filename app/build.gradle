@@ -87,8 +87,11 @@ dependencies {
   compile 'com.pgyersdk:sdk:2.5.6' // 蒲公英
   compile 'se.emilsjolander:stickylistheaders:2.7.0' // stickylist
   compile 'pub.devrel:easypermissions:0.4.0' // 权限管理
+
   compile 'cn.bingoogolapple:bga-adapter:1.1.8@aar' // bga
   compile 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar' // bga
+  compile 'cn.bingoogolapple:bga-indicator:1.0.1@aar'
+  
   compile 'com.umeng.analytics:analytics:6.0.4' // 友盟统计
   compile 'com.github.lzyzsd:jsbridge:1.0.4' // JsBridge
   compile 'com.blankj:utilcode:1.5.1' // 常用工具类
