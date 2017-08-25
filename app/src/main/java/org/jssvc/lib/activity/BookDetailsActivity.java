@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import java.io.Serializable;
@@ -38,6 +37,7 @@ import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.fragment.BookDetailInfoFragment;
 import org.jssvc.lib.fragment.BookDetailQtyFragment;
 import org.jssvc.lib.utils.HtmlParseUtils;
+import org.jssvc.lib.utils.ImageLoader;
 import org.jssvc.lib.view.CustomDialog;
 import org.jssvc.lib.view.DividerItemDecoration;
 
@@ -48,7 +48,7 @@ public class BookDetailsActivity extends BaseActivity {
 
   @BindView(R.id.tvBack) TextView tvBack;
   @BindView(R.id.tvCollect) ImageView tvCollect;
-  @BindView(R.id.bookView) SimpleDraweeView bookView;
+  @BindView(R.id.bookView) ImageView bookView;
   @BindView(R.id.tvBookName) TextView tvBookName;
 
   @BindView(R.id.tabLayout) TabLayout tabLayout;
@@ -229,7 +229,7 @@ public class BookDetailsActivity extends BaseActivity {
   private void parseHtml(String s) {
     // 解析图片
     String coverUrl = HtmlParseUtils.getBookCoverUrl(s);
-    bookView.setImageURI(coverUrl);
+    ImageLoader.with(context, bookView, coverUrl);
 
     // 解析详情
     List<BookDetailsBean> detailList = new ArrayList<>();

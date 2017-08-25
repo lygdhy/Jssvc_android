@@ -3,7 +3,6 @@ package org.jssvc.lib.base;
 import android.support.multidex.MultiDexApplication;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
@@ -33,9 +32,6 @@ public class BaseApplication extends MultiDexApplication {
     //if (spUtils == null) {
     //  spUtils = new SPUtils(FILE_NAME);// 实例化SharePreferenceUtils
     //}
-
-    // 初始化Fresco
-    Fresco.initialize(this);
 
     // 蒲公英
     PgyCrashManager.register(this);

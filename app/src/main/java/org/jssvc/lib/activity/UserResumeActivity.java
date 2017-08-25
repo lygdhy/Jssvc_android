@@ -5,10 +5,10 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
-import com.facebook.drawee.view.SimpleDraweeView;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 
@@ -19,7 +19,7 @@ import static org.jssvc.lib.R.id.rl_birth;
  */
 public class UserResumeActivity extends BaseActivity {
 
-  @BindView(R.id.iv_avatar) SimpleDraweeView ivAvatar;
+  @BindView(R.id.iv_avatar) ImageView ivAvatar;
   @BindView(R.id.tv_nick_name) TextView tvNickName;
   @BindView(R.id.tv_real_name) TextView tvRealName;
   @BindView(R.id.tv_sex) TextView tvSex;
