@@ -9,11 +9,18 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.umeng.analytics.MobclickAgent;
-
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.BookReadingAdapter;
 import org.jssvc.lib.base.BaseActivity;
@@ -22,18 +29,6 @@ import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
 import org.jssvc.lib.view.CustomDialog;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import butterknife.BindView;
-import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Response;
 
 /**
  * 借阅历史
@@ -72,19 +67,32 @@ public class CurentBorrowActivity extends BaseActivity {
   // 获取图书列表
   private void loadBookList() {
     showProgressDialog();
-    OkGo.post(HttpUrlParams.URL_LIB_CURRENT_BORROW).tag(this).execute(new StringCallback() {
-      @Override public void onSuccess(String s, Call call, Response response) {
+    OkGo.<String>post(HttpUrlParams.URL_LIB_CURRENT_BORROW).tag(this).execute(new StringCallback() {
+      @Override public void onSuccess(Response<String> response) {
         dissmissProgressDialog();
-        // s 即为所需要的结果
-        parseHtml(s);
+        parseHtml(response.body());
       }
 
-      @Override public void onError(Call call, Response response, Exception e) {
-        super.onError(call, response, e);
+      @Override public void onError(Response<String> response) {
+        super.onError(response);
         dissmissProgressDialog();
-        dealNetError(e);
+        dealNetError(response);
       }
     });
+
+    //OkGo.post(HttpUrlParams.URL_LIB_CURRENT_BORROW).tag(this).execute(new StringCallback() {
+    //  @Override public void onSuccess(String s, Call call, Response response) {
+    //    dissmissProgressDialog();
+    //    // s 即为所需要的结果
+    //    parseHtml(s);
+    //  }
+    //
+    //  @Override public void onError(Call call, Response response, Exception e) {
+    //    super.onError(call, response, e);
+    //    dissmissProgressDialog();
+    //    dealNetError(e);
+    //  }
+    //});
   }
 
   // 解析网页
@@ -131,23 +139,39 @@ public class CurentBorrowActivity extends BaseActivity {
         map.put("bookTitle", item.getBookName());
         MobclickAgent.onEvent(context, "book_renew", map);
 
-        OkGo.get(HttpUrlParams.URL_LIB_RENEW_BORROW)
-            .tag(this)
+        OkGo.<String>post(HttpUrlParams.URL_LIB_BOOK_ADD).tag(this)
             .params("bar_code", item.getBarCode())
             .params("time", String.valueOf(new Date().getTime()))
             .execute(new StringCallback() {
-              @Override public void onSuccess(String s, Call call, Response response) {
+              @Override public void onSuccess(Response<String> response) {
                 dissmissProgressDialog();
-                // s 即为所需要的结果
-                showResultDialog(s);
+                showResultDialog(response.body());
               }
 
-              @Override public void onError(Call call, Response response, Exception e) {
-                super.onError(call, response, e);
+              @Override public void onError(Response<String> response) {
+                super.onError(response);
                 dissmissProgressDialog();
-                dealNetError(e);
+                dealNetError(response);
               }
             });
+
+        //OkGo.get(HttpUrlParams.URL_LIB_RENEW_BORROW)
+        //    .tag(this)
+        //    .params("bar_code", item.getBarCode())
+        //    .params("time", String.valueOf(new Date().getTime()))
+        //    .execute(new StringCallback() {
+        //      @Override public void onSuccess(String s, Call call, Response response) {
+        //        dissmissProgressDialog();
+        //        // s 即为所需要的结果
+        //        showResultDialog(s);
+        //      }
+        //
+        //      @Override public void onError(Call call, Response response, Exception e) {
+        //        super.onError(call, response, e);
+        //        dissmissProgressDialog();
+        //        dealNetError(e);
+        //      }
+        //    });
       }
     });
   }

@@ -6,23 +6,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
-
+import com.lzy.okgo.model.Response;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.view.CustomDialog;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import butterknife.BindView;
-import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Response;
 
 /**
  * 意见反馈
@@ -69,24 +64,43 @@ public class FeedbackActivity extends BaseActivity {
   private void submintFeedback(String feedStr, String trim) {
     showProgressDialog("正在提交...");
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-    OkGo.post(HttpUrlParams.URL_ORG_FEEDBACK)
-        .tag(this)
+
+    OkGo.<String>post(HttpUrlParams.URL_ORG_FEEDBACK).tag(this)
         .params("time", df.format(new Date()))
         .params("userid", AccountPref.getLogonAccoundNumber(context))
         .params("advice", feedStr)
         .params("email", trim + "")
         .execute(new StringCallback() {
-          @Override public void onSuccess(String s, Call call, Response response) {
+          @Override public void onSuccess(Response<String> response) {
             dissmissProgressDialog();
             thankDialog();
           }
 
-          @Override public void onError(Call call, Response response, Exception e) {
-            super.onError(call, response, e);
+          @Override public void onError(Response<String> response) {
+            super.onError(response);
             dissmissProgressDialog();
-            dealNetError(e);
+            dealNetError(response);
           }
         });
+
+    //OkGo.post(HttpUrlParams.URL_ORG_FEEDBACK)
+    //    .tag(this)
+    //    .params("time", df.format(new Date()))
+    //    .params("userid", AccountPref.getLogonAccoundNumber(context))
+    //    .params("advice", feedStr)
+    //    .params("email", trim + "")
+    //    .execute(new StringCallback() {
+    //      @Override public void onSuccess(String s, Call call, Response response) {
+    //        dissmissProgressDialog();
+    //        thankDialog();
+    //      }
+    //
+    //      @Override public void onError(Call call, Response response, Exception e) {
+    //        super.onError(call, response, e);
+    //        dissmissProgressDialog();
+    //        dealNetError(e);
+    //      }
+    //    });
   }
 
   // 感谢

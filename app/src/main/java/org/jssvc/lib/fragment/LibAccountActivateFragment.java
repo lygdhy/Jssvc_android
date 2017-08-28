@@ -7,8 +7,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
-import okhttp3.Call;
-import okhttp3.Response;
+import com.lzy.okgo.model.Response;
 import org.jssvc.lib.R;
 import org.jssvc.lib.activity.AccountLibManagerActivity;
 import org.jssvc.lib.base.BaseFragment;
@@ -46,22 +45,37 @@ public class LibAccountActivateFragment extends BaseFragment {
         } else {
           showProgressDialog("正在提交...");
 
-          OkGo.post(HttpUrlParams.URL_LIB_USER_REGISTER)
-              .tag(this)
+          OkGo.<String>post(HttpUrlParams.URL_LIB_USER_REGISTER).tag(this)
               .params("name", realName)
               .execute(new StringCallback() {
-                @Override public void onSuccess(String s, Call call, Response response) {
+                @Override public void onSuccess(Response<String> response) {
                   dissmissProgressDialog();
-                  // s 即为所需要的结果
-                  parseHtml(s);
+                  parseHtml(response.body());
                 }
 
-                @Override public void onError(Call call, Response response, Exception e) {
-                  super.onError(call, response, e);
+                @Override public void onError(Response<String> response) {
+                  super.onError(response);
                   dissmissProgressDialog();
-                  dealNetError(e);
+                  dealNetError(response);
                 }
               });
+
+          //OkGo.post(HttpUrlParams.URL_LIB_USER_REGISTER)
+          //    .tag(this)
+          //    .params("name", realName)
+          //    .execute(new StringCallback() {
+          //      @Override public void onSuccess(String s, Call call, Response response) {
+          //        dissmissProgressDialog();
+          //        // s 即为所需要的结果
+          //        parseHtml(s);
+          //      }
+          //
+          //      @Override public void onError(Call call, Response response, Exception e) {
+          //        super.onError(call, response, e);
+          //        dissmissProgressDialog();
+          //        dealNetError(e);
+          //      }
+          //    });
         }
         break;
     }

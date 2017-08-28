@@ -13,11 +13,10 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.umeng.analytics.MobclickAgent;
 import java.util.ArrayList;
 import java.util.List;
-import okhttp3.Call;
-import okhttp3.Response;
 import org.jssvc.lib.R;
 import org.jssvc.lib.activity.AccountLibManagerActivity;
 import org.jssvc.lib.adapter.DialogListSelecterAdapter;
@@ -77,24 +76,42 @@ public class LibAccountBoundFragment extends BaseFragment {
 
           AccountPref.saveLoginAccoundNumber(context, loginname);
           AccountPref.saveLoginType(context, currentLoginType.getId());
-          OkGo.post(HttpUrlParams.URL_LIB_LOGIN)
-              .tag(this)
+
+          OkGo.<String>post(HttpUrlParams.URL_LIB_LOGIN).tag(this)
               .params("number", loginname)
               .params("passwd", loginpwd)
               .params("select", currentLoginType.getId())
               .execute(new StringCallback() {
-                @Override public void onSuccess(String s, Call call, Response response) {
+                @Override public void onSuccess(Response<String> response) {
                   dissmissProgressDialog();
-                  // s 即为所需要的结果
-                  parseHtml(s, loginpwd);
+                  parseHtml(response.body(), loginpwd);
                 }
 
-                @Override public void onError(Call call, Response response, Exception e) {
-                  super.onError(call, response, e);
+                @Override public void onError(Response<String> response) {
+                  super.onError(response);
                   dissmissProgressDialog();
-                  dealNetError(e);
+                  dealNetError(response);
                 }
               });
+
+          //OkGo.post(HttpUrlParams.URL_LIB_LOGIN)
+          //    .tag(this)
+          //    .params("number", loginname)
+          //    .params("passwd", loginpwd)
+          //    .params("select", currentLoginType.getId())
+          //    .execute(new StringCallback() {
+          //      @Override public void onSuccess(String s, Call call, Response response) {
+          //        dissmissProgressDialog();
+          //        // s 即为所需要的结果
+          //        parseHtml(s, loginpwd);
+          //      }
+          //
+          //      @Override public void onError(Call call, Response response, Exception e) {
+          //        super.onError(call, response, e);
+          //        dissmissProgressDialog();
+          //        dealNetError(e);
+          //      }
+          //    });
         }
         break;
     }

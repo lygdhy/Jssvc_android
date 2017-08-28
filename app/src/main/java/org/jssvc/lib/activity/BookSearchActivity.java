@@ -23,6 +23,7 @@ import cn.bingoogolapple.refreshlayout.BGAMoocStyleRefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.umeng.analytics.MobclickAgent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,8 +32,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import okhttp3.Call;
-import okhttp3.Response;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.BookSearchAdapter;
 import org.jssvc.lib.adapter.BookSearchHisAdapter;
@@ -244,8 +243,7 @@ public class BookSearchActivity extends BaseActivity
     map.put("strText", searchText);
     MobclickAgent.onEvent(context, "book_search", map);
 
-    OkGo.post(HttpUrlParams.URL_LIB_BOOK_SEARCH)
-        .tag(this)
+    OkGo.<String>post(HttpUrlParams.URL_LIB_BOOK_SEARCH).tag(this)
         .params("strSearchType", currentSearchType.getId())
         .params("strText", searchText)
         .params("page", String.valueOf(searchPage))
@@ -255,7 +253,7 @@ public class BookSearchActivity extends BaseActivity
         .params("showmode", "list")
         .params("dept", "ALL")
         .execute(new StringCallback() {
-          @Override public void onSuccess(String s, Call call, Response response) {
+          @Override public void onSuccess(Response<String> response) {
             dissmissProgressDialog();
             if (mRefreshLayout != null) {
               if (isRefresh) {
@@ -263,13 +261,12 @@ public class BookSearchActivity extends BaseActivity
               } else {
                 mRefreshLayout.endLoadingMore();
               }
-              // s 即为所需要的结果
-              parseHtml(isRefresh, s);
+              parseHtml(isRefresh, response.body());
             }
           }
 
-          @Override public void onError(Call call, Response response, Exception e) {
-            super.onError(call, response, e);
+          @Override public void onError(Response<String> response) {
+            super.onError(response);
             dissmissProgressDialog();
             if (mRefreshLayout != null) {
               if (isRefresh) {
@@ -277,10 +274,48 @@ public class BookSearchActivity extends BaseActivity
               } else {
                 mRefreshLayout.endLoadingMore();
               }
-              dealNetError(e);
+              dealNetError(response);
             }
           }
         });
+
+    //OkGo.post(HttpUrlParams.URL_LIB_BOOK_SEARCH)
+    //    .tag(this)
+    //    .params("strSearchType", currentSearchType.getId())
+    //    .params("strText", searchText)
+    //    .params("page", String.valueOf(searchPage))
+    //
+    //    .params("sort", "CATA_DATE")
+    //    .params("orderby", "DESC")
+    //    .params("showmode", "list")
+    //    .params("dept", "ALL")
+    //    .execute(new StringCallback() {
+    //      @Override public void onSuccess(String s, Call call, Response response) {
+    //        dissmissProgressDialog();
+    //        if (mRefreshLayout != null) {
+    //          if (isRefresh) {
+    //            mRefreshLayout.endRefreshing();
+    //          } else {
+    //            mRefreshLayout.endLoadingMore();
+    //          }
+    //          // s 即为所需要的结果
+    //          parseHtml(isRefresh, s);
+    //        }
+    //      }
+    //
+    //      @Override public void onError(Call call, Response response, Exception e) {
+    //        super.onError(call, response, e);
+    //        dissmissProgressDialog();
+    //        if (mRefreshLayout != null) {
+    //          if (isRefresh) {
+    //            mRefreshLayout.endRefreshing();
+    //          } else {
+    //            mRefreshLayout.endLoadingMore();
+    //          }
+    //          dealNetError(e);
+    //        }
+    //      }
+    //    });
   }
 
   // 解析网页

@@ -19,11 +19,10 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import okhttp3.Call;
-import okhttp3.Response;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.DialogListSelecterAdapter;
 import org.jssvc.lib.adapter.ShowTabAdapter;
@@ -79,19 +78,33 @@ public class BookDetailsActivity extends BaseActivity {
     }
 
     showProgressDialog();
-    OkGo.post(detialUrl).tag(this).execute(new StringCallback() {
-      @Override public void onSuccess(String s, Call call, Response response) {
+
+    OkGo.<String>post(detialUrl).tag(this).execute(new StringCallback() {
+      @Override public void onSuccess(Response<String> response) {
         dissmissProgressDialog();
-        // s 即为所需要的结果
-        parseHtml(s);
+        parseHtml(response.body());
       }
 
-      @Override public void onError(Call call, Response response, Exception e) {
-        super.onError(call, response, e);
+      @Override public void onError(Response<String> response) {
+        super.onError(response);
         dissmissProgressDialog();
-        dealNetError(e);
+        dealNetError(response);
       }
     });
+
+    //OkGo.post(detialUrl).tag(this).execute(new StringCallback() {
+    //  @Override public void onSuccess(String s, Call call, Response response) {
+    //    dissmissProgressDialog();
+    //    // s 即为所需要的结果
+    //    parseHtml(s);
+    //  }
+    //
+    //  @Override public void onError(Call call, Response response, Exception e) {
+    //    super.onError(call, response, e);
+    //    dissmissProgressDialog();
+    //    dealNetError(response, e);
+    //  }
+    //});
   }
 
   @OnClick({ R.id.tvBack, R.id.tvCollect }) public void onClick(View view) {
@@ -174,41 +187,72 @@ public class BookDetailsActivity extends BaseActivity {
   // 调用服务添加图书
   private void add2Shelf(String classid) {
     showProgressDialog();
-    OkGo.get(HttpUrlParams.URL_LIB_BOOK_ADD)
+
+    OkGo.<String>post(HttpUrlParams.URL_LIB_BOOK_ADD).tag(this)
         .params("classid", classid)
         .params("marc_no", marc_no)
         .params("time", System.currentTimeMillis())
-        .tag(this)
         .execute(new StringCallback() {
-          @Override public void onSuccess(String s, Call call, Response response) {
+          @Override public void onSuccess(Response<String> response) {
             dissmissProgressDialog();
-            showAlertDialog(s);
+            showAlertDialog(response.body());
           }
 
-          @Override public void onError(Call call, Response response, Exception e) {
-            super.onError(call, response, e);
+          @Override public void onError(Response<String> response) {
+            super.onError(response);
             dissmissProgressDialog();
-            dealNetError(e);
+            dealNetError(response);
           }
         });
+
+    //OkGo.get(HttpUrlParams.URL_LIB_BOOK_ADD)
+    //    .params("classid", classid)
+    //    .params("marc_no", marc_no)
+    //    .params("time", System.currentTimeMillis())
+    //    .tag(this)
+    //    .execute(new StringCallback() {
+    //      @Override public void onSuccess(String s, Call call, Response response) {
+    //        dissmissProgressDialog();
+    //        showAlertDialog(s);
+    //      }
+    //
+    //      @Override public void onError(Call call, Response response, Exception e) {
+    //        super.onError(call, response, e);
+    //        dissmissProgressDialog();
+    //        dealNetError(e);
+    //      }
+    //    });
   }
 
   // 获取书架目录
   private void getBookShelf() {
     showProgressDialog();
-    OkGo.post(HttpUrlParams.URL_LIB_BOOK_SHELF).tag(this).execute(new StringCallback() {
-      @Override public void onSuccess(String s, Call call, Response response) {
+    OkGo.<String>post(HttpUrlParams.URL_LIB_BOOK_SHELF).tag(this).execute(new StringCallback() {
+      @Override public void onSuccess(Response<String> response) {
         dissmissProgressDialog();
-        // s 即为所需要的结果
-        parseHtml2List(s);
+        parseHtml2List(response.body());
       }
 
-      @Override public void onError(Call call, Response response, Exception e) {
-        super.onError(call, response, e);
+      @Override public void onError(Response<String> response) {
+        super.onError(response);
         dissmissProgressDialog();
-        dealNetError(e);
+        dealNetError(response);
       }
     });
+
+    //OkGo.post(HttpUrlParams.URL_LIB_BOOK_SHELF).tag(this).execute(new StringCallback() {
+    //  @Override public void onSuccess(String s, Call call, Response response) {
+    //    dissmissProgressDialog();
+    //    // s 即为所需要的结果
+    //    parseHtml2List(s);
+    //  }
+    //
+    //  @Override public void onError(Call call, Response response, Exception e) {
+    //    super.onError(call, response, e);
+    //    dissmissProgressDialog();
+    //    dealNetError(e);
+    //  }
+    //});
   }
 
   // 解析网页

@@ -77,7 +77,7 @@ dependencies {
   compile 'com.android.support:appcompat-v7:24.2.1'
   compile 'com.android.support:support-v4:24.2.1'
   testCompile 'junit:junit:4.12'
-  compile 'com.lzy.net:okgo:2.1.4' // okgo联网
+  compile 'com.lzy.net:okgo:3.0.4' // okgo联网
   compile 'com.jakewharton:butterknife:8.4.0' // butterknife格式化代码
   apt 'com.jakewharton:butterknife-compiler:8.4.0' // butterknife格式化代码
   compile 'com.github.niorgai:StatusBarCompat:1.2.0' // StatusBar
@@ -90,8 +90,8 @@ dependencies {
 
   compile 'cn.bingoogolapple:bga-adapter:1.1.8@aar' // bga
   compile 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar' // bga
-  compile 'cn.bingoogolapple:bga-indicator:1.0.1@aar'
-  
+  compile 'cn.bingoogolapple:bga-indicator:1.0.1@aar' // bga
+
   compile 'com.umeng.analytics:analytics:6.0.4' // 友盟统计
   compile 'com.github.lzyzsd:jsbridge:1.0.4' // JsBridge
   compile 'com.blankj:utilcode:1.5.1' // 常用工具类

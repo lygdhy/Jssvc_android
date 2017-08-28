@@ -12,11 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import org.jssvc.lib.view.pDialog.XProgressDialog;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import com.lzy.okgo.model.Response;
+import org.jssvc.lib.view.pDialog.XProgressDialog;
 
 /**
  * 基类Fragment
@@ -86,8 +85,8 @@ public abstract class BaseFragment extends Fragment {
   /**
    * 网络错误处理
    */
-  protected void dealNetError(Exception e) {
-    mActivity.dealNetError(e);
+  protected void dealNetError(Response response) {
+    mActivity.dealNetError(response);
   }
 }
 
