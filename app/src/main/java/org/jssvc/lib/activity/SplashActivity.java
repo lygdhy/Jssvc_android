@@ -28,6 +28,13 @@ public class SplashActivity extends BaseActivity {
     handler.postDelayed(new splashhandler(), 1000);//静态启动页
   }
 
+  /**
+   * 是否支持滑动返回
+   */
+  protected boolean supportSlideBack() {
+    return false;
+  }
+
   class splashhandler implements Runnable {
     public void run() {
       if (AccountPref.isLogon(context)) {

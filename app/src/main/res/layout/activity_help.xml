@@ -4,20 +4,20 @@
     android:background="@color/color_ui_content"
     android:orientation="vertical">
 
-    <RelativeLayout style="@style/actionbar_whole_style_white">
+    <RelativeLayout style="@style/actionbar_whole_style_base">
 
         <TextView
             android:id="@+id/tvBack"
-            style="@style/actionbar_left_style_white" />
+            style="@style/actionbar_left_style_base" />
 
         <TextView
-            style="@style/actionbar_title_style_white"
+            style="@style/actionbar_title_style_base"
             android:text="帮助指南" />
 
-        <TextView
+        <ImageView
             android:id="@+id/tvChat"
-            style="@style/actionbar_right_style_white"
-            android:drawableLeft="@drawable/icon_menu_chat" />
+            style="@style/actionbar_right_style_base"
+            android:src="@drawable/icon_menu_chat" />
         <View style="@style/item_split_horizontal"/>
     </RelativeLayout>
 

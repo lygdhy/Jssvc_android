@@ -1,6 +1,8 @@
 package org.jssvc.lib.base;
 
+import android.app.Activity;
 import android.support.multidex.MultiDexApplication;
+import android.view.View;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
 import com.lzy.okgo.OkGo;
@@ -15,6 +17,7 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import okhttp3.OkHttpClient;
+import org.jssvc.lib.view.ActivityLifecycleHelper;
 
 /**
  * Created by lygdh on 2016/11/15.
@@ -26,6 +29,8 @@ public class BaseApplication extends MultiDexApplication {
   private static final String FILE_NAME = "sp_jssvc_lib";
 
   BaseApplication appContext;
+
+  private ActivityLifecycleHelper mActivityLifecycleHelper;
 
   @Override public void onCreate() {
     super.onCreate();
@@ -48,6 +53,9 @@ public class BaseApplication extends MultiDexApplication {
     // Mob SDK
     //SMSSDK.initSDK(this, "1e85bf08b2f08", "7d2ed9146830fca64601549ca9f87c93");
     MobSDK.init(this, null, null);
+
+    // 注册滑动返回
+    registerActivityLifecycleCallbacks(mActivityLifecycleHelper = new ActivityLifecycleHelper());
   }
 
   // 初始化OkGo
@@ -73,5 +81,24 @@ public class BaseApplication extends MultiDexApplication {
         .setCacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)//先使用缓存，不管是否存在，仍然请求网络
         .setCacheTime(CacheEntity.CACHE_NEVER_EXPIRE)   //全局统一缓存时间，默认永不过期，可以不传
         .setRetryCount(3);                       //全局公共参数
+  }
+
+  public ActivityLifecycleHelper getActivityLifecycleHelper() {
+    return mActivityLifecycleHelper;
+  }
+
+  public void onSlideBack(boolean isReset, float distance) {
+    if (mActivityLifecycleHelper != null) {
+      Activity lastActivity = mActivityLifecycleHelper.getPreActivity();
+      if (lastActivity != null) {
+        View contentView = lastActivity.findViewById(android.R.id.content);
+        if (isReset) {
+          contentView.setX(contentView.getLeft());
+        } else {
+          final int width = getResources().getDisplayMetrics().widthPixels;
+          contentView.setX(-width / 3 + distance / 3);
+        }
+      }
+    }
   }
 }

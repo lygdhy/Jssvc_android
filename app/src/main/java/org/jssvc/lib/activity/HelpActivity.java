@@ -1,6 +1,7 @@
 package org.jssvc.lib.activity;
 
 import android.content.Intent;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +13,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.OnClick;
+import java.util.ArrayList;
+import java.util.List;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.DialogListSelecterAdapter;
 import org.jssvc.lib.adapter.QleftAdapter;
@@ -23,12 +27,6 @@ import org.jssvc.lib.bean.ListSelecterBean;
 import org.jssvc.lib.bean.QuestionBean;
 import org.jssvc.lib.data.AppPref;
 import org.jssvc.lib.view.DividerItemDecoration;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 /**
@@ -40,7 +38,7 @@ public class HelpActivity extends BaseActivity
     StickyListHeadersListView.OnStickyHeaderChangedListener {
 
   @BindView(R.id.tvBack) TextView tvBack;
-  @BindView(R.id.tvChat) TextView tvChat;
+  @BindView(R.id.tvChat) ImageView tvChat;
   @BindView(R.id.ivClose) ImageView ivClose;
   @BindView(R.id.tvTip) TextView tvTip;
   @BindView(R.id.rlTip) RelativeLayout rlTip;
@@ -68,6 +66,9 @@ public class HelpActivity extends BaseActivity
     } else {
       rlTip.setVisibility(View.GONE);
     }
+
+    DrawableCompat.setTint(DrawableCompat.wrap(tvChat.getDrawable().mutate()),
+        context.getResources().getColor(android.R.color.black));
 
     // 获取焦点
     lvLeft.setFocusable(false);

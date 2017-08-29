@@ -5,17 +5,17 @@
     android:orientation="vertical"
     >
 
-  <RelativeLayout style="@style/actionbar_whole_style_white">
+  <RelativeLayout style="@style/actionbar_whole_style_base">
 
     <TextView
         android:id="@+id/tvBack"
-        style="@style/actionbar_left_style_white"
+        style="@style/actionbar_left_style_base"
         />
 
     <TextView
         android:id="@+id/tvTitle"
         android:text="有问必答"
-        style="@style/actionbar_title_style_white"
+        style="@style/actionbar_title_style_base"
         />
     <View style="@style/item_split_horizontal"/>
   </RelativeLayout>
