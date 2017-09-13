@@ -12,11 +12,11 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.pgyersdk.javabean.AppBean;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
-import okhttp3.Call;
-import okhttp3.Response;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.User;
@@ -136,17 +136,38 @@ public class SettingActivity extends BaseActivity {
 
   // 获取个人信息
   private void getUserInfoByNet() {
-    OkGo.post(HttpUrlParams.URL_LIB_ACCOUND).tag(this).execute(new StringCallback() {
-      @Override public void onSuccess(String s, Call call, Response response) {
-        // s 即为所需要的结果
-        parseHtml(s);
+    OkGo.<String>post(HttpUrlParams.URL_LIB_ACCOUND).tag(this).execute(new StringCallback() {
+      @Override public void onSuccess(Response<String> response) {
+        parseHtml(response.body());
       }
 
-      @Override public void onError(Call call, Response response, Exception e) {
-        super.onError(call, response, e);
-        dealNetError(e);
+      @Override public void onError(Response<String> response) {
+        super.onError(response);
+        dealNetError(response);
+      }
+
+      @Override public void onStart(Request<String, ? extends Request> request) {
+        super.onStart(request);
+        showProgressDialog();
+      }
+
+      @Override public void onFinish() {
+        super.onFinish();
+        dissmissProgressDialog();
       }
     });
+
+    //OkGo.post(HttpUrlParams.URL_LIB_ACCOUND).tag(this).execute(new StringCallback() {
+    //  @Override public void onSuccess(String s, Call call, Response response) {
+    //    // s 即为所需要的结果
+    //    parseHtml(s);
+    //  }
+    //
+    //  @Override public void onError(Call call, Response response, Exception e) {
+    //    super.onError(call, response, e);
+    //    dealNetError(e);
+    //  }
+    //});
   }
 
   // 解析网页

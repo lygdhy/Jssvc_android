@@ -19,11 +19,11 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import okhttp3.Call;
-import okhttp3.Response;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.DialogListSelecterAdapter;
 import org.jssvc.lib.adapter.ShowTabAdapter;
@@ -54,8 +54,8 @@ public class BookDetailsActivity extends BaseActivity {
   @BindView(R.id.tabLayout) TabLayout tabLayout;
   @BindView(R.id.viewPager) ViewPager viewPager;
 
-  private List<String> list_title;
-  private List<Fragment> list_fragment;
+  private List<String> mTitles;
+  private List<Fragment> mFragments;
   private ShowTabAdapter showTabAdapter;
 
   String marc_no = "";
@@ -79,19 +79,33 @@ public class BookDetailsActivity extends BaseActivity {
     }
 
     showProgressDialog();
-    OkGo.post(detialUrl).tag(this).execute(new StringCallback() {
-      @Override public void onSuccess(String s, Call call, Response response) {
+
+    OkGo.<String>post(detialUrl).tag(this).execute(new StringCallback() {
+      @Override public void onSuccess(Response<String> response) {
         dissmissProgressDialog();
-        // s 即为所需要的结果
-        parseHtml(s);
+        parseHtml(response.body());
       }
 
-      @Override public void onError(Call call, Response response, Exception e) {
-        super.onError(call, response, e);
+      @Override public void onError(Response<String> response) {
+        super.onError(response);
         dissmissProgressDialog();
-        dealNetError(e);
+        dealNetError(response);
       }
     });
+
+    //OkGo.post(detialUrl).tag(this).execute(new StringCallback() {
+    //  @Override public void onSuccess(String s, Call call, Response response) {
+    //    dissmissProgressDialog();
+    //    // s 即为所需要的结果
+    //    parseHtml(s);
+    //  }
+    //
+    //  @Override public void onError(Call call, Response response, Exception e) {
+    //    super.onError(call, response, e);
+    //    dissmissProgressDialog();
+    //    dealNetError(response, e);
+    //  }
+    //});
   }
 
   @OnClick({ R.id.tvBack, R.id.tvCollect }) public void onClick(View view) {
@@ -173,42 +187,86 @@ public class BookDetailsActivity extends BaseActivity {
 
   // 调用服务添加图书
   private void add2Shelf(String classid) {
-    showProgressDialog();
-    OkGo.get(HttpUrlParams.URL_LIB_BOOK_ADD)
+    OkGo.<String>post(HttpUrlParams.URL_LIB_BOOK_ADD).tag(this)
         .params("classid", classid)
         .params("marc_no", marc_no)
         .params("time", System.currentTimeMillis())
-        .tag(this)
         .execute(new StringCallback() {
-          @Override public void onSuccess(String s, Call call, Response response) {
-            dissmissProgressDialog();
-            showAlertDialog(s);
+          @Override public void onSuccess(Response<String> response) {
+            showAlertDialog(response.body());
           }
 
-          @Override public void onError(Call call, Response response, Exception e) {
-            super.onError(call, response, e);
+          @Override public void onError(Response<String> response) {
+            super.onError(response);
+            dealNetError(response);
+          }
+
+          @Override public void onStart(Request<String, ? extends Request> request) {
+            super.onStart(request);
+            showProgressDialog();
+          }
+
+          @Override public void onFinish() {
+            super.onFinish();
             dissmissProgressDialog();
-            dealNetError(e);
           }
         });
+
+    //OkGo.get(HttpUrlParams.URL_LIB_BOOK_ADD)
+    //    .params("classid", classid)
+    //    .params("marc_no", marc_no)
+    //    .params("time", System.currentTimeMillis())
+    //    .tag(this)
+    //    .execute(new StringCallback() {
+    //      @Override public void onSuccess(String s, Call call, Response response) {
+    //        dissmissProgressDialog();
+    //        showAlertDialog(s);
+    //      }
+    //
+    //      @Override public void onError(Call call, Response response, Exception e) {
+    //        super.onError(call, response, e);
+    //        dissmissProgressDialog();
+    //        dealNetError(e);
+    //      }
+    //    });
   }
 
   // 获取书架目录
   private void getBookShelf() {
-    showProgressDialog();
-    OkGo.post(HttpUrlParams.URL_LIB_BOOK_SHELF).tag(this).execute(new StringCallback() {
-      @Override public void onSuccess(String s, Call call, Response response) {
-        dissmissProgressDialog();
-        // s 即为所需要的结果
-        parseHtml2List(s);
+    OkGo.<String>post(HttpUrlParams.URL_LIB_BOOK_SHELF).tag(this).execute(new StringCallback() {
+      @Override public void onSuccess(Response<String> response) {
+        parseHtml2List(response.body());
       }
 
-      @Override public void onError(Call call, Response response, Exception e) {
-        super.onError(call, response, e);
+      @Override public void onError(Response<String> response) {
+        super.onError(response);
+        dealNetError(response);
+      }
+
+      @Override public void onStart(Request<String, ? extends Request> request) {
+        super.onStart(request);
+        showProgressDialog();
+      }
+
+      @Override public void onFinish() {
+        super.onFinish();
         dissmissProgressDialog();
-        dealNetError(e);
       }
     });
+
+    //OkGo.post(HttpUrlParams.URL_LIB_BOOK_SHELF).tag(this).execute(new StringCallback() {
+    //  @Override public void onSuccess(String s, Call call, Response response) {
+    //    dissmissProgressDialog();
+    //    // s 即为所需要的结果
+    //    parseHtml2List(s);
+    //  }
+    //
+    //  @Override public void onError(Call call, Response response, Exception e) {
+    //    super.onError(call, response, e);
+    //    dissmissProgressDialog();
+    //    dealNetError(e);
+    //  }
+    //});
   }
 
   // 解析网页
@@ -250,22 +308,22 @@ public class BookDetailsActivity extends BaseActivity {
       fragmentInfo.setArguments(bundle);
 
       //将fragment装进列表中
-      list_fragment = new ArrayList<>();
-      list_fragment.add(fragmentInlib);
-      list_fragment.add(fragmentInfo);
+      mFragments = new ArrayList<>();
+      mFragments.add(fragmentInlib);
+      mFragments.add(fragmentInfo);
 
       //将名称加载tab名字列表
-      list_title = new ArrayList<>();
-      list_title.add("在馆状态");
-      list_title.add("书目信息");
+      mTitles = new ArrayList<>();
+      mTitles.add("在馆状态");
+      mTitles.add("书目信息");
 
       //设置TabLayout的模式
       tabLayout.setTabMode(TabLayout.MODE_FIXED);
       //为TabLayout添加tab名称
-      tabLayout.addTab(tabLayout.newTab().setText(list_title.get(0)));
-      tabLayout.addTab(tabLayout.newTab().setText(list_title.get(1)));
+      tabLayout.addTab(tabLayout.newTab().setText(mTitles.get(0)));
+      tabLayout.addTab(tabLayout.newTab().setText(mTitles.get(1)));
 
-      showTabAdapter = new ShowTabAdapter(getSupportFragmentManager(), list_fragment, list_title);
+      showTabAdapter = new ShowTabAdapter(getSupportFragmentManager(), mFragments, mTitles);
       viewPager.setAdapter(showTabAdapter);
 
       //TabLayout加载viewpager

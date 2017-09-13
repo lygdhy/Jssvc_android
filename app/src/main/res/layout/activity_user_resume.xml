@@ -6,15 +6,15 @@
     android:orientation="vertical"
     >
   <RelativeLayout
-      style="@style/actionbar_whole_style_white"
+      style="@style/actionbar_whole_style_base"
       >
     <TextView
         android:id="@+id/tv_back"
-        style="@style/actionbar_left_style_white"
+        style="@style/actionbar_left_style_base"
         />
     <TextView
         android:text="个人中心"
-        style="@style/actionbar_title_style_white"
+        style="@style/actionbar_title_style_base"
         />
     <View style="@style/item_split_horizontal"/>
   </RelativeLayout>
@@ -40,7 +40,7 @@
         <View style="@style/item_split_horizontal"/>
         <RelativeLayout
             android:id="@+id/rl_avatar"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             style="@style/style_menu_list"
             >
 
@@ -56,7 +56,7 @@
               android:layout_alignParentRight="true"
               android:layout_centerVertical="true"
               android:layout_marginRight="20dp"
-              android:src="@drawable/icon_default_avatar"
+              android:src="@drawable/icon_default_avatar_1"
               />
 
           <TextView
@@ -81,7 +81,8 @@
           <TextView
               android:id="@+id/tv_nick_name"
               android:drawableRight="@drawable/icon_goto"
-              android:text="七星岩"
+              android:hint="报上江湖番号"
+              android:text=""
               style="@style/style_text_value_menu"
               />
         </RelativeLayout>
@@ -109,7 +110,8 @@
           <TextView
               android:id="@+id/tv_real_name"
               android:drawableRight="@drawable/icon_goto"
-              android:text="董洪逾"
+              android:hint="雷锋，留下你的姓名吧"
+              android:text=""
               style="@style/style_text_value_menu"
               />
         </RelativeLayout>
@@ -151,7 +153,8 @@
           <TextView
               android:id="@+id/tv_birth"
               android:drawableRight="@drawable/icon_goto"
-              android:text="1991-07-10"
+              android:hint="破壳日"
+              android:text=""
               style="@style/style_text_value_menu"
               />
         </RelativeLayout>
@@ -178,8 +181,8 @@
 
           <TextView
               android:id="@+id/tv_tel"
-              android:drawableRight="@drawable/icon_goto"
-              android:hint="18862396732"
+              android:layout_marginRight="15dp"
+              android:hint="188********88"
               style="@style/style_text_value_menu"
               />
         </RelativeLayout>
@@ -200,7 +203,8 @@
           <TextView
               android:id="@+id/tv_qq"
               android:drawableRight="@drawable/icon_goto"
-              android:text="1262166651"
+              android:hint="留个Q，约一发可好"
+              android:text=""
               style="@style/style_text_value_menu"
               />
         </RelativeLayout>
@@ -221,7 +225,8 @@
           <TextView
               android:id="@+id/tv_email"
               android:drawableRight="@drawable/icon_goto"
-              android:text="window2004@126.com"
+              android:hint="种子有的是，你看着办吧"
+              android:text=""
               style="@style/style_text_value_menu"
               />
         </RelativeLayout>

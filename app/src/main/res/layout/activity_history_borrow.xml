@@ -4,14 +4,14 @@
     android:background="@color/color_ui_content"
     android:orientation="vertical">
 
-    <RelativeLayout style="@style/actionbar_whole_style_white">
+    <RelativeLayout style="@style/actionbar_whole_style_base">
 
         <TextView
             android:id="@+id/tvBack"
-            style="@style/actionbar_left_style_white" />
+            style="@style/actionbar_left_style_base" />
 
         <TextView
-            style="@style/actionbar_title_style_white"
+            style="@style/actionbar_title_style_base"
             android:text="借阅历史" />
         <View style="@style/item_split_horizontal"/>
     </RelativeLayout>

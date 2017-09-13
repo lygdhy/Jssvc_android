@@ -6,19 +6,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.OnClick;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.MsgAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.MsgBean;
 import org.jssvc.lib.view.DividerItemDecoration;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * 新闻通知

@@ -106,4 +106,11 @@ public class MainActivity extends BaseActivity {
       return tabIndicators.get(position);
     }
   }
+
+  /**
+   * 是否支持滑动返回
+   */
+  protected boolean supportSlideBack() {
+    return false;
+  }
 }

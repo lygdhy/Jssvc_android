@@ -11,12 +11,9 @@
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
     <!-- 设置activity切换动画 -->
-    <item name="android:windowAnimationStyle">@style/activityAnimation</item>
+    <item name="android:windowAnimationStyle">@style/activity_animation</item>
     <!--listview Divider-->
     <item name="android:listDivider">@drawable/divider_bg</item>
-    <!--背景颜色-->
-    <item name="android:windowBackground">@android:color/white</item>
-    <item name="android:windowIsTranslucent">true</item>
   </style>
 
   <!--启动页主题-->
@@ -24,7 +21,7 @@
     <item name="android:windowBackground">@drawable/layout_list_start_pic</item>
   </style>
 
-  <style name="activityAnimation" parent="@android:style/Animation">
+  <style name="activity_animation" parent="@android:style/Animation">
     <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
     <item name="android:activityOpenExitAnimation">@anim/slide_left_out</item>
     <item name="android:activityCloseEnterAnimation">@anim/slide_left_in</item>
@@ -41,11 +38,6 @@
     <item name="android:background">@color/color_ui_head</item>
   </style>
 
-  <!-- actionbar_whole_style_white -->
-  <style name="actionbar_whole_style_white" parent="actionbar_whole_style_base">
-    <item name="android:background">@android:color/white</item>
-  </style>
-
   <!-- actionbar_title_style_base -->
   <style name="actionbar_title_style_base">
     <item name="android:layout_width">wrap_content</item>
@@ -57,11 +49,6 @@
     <item name="android:textColor">@android:color/white</item>
     <item name="android:singleLine">true</item>
     <item name="android:ellipsize">end</item>
-  </style>
-
-  <!-- actionbar_title_style_white -->
-  <style name="actionbar_title_style_white" parent="actionbar_title_style_base">
-    <item name="android:textColor">@color/color_text_title</item>
   </style>
 
   <!-- actionbar_left_style_base -->
@@ -77,12 +64,6 @@
     <item name="android:textColor">@android:color/white</item>
   </style>
 
-  <!-- actionbar_left_style_white -->
-  <style name="actionbar_left_style_white" parent="actionbar_left_style_base">
-    <item name="android:drawableLeft">@drawable/arrow_left_theme</item>
-    <item name="android:textColor">@color/color_text_title</item>
-  </style>
-
   <!-- actionbar_right_style_base -->
   <style name="actionbar_right_style_base">
     <item name="android:layout_width">wrap_content</item>
@@ -93,11 +74,6 @@
     <item name="android:padding">10dp</item>
     <item name="android:textSize">@dimen/actionbar_textsize_right</item>
     <item name="android:textColor">@android:color/white</item>
-  </style>
-
-  <!-- actionbar_right_style_white -->
-  <style name="actionbar_right_style_white" parent="actionbar_right_style_base">
-    <item name="android:textColor">@color/color_ui_theme</item>
   </style>
 
   <!-- 菜单Item_分割线 -->
@@ -177,6 +153,10 @@
   <style name="style_text_value_menu" parent="style_text_base">
     <item name="android:layout_alignParentRight">true</item>
     <item name="android:textSize">14sp</item>
+    <item name="android:gravity">right</item>
+    <item name="android:lines">1</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:layout_marginLeft">100dp</item>
     <item name="android:textColor">@color/color_text_content</item>
     <item name="android:textColorHint">@color/color_text_hint</item>
   </style>

@@ -6,23 +6,23 @@
     android:orientation="vertical"
     >
   <RelativeLayout
-      style="@style/actionbar_whole_style_white"
+      style="@style/actionbar_whole_style_base"
       >
     <TextView
         android:id="@+id/tv_back"
-        style="@style/actionbar_left_style_white"
+        style="@style/actionbar_left_style_base"
         />
     <TextView
         android:text="关于图书馆"
-        style="@style/actionbar_title_style_white"
+        style="@style/actionbar_title_style_base"
         />
     <View style="@style/item_split_horizontal"/>
   </RelativeLayout>
 
-  <LinearLayout
+  <cn.bingoogolapple.refreshlayout.BGAStickyNavLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical"
+      android:layout_height="0dp"
+      android:layout_weight="1"
       >
 
     <LinearLayout
@@ -57,35 +57,31 @@
       </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <cn.bingoogolapple.bgaindicator.BGAFixedIndicator
+        android:id="@+id/indicator"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-      <View
-          style="@style/item_split_horizontal"
-          />
-      <android.support.design.widget.TabLayout
-          android:id="@+id/tabLayout"
-          android:layout_width="match_parent"
-          android:layout_height="50dp"
-          app:tabBackground="@android:color/white"
-          app:tabIndicatorColor="@color/colorAccent"
-          app:tabIndicatorHeight="2dp"
-          app:tabMode="fixed"
-          app:tabPaddingEnd="12dp"
-          app:tabPaddingStart="12dp"
-          app:tabSelectedTextColor="@color/colorAccent"
-          app:tabTextColor="@color/color_text_title"
-          />
-      <View
-          style="@style/item_split_horizontal"
-          />
-      <android.support.v4.view.ViewPager
-          android:id="@+id/viewPager"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          />
-    </LinearLayout>
-  </LinearLayout>
+        android:layout_height="40dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="0dp"
+        android:background="@android:color/white"
+        android:paddingBottom="0dp"
+        android:paddingTop="0dp"
+        app:indicator_dividerColor="@color/color_divider"
+        app:indicator_dividerVerticalMargin="5dp"
+        app:indicator_dividerWidth="0.5dp"
+        app:indicator_hasDivider="true"
+        app:indicator_textColor="@color/colorAccent"
+        app:indicator_textSizeNormal="12sp"
+        app:indicator_textSizeSelected="14sp"
+        app:indicator_triangleColor="@color/colorAccent"
+        app:indicator_triangleHeight="2dp"
+        app:indicator_triangleHorizontalMargin="5dp"
+        />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+  </cn.bingoogolapple.refreshlayout.BGAStickyNavLayout>
 </LinearLayout>

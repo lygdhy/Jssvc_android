@@ -15,10 +15,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
-
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
+import java.util.ArrayList;
+import java.util.List;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.ShowTabAdapter;
 import org.jssvc.lib.base.BaseActivity;
@@ -26,14 +30,6 @@ import org.jssvc.lib.bean.BookShelfBean;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.fragment.BookShelfFragment;
 import org.jssvc.lib.utils.HtmlParseUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Response;
 
 /**
  * 我的书架
@@ -84,20 +80,40 @@ public class BookShelfActivity extends BaseActivity {
 
   // 获取书架目录
   private void getBookShelf() {
-    showProgressDialog();
-    OkGo.post(HttpUrlParams.URL_LIB_BOOK_SHELF).tag(this).execute(new StringCallback() {
-      @Override public void onSuccess(String s, Call call, Response response) {
-        dissmissProgressDialog();
-        // s 即为所需要的结果
-        parseHtml2List(s);
+    OkGo.<String>post(HttpUrlParams.URL_LIB_BOOK_SHELF).tag(this).execute(new StringCallback() {
+      @Override public void onSuccess(Response<String> response) {
+        parseHtml2List(response.body());
       }
 
-      @Override public void onError(Call call, Response response, Exception e) {
-        super.onError(call, response, e);
+      @Override public void onError(Response<String> response) {
+        super.onError(response);
+        dealNetError(response);
+      }
+
+      @Override public void onStart(Request<String, ? extends Request> request) {
+        super.onStart(request);
+        showProgressDialog();
+      }
+
+      @Override public void onFinish() {
+        super.onFinish();
         dissmissProgressDialog();
-        dealNetError(e);
       }
     });
+
+    //OkGo.post(HttpUrlParams.URL_LIB_BOOK_SHELF).tag(this).execute(new StringCallback() {
+    //  @Override public void onSuccess(String s, Call call, Response response) {
+    //    dissmissProgressDialog();
+    //    // s 即为所需要的结果
+    //    parseHtml2List(s);
+    //  }
+    //
+    //  @Override public void onError(Call call, Response response, Exception e) {
+    //    super.onError(call, response, e);
+    //    dissmissProgressDialog();
+    //    dealNetError(e);
+    //  }
+    //});
   }
 
   // 解析网页
@@ -199,26 +215,51 @@ public class BookShelfActivity extends BaseActivity {
   // http://opac.jssvc.edu.cn:8080/reader/book_shelf_man.php?action=0&classid=&cls_name=路人甲&remark=这是一个测试书架
   // http://opac.jssvc.edu.cn:8080/reader/book_shelf_man.php?action=2&classid=0000000501&cls_name=路人甲&remark=这是一个测试书架
   private void editBookShelf(String code, String classid, String cls_name) {
-    showProgressDialog();
-    OkGo.get(HttpUrlParams.URL_LIB_BOOK_SHELF)
+    OkGo.<String>post(HttpUrlParams.URL_LIB_BOOK_SHELF).tag(this)
         .params("action", code)
         .params("classid", classid)
         .params("cls_name", cls_name)
         .params("remark", "")
-        .tag(this)
         .execute(new StringCallback() {
-          @Override public void onSuccess(String s, Call call, Response response) {
-            dissmissProgressDialog();
-            // s 即为所需要的结果
-            parseHtml2List(s);
+          @Override public void onSuccess(Response<String> response) {
+            parseHtml2List(response.body());
           }
 
-          @Override public void onError(Call call, Response response, Exception e) {
-            super.onError(call, response, e);
+          @Override public void onError(Response<String> response) {
+            super.onError(response);
+            dealNetError(response);
+          }
+
+          @Override public void onStart(Request<String, ? extends Request> request) {
+            super.onStart(request);
+            showProgressDialog();
+          }
+
+          @Override public void onFinish() {
+            super.onFinish();
             dissmissProgressDialog();
-            dealNetError(e);
           }
         });
+
+    //OkGo.get(HttpUrlParams.URL_LIB_BOOK_SHELF)
+    //    .params("action", code)
+    //    .params("classid", classid)
+    //    .params("cls_name", cls_name)
+    //    .params("remark", "")
+    //    .tag(this)
+    //    .execute(new StringCallback() {
+    //      @Override public void onSuccess(String s, Call call, Response response) {
+    //        dissmissProgressDialog();
+    //        // s 即为所需要的结果
+    //        parseHtml2List(s);
+    //      }
+    //
+    //      @Override public void onError(Call call, Response response, Exception e) {
+    //        super.onError(call, response, e);
+    //        dissmissProgressDialog();
+    //        dealNetError(e);
+    //      }
+    //    });
   }
 
   @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {

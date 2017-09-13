@@ -5,14 +5,18 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.NetworkUtils;
+import com.lzy.okgo.exception.HttpException;
+import com.lzy.okgo.model.Response;
 import com.pgyersdk.crash.PgyCrashManager;
 import com.umeng.analytics.MobclickAgent;
+import org.jssvc.lib.view.SwipeWindowHelper;
 import org.jssvc.lib.view.pDialog.XProgressDialog;
 
 /**
@@ -29,6 +33,8 @@ public abstract class BaseActivity extends AppCompatActivity {
   protected abstract int getContentViewId();
 
   protected abstract void initView();
+
+  private SwipeWindowHelper mSwipeWindowHelper;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -55,6 +61,24 @@ public abstract class BaseActivity extends AppCompatActivity {
   public void onPause() {
     super.onPause();
     MobclickAgent.onPause(this);
+  }
+
+  @Override public boolean dispatchTouchEvent(MotionEvent ev) {
+    if (!supportSlideBack()) {
+      return super.dispatchTouchEvent(ev);
+    }
+
+    if (mSwipeWindowHelper == null) {
+      mSwipeWindowHelper = new SwipeWindowHelper(getWindow());
+    }
+    return mSwipeWindowHelper.processTouchEvent(ev) || super.dispatchTouchEvent(ev);
+  }
+
+  /**
+   * 是否支持滑动返回
+   */
+  protected boolean supportSlideBack() {
+    return true;
   }
 
   /**
@@ -105,14 +129,18 @@ public abstract class BaseActivity extends AppCompatActivity {
   /**
    * 网络错误处理
    */
-  protected void dealNetError(Exception e) {
+  protected void dealNetError(Response response) {
+    Exception e = (Exception) response.getException();
     if (!NetworkUtils.isConnected()) {
       showToast("无法连接网络");
     } else if (e.getMessage().contains("No address associated with hostname")) {
       // Unable to resolve host "opac.jssvc.edu.cn": No address associated with hostname
       showToast("服务器故障，请稍后重试！");
+    } else if (e == HttpException.NET_ERROR()) {
+      // network error! http response code is 404 or 5xx!
+      showToast("网络错误，错误代码 " + response.code());
     } else {
-      showToast("网络出错：" + e.getMessage());
+      showToast(e.getMessage());
     }
   }
 

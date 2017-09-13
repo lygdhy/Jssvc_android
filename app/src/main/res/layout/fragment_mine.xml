@@ -49,11 +49,11 @@
               android:layout_width="80dp"
               android:layout_height="80dp"
               android:layout_margin="10dp"
-              android:src="@drawable/icon_logo"
+              android:src="@drawable/icon_default_avatar_1"
               />
           <TextView
               android:id="@+id/tv_user_name"
-              android:text="张三丰"
+              android:text="图小智"
               android:textColor="@android:color/white"
               android:textSize="18sp"
               style="@style/style_text_title"

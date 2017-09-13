@@ -7,8 +7,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
-import okhttp3.Call;
-import okhttp3.Response;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.data.AccountPref;
@@ -60,27 +60,51 @@ public class LibAccountResetPwdFragment extends BaseFragment {
 
   // 前往重置密码
   private void go2Reset(String newpwd) {
-    showProgressDialog("正在提交...");
-
-    OkGo.post(HttpUrlParams.URL_LIB_CHANGE_PWD)
-        .tag(this)
+    OkGo.<String>post(HttpUrlParams.URL_LIB_CHANGE_PWD).tag(this)
         .params("old_passwd", AccountPref.getLogonAccoundPwd(context))
         .params("new_passwd", newpwd)
         .params("chk_passwd", newpwd)
         .params("submit1", "%E7%A1%AE%E5%AE%9A")
         .execute(new StringCallback() {
-          @Override public void onSuccess(String s, Call call, Response response) {
-            dissmissProgressDialog();
-            // s 即为所需要的结果
-            parseHtml(s);
+          @Override public void onSuccess(Response<String> response) {
+            parseHtml(response.body());
           }
 
-          @Override public void onError(Call call, Response response, Exception e) {
-            super.onError(call, response, e);
+          @Override public void onError(Response<String> response) {
+            super.onError(response);
+            dealNetError(response);
+          }
+
+          @Override public void onStart(Request<String, ? extends Request> request) {
+            super.onStart(request);
+            showProgressDialog("正在提交...");
+          }
+
+          @Override public void onFinish() {
+            super.onFinish();
             dissmissProgressDialog();
-            dealNetError(e);
           }
         });
+
+    //OkGo.post(HttpUrlParams.URL_LIB_CHANGE_PWD)
+    //    .tag(this)
+    //    .params("old_passwd", AccountPref.getLogonAccoundPwd(context))
+    //    .params("new_passwd", newpwd)
+    //    .params("chk_passwd", newpwd)
+    //    .params("submit1", "%E7%A1%AE%E5%AE%9A")
+    //    .execute(new StringCallback() {
+    //      @Override public void onSuccess(String s, Call call, Response response) {
+    //        dissmissProgressDialog();
+    //        // s 即为所需要的结果
+    //        parseHtml(s);
+    //      }
+    //
+    //      @Override public void onError(Call call, Response response, Exception e) {
+    //        super.onError(call, response, e);
+    //        dissmissProgressDialog();
+    //        dealNetError(e);
+    //      }
+    //    });
   }
 
   // 解析网页

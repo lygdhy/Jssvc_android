@@ -2,15 +2,12 @@ package org.jssvc.lib.activity;
 
 import android.view.View;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.OnClick;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
-
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.MsgBean;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * 新闻详情

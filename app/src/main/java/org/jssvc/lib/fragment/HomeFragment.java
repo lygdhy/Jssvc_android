@@ -2,22 +2,28 @@ package org.jssvc.lib.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import butterknife.BindView;
-import butterknife.OnClick;
+import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import java.util.ArrayList;
 import java.util.List;
 import org.jssvc.lib.R;
+import org.jssvc.lib.activity.AboutActivity;
 import org.jssvc.lib.activity.CurentBorrowActivity;
 import org.jssvc.lib.activity.HelpActivity;
 import org.jssvc.lib.activity.LoginActivity;
 import org.jssvc.lib.activity.MainActivity;
+import org.jssvc.lib.adapter.MenuAdapter;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.AdsBean;
+import org.jssvc.lib.bean.MenuBean;
 import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.utils.ImageLoader;
 
@@ -29,8 +35,12 @@ import org.jssvc.lib.utils.ImageLoader;
  *     version: 1.0
  * </pre>
  */
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListener {
+  @BindView(R.id.recyclerView) RecyclerView mRecyclerView;
   @BindView(R.id.convenientBanner) ConvenientBanner convenientBanner;
+
+  MenuAdapter mAdapter;
+  List<MenuBean> menuList = new ArrayList<>();
 
   @Override protected int getContentViewId() {
     return R.layout.fragment_home;
@@ -38,17 +48,29 @@ public class HomeFragment extends BaseFragment {
 
   @Override protected void initView() {
     showAd();
+
+    // 加载菜单
+    menuList.add(new MenuBean(1, "帮助指南", R.drawable.icon_menu_a));
+    menuList.add(new MenuBean(2, "催还续借", R.drawable.icon_menu_b));
+    menuList.add(new MenuBean(3, "图书搜索", R.drawable.icon_menu_c));
+    menuList.add(new MenuBean(4, "关于我们", R.drawable.icon_menu_d));
+
+    mRecyclerView.setLayoutManager(new GridLayoutManager(context, 4));
+    mAdapter = new MenuAdapter(mRecyclerView);
+    mAdapter.setOnRVItemClickListener(this);
+    mRecyclerView.setAdapter(mAdapter);
+    mAdapter.setData(menuList);
   }
 
-  @OnClick({
-      R.id.ll_help, R.id.ll_renew, R.id.ll_search
-  }) public void onClick(View view) {
-    switch (view.getId()) {
-      case R.id.ll_help:
+  @Override public void onRVItemClick(ViewGroup parent, View itemView, int position) {
+    MenuBean item = mAdapter.getItem(position);
+    // Type 0链接类  !0 其他类别
+    switch (item.getType()) {
+      case 1:
         // 帮助指南
         startActivity(new Intent(context, HelpActivity.class));
         break;
-      case R.id.ll_renew:
+      case 2:
         // 当前借阅 / 催还续借
         if (AccountPref.isLogon(context)) {
           startActivity(new Intent(context, CurentBorrowActivity.class));
@@ -56,13 +78,41 @@ public class HomeFragment extends BaseFragment {
           startActivity(new Intent(context, LoginActivity.class));
         }
         break;
-      case R.id.ll_search:
+      case 3:
         // 图书搜索
         MainActivity parentActivity = (MainActivity) getActivity();
         parentActivity.turnPage(1);
         break;
+      case 4:
+        // 关于
+        startActivity(new Intent(context, AboutActivity.class));
+        break;
     }
   }
+
+  //@OnClick({
+  //    R.id.ll_help, R.id.ll_renew, R.id.ll_search
+  //}) public void onClick(View view) {
+  //  switch (view.getId()) {
+  //    case R.id.ll_help:
+  //      // 帮助指南
+  //      startActivity(new Intent(context, HelpActivity.class));
+  //      break;
+  //    case R.id.ll_renew:
+  //      // 当前借阅 / 催还续借
+  //      if (AccountPref.isLogon(context)) {
+  //        startActivity(new Intent(context, CurentBorrowActivity.class));
+  //      } else {
+  //        startActivity(new Intent(context, LoginActivity.class));
+  //      }
+  //      break;
+  //    case R.id.ll_search:
+  //      // 图书搜索
+  //      MainActivity parentActivity = (MainActivity) getActivity();
+  //      parentActivity.turnPage(1);
+  //      break;
+  //  }
+  //}
 
   private void showAd() {
     List<AdsBean> adsList = new ArrayList<>();

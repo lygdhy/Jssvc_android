@@ -9,10 +9,13 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
-
+import butterknife.BindView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
-
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
+import java.util.ArrayList;
+import java.util.List;
 import org.jssvc.lib.R;
 import org.jssvc.lib.activity.BookDetailsActivity;
 import org.jssvc.lib.adapter.BookShelfListAdapter;
@@ -21,13 +24,6 @@ import org.jssvc.lib.bean.BookShelfListBean;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
 import org.jssvc.lib.view.CustomDialog;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import okhttp3.Call;
-import okhttp3.Response;
 
 /**
  * 书架
@@ -69,17 +65,30 @@ public class BookShelfFragment extends BaseFragment {
   }
 
   private void loadBookList() {
-    OkGo.post(baseUrl).tag(this).execute(new StringCallback() {
-      @Override public void onSuccess(String s, Call call, Response response) {
-        // s 即为所需要的结果
-        parseHtml(s);
+    OkGo.<String>post(baseUrl).tag(this).execute(new StringCallback() {
+      @Override public void onSuccess(Response<String> response) {
+        dissmissProgressDialog();
+        parseHtml(response.body());
       }
 
-      @Override public void onError(Call call, Response response, Exception e) {
-        super.onError(call, response, e);
-        dealNetError(e);
+      @Override public void onError(Response<String> response) {
+        super.onError(response);
+        dissmissProgressDialog();
+        dealNetError(response);
       }
     });
+
+    //OkGo.post(baseUrl).tag(this).execute(new StringCallback() {
+    //  @Override public void onSuccess(String s, Call call, Response response) {
+    //    // s 即为所需要的结果
+    //    parseHtml(s);
+    //  }
+    //
+    //  @Override public void onError(Call call, Response response, Exception e) {
+    //    super.onError(call, response, e);
+    //    dealNetError(e);
+    //  }
+    //});
   }
 
   // 解析网页
@@ -153,24 +162,48 @@ public class BookShelfFragment extends BaseFragment {
 
   // 移除图书
   private void removeBook(String classid, String bookcode) {
-    showProgressDialog();
-    OkGo.get(HttpUrlParams.URL_LIB_BOOK_DEL)
+    OkGo.<String>post(HttpUrlParams.URL_LIB_BOOK_DEL).tag(this)
         .params("classid", classid)
         .params("marc_no", bookcode)
         .params("time", System.currentTimeMillis())
-        .tag(this)
         .execute(new StringCallback() {
-          @Override public void onSuccess(String s, Call call, Response response) {
-            dissmissProgressDialog();
-            showAlertDialog(s);
+          @Override public void onSuccess(Response<String> response) {
+            showAlertDialog(response.body());
           }
 
-          @Override public void onError(Call call, Response response, Exception e) {
-            super.onError(call, response, e);
+          @Override public void onError(Response<String> response) {
+            super.onError(response);
+            dealNetError(response);
+          }
+
+          @Override public void onStart(Request<String, ? extends Request> request) {
+            super.onStart(request);
+            showProgressDialog();
+          }
+
+          @Override public void onFinish() {
+            super.onFinish();
             dissmissProgressDialog();
-            dealNetError(e);
           }
         });
+
+    //OkGo.get(HttpUrlParams.URL_LIB_BOOK_DEL)
+    //    .params("classid", classid)
+    //    .params("marc_no", bookcode)
+    //    .params("time", System.currentTimeMillis())
+    //    .tag(this)
+    //    .execute(new StringCallback() {
+    //      @Override public void onSuccess(String s, Call call, Response response) {
+    //        dissmissProgressDialog();
+    //        showAlertDialog(s);
+    //      }
+    //
+    //      @Override public void onError(Call call, Response response, Exception e) {
+    //        super.onError(call, response, e);
+    //        dissmissProgressDialog();
+    //        dealNetError(e);
+    //      }
+    //    });
   }
 
   // 删除结果显示

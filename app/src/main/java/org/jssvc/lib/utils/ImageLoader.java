@@ -27,4 +27,8 @@ public class ImageLoader {
         .error(R.drawable.icon_loading_err)
         .into(view);
   }
+
+  public static void with(Context context, ImageView view, Integer resourceId) {
+    Glide.with(context).load(resourceId).into(view);
+  }
 }
