@@ -11,7 +11,7 @@
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
-      android:background="@drawable/bg_white_circle"
+      android:background="@drawable/bg_white_circle_10"
       android:orientation="vertical"
       >
 

@@ -12,7 +12,6 @@
       android:layout_height="match_parent"
       android:layout_marginBottom="80dp"
       android:scaleType="centerCrop"
-      android:src="@drawable/icon_404_drown"
       />
 
 </RelativeLayout>
