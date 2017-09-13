@@ -20,6 +20,7 @@ import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -186,22 +187,28 @@ public class BookDetailsActivity extends BaseActivity {
 
   // 调用服务添加图书
   private void add2Shelf(String classid) {
-    showProgressDialog();
-
     OkGo.<String>post(HttpUrlParams.URL_LIB_BOOK_ADD).tag(this)
         .params("classid", classid)
         .params("marc_no", marc_no)
         .params("time", System.currentTimeMillis())
         .execute(new StringCallback() {
           @Override public void onSuccess(Response<String> response) {
-            dissmissProgressDialog();
             showAlertDialog(response.body());
           }
 
           @Override public void onError(Response<String> response) {
             super.onError(response);
-            dissmissProgressDialog();
             dealNetError(response);
+          }
+
+          @Override public void onStart(Request<String, ? extends Request> request) {
+            super.onStart(request);
+            showProgressDialog();
+          }
+
+          @Override public void onFinish() {
+            super.onFinish();
+            dissmissProgressDialog();
           }
         });
 
@@ -226,17 +233,24 @@ public class BookDetailsActivity extends BaseActivity {
 
   // 获取书架目录
   private void getBookShelf() {
-    showProgressDialog();
     OkGo.<String>post(HttpUrlParams.URL_LIB_BOOK_SHELF).tag(this).execute(new StringCallback() {
       @Override public void onSuccess(Response<String> response) {
-        dissmissProgressDialog();
         parseHtml2List(response.body());
       }
 
       @Override public void onError(Response<String> response) {
         super.onError(response);
-        dissmissProgressDialog();
         dealNetError(response);
+      }
+
+      @Override public void onStart(Request<String, ? extends Request> request) {
+        super.onStart(request);
+        showProgressDialog();
+      }
+
+      @Override public void onFinish() {
+        super.onFinish();
+        dissmissProgressDialog();
       }
     });
 

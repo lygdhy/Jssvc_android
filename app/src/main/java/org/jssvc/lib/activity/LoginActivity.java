@@ -9,6 +9,7 @@ import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.data.HttpUrlParams;
@@ -67,14 +68,22 @@ public class LoginActivity extends BaseActivity {
         .params("passwd", loginpwd)
         .execute(new StringCallback() {
           @Override public void onSuccess(Response<String> response) {
-            dissmissProgressDialog();
             showToast(response.body());
           }
 
           @Override public void onError(Response<String> response) {
             super.onError(response);
-            dissmissProgressDialog();
             dealNetError(response);
+          }
+
+          @Override public void onStart(Request<String, ? extends Request> request) {
+            super.onStart(request);
+            showProgressDialog();
+          }
+
+          @Override public void onFinish() {
+            super.onFinish();
+            dissmissProgressDialog();
           }
         });
 

@@ -59,7 +59,6 @@ public class SplashActivity extends BaseActivity {
         .params("select", AccountPref.getLogonType(context))
         .execute(new StringCallback() {
           @Override public void onSuccess(Response<String> response) {
-            dissmissProgressDialog();
             // 账号统计
             MobclickAgent.onProfileSignIn(AccountPref.getLogonType(context).toUpperCase(),
                 AccountPref.getLogonAccoundNumber(context));

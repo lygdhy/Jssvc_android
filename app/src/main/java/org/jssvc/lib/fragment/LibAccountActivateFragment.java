@@ -8,6 +8,7 @@ import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import org.jssvc.lib.R;
 import org.jssvc.lib.activity.AccountLibManagerActivity;
 import org.jssvc.lib.base.BaseFragment;
@@ -43,20 +44,26 @@ public class LibAccountActivateFragment extends BaseFragment {
         if (TextUtils.isEmpty(realName)) {
           showToast("请输入您图书证上的姓名");
         } else {
-          showProgressDialog("正在提交...");
-
           OkGo.<String>post(HttpUrlParams.URL_LIB_USER_REGISTER).tag(this)
               .params("name", realName)
               .execute(new StringCallback() {
                 @Override public void onSuccess(Response<String> response) {
-                  dissmissProgressDialog();
                   parseHtml(response.body());
                 }
 
                 @Override public void onError(Response<String> response) {
                   super.onError(response);
-                  dissmissProgressDialog();
                   dealNetError(response);
+                }
+
+                @Override public void onStart(Request<String, ? extends Request> request) {
+                  super.onStart(request);
+                  showProgressDialog("正在提交...");
+                }
+
+                @Override public void onFinish() {
+                  super.onFinish();
+                  dissmissProgressDialog();
                 }
               });
 

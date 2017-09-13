@@ -11,6 +11,7 @@ import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.User;
@@ -65,17 +66,24 @@ public class CardInfoActivity extends BaseActivity {
 
   // 获取个人信息
   private void getUserInfoByNet() {
-    showProgressDialog();
     OkGo.<String>post(HttpUrlParams.URL_LIB_ACCOUND).tag(this).execute(new StringCallback() {
       @Override public void onSuccess(Response<String> response) {
-        dissmissProgressDialog();
         parseHtml(response.body());
       }
 
       @Override public void onError(Response<String> response) {
         super.onError(response);
-        dissmissProgressDialog();
         dealNetError(response);
+      }
+
+      @Override public void onStart(Request<String, ? extends Request> request) {
+        super.onStart(request);
+        showProgressDialog();
+      }
+
+      @Override public void onFinish() {
+        super.onFinish();
+        dissmissProgressDialog();
       }
     });
 

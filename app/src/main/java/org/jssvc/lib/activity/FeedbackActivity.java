@@ -11,6 +11,7 @@ import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.jssvc.lib.R;
@@ -62,7 +63,6 @@ public class FeedbackActivity extends BaseActivity {
 
   // 提交反馈
   private void submintFeedback(String feedStr, String trim) {
-    showProgressDialog("正在提交...");
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
     OkGo.<String>post(HttpUrlParams.URL_ORG_FEEDBACK).tag(this)
@@ -72,14 +72,22 @@ public class FeedbackActivity extends BaseActivity {
         .params("email", trim + "")
         .execute(new StringCallback() {
           @Override public void onSuccess(Response<String> response) {
-            dissmissProgressDialog();
             thankDialog();
           }
 
           @Override public void onError(Response<String> response) {
             super.onError(response);
-            dissmissProgressDialog();
             dealNetError(response);
+          }
+
+          @Override public void onStart(Request<String, ? extends Request> request) {
+            super.onStart(request);
+            showProgressDialog("正在提交...");
+          }
+
+          @Override public void onFinish() {
+            super.onFinish();
+            dissmissProgressDialog();
           }
         });
 

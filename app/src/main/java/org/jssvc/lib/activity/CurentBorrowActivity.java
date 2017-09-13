@@ -14,6 +14,7 @@ import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.umeng.analytics.MobclickAgent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,17 +67,24 @@ public class CurentBorrowActivity extends BaseActivity {
 
   // 获取图书列表
   private void loadBookList() {
-    showProgressDialog();
     OkGo.<String>post(HttpUrlParams.URL_LIB_CURRENT_BORROW).tag(this).execute(new StringCallback() {
       @Override public void onSuccess(Response<String> response) {
-        dissmissProgressDialog();
         parseHtml(response.body());
       }
 
       @Override public void onError(Response<String> response) {
         super.onError(response);
-        dissmissProgressDialog();
         dealNetError(response);
+      }
+
+      @Override public void onStart(Request<String, ? extends Request> request) {
+        super.onStart(request);
+        showProgressDialog();
+      }
+
+      @Override public void onFinish() {
+        super.onFinish();
+        dissmissProgressDialog();
       }
     });
 
@@ -127,9 +135,6 @@ public class CurentBorrowActivity extends BaseActivity {
       }
 
       @Override public void onXujieClick(View view, BookReadingBean item) {
-        // 续借
-        showProgressDialog("申请中...");
-
         // 续借事件统计
         Map<String, String> map = new HashMap<>();
         map.put("userName", AccountPref.getLogonAccoundNumber(context));
@@ -144,14 +149,22 @@ public class CurentBorrowActivity extends BaseActivity {
             .params("time", String.valueOf(new Date().getTime()))
             .execute(new StringCallback() {
               @Override public void onSuccess(Response<String> response) {
-                dissmissProgressDialog();
                 showResultDialog(response.body());
               }
 
               @Override public void onError(Response<String> response) {
                 super.onError(response);
-                dissmissProgressDialog();
                 dealNetError(response);
+              }
+
+              @Override public void onStart(Request<String, ? extends Request> request) {
+                super.onStart(request);
+                showProgressDialog("申请中...");
+              }
+
+              @Override public void onFinish() {
+                super.onFinish();
+                dissmissProgressDialog();
               }
             });
 

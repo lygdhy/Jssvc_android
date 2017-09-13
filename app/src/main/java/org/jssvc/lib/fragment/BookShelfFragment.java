@@ -13,6 +13,7 @@ import butterknife.BindView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import java.util.ArrayList;
 import java.util.List;
 import org.jssvc.lib.R;
@@ -161,21 +162,28 @@ public class BookShelfFragment extends BaseFragment {
 
   // 移除图书
   private void removeBook(String classid, String bookcode) {
-    showProgressDialog();
     OkGo.<String>post(HttpUrlParams.URL_LIB_BOOK_DEL).tag(this)
         .params("classid", classid)
         .params("marc_no", bookcode)
         .params("time", System.currentTimeMillis())
         .execute(new StringCallback() {
           @Override public void onSuccess(Response<String> response) {
-            dissmissProgressDialog();
             showAlertDialog(response.body());
           }
 
           @Override public void onError(Response<String> response) {
             super.onError(response);
-            dissmissProgressDialog();
             dealNetError(response);
+          }
+
+          @Override public void onStart(Request<String, ? extends Request> request) {
+            super.onStart(request);
+            showProgressDialog();
+          }
+
+          @Override public void onFinish() {
+            super.onFinish();
+            dissmissProgressDialog();
           }
         });
 

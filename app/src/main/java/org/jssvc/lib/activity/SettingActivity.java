@@ -13,6 +13,7 @@ import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.pgyersdk.javabean.AppBean;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
@@ -137,14 +138,22 @@ public class SettingActivity extends BaseActivity {
   private void getUserInfoByNet() {
     OkGo.<String>post(HttpUrlParams.URL_LIB_ACCOUND).tag(this).execute(new StringCallback() {
       @Override public void onSuccess(Response<String> response) {
-        dissmissProgressDialog();
         parseHtml(response.body());
       }
 
       @Override public void onError(Response<String> response) {
         super.onError(response);
-        dissmissProgressDialog();
         dealNetError(response);
+      }
+
+      @Override public void onStart(Request<String, ? extends Request> request) {
+        super.onStart(request);
+        showProgressDialog();
+      }
+
+      @Override public void onFinish() {
+        super.onFinish();
+        dissmissProgressDialog();
       }
     });
 

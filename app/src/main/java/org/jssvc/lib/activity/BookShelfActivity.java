@@ -20,6 +20,7 @@ import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import java.util.ArrayList;
 import java.util.List;
 import org.jssvc.lib.R;
@@ -79,18 +80,24 @@ public class BookShelfActivity extends BaseActivity {
 
   // 获取书架目录
   private void getBookShelf() {
-    showProgressDialog();
-
     OkGo.<String>post(HttpUrlParams.URL_LIB_BOOK_SHELF).tag(this).execute(new StringCallback() {
       @Override public void onSuccess(Response<String> response) {
-        dissmissProgressDialog();
         parseHtml2List(response.body());
       }
 
       @Override public void onError(Response<String> response) {
         super.onError(response);
-        dissmissProgressDialog();
         dealNetError(response);
+      }
+
+      @Override public void onStart(Request<String, ? extends Request> request) {
+        super.onStart(request);
+        showProgressDialog();
+      }
+
+      @Override public void onFinish() {
+        super.onFinish();
+        dissmissProgressDialog();
       }
     });
 
@@ -208,8 +215,6 @@ public class BookShelfActivity extends BaseActivity {
   // http://opac.jssvc.edu.cn:8080/reader/book_shelf_man.php?action=0&classid=&cls_name=路人甲&remark=这是一个测试书架
   // http://opac.jssvc.edu.cn:8080/reader/book_shelf_man.php?action=2&classid=0000000501&cls_name=路人甲&remark=这是一个测试书架
   private void editBookShelf(String code, String classid, String cls_name) {
-    showProgressDialog();
-
     OkGo.<String>post(HttpUrlParams.URL_LIB_BOOK_SHELF).tag(this)
         .params("action", code)
         .params("classid", classid)
@@ -217,14 +222,22 @@ public class BookShelfActivity extends BaseActivity {
         .params("remark", "")
         .execute(new StringCallback() {
           @Override public void onSuccess(Response<String> response) {
-            dissmissProgressDialog();
             parseHtml2List(response.body());
           }
 
           @Override public void onError(Response<String> response) {
             super.onError(response);
-            dissmissProgressDialog();
             dealNetError(response);
+          }
+
+          @Override public void onStart(Request<String, ? extends Request> request) {
+            super.onStart(request);
+            showProgressDialog();
+          }
+
+          @Override public void onFinish() {
+            super.onFinish();
+            dissmissProgressDialog();
           }
         });
 

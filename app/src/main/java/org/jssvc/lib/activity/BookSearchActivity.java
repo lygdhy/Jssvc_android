@@ -24,6 +24,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.umeng.analytics.MobclickAgent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -231,9 +232,6 @@ public class BookSearchActivity extends BaseActivity
       searchPage++;
     }
 
-    showProgressDialog("检索中...");
-    hisLayout.setVisibility(View.GONE);
-
     // 搜索事件统计
     Map<String, String> map = new HashMap<>();
     map.put("userName", AccountPref.getLogonAccoundNumber(context));
@@ -254,7 +252,6 @@ public class BookSearchActivity extends BaseActivity
         .params("dept", "ALL")
         .execute(new StringCallback() {
           @Override public void onSuccess(Response<String> response) {
-            dissmissProgressDialog();
             if (mRefreshLayout != null) {
               if (isRefresh) {
                 mRefreshLayout.endRefreshing();
@@ -267,7 +264,6 @@ public class BookSearchActivity extends BaseActivity
 
           @Override public void onError(Response<String> response) {
             super.onError(response);
-            dissmissProgressDialog();
             if (mRefreshLayout != null) {
               if (isRefresh) {
                 mRefreshLayout.endRefreshing();
@@ -276,6 +272,17 @@ public class BookSearchActivity extends BaseActivity
               }
               dealNetError(response);
             }
+          }
+
+          @Override public void onStart(Request<String, ? extends Request> request) {
+            super.onStart(request);
+            showProgressDialog("检索中...");
+            hisLayout.setVisibility(View.GONE);
+          }
+
+          @Override public void onFinish() {
+            super.onFinish();
+            dissmissProgressDialog();
           }
         });
 

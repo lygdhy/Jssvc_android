@@ -14,6 +14,7 @@ import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.umeng.analytics.MobclickAgent;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +73,6 @@ public class LibAccountBoundFragment extends BaseFragment {
         if (TextUtils.isEmpty(loginname) || TextUtils.isEmpty(loginpwd)) {
           showToast("登录信息不能为空");
         } else {
-          showProgressDialog("绑定中...");
 
           AccountPref.saveLoginAccoundNumber(context, loginname);
           AccountPref.saveLoginType(context, currentLoginType.getId());
@@ -83,14 +83,22 @@ public class LibAccountBoundFragment extends BaseFragment {
               .params("select", currentLoginType.getId())
               .execute(new StringCallback() {
                 @Override public void onSuccess(Response<String> response) {
-                  dissmissProgressDialog();
                   parseHtml(response.body(), loginpwd);
                 }
 
                 @Override public void onError(Response<String> response) {
                   super.onError(response);
-                  dissmissProgressDialog();
                   dealNetError(response);
+                }
+
+                @Override public void onStart(Request<String, ? extends Request> request) {
+                  super.onStart(request);
+                  showProgressDialog("绑定中...");
+                }
+
+                @Override public void onFinish() {
+                  super.onFinish();
+                  dissmissProgressDialog();
                 }
               });
 
