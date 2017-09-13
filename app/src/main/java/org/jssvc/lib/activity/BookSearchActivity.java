@@ -52,17 +52,17 @@ import org.jssvc.lib.view.DividerItemDecoration;
 public class BookSearchActivity extends BaseActivity
     implements BGARefreshLayout.BGARefreshLayoutDelegate {
 
-  @BindView(R.id.tvBack) TextView tvBack;
-  @BindView(R.id.tvType) TextView tvType;
-  @BindView(R.id.edtKey) EditText edtKey;
-  @BindView(R.id.ivSearch) ImageView ivSearch;
-  @BindView(R.id.rlEmpty) RelativeLayout rlEmpty;
+  @BindView(R.id.tv_back) TextView tvBack;
+  @BindView(R.id.tv_type) TextView tvType;
+  @BindView(R.id.edt_key) EditText edtKey;
+  @BindView(R.id.iv_search) ImageView ivSearch;
+  @BindView(R.id.rl_empty) RelativeLayout rlEmpty;
 
-  @BindView(R.id.hisLayout) LinearLayout hisLayout;//搜索记录
-  @BindView(R.id.lvHistory) RecyclerView lvHistory;
-  @BindView(R.id.tvDeleteHis) TextView tvDeleteHis;
+  @BindView(R.id.his_layout) LinearLayout hisLayout;//搜索记录
+  @BindView(R.id.lv_history) RecyclerView lvHistory;
+  @BindView(R.id.tv_delete_his) TextView tvDeleteHis;
 
-  @BindView(R.id.refreshLayout) BGARefreshLayout mRefreshLayout;
+  @BindView(R.id.refresh_layout) BGARefreshLayout mRefreshLayout;
   @BindView(R.id.recyclerView) RecyclerView recyclerView;//查询数据
 
   // 搜索记录
@@ -198,17 +198,17 @@ public class BookSearchActivity extends BaseActivity
     mRefreshLayout.setRefreshViewHolder(moocStyleRefreshViewHolder);
   }
 
-  @OnClick({ R.id.tvBack, R.id.tvType, R.id.ivSearch, R.id.tvDeleteHis })
+  @OnClick({ R.id.tv_back, R.id.tv_type, R.id.iv_search, R.id.tv_delete_his })
   public void onClick(View view) {
     switch (view.getId()) {
-      case R.id.tvBack:
+      case R.id.tv_back:
         finish();
         break;
-      case R.id.tvType:
+      case R.id.tv_type:
         // 类型选择
         showTypeDialog();
         break;
-      case R.id.ivSearch:
+      case R.id.iv_search:
         // 搜索
         searchText = edtKey.getText().toString().trim();
         if (!TextUtils.isEmpty(searchText)) {
@@ -216,7 +216,7 @@ public class BookSearchActivity extends BaseActivity
           searchBookEngine(true);
         }
         break;
-      case R.id.tvDeleteHis:
+      case R.id.tv_delete_his:
         // 清空历史
         AppPref.clearSearchKey(context);
         reLoadSearchHis();

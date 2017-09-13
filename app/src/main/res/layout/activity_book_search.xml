@@ -8,7 +8,7 @@
   <RelativeLayout style="@style/actionbar_whole_style_base">
 
     <TextView
-        android:id="@+id/tvBack"
+        android:id="@+id/tv_back"
         style="@style/actionbar_left_style_base"
         />
 
@@ -30,7 +30,7 @@
       >
 
     <TextView
-        android:id="@+id/tvType"
+        android:id="@+id/tv_type"
         android:layout_width="60dp"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
@@ -44,13 +44,13 @@
     <View
         android:id="@+id/split"
         android:layout_margin="10dp"
-        android:layout_toRightOf="@+id/tvType"
+        android:layout_toRightOf="@+id/tv_type"
         style="@style/item_split_vertical"
         />
 
     <EditText
-        android:id="@+id/edtKey"
-        android:layout_toLeftOf="@+id/ivSearch"
+        android:id="@+id/edt_key"
+        android:layout_toLeftOf="@+id/iv_search"
         android:layout_toRightOf="@+id/split"
         android:hint="请输入关键字"
         android:imeOptions="actionSearch"
@@ -61,7 +61,7 @@
         />
 
     <ImageView
-        android:id="@+id/ivSearch"
+        android:id="@+id/iv_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -79,7 +79,7 @@
       >
 
     <RelativeLayout
-        android:id="@+id/rlEmpty"
+        android:id="@+id/rl_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
@@ -99,7 +99,7 @@
     </RelativeLayout>
 
     <cn.bingoogolapple.refreshlayout.BGARefreshLayout
-        android:id="@+id/refreshLayout"
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
@@ -113,7 +113,7 @@
     </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 
     <LinearLayout
-        android:id="@+id/hisLayout"
+        android:id="@+id/his_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
@@ -128,7 +128,7 @@
           >
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/lvHistory"
+            android:id="@+id/lv_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
@@ -137,7 +137,7 @@
       <View style="@style/item_split_horizontal"/>
 
       <TextView
-          android:id="@+id/tvDeleteHis"
+          android:id="@+id/tv_delete_his"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:gravity="center_horizontal"
