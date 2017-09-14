@@ -49,10 +49,10 @@ public class CurentBorrowActivity extends BaseActivity {
   @Override protected void initView() {
     rlEmpty.setVisibility(View.GONE);
 
-    if (AccountPref.isLogon(context)) {
+    if (AccountPref.isLogon(mContext)) {
       loadBookList();
     } else {
-      startActivity(new Intent(context, LoginActivity.class));
+      startActivity(new Intent(mContext, LoginActivity.class));
       finish();
     }
   }
@@ -117,17 +117,17 @@ public class CurentBorrowActivity extends BaseActivity {
 
   private void loadList(List<BookReadingBean> bookList) {
     //创建默认的线性LayoutManager
-    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+    recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
     recyclerView.setHasFixedSize(true);
     //创建并设置Adapter
-    bookReadingAdapter = new BookReadingAdapter(context, bookList);
+    bookReadingAdapter = new BookReadingAdapter(mContext, bookList);
     recyclerView.setAdapter(bookReadingAdapter);
 
     bookReadingAdapter.setOnItemClickListener(new BookReadingAdapter.IMyViewHolderClicks() {
       @Override public void onItemClick(View view, BookReadingBean item) {
         if (!TextUtils.isEmpty(item.getDetialUrl())) {
-          Intent intent = new Intent(context, BookDetailsActivity.class);
+          Intent intent = new Intent(mContext, BookDetailsActivity.class);
           intent.putExtra("title", item.getBookName());
           intent.putExtra("url", item.getDetialUrl());
           startActivity(intent);
@@ -137,12 +137,12 @@ public class CurentBorrowActivity extends BaseActivity {
       @Override public void onXujieClick(View view, BookReadingBean item) {
         // 续借事件统计
         Map<String, String> map = new HashMap<>();
-        map.put("userName", AccountPref.getLogonAccoundNumber(context));
+        map.put("userName", AccountPref.getLogonAccoundNumber(mContext));
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         map.put("optDate", df.format(new Date()));
         map.put("bookBarCode", item.getBarCode());
         map.put("bookTitle", item.getBookName());
-        MobclickAgent.onEvent(context, "book_renew", map);
+        MobclickAgent.onEvent(mContext, "book_renew", map);
 
         OkGo.<String>post(HttpUrlParams.URL_LIB_BOOK_ADD).tag(this)
             .params("bar_code", item.getBarCode())
@@ -191,7 +191,7 @@ public class CurentBorrowActivity extends BaseActivity {
 
   // 续借结果
   private void showResultDialog(String result) {
-    CustomDialog.Builder builder = new CustomDialog.Builder(context).setTitle("续借结果")
+    CustomDialog.Builder builder = new CustomDialog.Builder(mContext).setTitle("续借结果")
         .setMessage(Html.fromHtml(result) + "")
         .setPositiveButton("确认", new DialogInterface.OnClickListener() {
           public void onClick(final DialogInterface dialog, int which) {

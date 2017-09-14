@@ -13,20 +13,19 @@ import org.jssvc.lib.base.BaseActivity;
  */
 public class AboutActivity extends BaseActivity {
 
-  @BindView(R.id.tvBack) TextView tvBack;
-  @BindView(R.id.tvVer) TextView tvVer;
+  @BindView(R.id.tv_version) TextView tvVersion;
 
   @Override protected int getContentViewId() {
     return R.layout.activity_about;
   }
 
   @Override protected void initView() {
-    tvVer.setText("Ver " + AppUtils.getAppVersionName());
+    tvVersion.setText("Ver " + AppUtils.getAppVersionName());
   }
 
-  @OnClick({ R.id.tvBack }) public void onClick(View view) {
+  @OnClick({ R.id.tv_back }) public void onClick(View view) {
     switch (view.getId()) {
-      case R.id.tvBack:
+      case R.id.tv_back:
         finish();
         break;
     }

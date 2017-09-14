@@ -46,10 +46,10 @@ public class CardInfoActivity extends BaseActivity {
   @Override protected void initView() {
     scrollView.setVisibility(View.GONE);
 
-    if (AccountPref.isLogon(context)) {
+    if (AccountPref.isLogon(mContext)) {
       getUserInfoByNet();
     } else {
-      startActivity(new Intent(context, LoginActivity.class));
+      startActivity(new Intent(mContext, LoginActivity.class));
       finish();
     }
   }
@@ -106,7 +106,7 @@ public class CardInfoActivity extends BaseActivity {
   private void parseHtml(String s) {
     User user = HtmlParseUtils.getUserInfo(s);
     if (!TextUtils.isEmpty(user.getUserid())) {
-      AccountPref.saveLogonUser(context, user);
+      AccountPref.saveLogonUser(mContext, user);
 
       scrollView.setVisibility(View.VISIBLE);
       tvName.setText(user.getUsername());

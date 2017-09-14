@@ -139,9 +139,9 @@ public class BookSearchFragment extends BaseFragment
     });
 
     // ============================================
-    lvHistory.setLayoutManager(new LinearLayoutManager(context));
+    lvHistory.setLayoutManager(new LinearLayoutManager(mContext));
     lvHistory.setHasFixedSize(true);
-    hislistAdapter = new BookSearchHisAdapter(context, hislist);
+    hislistAdapter = new BookSearchHisAdapter(mContext, hislist);
     lvHistory.setAdapter(hislistAdapter);
 
     hislistAdapter.setOnItemClickListener(
@@ -159,16 +159,16 @@ public class BookSearchFragment extends BaseFragment
 
     // ============================================
     //创建默认的线性LayoutManager
-    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+    recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     recyclerView.setHasFixedSize(true);
-    bookSearchAdapter = new BookSearchAdapter(context, booklists);
+    bookSearchAdapter = new BookSearchAdapter(mContext, booklists);
     recyclerView.setAdapter(bookSearchAdapter);
 
     bookSearchAdapter.setOnItemClickListener(
         new BookSearchAdapter.OnRecyclerViewItemClickListener() {
           @Override public void onItemClick(View view, BookSearchBean item) {
             if (!TextUtils.isEmpty(item.getDetialUrl())) {
-              Intent intent = new Intent(context, BookDetailsActivity.class);
+              Intent intent = new Intent(mContext, BookDetailsActivity.class);
               intent.putExtra("title", item.getTitle());
               intent.putExtra("url", item.getDetialUrl());
               startActivity(intent);
@@ -219,7 +219,7 @@ public class BookSearchFragment extends BaseFragment
         break;
       case R.id.tv_delete_his:
         // 清空历史
-        AppPref.clearSearchKey(context);
+        AppPref.clearSearchKey(mContext);
         reLoadSearchHis();
         break;
     }
@@ -235,12 +235,12 @@ public class BookSearchFragment extends BaseFragment
 
     // 搜索事件统计
     Map<String, String> map = new HashMap<>();
-    map.put("userName", AccountPref.getLogonAccoundNumber(context));
+    map.put("userName", AccountPref.getLogonAccoundNumber(mContext));
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     map.put("optDate", df.format(new Date()));
     map.put("strSearchType", currentSearchType.getId());
     map.put("strText", searchText);
-    MobclickAgent.onEvent(context, "book_search", map);
+    MobclickAgent.onEvent(mContext, "book_search", map);
 
     OkGo.<String>post(HttpUrlParams.URL_LIB_BOOK_SEARCH).tag(this)
         .params("strSearchType", currentSearchType.getId())
@@ -359,7 +359,7 @@ public class BookSearchFragment extends BaseFragment
 
   // 方式选择
   private void showTypeDialog() {
-    final AlertDialog dlg = new AlertDialog.Builder(context).create();
+    final AlertDialog dlg = new AlertDialog.Builder(mContext).create();
     dlg.show();
     dlg.getWindow()
         .clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
@@ -377,11 +377,11 @@ public class BookSearchFragment extends BaseFragment
     DialogListSelecterAdapter selecterAdapter;
     RecyclerView recyclerView = (RecyclerView) window.findViewById(R.id.recyclerView);
 
-    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+    recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     recyclerView.setHasFixedSize(true);
     recyclerView.addItemDecoration(
-        new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST));
-    selecterAdapter = new DialogListSelecterAdapter(context, searchTypeList);
+        new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
+    selecterAdapter = new DialogListSelecterAdapter(mContext, searchTypeList);
     recyclerView.setAdapter(selecterAdapter);
 
     selecterAdapter.setOnItemClickListener(new DialogListSelecterAdapter.IMyViewHolderClicks() {
@@ -420,7 +420,7 @@ public class BookSearchFragment extends BaseFragment
   // 加载搜索记录
   private void reLoadSearchHis() {
     hislist.clear();
-    String allkeys = AppPref.getSearchKey(context);
+    String allkeys = AppPref.getSearchKey(mContext);
     String[] hisArrays = allkeys.split(",");
     for (int i = 0; i < hisArrays.length; i++) {
       if (!TextUtils.isEmpty(hisArrays[i])) hislist.add(hisArrays[i]);
@@ -439,7 +439,7 @@ public class BookSearchFragment extends BaseFragment
   private void saveKey2Local(String key) {
     if (!TextUtils.isEmpty(key)) {
       // 1、读取本地数据
-      String allkeys = AppPref.getSearchKey(context);
+      String allkeys = AppPref.getSearchKey(mContext);
       // 2、重复性判断
       int pos = 0;
       int maxlong = 5;
@@ -469,7 +469,7 @@ public class BookSearchFragment extends BaseFragment
       for (int i = 0; i < hisArr.size(); i++) {
         sb.append(hisArr.get(i) + ",");
       }
-      AppPref.saveSearchKey(context, sb.toString());
+      AppPref.saveSearchKey(mContext, sb.toString());
     }
   }
 }

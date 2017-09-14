@@ -43,16 +43,16 @@ public class BookDetailInfoFragment extends BaseFragment {
   // 加载详情
   private void loadDetailsList(List<BookDetailsBean> detailsList) {
     //创建默认的线性LayoutManager
-    detailsRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+    detailsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
     detailsRecyclerView.setHasFixedSize(true);
     //添加分割线divider
     detailsRecyclerView.addItemDecoration(
-        new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST));
+        new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
     //解决滑动冲突
     detailsRecyclerView.setNestedScrollingEnabled(false);
     //创建并设置Adapter
-    bookDetailsAdapter = new BookDetailsAdapter(context, detailsList);
+    bookDetailsAdapter = new BookDetailsAdapter(mContext, detailsList);
     detailsRecyclerView.setAdapter(bookDetailsAdapter);
 
     bookDetailsAdapter.setOnItemClickListener(

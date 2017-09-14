@@ -60,47 +60,47 @@ public class HomeActivity extends BaseActivity implements EasyPermissions.Permis
     switch (view.getId()) {
       case R.id.btnBookShelf:
         // 我的书架
-        if (AccountPref.isLogon(context)) {
-          startActivity(new Intent(context, BookShelfActivity.class));
+        if (AccountPref.isLogon(mContext)) {
+          startActivity(new Intent(mContext, BookShelfActivity.class));
         } else {
-          startActivity(new Intent(context, LoginActivity.class));
+          startActivity(new Intent(mContext, LoginActivity.class));
         }
         break;
       case R.id.btnCurentBorrow:
         // 当前借阅 / 催还续借
-        if (AccountPref.isLogon(context)) {
-          startActivity(new Intent(context, CurentBorrowActivity.class));
+        if (AccountPref.isLogon(mContext)) {
+          startActivity(new Intent(mContext, CurentBorrowActivity.class));
         } else {
-          startActivity(new Intent(context, LoginActivity.class));
+          startActivity(new Intent(mContext, LoginActivity.class));
         }
         break;
       case R.id.btnHistoryBorrow:
         // 借阅历史
-        if (AccountPref.isLogon(context)) {
-          startActivity(new Intent(context, HistoryBorrowActivity.class));
+        if (AccountPref.isLogon(mContext)) {
+          startActivity(new Intent(mContext, HistoryBorrowActivity.class));
         } else {
-          startActivity(new Intent(context, LoginActivity.class));
+          startActivity(new Intent(mContext, LoginActivity.class));
         }
         break;
       case R.id.btnBookSearch:
         // 图书搜索
-        startActivity(new Intent(context, BookSearchActivity.class));
+        startActivity(new Intent(mContext, BookSearchActivity.class));
         break;
       case R.id.btnMsg:
         // 新闻通知
-        startActivity(new Intent(context, MsgActivity.class));
+        startActivity(new Intent(mContext, MsgActivity.class));
         break;
       case R.id.btnHelp:
         // 帮助指南
-        startActivity(new Intent(context, HelpActivity.class));
+        startActivity(new Intent(mContext, HelpActivity.class));
         break;
       case R.id.btnVideo:
         // 图书馆简介
-        startActivity(new Intent(context, AboutSchoolActivity.class));
+        startActivity(new Intent(mContext, AboutSchoolActivity.class));
         break;
       case R.id.btnSetting:
         // 设置
-        startActivity(new Intent(context, SettingActivity.class));
+        startActivity(new Intent(mContext, SettingActivity.class));
         break;
     }
   }

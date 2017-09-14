@@ -61,14 +61,14 @@ public class HelpActivity extends BaseActivity
   }
 
   @Override protected void initView() {
-    if (AppPref.isFirstHelp(context)) {
+    if (AppPref.isFirstHelp(mContext)) {
       rlTip.setVisibility(View.VISIBLE);
     } else {
       rlTip.setVisibility(View.GONE);
     }
 
     DrawableCompat.setTint(DrawableCompat.wrap(tvChat.getDrawable().mutate()),
-        context.getResources().getColor(android.R.color.black));
+        mContext.getResources().getColor(android.R.color.black));
 
     // 获取焦点
     lvLeft.setFocusable(false);
@@ -109,7 +109,7 @@ public class HelpActivity extends BaseActivity
 
     lvRight.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(context, HelpDetailsActivity.class);
+        Intent intent = new Intent(mContext, HelpDetailsActivity.class);
         intent.putExtra("c", "" + rightList.get(position).getCategory());//类别
         intent.putExtra("q", "" + rightList.get(position).getTitle());
         intent.putExtra("a", "" + rightList.get(position).getContent());
@@ -139,7 +139,7 @@ public class HelpActivity extends BaseActivity
         break;
       case R.id.ivClose:
         // 关闭滚动提示
-        AppPref.setHelpClose(context);
+        AppPref.setHelpClose(mContext);
         rlTip.setVisibility(View.GONE);
         break;
     }
@@ -147,7 +147,7 @@ public class HelpActivity extends BaseActivity
 
   // 客服弹框
   private void qqCheckDialog(String dTitle, String dSubTitle, List<ListSelecterBean> dataList) {
-    final AlertDialog dlg = new AlertDialog.Builder(context).create();
+    final AlertDialog dlg = new AlertDialog.Builder(mContext).create();
     dlg.show();
     dlg.getWindow()
         .clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
@@ -165,11 +165,11 @@ public class HelpActivity extends BaseActivity
     DialogListSelecterAdapter selecterAdapter;
     RecyclerView recyclerView = (RecyclerView) window.findViewById(R.id.recyclerView);
 
-    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+    recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     recyclerView.setHasFixedSize(true);
     recyclerView.addItemDecoration(
-        new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST));
-    selecterAdapter = new DialogListSelecterAdapter(context, dataList);
+        new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
+    selecterAdapter = new DialogListSelecterAdapter(mContext, dataList);
     recyclerView.setAdapter(selecterAdapter);
 
     selecterAdapter.setOnItemClickListener(new DialogListSelecterAdapter.IMyViewHolderClicks() {

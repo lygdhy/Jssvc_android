@@ -44,8 +44,8 @@ public class DiscussFragment extends BaseFragment
 
   private void initRefreshView() {
     refreshLayout.setDelegate(this);
-    refreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(context, true));
-    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+    refreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(mContext, true));
+    recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     discussAdapter = new DiscussAdapter(recyclerView);
     discussAdapter.setOnRVItemClickListener(this);
     recyclerView.setAdapter(discussAdapter);

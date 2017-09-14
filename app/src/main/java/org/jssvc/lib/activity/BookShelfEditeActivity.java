@@ -114,11 +114,11 @@ public class BookShelfEditeActivity extends BaseActivity {
     }
 
     //创建默认的线性LayoutManager
-    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+    recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
     recyclerView.setHasFixedSize(true);
     //创建并设置Adapter
-    bookShelfEditeAdapter = new BookShelfEditeAdapter(context, shelfList);
+    bookShelfEditeAdapter = new BookShelfEditeAdapter(mContext, shelfList);
     recyclerView.setAdapter(bookShelfEditeAdapter);
 
     bookShelfEditeAdapter.setOnItemClickListener(new BookShelfEditeAdapter.IMyViewHolderClicks() {
@@ -139,7 +139,7 @@ public class BookShelfEditeActivity extends BaseActivity {
 
   // 删除书架
   public void deleteAlertDialog(final BookShelfBean item) {
-    CustomDialog.Builder builder = new CustomDialog.Builder(context);
+    CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
     builder.setTitle("提示");
     builder.setMessage("删除此类，将删除该类下所有数据。确认删除?");
     builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
@@ -191,7 +191,7 @@ public class BookShelfEditeActivity extends BaseActivity {
 
   // 编辑框
   public void showInputAlert(final String code, final String shelfId, final String shelfName) {
-    final AlertDialog dlg = new AlertDialog.Builder(context).create();
+    final AlertDialog dlg = new AlertDialog.Builder(mContext).create();
     dlg.show();
     dlg.getWindow()
         .clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE

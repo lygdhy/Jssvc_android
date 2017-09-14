@@ -61,7 +61,7 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
     menuList.add(new MenuBean(3, "图书搜索", R.drawable.icon_menu_c));
     menuList.add(new MenuBean(4, "关于我们", R.drawable.icon_menu_d));
 
-    mRecyclerView.setLayoutManager(new GridLayoutManager(context, 4));
+    mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
     mAdapter = new MenuAdapter(mRecyclerView);
     mAdapter.setOnRVItemClickListener(this);
     mRecyclerView.setAdapter(mAdapter);
@@ -74,14 +74,14 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
     switch (item.getType()) {
       case 1:
         // 帮助指南
-        startActivity(new Intent(context, HelpActivity.class));
+        startActivity(new Intent(mContext, HelpActivity.class));
         break;
       case 2:
         // 当前借阅 / 催还续借
-        if (AccountPref.isLogon(context)) {
-          startActivity(new Intent(context, CurentBorrowActivity.class));
+        if (AccountPref.isLogon(mContext)) {
+          startActivity(new Intent(mContext, CurentBorrowActivity.class));
         } else {
-          startActivity(new Intent(context, LoginActivity.class));
+          startActivity(new Intent(mContext, LoginActivity.class));
         }
         break;
       case 3:
@@ -91,7 +91,7 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
         break;
       case 4:
         // 关于
-        startActivity(new Intent(context, AboutActivity.class));
+        startActivity(new Intent(mContext, AboutActivity.class));
         break;
     }
   }
@@ -104,7 +104,7 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
         break;
       case R.id.tv_search_bar:
         // 图书搜索
-        startActivity(new Intent(context, BookSearchActivity.class));
+        startActivity(new Intent(mContext, BookSearchActivity.class));
         break;
     }
   }

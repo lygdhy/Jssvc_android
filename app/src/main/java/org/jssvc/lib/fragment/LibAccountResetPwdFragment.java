@@ -43,7 +43,7 @@ public class LibAccountResetPwdFragment extends BaseFragment {
       case R.id.btn_submit:
         String oldpwd = edtOldPwd.getText().toString().trim();
         String newpwd = edtNewPwd.getText().toString().trim();
-        String localpwd = AccountPref.getLogonAccoundPwd(context);
+        String localpwd = AccountPref.getLogonAccoundPwd(mContext);
 
         if (TextUtils.isEmpty(oldpwd) || TextUtils.isEmpty(newpwd)) {
           showToast("就旧密码不能为空！");
@@ -61,7 +61,7 @@ public class LibAccountResetPwdFragment extends BaseFragment {
   // 前往重置密码
   private void go2Reset(String newpwd) {
     OkGo.<String>post(HttpUrlParams.URL_LIB_CHANGE_PWD).tag(this)
-        .params("old_passwd", AccountPref.getLogonAccoundPwd(context))
+        .params("old_passwd", AccountPref.getLogonAccoundPwd(mContext))
         .params("new_passwd", newpwd)
         .params("chk_passwd", newpwd)
         .params("submit1", "%E7%A1%AE%E5%AE%9A")
@@ -88,7 +88,7 @@ public class LibAccountResetPwdFragment extends BaseFragment {
 
     //OkGo.post(HttpUrlParams.URL_LIB_CHANGE_PWD)
     //    .tag(this)
-    //    .params("old_passwd", AccountPref.getLogonAccoundPwd(context))
+    //    .params("old_passwd", AccountPref.getLogonAccoundPwd(mContext))
     //    .params("new_passwd", newpwd)
     //    .params("chk_passwd", newpwd)
     //    .params("submit1", "%E7%A1%AE%E5%AE%9A")
@@ -113,7 +113,7 @@ public class LibAccountResetPwdFragment extends BaseFragment {
     if (TextUtils.isEmpty(errorMsg)) {
       // 密码修改成功
       showToast("密码修改成功");
-      AccountPref.saveLoginAccoundPwd(context, edtNewPwd.getText().toString().trim());
+      AccountPref.saveLoginAccoundPwd(mContext, edtNewPwd.getText().toString().trim());
       getActivity().finish();
     } else {
       // 有错误提示

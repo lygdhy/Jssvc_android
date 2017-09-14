@@ -46,13 +46,11 @@ import org.jssvc.lib.view.DividerItemDecoration;
  */
 public class BookDetailsActivity extends BaseActivity {
 
-  @BindView(R.id.tvBack) TextView tvBack;
-  @BindView(R.id.tvCollect) ImageView tvCollect;
-  @BindView(R.id.bookView) ImageView bookView;
-  @BindView(R.id.tvBookName) TextView tvBookName;
+  @BindView(R.id.iv_book_cover) ImageView ivBookCover;
+  @BindView(R.id.tv_book_title) TextView tvBookTitle;
 
-  @BindView(R.id.tabLayout) TabLayout tabLayout;
-  @BindView(R.id.viewPager) ViewPager viewPager;
+  @BindView(R.id.tab_layout) TabLayout mTabLayout;
+  @BindView(R.id.view_pager) ViewPager mViewPager;
 
   private List<String> mTitles;
   private List<Fragment> mFragments;
@@ -68,7 +66,7 @@ public class BookDetailsActivity extends BaseActivity {
 
   @Override protected void initView() {
 
-    tvBookName.setText(getIntent().getStringExtra("title") + "");
+    tvBookTitle.setText(getIntent().getStringExtra("title") + "");
     detialUrl = getIntent().getStringExtra("url");
 
     String[] array = detialUrl.split("marc_no=");
@@ -108,17 +106,17 @@ public class BookDetailsActivity extends BaseActivity {
     //});
   }
 
-  @OnClick({ R.id.tvBack, R.id.tvCollect }) public void onClick(View view) {
+  @OnClick({ R.id.tv_back, R.id.tv_collect }) public void onClick(View view) {
     switch (view.getId()) {
-      case R.id.tvBack:
+      case R.id.tv_back:
         finish();
         break;
-      case R.id.tvCollect:
-        if (AccountPref.isLogon(context)) {
+      case R.id.tv_collect:
+        if (AccountPref.isLogon(mContext)) {
           // 添加到书架
           collectBook();
         } else {
-          startActivity(new Intent(context, LoginActivity.class));
+          startActivity(new Intent(mContext, LoginActivity.class));
         }
         break;
     }
@@ -152,7 +150,7 @@ public class BookDetailsActivity extends BaseActivity {
 
   // 书架列表
   private void bookShelifListDialog(String dTitle, List<ListSelecterBean> dataList) {
-    final AlertDialog dlg = new AlertDialog.Builder(context).create();
+    final AlertDialog dlg = new AlertDialog.Builder(mContext).create();
     dlg.show();
     dlg.getWindow()
         .clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
@@ -170,11 +168,11 @@ public class BookDetailsActivity extends BaseActivity {
     DialogListSelecterAdapter selecterAdapter;
     RecyclerView recyclerView = (RecyclerView) window.findViewById(R.id.recyclerView);
 
-    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+    recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     recyclerView.setHasFixedSize(true);
     recyclerView.addItemDecoration(
-        new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST));
-    selecterAdapter = new DialogListSelecterAdapter(context, dataList);
+        new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
+    selecterAdapter = new DialogListSelecterAdapter(mContext, dataList);
     recyclerView.setAdapter(selecterAdapter);
 
     selecterAdapter.setOnItemClickListener(new DialogListSelecterAdapter.IMyViewHolderClicks() {
@@ -279,7 +277,7 @@ public class BookDetailsActivity extends BaseActivity {
     } else {
       // 没有书架
       showToast("您需要先创建一个书架");
-      startActivity(new Intent(context, BookShelfEditeActivity.class));
+      startActivity(new Intent(mContext, BookShelfEditeActivity.class));
     }
   }
 
@@ -287,7 +285,7 @@ public class BookDetailsActivity extends BaseActivity {
   private void parseHtml(String s) {
     // 解析图片
     String coverUrl = HtmlParseUtils.getBookCoverUrl(s);
-    ImageLoader.with(context, bookView, coverUrl);
+    ImageLoader.with(mContext, ivBookCover, coverUrl);
 
     // 解析详情
     List<BookDetailsBean> detailList = new ArrayList<>();
@@ -318,16 +316,16 @@ public class BookDetailsActivity extends BaseActivity {
       mTitles.add("书目信息");
 
       //设置TabLayout的模式
-      tabLayout.setTabMode(TabLayout.MODE_FIXED);
+      mTabLayout.setTabMode(TabLayout.MODE_FIXED);
       //为TabLayout添加tab名称
-      tabLayout.addTab(tabLayout.newTab().setText(mTitles.get(0)));
-      tabLayout.addTab(tabLayout.newTab().setText(mTitles.get(1)));
+      mTabLayout.addTab(mTabLayout.newTab().setText(mTitles.get(0)));
+      mTabLayout.addTab(mTabLayout.newTab().setText(mTitles.get(1)));
 
       showTabAdapter = new ShowTabAdapter(getSupportFragmentManager(), mFragments, mTitles);
-      viewPager.setAdapter(showTabAdapter);
+      mViewPager.setAdapter(showTabAdapter);
 
       //TabLayout加载viewpager
-      tabLayout.setupWithViewPager(viewPager);
+      mTabLayout.setupWithViewPager(mViewPager);
     } else {
       showToast("解析失败");
     }
@@ -335,7 +333,7 @@ public class BookDetailsActivity extends BaseActivity {
 
   // 添加结果显示
   public void showAlertDialog(final String str) {
-    CustomDialog.Builder builder = new CustomDialog.Builder(context);
+    CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
     builder.setTitle("提示");
     builder.setMessage(Html.fromHtml(str) + "");
     builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {

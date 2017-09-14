@@ -28,7 +28,7 @@ public class AccountThirdManagerActivity extends BaseActivity {
         break;
       case R.id.rl_lib:
         // 图书馆账户绑定
-        startActivity(new Intent(context, AccountLibManagerActivity.class));
+        startActivity(new Intent(mContext, AccountLibManagerActivity.class));
         break;
       case R.id.rl_jw:
         // 教务系统绑定

@@ -43,13 +43,13 @@ public class BookDetailQtyFragment extends BaseFragment {
   // 加载藏书列表
   private void loadAccessList(List<BookAccessBean> accessList) {
     //创建默认的线性LayoutManager
-    inLibRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+    inLibRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
     inLibRecyclerView.setHasFixedSize(true);
     //解决滑动冲突
     inLibRecyclerView.setNestedScrollingEnabled(false);
     //创建并设置Adapter
-    bookAccessAdapter = new BookAccessAdapter(context, accessList);
+    bookAccessAdapter = new BookAccessAdapter(mContext, accessList);
     inLibRecyclerView.setAdapter(bookAccessAdapter);
 
     bookAccessAdapter.setOnItemClickListener(

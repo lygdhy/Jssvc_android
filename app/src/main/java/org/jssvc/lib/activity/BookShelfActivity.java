@@ -72,7 +72,7 @@ public class BookShelfActivity extends BaseActivity {
           showInputAlert("0", "", "");
         } else {
           // 编辑书架
-          startActivityForResult(new Intent(context, BookShelfEditeActivity.class), 10086);
+          startActivityForResult(new Intent(mContext, BookShelfEditeActivity.class), 10086);
         }
         break;
     }
@@ -165,7 +165,7 @@ public class BookShelfActivity extends BaseActivity {
 
   // 编辑框
   public void showInputAlert(final String code, final String shelfId, final String shelfName) {
-    final AlertDialog dlg = new AlertDialog.Builder(context).create();
+    final AlertDialog dlg = new AlertDialog.Builder(mContext).create();
     dlg.show();
     dlg.getWindow()
         .clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE

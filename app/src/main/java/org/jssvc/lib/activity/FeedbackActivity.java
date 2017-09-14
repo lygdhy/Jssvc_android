@@ -67,7 +67,7 @@ public class FeedbackActivity extends BaseActivity {
 
     OkGo.<String>post(HttpUrlParams.URL_ORG_FEEDBACK).tag(this)
         .params("time", df.format(new Date()))
-        .params("userid", AccountPref.getLogonAccoundNumber(context))
+        .params("userid", AccountPref.getLogonAccoundNumber(mContext))
         .params("advice", feedStr)
         .params("email", trim + "")
         .execute(new StringCallback() {
@@ -94,7 +94,7 @@ public class FeedbackActivity extends BaseActivity {
     //OkGo.post(HttpUrlParams.URL_ORG_FEEDBACK)
     //    .tag(this)
     //    .params("time", df.format(new Date()))
-    //    .params("userid", AccountPref.getLogonAccoundNumber(context))
+    //    .params("userid", AccountPref.getLogonAccoundNumber(mContext))
     //    .params("advice", feedStr)
     //    .params("email", trim + "")
     //    .execute(new StringCallback() {
@@ -113,7 +113,7 @@ public class FeedbackActivity extends BaseActivity {
 
   // 感谢
   private void thankDialog() {
-    CustomDialog.Builder builder = new CustomDialog.Builder(context);
+    CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
     builder.setTitle("提示");
     builder.setMessage("感谢您提出的宝贵意见！");
     builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {

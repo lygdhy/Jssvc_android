@@ -25,10 +25,10 @@ import org.jssvc.lib.view.pDialog.XProgressDialog;
 
 public abstract class BaseActivity extends AppCompatActivity {
   private Unbinder unbinder;
-  public Context context;
+  public Context mContext;
 
-  private Toast toast = null;//全局Toast
-  private XProgressDialog progressDialog = null;//全局ProgressDialog
+  private Toast mToast = null;//全局Toast
+  private XProgressDialog mProgressDialog = null;//全局ProgressDialog
 
   protected abstract int getContentViewId();
 
@@ -40,7 +40,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(getContentViewId());
     unbinder = ButterKnife.bind(this);
-    context = this;
+    mContext = this;
     initView();
 
     // 蒲公英错误日志收集
@@ -85,12 +85,12 @@ public abstract class BaseActivity extends AppCompatActivity {
    * show Toast
    */
   protected void showToast(String msg) {
-    if (toast == null) {
-      toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+    if (mToast == null) {
+      mToast = Toast.makeText(mContext, msg, Toast.LENGTH_SHORT);
     } else {
-      toast.setText(msg);
+      mToast.setText(msg);
     }
-    toast.show();
+    mToast.show();
   }
 
   /**
@@ -98,10 +98,10 @@ public abstract class BaseActivity extends AppCompatActivity {
    */
   protected void showProgressDialog() {
     KeyboardUtils.hideSoftInput(this);
-    if (progressDialog == null) {
-      progressDialog = new XProgressDialog(context, XProgressDialog.THEME_HORIZONTAL_SPOT);
+    if (mProgressDialog == null) {
+      mProgressDialog = new XProgressDialog(mContext, XProgressDialog.THEME_HORIZONTAL_SPOT);
     }
-    progressDialog.show();
+    mProgressDialog.show();
   }
 
   /**
@@ -109,20 +109,20 @@ public abstract class BaseActivity extends AppCompatActivity {
    */
   protected void showProgressDialog(String msg) {
     KeyboardUtils.hideSoftInput(this);
-    if (progressDialog == null) {
-      progressDialog = new XProgressDialog(context, msg, XProgressDialog.THEME_HORIZONTAL_SPOT);
+    if (mProgressDialog == null) {
+      mProgressDialog = new XProgressDialog(mContext, msg, XProgressDialog.THEME_HORIZONTAL_SPOT);
     } else {
-      progressDialog.setMessage(msg);
+      mProgressDialog.setMessage(msg);
     }
-    progressDialog.show();
+    mProgressDialog.show();
   }
 
   /**
    * dissmiss ProgressDialog
    */
   protected void dissmissProgressDialog() {
-    if (progressDialog != null) {
-      progressDialog.dismiss();
+    if (mProgressDialog != null) {
+      mProgressDialog.dismiss();
     }
   }
 
