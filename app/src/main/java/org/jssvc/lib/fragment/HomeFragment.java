@@ -7,7 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
@@ -16,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jssvc.lib.R;
 import org.jssvc.lib.activity.AboutActivity;
+import org.jssvc.lib.activity.BookSearchActivity;
 import org.jssvc.lib.activity.CurentBorrowActivity;
 import org.jssvc.lib.activity.HelpActivity;
 import org.jssvc.lib.activity.LoginActivity;
@@ -36,6 +40,8 @@ import org.jssvc.lib.utils.ImageLoader;
  * </pre>
  */
 public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListener {
+  @BindView(R.id.tv_search_bar) TextView tvSearchBar;
+  @BindView(R.id.tip_layout) LinearLayout tipLayout;
   @BindView(R.id.recyclerView) RecyclerView mRecyclerView;
   @BindView(R.id.convenientBanner) ConvenientBanner convenientBanner;
 
@@ -90,29 +96,18 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
     }
   }
 
-  //@OnClick({
-  //    R.id.ll_help, R.id.ll_renew, R.id.ll_search
-  //}) public void onClick(View view) {
-  //  switch (view.getId()) {
-  //    case R.id.ll_help:
-  //      // 帮助指南
-  //      startActivity(new Intent(context, HelpActivity.class));
-  //      break;
-  //    case R.id.ll_renew:
-  //      // 当前借阅 / 催还续借
-  //      if (AccountPref.isLogon(context)) {
-  //        startActivity(new Intent(context, CurentBorrowActivity.class));
-  //      } else {
-  //        startActivity(new Intent(context, LoginActivity.class));
-  //      }
-  //      break;
-  //    case R.id.ll_search:
-  //      // 图书搜索
-  //      MainActivity parentActivity = (MainActivity) getActivity();
-  //      parentActivity.turnPage(1);
-  //      break;
-  //  }
-  //}
+  @OnClick({
+      R.id.tip_layout, R.id.tv_search_bar
+  }) public void onClick(View view) {
+    switch (view.getId()) {
+      case R.id.tip_layout:
+        break;
+      case R.id.tv_search_bar:
+        // 图书搜索
+        startActivity(new Intent(context, BookSearchActivity.class));
+        break;
+    }
+  }
 
   private void showAd() {
     List<AdsBean> adsList = new ArrayList<>();
