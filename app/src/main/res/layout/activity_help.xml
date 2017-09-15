@@ -2,101 +2,116 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_ui_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
-    <RelativeLayout style="@style/actionbar_whole_style_base">
+  <RelativeLayout style="@style/actionbar_whole_style_base">
+
+    <TextView
+        android:id="@+id/opt_back"
+        style="@style/actionbar_left_style_base"
+        />
+
+    <TextView
+        android:drawableTint="@color/color_drawable_tint"
+        android:text="帮助指南"
+        android:tint="@color/color_drawable_tint"
+        style="@style/actionbar_title_style_base"
+        />
+
+    <ImageView
+        android:id="@+id/opt_chat"
+        android:src="@drawable/icon_menu_chat"
+        style="@style/actionbar_right_icon"
+        />
+    <View style="@style/item_split_horizontal"/>
+  </RelativeLayout>
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+      <RelativeLayout
+          android:id="@+id/rlTip"
+          android:layout_width="match_parent"
+          android:layout_height="35dp"
+          android:background="#fefcec"
+          >
 
         <TextView
-            android:id="@+id/tvBack"
-            style="@style/actionbar_left_style_base" />
-
-        <TextView
-            style="@style/actionbar_title_style_base"
-            android:text="帮助指南" />
+            android:id="@+id/tvTip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/ivClose"
+            android:drawableLeft="@drawable/icon_worning"
+            android:drawablePadding="5dp"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:paddingLeft="10dp"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="以下信息摘自苏州市职业大学图书馆官网，仅供参考，如有变化请以官网公布的更新为准。(2017.1摘取)"
+            android:textColor="#f76a24"
+            android:textSize="14sp"
+            />
 
         <ImageView
-            android:id="@+id/tvChat"
-            style="@style/actionbar_right_style_base"
-            android:src="@drawable/icon_menu_chat" />
-        <View style="@style/item_split_horizontal"/>
-    </RelativeLayout>
+            android:id="@+id/opt_close"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/icon_close_org"
+            />
+      </RelativeLayout>
 
-    <FrameLayout
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal"
+          >
+
+        <ListView
+            android:id="@+id/lv_left"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:cacheColorHint="#00000000"
+            />
+
+        <se.emilsjolander.stickylistheaders.StickyListHeadersListView
+            android:id="@+id/lv_right"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="#00000000"
+            android:clipToPadding="false"
+            android:drawSelectorOnTop="true"
+            android:fastScrollEnabled="true"
+            android:footerDividersEnabled="false"
+            android:scrollbarStyle="outsideOverlay"
+            />
+      </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/empty"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:id="@+id/rlTip"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:background="#fefcec">
-
-                <TextView
-                    android:id="@+id/tvTip"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toLeftOf="@+id/ivClose"
-                    android:drawableLeft="@drawable/icon_worning"
-                    android:drawablePadding="5dp"
-                    android:ellipsize="marquee"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:gravity="center_vertical"
-                    android:lines="1"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:paddingLeft="10dp"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
-                    android:text="以下信息摘自苏州市职业大学图书馆官网，仅供参考，如有变化请以官网公布的更新为准。(2017.1摘取)"
-                    android:textColor="#f76a24"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:id="@+id/ivClose"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:src="@drawable/icon_close_org" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <ListView
-                    android:id="@+id/lv_left"
-                    android:layout_width="80dp"
-                    android:layout_height="match_parent"
-                    android:cacheColorHint="#00000000" />
-
-                <se.emilsjolander.stickylistheaders.StickyListHeadersListView
-                    android:id="@+id/lv_right"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:cacheColorHint="#00000000"
-                    android:clipToPadding="false"
-                    android:drawSelectorOnTop="true"
-                    android:fastScrollEnabled="true"
-                    android:footerDividersEnabled="false"
-                    android:scrollbarStyle="outsideOverlay" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/empty"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="empty"
-            android:textSize="30sp"
-            android:visibility="gone" />
-    </FrameLayout>
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="empty"
+        android:textSize="30sp"
+        android:visibility="gone"
+        />
+  </FrameLayout>
 </LinearLayout>

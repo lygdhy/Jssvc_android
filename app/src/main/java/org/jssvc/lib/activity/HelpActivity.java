@@ -1,7 +1,6 @@
 package org.jssvc.lib.activity;
 
 import android.content.Intent;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,9 +36,6 @@ public class HelpActivity extends BaseActivity
     StickyListHeadersListView.OnStickyHeaderOffsetChangedListener,
     StickyListHeadersListView.OnStickyHeaderChangedListener {
 
-  @BindView(R.id.tvBack) TextView tvBack;
-  @BindView(R.id.tvChat) ImageView tvChat;
-  @BindView(R.id.ivClose) ImageView ivClose;
   @BindView(R.id.tvTip) TextView tvTip;
   @BindView(R.id.rlTip) RelativeLayout rlTip;
   @BindView(R.id.lv_left) ListView lvLeft;
@@ -67,8 +63,8 @@ public class HelpActivity extends BaseActivity
       rlTip.setVisibility(View.GONE);
     }
 
-    DrawableCompat.setTint(DrawableCompat.wrap(tvChat.getDrawable().mutate()),
-        mContext.getResources().getColor(android.R.color.black));
+    //DrawableCompat.setTint(DrawableCompat.wrap(tvChat.getDrawable().mutate()),
+    //    mContext.getResources().getColor(android.R.color.black));
 
     // 获取焦点
     lvLeft.setFocusable(false);
@@ -119,12 +115,12 @@ public class HelpActivity extends BaseActivity
     });
   }
 
-  @OnClick({ R.id.tvBack, R.id.tvChat, R.id.ivClose }) public void onClick(View view) {
+  @OnClick({ R.id.opt_back, R.id.opt_chat, R.id.opt_close }) public void onClick(View view) {
     switch (view.getId()) {
-      case R.id.tvBack:
+      case R.id.opt_back:
         finish();
         break;
-      case R.id.tvChat:
+      case R.id.opt_chat:
         // 客服弹框
         List<ListSelecterBean> dataList = new ArrayList<>();
         dataList.add(
@@ -137,7 +133,7 @@ public class HelpActivity extends BaseActivity
             new ListSelecterBean(R.drawable.icon_chat_qq, "149553453", "图姐姐", "QQ 149553453"));
         qqCheckDialog("在线服务", "正常工作日9:00~16:30", dataList);
         break;
-      case R.id.ivClose:
+      case R.id.opt_close:
         // 关闭滚动提示
         AppPref.setHelpClose(mContext);
         rlTip.setVisibility(View.GONE);

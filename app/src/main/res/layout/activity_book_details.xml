@@ -21,7 +21,7 @@
     <ImageView
         android:id="@+id/tv_collect"
         android:src="@drawable/icon_collect_on"
-        style="@style/actionbar_right_style_base"
+        style="@style/actionbar_right_icon"
         />
     <View style="@style/item_split_horizontal"/>
   </RelativeLayout>

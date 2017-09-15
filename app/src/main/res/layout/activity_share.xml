@@ -11,7 +11,7 @@
       >
 
     <TextView
-        android:id="@+id/tvBack"
+        android:id="@+id/opt_back"
         style="@style/actionbar_left_style_base"
         />
 
@@ -20,10 +20,10 @@
         style="@style/actionbar_title_style_base"
         />
 
-    <TextView
-        android:id="@+id/tvShare"
+    <ImageView
+        android:id="@+id/opt_share"
         android:drawableLeft="@drawable/icon_share"
-        style="@style/actionbar_right_style_base"
+        style="@style/actionbar_right_icon"
         />
     <View style="@style/item_split_horizontal"/>
   </RelativeLayout>

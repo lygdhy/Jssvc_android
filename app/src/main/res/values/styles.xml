@@ -76,6 +76,11 @@
     <item name="android:textColor">@android:color/white</item>
   </style>
 
+  <style name="actionbar_right_icon" parent="actionbar_right_style_base">
+    <!-- <item name="android:drawableTint">@color/color_drawable_tint</item>-->
+    <item name="android:tint">@color/color_drawable_tint</item>
+  </style>
+
   <!-- 菜单Item_分割线 -->
   <style name="item_split_horizontal">
     <item name="android:layout_width">match_parent</item>

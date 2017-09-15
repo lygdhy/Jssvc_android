@@ -56,6 +56,7 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
     showAd();
 
     // 加载菜单
+    menuList.clear();
     menuList.add(new MenuBean(1, "帮助指南", R.drawable.icon_menu_a));
     menuList.add(new MenuBean(2, "催还续借", R.drawable.icon_menu_b));
     menuList.add(new MenuBean(3, "图书搜索", R.drawable.icon_menu_c));
