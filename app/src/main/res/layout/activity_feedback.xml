@@ -19,7 +19,7 @@
 
     <ImageView
         android:id="@+id/opt_chat"
-        android:drawableLeft="@drawable/icon_menu_chat"
+        android:src="@drawable/icon_menu_chat"
         style="@style/actionbar_right_icon"
         />
     <View style="@style/item_split_horizontal"/>

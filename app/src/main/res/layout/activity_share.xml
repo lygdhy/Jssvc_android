@@ -22,7 +22,7 @@
 
     <ImageView
         android:id="@+id/opt_share"
-        android:drawableLeft="@drawable/icon_share"
+        android:src="@drawable/icon_share"
         style="@style/actionbar_right_icon"
         />
     <View style="@style/item_split_horizontal"/>
