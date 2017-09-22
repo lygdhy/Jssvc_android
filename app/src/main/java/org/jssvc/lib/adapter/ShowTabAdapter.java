@@ -3,7 +3,6 @@ package org.jssvc.lib.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
 import java.util.List;
 
 /**
@@ -14,7 +13,8 @@ public class ShowTabAdapter extends FragmentPagerAdapter {
   private List<Fragment> tabFragments;
   private List<String> tabIndicators;
 
-  public ShowTabAdapter(FragmentManager fm, List<Fragment> tabFragments, List<String> tabIndicators) {
+  public ShowTabAdapter(FragmentManager fm, List<Fragment> tabFragments,
+      List<String> tabIndicators) {
     super(fm);
     this.tabFragments = tabFragments;
     this.tabIndicators = tabIndicators;

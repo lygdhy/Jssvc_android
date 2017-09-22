@@ -12,6 +12,9 @@ public class HttpUrlParams {
   public static final String URL_ORG_FEEDBACK = BASE_ORG_URL + "svu/feedback.php";// 意见反馈
   public static final String URL_USER_LOGIN = BASE_ORG_URL + "svu/user_login.php";// 账户登录
 
+  public static final String GET_ARTICLE_LIST = BASE_ORG_URL + "app/api/get_article_list.php";// 频道列表
+  public static final String GET_CHANNEL_LIST = BASE_ORG_URL + "app/api/get_channel_list.php";// 文章列表
+
   // 新书推荐
   // http://lib.jssvc.edu.cn/reading/newbooks/new.html
 

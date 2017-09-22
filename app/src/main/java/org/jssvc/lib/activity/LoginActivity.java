@@ -56,7 +56,7 @@ public class LoginActivity extends BaseActivity {
 
   // //0注册1找回密码
   private void goAccountReset(int code) {
-    Intent intent = new Intent(context, AccountPlatformManagerActivity.class);
+    Intent intent = new Intent(mContext, AccountPlatformManagerActivity.class);
     intent.putExtra(AccountPlatformManagerActivity.ARG_OPT_CODE, code);//0注册1找回密码
     startActivity(intent);
   }

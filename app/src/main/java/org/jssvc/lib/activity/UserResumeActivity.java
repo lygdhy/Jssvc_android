@@ -89,7 +89,7 @@ public class UserResumeActivity extends BaseActivity {
 
   // 生日
   private void showDatePickerDialog() {
-    DatePickerDialog dpd = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+    DatePickerDialog dpd = new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
       @Override
       public void onDateSet(DatePicker view, int myyear, int monthOfYear, int dayOfMonth) {
         year = myyear;
@@ -108,9 +108,9 @@ public class UserResumeActivity extends BaseActivity {
   final int tag_email = 4;
 
   private void showInputDialog(final int tag, String title, String hint, String value) {
-    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
     builder.setTitle("");
-    LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+    LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
     View layout = inflater.inflate(R.layout.dialog_normal_input_layout, null);
 
     TextView tvTitle = (TextView) layout.findViewById(R.id.title);

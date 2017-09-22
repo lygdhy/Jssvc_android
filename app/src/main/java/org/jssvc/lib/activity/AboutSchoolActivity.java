@@ -22,7 +22,7 @@ import org.jssvc.lib.fragment.LibYellowPagesFragment;
 public class AboutSchoolActivity extends BaseActivity {
 
   @BindView(R.id.indicator) BGAFixedIndicator mIndicator;
-  @BindView(R.id.viewPager) ViewPager viewPager;
+  @BindView(R.id.viewPager) ViewPager mViewPager;
 
   private List<String> mTitles;
   private List<Fragment> mFragments;
@@ -60,7 +60,7 @@ public class AboutSchoolActivity extends BaseActivity {
     mTitles.add("联系方式");
 
     showTabAdapter = new ShowTabAdapter(getSupportFragmentManager(), mFragments, mTitles);
-    viewPager.setAdapter(showTabAdapter);
-    mIndicator.initData(0, viewPager);
+    mViewPager.setAdapter(showTabAdapter);
+    mIndicator.initData(0, mViewPager);
   }
 }

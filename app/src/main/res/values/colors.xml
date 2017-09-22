@@ -10,6 +10,8 @@
   <color name="color_ui_head">#507aa3</color>
   <!-- 页面底色(背景色) -->
   <color name="color_ui_content">#f7f7f7</color>
+  <!--ActionBar 按钮图片颜色-->
+  <color name="color_drawable_tint">#fff</color>
 
   <!-- 文本颜色 -->
   <!--标题-->

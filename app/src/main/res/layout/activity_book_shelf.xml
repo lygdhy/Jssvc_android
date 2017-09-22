@@ -17,7 +17,7 @@
 
         <ImageView
             android:id="@+id/ivEdite"
-            style="@style/actionbar_right_style_base"
+            style="@style/actionbar_right_icon"
             android:src="@drawable/icon_collect_edite" />
         <View style="@style/item_split_horizontal"/>
     </RelativeLayout>

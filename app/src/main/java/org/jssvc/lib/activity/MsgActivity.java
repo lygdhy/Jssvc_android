@@ -71,16 +71,16 @@ public class MsgActivity extends BaseActivity {
         "http://www.jssvc.edu.cn/UploadFiles/20161226132646745.jpg", "校长办公室", "2016/12/27"));
 
     //创建默认的线性LayoutManager
-    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+    recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     recyclerView.setHasFixedSize(true);
     recyclerView.addItemDecoration(
-        new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST));
-    msgAdapter = new MsgAdapter(context, msgList);
+        new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
+    msgAdapter = new MsgAdapter(mContext, msgList);
     recyclerView.setAdapter(msgAdapter);
 
     msgAdapter.setOnItemClickListener(new MsgAdapter.OnRecyclerViewItemClickListener() {
       @Override public void onItemClick(View view, MsgBean item) {
-        Intent intent = new Intent(context, MsgBrowseActivity.class);
+        Intent intent = new Intent(mContext, MsgBrowseActivity.class);
         intent.putExtra("item", (Serializable) item);
         startActivity(intent);
       }

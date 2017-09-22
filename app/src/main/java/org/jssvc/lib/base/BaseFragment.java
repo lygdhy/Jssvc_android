@@ -11,11 +11,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.lzy.okgo.model.Response;
-import org.jssvc.lib.view.pDialog.XProgressDialog;
 
 /**
  * 基类Fragment
@@ -23,12 +21,9 @@ import org.jssvc.lib.view.pDialog.XProgressDialog;
 
 public abstract class BaseFragment extends Fragment {
 
-  private Toast toast = null;//全局Toast
-  private XProgressDialog progressDialog = null;//全局ProgressDialog
-
   private Unbinder unbinder;
 
-  protected Context context;
+  protected Context mContext;
   protected BaseActivity mActivity;
 
   protected abstract int getContentViewId();
@@ -44,7 +39,7 @@ public abstract class BaseFragment extends Fragment {
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(getContentViewId(), container, false);
     unbinder = ButterKnife.bind(this, view);//绑定fragment
-    this.context = getActivity();
+    this.mContext = getActivity();
     initView();
     return view;
   }

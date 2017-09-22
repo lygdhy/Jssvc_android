@@ -41,10 +41,10 @@ public class HistoryBorrowActivity extends BaseActivity {
   @Override protected void initView() {
     rlEmpty.setVisibility(View.GONE);
 
-    if (AccountPref.isLogon(context)) {
+    if (AccountPref.isLogon(mContext)) {
       loadBookList();
     } else {
-      startActivity(new Intent(context, LoginActivity.class));
+      startActivity(new Intent(mContext, LoginActivity.class));
       finish();
     }
   }
@@ -113,18 +113,18 @@ public class HistoryBorrowActivity extends BaseActivity {
 
   private void loadList(List<BookReadingBean> bookList) {
     //创建默认的线性LayoutManager
-    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+    recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
     recyclerView.setHasFixedSize(true);
     //创建并设置Adapter
-    bookReturnAdapter = new BookReturnAdapter(context, bookList);
+    bookReturnAdapter = new BookReturnAdapter(mContext, bookList);
     recyclerView.setAdapter(bookReturnAdapter);
 
     bookReturnAdapter.setOnItemClickListener(
         new BookReturnAdapter.OnRecyclerViewItemClickListener() {
           @Override public void onItemClick(View view, BookReadingBean item) {
             if (!TextUtils.isEmpty(item.getDetialUrl())) {
-              Intent intent = new Intent(context, BookDetailsActivity.class);
+              Intent intent = new Intent(mContext, BookDetailsActivity.class);
               intent.putExtra("title", item.getBookName());
               intent.putExtra("url", item.getDetialUrl());
               startActivity(intent);

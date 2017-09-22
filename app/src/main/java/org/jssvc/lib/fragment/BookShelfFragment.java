@@ -109,20 +109,20 @@ public class BookShelfFragment extends BaseFragment {
 
   private void loadBookList(List<BookShelfListBean> bookList) {
     //创建默认的线性LayoutManager
-    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+    recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
     recyclerView.setHasFixedSize(true);
     //解决滑动冲突
     recyclerView.setNestedScrollingEnabled(false);
     //创建并设置Adapter
-    bookShelfListAdapter = new BookShelfListAdapter(context, bookList);
+    bookShelfListAdapter = new BookShelfListAdapter(mContext, bookList);
     recyclerView.setAdapter(bookShelfListAdapter);
 
     bookShelfListAdapter.setOnItemClickListener(new BookShelfListAdapter.IMyViewHolderClicks() {
       @Override public void onItemClick(View view, BookShelfListBean item) {
         // 查看详情
         if (!TextUtils.isEmpty(item.getUrl())) {
-          Intent intent = new Intent(context, BookDetailsActivity.class);
+          Intent intent = new Intent(mContext, BookDetailsActivity.class);
           intent.putExtra("title", item.getName());
           intent.putExtra("url", item.getUrl());
           startActivity(intent);
@@ -142,7 +142,7 @@ public class BookShelfFragment extends BaseFragment {
 
   // 删除书架
   public void deleteAlertDialog(final String classid, final String bookcode) {
-    CustomDialog.Builder builder = new CustomDialog.Builder(context);
+    CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
     builder.setTitle("提示");
     builder.setMessage("确认要从书架中删除吗?");
     builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
@@ -208,7 +208,7 @@ public class BookShelfFragment extends BaseFragment {
 
   // 删除结果显示
   public void showAlertDialog(final String str) {
-    CustomDialog.Builder builder = new CustomDialog.Builder(context);
+    CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
     builder.setTitle("提示");
     builder.setMessage(Html.fromHtml(str) + "");
     builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {

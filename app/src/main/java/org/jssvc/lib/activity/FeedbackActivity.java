@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
@@ -25,11 +24,9 @@ import org.jssvc.lib.view.CustomDialog;
  */
 public class FeedbackActivity extends BaseActivity {
 
-  @BindView(R.id.tvBack) TextView tvBack;
   @BindView(R.id.edtFeed) EditText edtFeed;
   @BindView(R.id.edtEmail) EditText edtEmail;
   @BindView(R.id.btnSubFeed) Button btnSubFeed;
-  @BindView(R.id.tvChat) TextView tvChat;
 
   @Override protected int getContentViewId() {
     return R.layout.activity_feedback;
@@ -39,9 +36,9 @@ public class FeedbackActivity extends BaseActivity {
 
   }
 
-  @OnClick({ R.id.tvBack, R.id.btnSubFeed, R.id.tvChat }) public void onClick(View view) {
+  @OnClick({ R.id.opt_back, R.id.btnSubFeed, R.id.opt_chat }) public void onClick(View view) {
     switch (view.getId()) {
-      case R.id.tvBack:
+      case R.id.opt_back:
         finish();
         break;
       case R.id.btnSubFeed:
@@ -55,7 +52,7 @@ public class FeedbackActivity extends BaseActivity {
           submintFeedback(feedStr, emailStr);
         }
         break;
-      case R.id.tvChat:
+      case R.id.opt_chat:
         callQQCell("2906501168");
         break;
     }
@@ -67,7 +64,7 @@ public class FeedbackActivity extends BaseActivity {
 
     OkGo.<String>post(HttpUrlParams.URL_ORG_FEEDBACK).tag(this)
         .params("time", df.format(new Date()))
-        .params("userid", AccountPref.getLogonAccoundNumber(context))
+        .params("userid", AccountPref.getLogonAccoundNumber(mContext))
         .params("advice", feedStr)
         .params("email", trim + "")
         .execute(new StringCallback() {
@@ -94,7 +91,7 @@ public class FeedbackActivity extends BaseActivity {
     //OkGo.post(HttpUrlParams.URL_ORG_FEEDBACK)
     //    .tag(this)
     //    .params("time", df.format(new Date()))
-    //    .params("userid", AccountPref.getLogonAccoundNumber(context))
+    //    .params("userid", AccountPref.getLogonAccoundNumber(mContext))
     //    .params("advice", feedStr)
     //    .params("email", trim + "")
     //    .execute(new StringCallback() {
@@ -113,7 +110,7 @@ public class FeedbackActivity extends BaseActivity {
 
   // 感谢
   private void thankDialog() {
-    CustomDialog.Builder builder = new CustomDialog.Builder(context);
+    CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
     builder.setTitle("提示");
     builder.setMessage("感谢您提出的宝贵意见！");
     builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {

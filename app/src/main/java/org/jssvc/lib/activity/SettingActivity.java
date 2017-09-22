@@ -50,7 +50,7 @@ public class SettingActivity extends BaseActivity {
 
   @Override public void onResume() {
     super.onResume();
-    if (AccountPref.isLogon(context)) {
+    if (AccountPref.isLogon(mContext)) {
       // 用户名和密码都在
       rlExit.setVisibility(View.VISIBLE);
 
@@ -61,7 +61,7 @@ public class SettingActivity extends BaseActivity {
   }
 
   private void loadUserInfo() {
-    User user = AccountPref.getLogonUser(context);
+    User user = AccountPref.getLogonUser(mContext);
     if (user == null || TextUtils.isEmpty(user.getUserid())) {
       getUserInfoByNet();
     } else {
@@ -95,18 +95,18 @@ public class SettingActivity extends BaseActivity {
         break;
       case R.id.rl_feedback:
         // 意见反馈
-        startActivity(new Intent(context, FeedbackActivity.class));
+        startActivity(new Intent(mContext, FeedbackActivity.class));
         break;
       case R.id.rl_about:
         // 关于我们
-        startActivity(new Intent(context, AboutActivity.class));
+        startActivity(new Intent(mContext, AboutActivity.class));
         break;
       //case R.id.rlMine:
       //  // 证件信息=============================
-      //  if (AccountPref.isLogon(context)) {
-      //    startActivity(new Intent(context, CardInfoActivity.class));
+      //  if (AccountPref.isLogon(mContext)) {
+      //    startActivity(new Intent(mContext, CardInfoActivity.class));
       //  } else {
-      //    startActivity(new Intent(context, LoginActivity.class));
+      //    startActivity(new Intent(mContext, LoginActivity.class));
       //  }
       //  break;
       case R.id.rl_appraise:
@@ -114,22 +114,22 @@ public class SettingActivity extends BaseActivity {
         break;
       case R.id.rl_invitation:
         // 邀请好友使用
-        startActivity(new Intent(context, ShareActivity.class));
+        startActivity(new Intent(mContext, ShareActivity.class));
         break;
       case R.id.rl_app:
         // 精品应用推荐
         break;
       case R.id.rl_exit:
         // 注销
-        //if (AccountPref.isLogon(context)) {
-        //  AccountPref.removeLogonAccoundPwd(context);
-        //  AccountPref.removeLogonUser(context);
+        //if (AccountPref.isLogon(mContext)) {
+        //  AccountPref.removeLogonAccoundPwd(mContext);
+        //  AccountPref.removeLogonUser(mContext);
         //  rlExit.setVisibility(View.GONE);
         //
         //  // 账号统计
         //  MobclickAgent.onProfileSignOff();
         //}
-        startActivity(new Intent(context, LoginActivity.class));
+        startActivity(new Intent(mContext, LoginActivity.class));
         break;
     }
   }
@@ -174,7 +174,7 @@ public class SettingActivity extends BaseActivity {
   private void parseHtml(String s) {
     User user = HtmlParseUtils.getUserInfo(s);
     if (user != null && !TextUtils.isEmpty(user.getUserid())) {
-      AccountPref.saveLogonUser(context, user);
+      AccountPref.saveLogonUser(mContext, user);
       loadUserInfo2UI(user);
     } else {
       showToast("解析失败");
@@ -199,7 +199,7 @@ public class SettingActivity extends BaseActivity {
   private void findNewVer(String result) {
     final AppBean appBean = getAppBeanFromString(result);
 
-    CustomDialog.Builder builder = new CustomDialog.Builder(context);
+    CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
     builder.setTitle("更新");
     builder.setMessage(appBean.getReleaseNote());
     builder.setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
@@ -222,14 +222,14 @@ public class SettingActivity extends BaseActivity {
       @Override public void onUpdateAvailable(String result) {
         if (tvVersion != null) {
           tvVersion.setText("发现新版本");
-          tvVersion.setTextColor(ContextCompat.getColor(context, R.color.color_text_warn));
+          tvVersion.setTextColor(ContextCompat.getColor(mContext, R.color.color_text_warn));
         }
       }
 
       @Override public void onNoUpdateAvailable() {
         if (tvVersion != null) {
           tvVersion.setText("已经是最新版");
-          tvVersion.setTextColor(ContextCompat.getColor(context, R.color.color_text_hint));
+          tvVersion.setTextColor(ContextCompat.getColor(mContext, R.color.color_text_hint));
         }
       }
     });
@@ -247,7 +247,7 @@ public class SettingActivity extends BaseActivity {
   private void setCurrentRubbish() {
     String sizeStr = "0.0M";
     try {
-      sizeStr = DataCleanManager.getTotalCacheSize(getApplicationContext());
+      sizeStr = DataCleanManager.getTotalCacheSize(mContext);
       tvCache.setHint(sizeStr);
     } catch (Exception e) {
       e.printStackTrace();
@@ -256,14 +256,14 @@ public class SettingActivity extends BaseActivity {
 
   // 清空缓存dialog
   public void clearAlertDialog() {
-    CustomDialog.Builder builder = new CustomDialog.Builder(context);
+    CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
     builder.setTitle("提示");
     builder.setMessage("确定要清除缓存吗？");
     builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
       public void onClick(final DialogInterface dialog, int which) {
         dialog.dismiss();
 
-        DataCleanManager.clearAllCache(getApplicationContext());
+        DataCleanManager.clearAllCache(mContext);
         showToast("清理中...");
         Handler x = new Handler();
         x.postDelayed(new splashhandler(), 3000);

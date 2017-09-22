@@ -9,7 +9,7 @@
   <RelativeLayout style="@style/actionbar_whole_style_base">
 
     <TextView
-        android:id="@+id/tvBack"
+        android:id="@+id/tv_back"
         style="@style/actionbar_left_style_base"
         />
 
@@ -19,9 +19,9 @@
         />
 
     <ImageView
-        android:id="@+id/tvCollect"
+        android:id="@+id/tv_collect"
         android:src="@drawable/icon_collect_on"
-        style="@style/actionbar_right_style_base"
+        style="@style/actionbar_right_icon"
         />
     <View style="@style/item_split_horizontal"/>
   </RelativeLayout>
@@ -41,14 +41,14 @@
         >
 
       <ImageView
-          android:id="@+id/bookView"
+          android:id="@+id/iv_book_cover"
           android:layout_width="80dp"
           android:layout_height="120dp"
           android:src="@drawable/def_book_cover"
           />
 
       <TextView
-          android:id="@+id/tvBookName"
+          android:id="@+id/tv_book_title"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:ellipsize="end"
@@ -72,7 +72,7 @@
         />
 
     <android.support.design.widget.TabLayout
-        android:id="@+id/tabLayout"
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:tabBackground="@android:color/white"
@@ -91,7 +91,7 @@
         />
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />

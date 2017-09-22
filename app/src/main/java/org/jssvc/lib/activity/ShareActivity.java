@@ -2,8 +2,6 @@ package org.jssvc.lib.activity;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.TextView;
-import butterknife.BindView;
 import butterknife.OnClick;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
@@ -13,9 +11,6 @@ import org.jssvc.lib.base.BaseActivity;
  */
 public class ShareActivity extends BaseActivity {
 
-  @BindView(R.id.tvBack) TextView tvBack;
-  @BindView(R.id.tvShare) TextView tvShare;
-
   @Override protected int getContentViewId() {
     return R.layout.activity_share;
   }
@@ -24,12 +19,12 @@ public class ShareActivity extends BaseActivity {
 
   }
 
-  @OnClick({ R.id.tvBack, R.id.tvShare }) public void onClick(View view) {
+  @OnClick({ R.id.opt_back, R.id.opt_share }) public void onClick(View view) {
     switch (view.getId()) {
-      case R.id.tvBack:
-        finish();
+      case R.id.opt_back:
+          finish();
         break;
-      case R.id.tvShare:
+      case R.id.opt_share:
         Intent share_intent = new Intent();
         share_intent.setAction(Intent.ACTION_SEND);//设置分享行为
         share_intent.setType("text/plain");//设置分享内容的类型

@@ -74,8 +74,8 @@ public class LibAccountBoundFragment extends BaseFragment {
           showToast("登录信息不能为空");
         } else {
 
-          AccountPref.saveLoginAccoundNumber(context, loginname);
-          AccountPref.saveLoginType(context, currentLoginType.getId());
+          AccountPref.saveLoginAccoundNumber(mContext, loginname);
+          AccountPref.saveLoginType(mContext, currentLoginType.getId());
 
           OkGo.<String>post(HttpUrlParams.URL_LIB_LOGIN).tag(this)
               .params("number", loginname)
@@ -130,10 +130,10 @@ public class LibAccountBoundFragment extends BaseFragment {
     String errorMsg = HtmlParseUtils.getErrMsgOnLogin(s);
     if (TextUtils.isEmpty(errorMsg)) {
       // 保存密码
-      AccountPref.saveLoginAccoundPwd(context, loginpwd);
+      AccountPref.saveLoginAccoundPwd(mContext, loginpwd);
       // 账号统计
-      MobclickAgent.onProfileSignIn(AccountPref.getLogonType(context).toUpperCase(),
-          AccountPref.getLogonAccoundNumber(context));
+      MobclickAgent.onProfileSignIn(AccountPref.getLogonType(mContext).toUpperCase(),
+          AccountPref.getLogonAccoundNumber(mContext));
       // 登录成功
       showToast("===绑定成功===");
       getActivity().finish();
@@ -145,7 +145,7 @@ public class LibAccountBoundFragment extends BaseFragment {
         activity.accountActivateFragment();
       } else {
         showToast(errorMsg);
-        AccountPref.removeLogonAccoundPwd(context);
+        AccountPref.removeLogonAccoundPwd(mContext);
       }
     }
   }
@@ -174,7 +174,7 @@ public class LibAccountBoundFragment extends BaseFragment {
 
   // 登录方式选择 code 0院校  1登录方式
   private void showSelecterDialog(final int code) {
-    final AlertDialog dlg = new AlertDialog.Builder(context).create();
+    final AlertDialog dlg = new AlertDialog.Builder(mContext).create();
     dlg.show();
     dlg.getWindow()
         .clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
@@ -200,11 +200,11 @@ public class LibAccountBoundFragment extends BaseFragment {
     DialogListSelecterAdapter selecterAdapter;
     RecyclerView recyclerView = (RecyclerView) window.findViewById(R.id.recyclerView);
 
-    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+    recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     recyclerView.setHasFixedSize(true);
     recyclerView.addItemDecoration(
-        new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST));
-    selecterAdapter = new DialogListSelecterAdapter(context, tempList);
+        new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
+    selecterAdapter = new DialogListSelecterAdapter(mContext, tempList);
     recyclerView.setAdapter(selecterAdapter);
 
     selecterAdapter.setOnItemClickListener(new DialogListSelecterAdapter.IMyViewHolderClicks() {

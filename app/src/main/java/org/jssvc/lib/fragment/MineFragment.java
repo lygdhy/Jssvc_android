@@ -44,7 +44,7 @@ public class MineFragment extends BaseFragment {
     switch (view.getId()) {
       case R.id.ll_user:
         // 登录/查看详情
-        startActivity(new Intent(context, UserResumeActivity.class));
+        startActivity(new Intent(mContext, UserResumeActivity.class));
         break;
       case R.id.rl_borrow:
         // 我的借阅
@@ -57,15 +57,15 @@ public class MineFragment extends BaseFragment {
         break;
       case R.id.rl_account:
         // 第三方账户绑定
-        startActivity(new Intent(context, AccountThirdManagerActivity.class));
+        startActivity(new Intent(mContext, AccountThirdManagerActivity.class));
         break;
       case R.id.rl_about_lib:
         // 关于图书馆
-        startActivity(new Intent(context, AboutSchoolActivity.class));
+        startActivity(new Intent(mContext, AboutSchoolActivity.class));
         break;
       case R.id.rl_setting:
         // 设置
-        startActivity(new Intent(context, SettingActivity.class));
+        startActivity(new Intent(mContext, SettingActivity.class));
         break;
     }
   }
