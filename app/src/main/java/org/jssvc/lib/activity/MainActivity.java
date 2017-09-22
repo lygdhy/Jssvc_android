@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.fragment.BookSearchFragment;
 import org.jssvc.lib.fragment.DiscussFragment;
 import org.jssvc.lib.fragment.HomeFragment;
 import org.jssvc.lib.fragment.MineFragment;
+import org.jssvc.lib.fragment.ReadingHubFragment;
 
 /**
  * 主程序
@@ -45,15 +45,15 @@ public class MainActivity extends BaseActivity {
     //将fragment装进列表中
     tabFragments = new ArrayList<>();
     tabFragments.add(new HomeFragment());
-    tabFragments.add(new BookSearchFragment());
+    tabFragments.add(new ReadingHubFragment());
     tabFragments.add(new DiscussFragment());
     tabFragments.add(new MineFragment());
 
     //将名称加载tab名字列表
     tabIndicators = new ArrayList<>();
     tabIndicators.add("首页");
-    tabIndicators.add("搜书");
-    tabIndicators.add("交流");
+    tabIndicators.add("阅读");
+    tabIndicators.add("泡泡");
     tabIndicators.add("我的");
 
     tabPics = new ArrayList<>();

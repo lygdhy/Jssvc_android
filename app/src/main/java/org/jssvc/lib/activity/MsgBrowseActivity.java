@@ -7,7 +7,6 @@ import butterknife.OnClick;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.bean.MsgBean;
 
 /**
  * 新闻详情
@@ -21,7 +20,7 @@ public class MsgBrowseActivity extends BaseActivity {
   }
 
   @Override protected void initView() {
-    MsgBean item = (MsgBean) getIntent().getSerializableExtra("item");
+    //MsgBean item = (MsgBean) getIntent().getSerializableExtra("item");
   }
 
   @OnClick({ R.id.tvBack }) public void onClick(View view) {
