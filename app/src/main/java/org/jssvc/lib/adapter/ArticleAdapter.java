@@ -1,11 +1,13 @@
 package org.jssvc.lib.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
-import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
+
 import org.jssvc.lib.R;
 import org.jssvc.lib.bean.ArticleListBean;
 import org.jssvc.lib.utils.ImageLoader;
+
+import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
+import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 
 /**
  * Created by lygdh on 2016/11/14.
@@ -14,7 +16,7 @@ import org.jssvc.lib.utils.ImageLoader;
 public class ArticleAdapter extends BGARecyclerViewAdapter<ArticleListBean> {
 
   public ArticleAdapter(RecyclerView recyclerView) {
-    super(recyclerView, R.layout.item_msg);
+    super(recyclerView, R.layout.item_article);
   }
 
   @Override

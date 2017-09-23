@@ -3,16 +3,19 @@ package org.jssvc.lib.activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.widget.ImageView;
-import butterknife.BindView;
+
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.umeng.analytics.MobclickAgent;
+
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.ImageLoader;
+
+import butterknife.BindView;
 import qiu.niorgai.StatusBarCompat;
 
 /**
@@ -34,7 +37,7 @@ public class SplashActivity extends BaseActivity {
     ImageLoader.with(mContext, mImageView, picPath);
 
     Handler handler = new Handler();
-    handler.postDelayed(new splashhandler(), 3000);//静态启动页
+    handler.postDelayed(new splashhandler(), 1000);//静态启动页
   }
 
   /**
