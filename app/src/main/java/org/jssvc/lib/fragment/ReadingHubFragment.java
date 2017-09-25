@@ -44,7 +44,7 @@ public class ReadingHubFragment extends BaseFragment {
 
   // 获取频道类型
   private void getChannelList() {
-    OkGo.<String>post(HttpUrlParams.GET_CHANNEL_LIST).tag(this).execute(new StringCallback() {
+    OkGo.<String>get(HttpUrlParams.GET_CHANNEL_LIST).tag(this).execute(new StringCallback() {
       @Override public void onSuccess(Response<String> response) {
         List<ChannelBean> channelList = new ArrayList<>();
         try {
