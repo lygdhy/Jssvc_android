@@ -192,6 +192,23 @@
     <item name="android:lines">1</item>
   </style>
 
+  <!--EditText-->
+  <style name="style_search_edit_text" parent="style_text_body">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">30dp</item>
+    <item name="android:layout_centerInParent">true</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:textColor">@color/color_text_content</item>
+    <item name="android:textColorHint">@color/color_text_hint</item>
+    <item name="android:textSize">12sp</item>
+    <item name="android:background">@drawable/bg_white_circle_15</item>
+    <item name="android:drawableLeft">@drawable/icon_search_white</item>
+    <item name="android:drawablePadding">3dp</item>
+    <item name="android:paddingLeft">15dp</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:lines">1</item>
+  </style>
+
   <!--Button base-->
   <style name="style_button_base">
     <item name="android:layout_width">match_parent</item>

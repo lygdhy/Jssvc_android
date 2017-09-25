@@ -52,9 +52,8 @@ import org.jssvc.lib.view.DividerItemDecoration;
 public class BookSearchActivity extends BaseActivity
     implements BGARefreshLayout.BGARefreshLayoutDelegate {
 
-  @BindView(R.id.tv_back) TextView tvBack;
-  @BindView(R.id.tv_type) TextView tvType;
-  @BindView(R.id.edt_key) EditText edtKey;
+  @BindView(R.id.tv_category) TextView tvCategory;
+  @BindView(R.id.edt_input) EditText edtInput;
   @BindView(R.id.iv_search) ImageView ivSearch;
   @BindView(R.id.rl_empty) RelativeLayout rlEmpty;
 
@@ -95,11 +94,11 @@ public class BookSearchActivity extends BaseActivity
     // 初始化搜索类型
     initSearchType();
 
-    edtKey.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+    edtInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
       public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEND || (event != null
             && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-          searchText = edtKey.getText().toString().trim();
+          searchText = edtInput.getText().toString().trim();
           if (!TextUtils.isEmpty(searchText)) {
             saveKey2Local(searchText);
             searchBookEngine(true);
@@ -110,7 +109,7 @@ public class BookSearchActivity extends BaseActivity
       }
     });
 
-    edtKey.addTextChangedListener(new TextWatcher() {
+    edtInput.addTextChangedListener(new TextWatcher() {
       @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
       }
@@ -145,7 +144,7 @@ public class BookSearchActivity extends BaseActivity
           @Override public void onItemClick(View view, String item) {
             if (!TextUtils.isEmpty(item)) {
               searchText = item;
-              edtKey.setText(item);
+              edtInput.setText(item);
               saveKey2Local(searchText);
               searchBookEngine(true);
             }
@@ -175,17 +174,17 @@ public class BookSearchActivity extends BaseActivity
 
   // 初始化搜索类型
   private void initSearchType() {
-    searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "title", "题名", ""));
-    searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "author", "责任者", ""));
-    searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "keyword", "主题词", ""));
-    searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "isbn", "ISBN/ISSN", ""));
-    searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "callno", "索书号", ""));
-    searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "publisher", "出版社", ""));
+    searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "title", "题名", ""));//1275
+    searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "keyword", "主题", ""));//216
+    searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "author", "作者", ""));//96
+    //searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "isbn", "ISBN/ISSN", ""));
+    //searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "callno", "索书号", ""));
+    //searchTypeList.add(new ListSelecterBean(R.drawable.icon_type, "publisher", "出版社", ""));
 
     // 默认选择第一个项目
     currentSearchType = searchTypeList.get(0);
-    tvType.setText(currentSearchType.getTitle());
-    edtKey.setHint("请输入" + currentSearchType.getTitle());
+    tvCategory.setText(currentSearchType.getTitle());
+    edtInput.setHint("请输入" + currentSearchType.getTitle());
   }
 
   private void initRefreshLayout() {
@@ -198,19 +197,19 @@ public class BookSearchActivity extends BaseActivity
     mRefreshLayout.setRefreshViewHolder(moocStyleRefreshViewHolder);
   }
 
-  @OnClick({ R.id.tv_back, R.id.tv_type, R.id.iv_search, R.id.tv_delete_his })
+  @OnClick({ R.id.tv_cancel, R.id.tv_category, R.id.iv_search, R.id.tv_delete_his })
   public void onClick(View view) {
     switch (view.getId()) {
-      case R.id.tv_back:
+      case R.id.tv_cancel:
         finish();
         break;
-      case R.id.tv_type:
+      case R.id.tv_category:
         // 类型选择
         showTypeDialog();
         break;
       case R.id.iv_search:
         // 搜索
-        searchText = edtKey.getText().toString().trim();
+        searchText = edtInput.getText().toString().trim();
         if (!TextUtils.isEmpty(searchText)) {
           saveKey2Local(searchText);
           searchBookEngine(true);
@@ -386,8 +385,8 @@ public class BookSearchActivity extends BaseActivity
     selecterAdapter.setOnItemClickListener(new DialogListSelecterAdapter.IMyViewHolderClicks() {
       @Override public void onItemClick(View view, ListSelecterBean item) {
         currentSearchType = item;
-        tvType.setText(currentSearchType.getTitle());
-        edtKey.setHint("请输入" + currentSearchType.getTitle());
+        tvCategory.setText(currentSearchType.getTitle());
+        edtInput.setHint("请输入" + currentSearchType.getTitle());
         dlg.dismiss();
       }
     });

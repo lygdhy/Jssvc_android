@@ -2,12 +2,14 @@ package org.jssvc.lib.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
@@ -41,6 +43,8 @@ import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.ImageLoader;
 import org.jssvc.lib.view.DividerItemDecoration;
 
+import static org.jssvc.lib.R.id.convenientBanner;
+
 /**
  * <pre>
  *     author : TOC_010
@@ -50,8 +54,10 @@ import org.jssvc.lib.view.DividerItemDecoration;
  * </pre>
  */
 public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListener {
+  @BindView(R.id.top_def_layout) RelativeLayout topDefLayout;
+  @BindView(R.id.nested_scroll_view) NestedScrollView mNestedScrollView;
   @BindView(R.id.menu_recyclerView) RecyclerView mRecyclerView;
-  @BindView(R.id.convenientBanner) ConvenientBanner convenientBanner;
+  @BindView(convenientBanner) ConvenientBanner mBanner;
 
   @BindView(R.id.new_recyclerView) RecyclerView articleRecyclerView;
   ArticleAdapter articleAdapter;
@@ -65,20 +71,42 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
   }
 
   @Override protected void initView() {
-    // 加载菜单
-    menuList.clear();
-    menuList.add(new MenuBean(1, "帮助指南", R.drawable.icon_menu_a));
-    menuList.add(new MenuBean(2, "催还续借", R.drawable.icon_menu_b));
-    menuList.add(new MenuBean(3, "新闻资讯", R.drawable.icon_menu_c));
-    menuList.add(new MenuBean(4, "关于我们", R.drawable.icon_menu_d));
 
+    initAdapter();
+
+    initMenu();// 加载菜单
+
+    getAdsList();// 获取Banner
+
+    getArticleList();// 获取文章列表
+
+    // 滑动监听
+    mNestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+      @Override
+      public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX,
+          int oldScrollY) {
+        int difHight = mBanner.getHeight() - topDefLayout.getHeight();
+        if (scrollY == 0) {
+          topDefLayout.setBackgroundResource(R.drawable.bg_home_captain);
+          topDefLayout.setAlpha(1f);
+        } else {
+          float alpha = (float) scrollY / difHight;
+          topDefLayout.setBackgroundResource(R.color.color_ui_head);
+          topDefLayout.setAlpha(alpha);
+        }
+      }
+    });
+  }
+
+  private void initAdapter() {
+    // 首页菜单
     mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
     mRecyclerView.setNestedScrollingEnabled(false);
     menuAdapter = new MenuAdapter(mRecyclerView);
     menuAdapter.setOnRVItemClickListener(this);
     mRecyclerView.setAdapter(menuAdapter);
-    menuAdapter.setData(menuList);
 
+    // 首页新闻Adapter
     articleRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     articleRecyclerView.setNestedScrollingEnabled(false);
     articleRecyclerView.addItemDecoration(
@@ -86,10 +114,17 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
     articleAdapter = new ArticleAdapter(articleRecyclerView);
     articleAdapter.setOnRVItemClickListener(this);
     articleRecyclerView.setAdapter(articleAdapter);
+  }
 
-    getAdsList();// 获取Banner
+  // 初始化菜单
+  private void initMenu() {
+    menuList.clear();
+    menuList.add(new MenuBean(1, "帮助指南", R.drawable.icon_menu_a));
+    menuList.add(new MenuBean(2, "催还续借", R.drawable.icon_menu_b));
+    menuList.add(new MenuBean(3, "新闻资讯", R.drawable.icon_menu_c));
+    menuList.add(new MenuBean(4, "关于我们", R.drawable.icon_menu_d));
 
-    getArticleList();// 获取文章列表
+    menuAdapter.setData(menuList);
   }
 
   @Override public void onRVItemClick(ViewGroup parent, View itemView, int position) {
@@ -126,14 +161,13 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
   }
 
   @OnClick({
-      R.id.tip_layout, R.id.tv_search_bar
+      R.id.tip_layout, R.id.edt_search
   }) public void onClick(View view) {
     switch (view.getId()) {
       case R.id.tip_layout:
         break;
-      case R.id.tv_search_bar:
-        // 图书搜索
-        startActivity(new Intent(mContext, BookSearchActivity.class));
+      case R.id.edt_search:
+        startActivity(new Intent(mContext, BookSearchActivity.class));// 图书搜索
         break;
     }
   }
@@ -142,7 +176,7 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
   private void getArticleList() {
     OkGo.<String>get(HttpUrlParams.GET_ARTICLE_LIST).tag(this)
         .params("page", "1")
-        .params("pagesize", "3")
+        .params("pagesize", "10")
         .execute(new StringCallback() {
           @Override public void onSuccess(Response<String> response) {
             articleList.clear();
@@ -211,7 +245,7 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
     }
 
     //自定义你的Holder，实现更多复杂的界面，不一定是图片翻页，其他任何控件翻页亦可。
-    convenientBanner.setPages(new CBViewHolderCreator<LocalImageHolderView>() {
+    mBanner.setPages(new CBViewHolderCreator<LocalImageHolderView>() {
       @Override public LocalImageHolderView createHolder() {
         return new LocalImageHolderView();
       }
@@ -223,7 +257,7 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
         .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
     //设置翻页的效果，不需要翻页效果可用不设
     //.setPageTransformer(Transformer.DefaultTransformer);    集成特效之后会有白屏现象，新版已经分离，如果要集成特效的例子可以看Demo的点击响应。
-    // convenientBanner.setManualPageable(false);//设置不能手动影响
+    // mBanner.setManualPageable(false);//设置不能手动影响
   }
 
   public class LocalImageHolderView implements Holder<AdsBean> {
@@ -247,11 +281,11 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
 
   @Override public void onResume() {
     super.onResume();
-    convenientBanner.startTurning(5000);
+    mBanner.startTurning(5000);
   }
 
   @Override public void onPause() {
     super.onPause();
-    convenientBanner.stopTurning();
+    mBanner.stopTurning();
   }
 }
