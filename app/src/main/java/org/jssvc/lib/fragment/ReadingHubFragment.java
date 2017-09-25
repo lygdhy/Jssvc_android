@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-
+import butterknife.BindView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
-import com.lzy.okgo.request.base.Request;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,11 +19,6 @@ import org.jssvc.lib.adapter.ShowTabAdapter;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.ChannelBean;
 import org.jssvc.lib.data.HttpUrlParams;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
 
 /**
  * <pre>
@@ -35,44 +30,17 @@ import butterknife.BindView;
  */
 public class ReadingHubFragment extends BaseFragment {
 
-    @BindView(R.id.tab_layout)
-    TabLayout tabLayout;
-    @BindView(R.id.view_pager)
-    ViewPager viewPager;
+  @BindView(R.id.tab_layout) TabLayout tabLayout;
+  @BindView(R.id.view_pager) ViewPager viewPager;
 
-    @Override
-    protected int getContentViewId() {
-        return R.layout.fragment_reading_hub;
-    }
+  @Override protected int getContentViewId() {
+    return R.layout.fragment_reading_hub;
+  }
 
-    @Override
-    protected void initView() {
-        getChannelList();
-    }
+  @Override protected void initView() {
+    getChannelList();
+  }
 
-    // 获取频道类型
-    private void getChannelList() {
-        OkGo.<String>get(HttpUrlParams.GET_CHANNEL_LIST).tag(this).execute(new StringCallback() {
-            @Override
-            public void onSuccess(Response<String> response) {
-                List<ChannelBean> channelList = new ArrayList<>();
-                try {
-                    JSONObject jsonObject = new JSONObject(response.body());
-                    if (jsonObject.optInt("code") == 200) {
-                        JSONArray jsonArray = jsonObject.optJSONArray("data");
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            ChannelBean item =
-                                    new Gson().fromJson(jsonArray.getJSONObject(i).toString(), ChannelBean.class);
-                            channelList.add(item);
-                        }
-                        loadData2UI(channelList);
-                    } else {
-                        showToast(jsonObject.optString("message"));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
   // 获取频道类型
   private void getChannelList() {
     OkGo.<String>get(HttpUrlParams.GET_CHANNEL_LIST).tag(this).execute(new StringCallback() {
@@ -95,51 +63,33 @@ public class ReadingHubFragment extends BaseFragment {
           e.printStackTrace();
         }
       }
+    });
+  }
 
-            @Override
-            public void onError(Response<String> response) {
-                super.onError(response);
-                dealNetError(response);
-            }
+  // 加载页面
+  private void loadData2UI(List<ChannelBean> channelList) {
+    if (channelList == null || channelList.size() == 0) {
+      return;
+    }
+    List<String> mTitles = new ArrayList<>();
+    List<Fragment> mFragments = new ArrayList<>();
 
-            @Override
-            public void onStart(Request<String, ? extends Request> request) {
-                super.onStart(request);
-                showProgressDialog();
-            }
+    for (int i = 0; i < channelList.size(); i++) {
+      mTitles.add(channelList.get(i).getPlatform());
+      tabLayout.addTab(tabLayout.newTab().setText(channelList.get(i).getPlatform()));
 
-            @Override
-            public void onFinish() {
-                super.onFinish();
-                dissmissProgressDialog();
-            }
-        });
+      ArticleListFragment fragment = new ArticleListFragment();
+      Bundle bundle = new Bundle();
+      bundle.putString("channel_id", channelList.get(i).getId());// category id
+      fragment.setArguments(bundle);
+      mFragments.add(fragment);
     }
 
-    // 加载页面
-    private void loadData2UI(List<ChannelBean> channelList) {
-        if (channelList == null || channelList.size() == 0) {
-            return;
-        }
-        List<String> mTitles = new ArrayList<>();
-        List<Fragment> mFragments = new ArrayList<>();
-
-        for (int i = 0; i < channelList.size(); i++) {
-            mTitles.add(channelList.get(i).getPlatform());
-            tabLayout.addTab(tabLayout.newTab().setText(channelList.get(i).getPlatform()));
-
-            ArticleListFragment fragment = new ArticleListFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("channel_id", channelList.get(i).getId());// category id
-            fragment.setArguments(bundle);
-            mFragments.add(fragment);
-        }
-
-        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        ShowTabAdapter showTabAdapter =
-                new ShowTabAdapter(getChildFragmentManager(), mFragments, mTitles);
-        viewPager.setAdapter(showTabAdapter);
-        viewPager.setOffscreenPageLimit(mTitles.size());
-        tabLayout.setupWithViewPager(viewPager);
-    }
+    tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+    ShowTabAdapter showTabAdapter =
+        new ShowTabAdapter(getChildFragmentManager(), mFragments, mTitles);
+    viewPager.setAdapter(showTabAdapter);
+    viewPager.setOffscreenPageLimit(mTitles.size());
+    tabLayout.setupWithViewPager(viewPager);
+  }
 }
