@@ -6,7 +6,8 @@
     android:background="@color/color_ui_content"
     android:orientation="vertical"
     >
-  <ScrollView
+  <android.support.v4.widget.NestedScrollView
+      android:id="@+id/nested_scroll_view"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:scrollbars="none"
@@ -37,20 +38,13 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="@android:color/white"
-          android:descendantFocusability="blocksDescendants"
           android:orientation="vertical"
           >
-        <View
-            style="@style/item_split_horizontal"
-            />
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/menu_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            />
-        <View
-            style="@style/item_split_horizontal"
             />
       </LinearLayout>
 
@@ -58,24 +52,16 @@
       <LinearLayout
           android:id="@+id/tip_layout"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="60dp"
           android:layout_marginTop="10dp"
           android:background="@android:color/white"
+          android:gravity="center"
           android:orientation="vertical"
           >
-        <View
-            style="@style/item_split_horizontal"
-            />
         <TextView
-            android:layout_margin="10dp"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:text="Tip部分，暂时隐藏"
+            android:text="plug-in"
             style="@style/style_text_body_light"
             />
-        <View
-            style="@style/item_split_horizontal"
-            />
       </LinearLayout>
 
       <!--模块-->
@@ -86,21 +72,15 @@
           android:background="@android:color/white"
           android:orientation="vertical"
           >
-        <View
-            style="@style/item_split_horizontal"
-            />
         <TextView
             android:layout_margin="10dp"
-            android:text="新书上架"
+            android:text="新闻资讯"
             style="@style/style_text_title"
             />
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/new_recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:orientation="vertical"
-            ></LinearLayout>
-        <View
-            style="@style/item_split_horizontal"
+            android:layout_height="wrap_content"
             />
       </LinearLayout>
 
@@ -111,6 +91,7 @@
           android:layout_marginTop="10dp"
           android:background="@android:color/white"
           android:orientation="vertical"
+          android:visibility="gone"
           >
         <View
             style="@style/item_split_horizontal"
@@ -137,6 +118,7 @@
           android:layout_marginTop="10dp"
           android:background="@android:color/white"
           android:orientation="vertical"
+          android:visibility="gone"
           >
         <View
             style="@style/item_split_horizontal"
@@ -156,38 +138,30 @@
             />
       </LinearLayout>
     </LinearLayout>
-  </ScrollView>
+  </android.support.v4.widget.NestedScrollView>
 
-  <LinearLayout
+  <FrameLayout
       android:background="@null"
       style="@style/actionbar_whole_style_base"
       >
-
     <RelativeLayout
         android:id="@+id/top_def_layout"
         android:background="@drawable/bg_home_captain"
         style="@style/actionbar_whole_style_base"
+        />
+    <RelativeLayout
+        android:background="@null"
+        style="@style/actionbar_whole_style_base"
         >
-
-      <TextView
-          android:id="@+id/tv_search_bar"
-          android:layout_width="match_parent"
-          android:layout_height="30dp"
-          android:layout_centerInParent="true"
+      <EditText
+          android:id="@+id/edt_search"
           android:layout_marginLeft="20dp"
           android:layout_marginRight="20dp"
-          android:background="@drawable/bg_white_circle_15"
-          android:drawableLeft="@drawable/icon_search_white"
-          android:drawablePadding="3dp"
-          android:ellipsize="end"
-          android:gravity="center_vertical"
-          android:lines="1"
-          android:paddingLeft="15dp"
-          android:text="书籍是人类进步的阶梯"
-          android:textColor="@color/color_text_hint"
-          android:textSize="12sp"
+          android:editable="false"
+          android:hint="书籍是人类进步的阶梯"
+          style="@style/style_search_edit_text"
           />
     </RelativeLayout>
 
-  </LinearLayout>
+  </FrameLayout>
 </FrameLayout>

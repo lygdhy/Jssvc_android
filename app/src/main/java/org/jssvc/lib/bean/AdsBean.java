@@ -7,57 +7,64 @@ import java.io.Serializable;
  */
 
 public class AdsBean implements Serializable {
-  private String uid;// 广告ID
-  private String type;// 广告类型
-  private String title;// 广告标题
-  private String pic;// 广告图片地址链接
-  private String url;// 跳转页面地址
+  private String id;
+  private String theme;
+  private String category;
+  private String banner;
+  private String extra1;
+  private String extra2;
 
-  public String getUid() {
-    return uid;
+  public String getId() {
+    return id;
   }
 
-  public void setUid(String uid) {
-    this.uid = uid;
+  public void setId(String id) {
+    this.id = id;
   }
 
-  public String getType() {
-    return type;
+  public String getTheme() {
+    return theme;
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void setTheme(String theme) {
+    this.theme = theme;
   }
 
-  public String getTitle() {
-    return title;
+  public String getCategory() {
+    return category;
   }
 
-  public void setTitle(String title) {
-    this.title = title;
+  public void setCategory(String category) {
+    this.category = category;
   }
 
-  public String getPic() {
-    return pic;
+  public String getBanner() {
+    return banner;
   }
 
-  public void setPic(String pic) {
-    this.pic = pic;
+  public void setBanner(String banner) {
+    this.banner = banner;
   }
 
-  public String getUrl() {
-    return url;
+  public String getExtra1() {
+    return extra1;
   }
 
-  public void setUrl(String url) {
-    this.url = url;
+  public void setExtra1(String extra1) {
+    this.extra1 = extra1;
   }
 
-  public AdsBean(String uid, String type, String title, String pic, String url) {
-    this.uid = uid;
-    this.type = type;
-    this.title = title;
-    this.pic = pic;
-    this.url = url;
+  public String getExtra2() {
+    return extra2;
+  }
+
+  public void setExtra2(String extra2) {
+    this.extra2 = extra2;
+  }
+
+  public AdsBean(String theme, String category, String banner) {
+    this.theme = theme;
+    this.category = category;
+    this.banner = banner;
   }
 }

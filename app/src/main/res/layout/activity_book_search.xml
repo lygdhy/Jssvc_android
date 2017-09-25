@@ -5,10 +5,48 @@
     android:orientation="vertical"
     >
 
+  <RelativeLayout
+      android:background="@color/color_ui_content"
+      style="@style/actionbar_whole_style_base"
+      >
+
+    <TextView
+        android:id="@+id/tv_category"
+        android:layout_height="match_parent"
+        android:drawablePadding="3dp"
+        android:drawableRight="@drawable/icon_footer_red"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="主题"
+        style="@style/style_text_body"
+        />
+
+    <EditText
+        android:id="@+id/edt_input"
+        android:layout_toLeftOf="@+id/tv_cancel"
+        android:layout_toRightOf="@+id/tv_category"
+        android:editable="true"
+        android:hint="请输入"
+        android:textSize="14sp"
+        style="@style/style_search_edit_text"
+        />
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="取消"
+        style="@style/style_text_body"
+        />
+  </RelativeLayout>
+
   <RelativeLayout style="@style/actionbar_whole_style_base">
 
     <TextView
-        android:id="@+id/tv_back"
+        android:id="@+id/tv_back2"
         style="@style/actionbar_left_style_base"
         />
 
@@ -30,7 +68,7 @@
       >
 
     <TextView
-        android:id="@+id/tv_type"
+        android:id="@+id/tv_type2"
         android:layout_width="60dp"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
@@ -44,12 +82,12 @@
     <View
         android:id="@+id/split"
         android:layout_margin="10dp"
-        android:layout_toRightOf="@+id/tv_type"
+        android:layout_toRightOf="@+id/tv_type2"
         style="@style/item_split_vertical"
         />
 
     <EditText
-        android:id="@+id/edt_key"
+        android:id="@+id/edt_key2"
         android:layout_toLeftOf="@+id/iv_search"
         android:layout_toRightOf="@+id/split"
         android:hint="请输入关键字"

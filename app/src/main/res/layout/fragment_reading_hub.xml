@@ -8,7 +8,7 @@
 
   <RelativeLayout style="@style/actionbar_whole_style_base">
     <TextView
-        android:text="资讯信息"
+        android:text="新闻资讯"
         style="@style/actionbar_title_style_base"
         />
   </RelativeLayout>

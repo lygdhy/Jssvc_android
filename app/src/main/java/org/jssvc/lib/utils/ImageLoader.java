@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import org.jssvc.lib.R;
 
 /**
  * <pre>
@@ -19,12 +18,12 @@ public class ImageLoader {
 
   public static void with(Context context, ImageView view, String url) {
     Uri uri = Uri.parse(url);
-    Glide.with(context)
-        .load(uri)
-        //.fitCenter().centerCrop()
+    Glide.with(context).load(uri)
+        //.fitCenter()
+        //.centerCrop()
         .diskCacheStrategy(DiskCacheStrategy.RESULT)
-        .placeholder(R.drawable.icon_loading)
-        .error(R.drawable.icon_loading_err)
+        //.placeholder(R.drawable.icon_loading)
+        //.error(R.drawable.icon_loading_err)
         .into(view);
   }
 
