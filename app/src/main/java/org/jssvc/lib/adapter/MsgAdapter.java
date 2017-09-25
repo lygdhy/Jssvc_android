@@ -28,7 +28,7 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>
   }
 
   @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_msg, parent, false);
+    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_article, parent, false);
     ViewHolder vh = new ViewHolder(view);
     //将创建的View注册点击事件
     view.setOnClickListener(this);

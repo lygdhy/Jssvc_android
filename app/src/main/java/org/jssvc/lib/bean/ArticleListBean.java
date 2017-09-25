@@ -18,6 +18,7 @@ public class ArticleListBean implements Serializable {
   private String author;
   private String platform;
   private String addtime;
+  private String original;
 
   public String getId() {
     return id;
@@ -73,5 +74,13 @@ public class ArticleListBean implements Serializable {
 
   public void setAddtime(String addtime) {
     this.addtime = addtime;
+  }
+
+  public String getOriginal() {
+    return original;
+  }
+
+  public void setOriginal(String original) {
+    this.original = original;
   }
 }
