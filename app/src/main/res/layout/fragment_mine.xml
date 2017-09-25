@@ -68,7 +68,6 @@
           android:background="@android:color/white"
           android:orientation="vertical"
           >
-        <View style="@style/item_split_horizontal"/>
         <RelativeLayout
             android:id="@+id/rl_account"
             style="@style/style_menu_list"
@@ -85,7 +84,6 @@
               style="@style/style_text_value_menu"
               />
         </RelativeLayout>
-        <View style="@style/item_split_horizontal"/>
       </LinearLayout>
 
       <LinearLayout
@@ -95,7 +93,6 @@
           android:background="@android:color/white"
           android:orientation="vertical"
           >
-        <View style="@style/item_split_horizontal"/>
         <RelativeLayout
             android:id="@+id/rl_borrow"
             style="@style/style_menu_list"
@@ -152,7 +149,6 @@
               style="@style/style_text_value_menu"
               />
         </RelativeLayout>
-        <View style="@style/item_split_horizontal"/>
       </LinearLayout>
 
       <LinearLayout
@@ -162,7 +158,6 @@
           android:background="@android:color/white"
           android:orientation="vertical"
           >
-        <View style="@style/item_split_horizontal"/>
         <RelativeLayout
             android:id="@+id/rl_about_lib"
             style="@style/style_menu_list"
@@ -199,7 +194,6 @@
               style="@style/style_text_value_menu"
               />
         </RelativeLayout>
-        <View style="@style/item_split_horizontal"/>
       </LinearLayout>
 
     </LinearLayout>

@@ -107,10 +107,7 @@ public class HomeActivity extends BaseActivity implements EasyPermissions.Permis
 
   private void showAd() {
     List<AdsBean> adsList = new ArrayList<>();
-    adsList.add(new AdsBean("1", "1", "主题一", "http://www.hydong.me/app/libapp/0001.png",
-        "http://lib.jssvc.edu.cn/"));
-    adsList.add(new AdsBean("2", "1", "主题二", "http://www.hydong.me/app/libapp/0002.png",
-        "http://lib.jssvc.edu.cn/"));
+    adsList.add(new AdsBean("默认Banner", "0", "http://www.hydong.me/app/picture/0000.png"));
 
     //自定义你的Holder，实现更多复杂的界面，不一定是图片翻页，其他任何控件翻页亦可。
     convenientBanner.setPages(new CBViewHolderCreator<LocalImageHolderView>() {
@@ -138,8 +135,8 @@ public class HomeActivity extends BaseActivity implements EasyPermissions.Permis
     }
 
     @Override
-    public void UpdateUI(final Context context, final int position, final AdsBean adsBean) {
-      ImageLoader.with(context, imageView, adsBean.getPic());
+    public void UpdateUI(final Context context, final int position, final AdsBean model) {
+      ImageLoader.with(context, imageView, model.getBanner());
       imageView.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View view) {
           //Intent intent = new Intent(context, WebActivity.class);
