@@ -15,7 +15,6 @@ import com.blankj.utilcode.util.NetworkUtils;
 import com.lzy.okgo.exception.HttpException;
 import com.lzy.okgo.model.Response;
 import com.pgyersdk.crash.PgyCrashManager;
-import com.umeng.analytics.MobclickAgent;
 import org.jssvc.lib.view.SwipeWindowHelper;
 import org.jssvc.lib.view.pDialog.XProgressDialog;
 
@@ -55,12 +54,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
   public void onResume() {
     super.onResume();
-    MobclickAgent.onResume(this);
+    //MobclickAgent.onResume(this);
   }
 
   public void onPause() {
     super.onPause();
-    MobclickAgent.onPause(this);
+    //MobclickAgent.onPause(this);
   }
 
   @Override public boolean dispatchTouchEvent(MotionEvent ev) {

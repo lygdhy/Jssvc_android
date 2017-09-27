@@ -157,6 +157,7 @@
           android:id="@+id/edt_search"
           android:layout_marginLeft="20dp"
           android:layout_marginRight="20dp"
+          android:clickable="true"
           android:editable="false"
           android:hint="书籍是人类进步的阶梯"
           style="@style/style_search_edit_text"
