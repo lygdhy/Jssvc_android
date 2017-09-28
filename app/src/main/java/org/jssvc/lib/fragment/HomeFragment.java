@@ -39,11 +39,10 @@ import org.jssvc.lib.bean.AdsBean;
 import org.jssvc.lib.bean.ArticleListBean;
 import org.jssvc.lib.bean.MenuBean;
 import org.jssvc.lib.data.AccountPref;
+import org.jssvc.lib.data.Constants;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.ImageLoader;
 import org.jssvc.lib.view.DividerItemDecoration;
-
-import static org.jssvc.lib.R.id.convenientBanner;
 
 /**
  * <pre>
@@ -57,7 +56,7 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
   @BindView(R.id.top_def_layout) RelativeLayout topDefLayout;
   @BindView(R.id.nested_scroll_view) NestedScrollView mNestedScrollView;
   @BindView(R.id.menu_recyclerView) RecyclerView mRecyclerView;
-  @BindView(convenientBanner) ConvenientBanner mBanner;
+  @BindView(R.id.convenientBanner) ConvenientBanner mBanner;
 
   @BindView(R.id.new_recyclerView) RecyclerView articleRecyclerView;
   ArticleAdapter articleAdapter;
@@ -79,6 +78,9 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
     getAdsList();// 获取Banner
 
     getArticleList();// 获取文章列表
+
+    // 天气API
+    // http://op.juhe.cn/onebox/weather/query?cityname=%E8%8B%8F%E5%B7%9E%E5%B8%82&key=220448b1902d02eea42160d3e06f87ff
 
     // 滑动监听
     mNestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -119,10 +121,10 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
   // 初始化菜单
   private void initMenu() {
     menuList.clear();
-    menuList.add(new MenuBean(1, "帮助指南", R.drawable.icon_menu_a));
-    menuList.add(new MenuBean(2, "催还续借", R.drawable.icon_menu_b));
-    menuList.add(new MenuBean(3, "新闻资讯", R.drawable.icon_menu_c));
-    menuList.add(new MenuBean(4, "关于我们", R.drawable.icon_menu_d));
+    menuList.add(new MenuBean(Constants.MENU_LIB_HELP, "帮助指南", R.drawable.icon_menu_a));
+    menuList.add(new MenuBean(Constants.MENU_LIB_RETURN, "催还续借", R.drawable.icon_menu_b));
+    menuList.add(new MenuBean(Constants.MENU_NEWS, "新闻资讯", R.drawable.icon_menu_c));
+    menuList.add(new MenuBean(Constants.MENU_ABOUT, "关于我们", R.drawable.icon_menu_d));
 
     menuAdapter.setData(menuList);
   }
@@ -135,25 +137,21 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
       MenuBean item = menuAdapter.getItem(position);
       // Type 0链接类  !0 其他类别
       switch (item.getType()) {
-        case 1:
-          // 帮助指南
+        case Constants.MENU_LIB_HELP:// 帮助指南
           startActivity(new Intent(mContext, HelpActivity.class));
           break;
-        case 2:
-          // 当前借阅 / 催还续借
+        case Constants.MENU_LIB_RETURN:// 当前借阅 / 催还续借
           if (AccountPref.isLogon(mContext)) {
             startActivity(new Intent(mContext, CurentBorrowActivity.class));
           } else {
             startActivity(new Intent(mContext, LoginActivity.class));
           }
           break;
-        case 3:
-          // 图书搜索
+        case Constants.MENU_LIB_SEARCH_BOOK:// 图书搜索
           MainActivity parentActivity = (MainActivity) getActivity();
           parentActivity.turnPage(1);
           break;
-        case 4:
-          // 关于
+        case Constants.MENU_ABOUT:// 关于
           startActivity(new Intent(mContext, AboutActivity.class));
           break;
       }
@@ -165,6 +163,7 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
   }) public void onClick(View view) {
     switch (view.getId()) {
       case R.id.tip_layout:
+        showToast("天气预报");
         break;
       case R.id.edt_search:
         startActivity(new Intent(mContext, BookSearchActivity.class));// 图书搜索

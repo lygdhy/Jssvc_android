@@ -19,6 +19,8 @@ public class HttpUrlParams {
   // 新书推荐
   // http://lib.jssvc.edu.cn/reading/newbooks/new.html
 
+  public static final String UPLOAD_FILES = BASE_ORG_URL + "app/api/upload_file.php";
+
   // ==========图书馆服务=============
   // 图书馆服务器地址
   public static final String BASE_LIB_URL = "http://opac.jssvc.edu.cn/";

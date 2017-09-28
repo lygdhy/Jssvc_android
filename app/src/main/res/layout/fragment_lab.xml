@@ -10,26 +10,14 @@
       >
 
     <TextView
-        android:text="图书交流"
+        android:text="发现"
         style="@style/actionbar_title_style_base"
         />
-    <TextView
-        android:id="@+id/opt_add"
-        android:text="Add"
-        style="@style/actionbar_right_style_base"
-        />
   </RelativeLayout>
-  <cn.bingoogolapple.refreshlayout.BGARefreshLayout
-      android:id="@+id/refresh_layout"
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/recycler"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      >
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/discuss_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        />
-  </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+      />
 </LinearLayout>

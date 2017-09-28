@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
@@ -40,6 +41,14 @@ public class DiscussFragment extends BaseFragment
     initRefreshView();
 
     getDiscussList();
+  }
+
+  @OnClick({ R.id.opt_add }) public void onClick(View view) {
+    switch (view.getId()) {
+      case R.id.opt_add:
+        showToast("ADD");
+        break;
+    }
   }
 
   private void initRefreshView() {
