@@ -37,9 +37,9 @@ public class BaseApplication extends MultiDexApplication {
     appContext = this;
 
     Utils.init(appContext);
-    //if (spUtils == null) {
-    //  spUtils = new SPUtils(FILE_NAME);// 实例化SharePreferenceUtils
-    //}
+    if (spUtils == null) {
+      spUtils = SPUtils.getInstance(FILE_NAME);
+    }
 
     // 蒲公英
     PgyCrashManager.register(this);

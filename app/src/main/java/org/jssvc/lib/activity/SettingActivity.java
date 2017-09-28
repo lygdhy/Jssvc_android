@@ -19,8 +19,9 @@ import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.bean.User;
+import org.jssvc.lib.bean.LibraryUser;
 import org.jssvc.lib.data.AccountPref;
+import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.DataCleanManager;
 import org.jssvc.lib.utils.HtmlParseUtils;
@@ -50,18 +51,15 @@ public class SettingActivity extends BaseActivity {
 
   @Override public void onResume() {
     super.onResume();
-    if (AccountPref.isLogon(mContext)) {
-      // 用户名和密码都在
+    if (DataSup.hasLogin()) {// 已登录
       rlExit.setVisibility(View.VISIBLE);
-
-      loadUserInfo();
-    } else {
-      //rlExit.setVisibility(View.GONE);
+    } else {// 未登录
+      rlExit.setVisibility(View.GONE);
     }
   }
 
   private void loadUserInfo() {
-    User user = AccountPref.getLogonUser(mContext);
+    LibraryUser user = AccountPref.getLogonUser(mContext);
     if (user == null || TextUtils.isEmpty(user.getUserid())) {
       getUserInfoByNet();
     } else {
@@ -101,14 +99,6 @@ public class SettingActivity extends BaseActivity {
         // 关于我们
         startActivity(new Intent(mContext, AboutActivity.class));
         break;
-      //case R.id.rlMine:
-      //  // 证件信息=============================
-      //  if (AccountPref.isLogon(mContext)) {
-      //    startActivity(new Intent(mContext, CardInfoActivity.class));
-      //  } else {
-      //    startActivity(new Intent(mContext, LoginActivity.class));
-      //  }
-      //  break;
       case R.id.rl_appraise:
         // 给我们点个赞
         break;
@@ -121,15 +111,9 @@ public class SettingActivity extends BaseActivity {
         break;
       case R.id.rl_exit:
         // 注销
-        //if (AccountPref.isLogon(mContext)) {
-        //  AccountPref.removeLogonAccoundPwd(mContext);
-        //  AccountPref.removeLogonUser(mContext);
-        //  rlExit.setVisibility(View.GONE);
-        //
-        //  // 账号统计
-        //  MobclickAgent.onProfileSignOff();
-        //}
-        startActivity(new Intent(mContext, LoginActivity.class));
+        DataSup.setMemberStr2Local("");
+        rlExit.setVisibility(View.GONE);
+        finish();
         break;
     }
   }
@@ -172,7 +156,7 @@ public class SettingActivity extends BaseActivity {
 
   // 解析网页
   private void parseHtml(String s) {
-    User user = HtmlParseUtils.getUserInfo(s);
+    LibraryUser user = HtmlParseUtils.getUserInfo(s);
     if (user != null && !TextUtils.isEmpty(user.getUserid())) {
       AccountPref.saveLogonUser(mContext, user);
       loadUserInfo2UI(user);
@@ -182,7 +166,7 @@ public class SettingActivity extends BaseActivity {
   }
 
   // 加载数据到页面
-  private void loadUserInfo2UI(User user) {
+  private void loadUserInfo2UI(LibraryUser user) {
 
     // 解析借阅次数
     if (!TextUtils.isEmpty(user.getReadTimes())) {

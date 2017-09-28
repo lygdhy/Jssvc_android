@@ -6,7 +6,7 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 
-import org.jssvc.lib.bean.User;
+import org.jssvc.lib.bean.LibraryUser;
 
 /**
  * Created by lygdh on 2016/9/30.
@@ -55,7 +55,7 @@ public class AccountPref {
   }
 
   // 用户信息
-  public static void saveLogonUser(Context context, User user) {
+  public static void saveLogonUser(Context context, LibraryUser user) {
     String userJson = new Gson().toJson(user);
     getPreference(context).edit().putString(KEY_LOGON_USER, userJson).apply();
   }
@@ -64,11 +64,11 @@ public class AccountPref {
     getPreference(context).edit().remove(KEY_LOGON_USER).apply();
   }
 
-  public static User getLogonUser(Context context) {
-    User user = null;
+  public static LibraryUser getLogonUser(Context context) {
+    LibraryUser user = null;
     String userJson = getPreference(context).getString(KEY_LOGON_USER, "");
     if (!TextUtils.isEmpty(userJson)) {
-      user = new Gson().fromJson(userJson, User.class);
+      user = new Gson().fromJson(userJson, LibraryUser.class);
     }
     return user;
   }

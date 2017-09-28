@@ -14,6 +14,10 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
+import org.jssvc.lib.bean.MemberBean;
+import org.jssvc.lib.utils.ImageLoader;
+
+import static org.jssvc.lib.data.DataSup.getLocalMemberBean;
 
 /**
  * 个人中心
@@ -29,6 +33,7 @@ public class UserResumeActivity extends BaseActivity {
   @BindView(R.id.tv_qq) TextView tvQq;
   @BindView(R.id.tv_email) TextView tvEmail;
 
+  MemberBean bean;
   int year = 2000;
   int month = 5;
   int day = 14;
@@ -38,6 +43,20 @@ public class UserResumeActivity extends BaseActivity {
   }
 
   @Override protected void initView() {
+    bean = getLocalMemberBean();
+    if (bean != null) {
+      ImageLoader.with(mContext, ivAvatar, bean.getAvatar());
+      tvNickName.setText(bean.getNickname());
+      tvRealName.setText(bean.getRealname());
+      tvSex.setText(bean.getSex());
+      tvBirth.setText(bean.getBirthday());
+      tvTel.setText(bean.getPhone());
+      tvQq.setText(bean.getQq());
+      tvEmail.setText(bean.getEmail());
+    } else {
+      showToast("信息丢失，请重新登录");
+      finish();
+    }
   }
 
   @OnClick({

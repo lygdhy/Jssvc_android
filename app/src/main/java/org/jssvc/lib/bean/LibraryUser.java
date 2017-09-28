@@ -7,7 +7,7 @@ import java.io.Serializable;
  * Created by lygdh on 2016/9/30.
  */
 
-public class User implements Serializable {
+public class LibraryUser implements Serializable {
   private String userid;//学号
   private String username;//姓名
   private String sex;//性别

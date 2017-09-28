@@ -2,6 +2,8 @@ package org.jssvc.lib.activity;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.TextView;
+import butterknife.BindView;
 import butterknife.OnClick;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
@@ -11,12 +13,16 @@ import org.jssvc.lib.base.BaseActivity;
  */
 public class AccountThirdManagerActivity extends BaseActivity {
 
+  @BindView(R.id.tv_lib_title) TextView tvLibTitle;
+  @BindView(R.id.tv_lib_tip) TextView tvLibTip;
+
   @Override protected int getContentViewId() {
     return R.layout.activity_account_third_manager;
   }
 
   @Override protected void initView() {
-
+    // 获取当前用户绑定的信息
+    getUserAcount();
   }
 
   @OnClick({
@@ -32,8 +38,12 @@ public class AccountThirdManagerActivity extends BaseActivity {
         break;
       case R.id.rl_jw:
         // 教务系统绑定
-        showToast("开发中...");
         break;
     }
+  }
+
+  // 获取当前用户绑定的第三方账户信息
+  private void getUserAcount() {
+    showToast("获取第三方账户信息");
   }
 }

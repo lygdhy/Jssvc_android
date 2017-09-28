@@ -19,4 +19,8 @@ public class Constants {
   public static final int MENU_LIB_RETURN = 1002;//催还续借
   public static final int MENU_LIB_SEARCH_BOOK = 1003;//图书搜索
   public static final int MENU_LIB_BOOK_REVIEW = 1004;//书评
+
+  // sharePreference
+  public static final String LOCAL_MEMBER = "local_member";// 当前账户
+  public static final String THIRD_ACCOUNT = "third_account";// 第三方账户
 }

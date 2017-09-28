@@ -9,9 +9,13 @@ import butterknife.OnClick;
 import org.jssvc.lib.R;
 import org.jssvc.lib.activity.AboutSchoolActivity;
 import org.jssvc.lib.activity.AccountThirdManagerActivity;
+import org.jssvc.lib.activity.LoginActivity;
 import org.jssvc.lib.activity.SettingActivity;
 import org.jssvc.lib.activity.UserResumeActivity;
 import org.jssvc.lib.base.BaseFragment;
+import org.jssvc.lib.bean.MemberBean;
+import org.jssvc.lib.data.DataSup;
+import org.jssvc.lib.utils.ImageLoader;
 import org.jssvc.lib.view.WaveView;
 
 /**
@@ -44,7 +48,11 @@ public class MineFragment extends BaseFragment {
     switch (view.getId()) {
       case R.id.ll_user:
         // 登录/查看详情
-        startActivity(new Intent(mContext, UserResumeActivity.class));
+        if (DataSup.hasLogin()) {// 已登录
+          startActivity(new Intent(mContext, UserResumeActivity.class));
+        } else {// 未登录
+          startActivity(new Intent(mContext, LoginActivity.class));
+        }
         break;
       case R.id.rl_borrow:
         // 我的借阅
@@ -67,6 +75,18 @@ public class MineFragment extends BaseFragment {
         // 设置
         startActivity(new Intent(mContext, SettingActivity.class));
         break;
+    }
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+    if (DataSup.hasLogin()) {// 已登录
+      MemberBean bean = DataSup.getLocalMemberBean();
+      ImageLoader.with(mContext, ivAvatar, bean.getAvatar());
+      tvUserName.setText(bean.getNickname());
+    } else {// 未登录
+      ImageLoader.with(mContext, ivAvatar, R.drawable.icon_default_avatar_1);
+      tvUserName.setText("点击登录");
     }
   }
 }

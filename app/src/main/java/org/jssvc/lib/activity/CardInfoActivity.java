@@ -14,7 +14,7 @@ import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.bean.User;
+import org.jssvc.lib.bean.LibraryUser;
 import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
@@ -104,7 +104,7 @@ public class CardInfoActivity extends BaseActivity {
 
   // 解析网页
   private void parseHtml(String s) {
-    User user = HtmlParseUtils.getUserInfo(s);
+    LibraryUser user = HtmlParseUtils.getUserInfo(s);
     if (!TextUtils.isEmpty(user.getUserid())) {
       AccountPref.saveLogonUser(mContext, user);
 
