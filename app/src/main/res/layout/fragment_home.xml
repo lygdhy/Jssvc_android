@@ -49,20 +49,118 @@
       </LinearLayout>
 
       <!--提示-->
-      <LinearLayout
+      <RelativeLayout
           android:id="@+id/tip_layout"
           android:layout_width="match_parent"
           android:layout_height="60dp"
           android:layout_marginTop="10dp"
           android:background="@android:color/white"
-          android:gravity="center"
           android:orientation="vertical"
+          android:padding="10dp"
           >
-        <TextView
-            android:text="plug-in"
-            style="@style/style_text_body_light"
+
+        <ImageView
+            android:id="@+id/iv_wea"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_weather_05"
             />
-      </LinearLayout>
+        <LinearLayout
+            android:id="@+id/wea_layout_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/iv_wea"
+            android:orientation="vertical"
+            >
+          <TextView
+              android:id="@+id/tv_temp1"
+              android:text="23°"
+              style="@style/style_text_title"
+              />
+          <TextView
+              android:id="@+id/tv_temp2"
+              android:text="20°C~23°C"
+              android:textSize="12sp"
+              style="@style/style_text_body"
+              />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/wea_layout_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/wea_layout_2"
+            android:orientation="vertical"
+            >
+          <TextView
+              android:id="@+id/tv_city"
+              android:text="苏州市"
+              style="@style/style_text_title"
+              />
+          <TextView
+              android:id="@+id/tv_info"
+              android:text="小于转中雨"
+              android:textSize="12sp"
+              style="@style/style_text_body"
+              />
+        </LinearLayout>
+        <View
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/wea_layout_4"
+            style="@style/item_split_vertical"
+            />
+        <LinearLayout
+            android:id="@+id/wea_layout_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/wea_layout_5"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+          <TextView
+              android:id="@+id/tv_pm"
+              android:layout_marginBottom="2dp"
+              android:text="13"
+              style="@style/style_text_title"
+              />
+          <TextView
+              android:text="pm2.5"
+              android:textSize="12sp"
+              style="@style/style_text_body"
+              />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/wea_layout_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+          <TextView
+              android:id="@+id/tv_level"
+              android:layout_marginBottom="2dp"
+              android:text="优"
+              style="@style/style_text_title"
+              />
+          <TextView
+              android:text="空气"
+              android:textSize="12sp"
+              style="@style/style_text_body"
+              />
+        </LinearLayout>
+
+      </RelativeLayout>
 
       <!--模块-->
       <LinearLayout

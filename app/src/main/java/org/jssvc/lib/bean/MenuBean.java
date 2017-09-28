@@ -11,7 +11,7 @@ import java.io.Serializable;
  * </pre>
  */
 public class MenuBean implements Serializable {
-  private int type; // 0链接类  !0 其他类别
+  private int type; // 0链接类  !0 其他类别(参考org.jssvc.lib.data.Constants)
   private String title;
   private String web_url;
   private String icon_url;
