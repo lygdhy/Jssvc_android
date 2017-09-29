@@ -60,6 +60,10 @@ public class SplashActivity extends BaseActivity {
       ThirdAccountBean libBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_LIB);
       if (libBean != null) {
         autoLogin(libBean.getAccount(), libBean.getPwd(), libBean.getPwd());
+      } else {
+        // 完成跳转
+        startActivity(new Intent(mContext, MainActivity.class));
+        finish();
       }
     }
   }

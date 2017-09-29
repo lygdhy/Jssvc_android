@@ -61,6 +61,8 @@ public class AccountThirdManagerActivity extends BaseActivity {
         // 图书馆账户绑定
         if (libBean == null) {
           startActivity(new Intent(mContext, AccountLibManagerActivity.class));
+        } else {
+          startActivity(new Intent(mContext, CardInfoActivity.class));
         }
         break;
       case R.id.rl_jw:
@@ -78,8 +80,7 @@ public class AccountThirdManagerActivity extends BaseActivity {
             try {
               JSONObject jsonObject = new JSONObject(response.body());
               if (jsonObject.optInt("code") == 200) {
-                JSONObject jo = jsonObject.optJSONObject("data");
-                DataSup.setThirdAccountStr2Local(jo.toString());
+                DataSup.setThirdAccountStr2Local(jsonObject.optString("data"));
                 loadUi();
               } else {
                 showToast(jsonObject.optString("message"));
