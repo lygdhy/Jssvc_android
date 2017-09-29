@@ -9,9 +9,12 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jssvc.lib.R;
+import org.jssvc.lib.activity.AccountLibManagerActivity;
 import org.jssvc.lib.base.BaseFragment;
-import org.jssvc.lib.data.AccountPref;
+import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
 
@@ -43,13 +46,15 @@ public class LibAccountResetPwdFragment extends BaseFragment {
       case R.id.btn_submit:
         String oldpwd = edtOldPwd.getText().toString().trim();
         String newpwd = edtNewPwd.getText().toString().trim();
-        String localpwd = AccountPref.getLogonAccoundPwd(mContext);
+
+        AccountLibManagerActivity activity = (AccountLibManagerActivity) getActivity();
+        String localpwd = activity.oldPwd;
 
         if (TextUtils.isEmpty(oldpwd) || TextUtils.isEmpty(newpwd)) {
           showToast("就旧密码不能为空！");
         } else {
           if (oldpwd.equals(localpwd)) {
-            go2Reset(newpwd);
+            go2Reset(localpwd, newpwd);
           } else {
             showToast("旧密码不符");
           }
@@ -59,15 +64,15 @@ public class LibAccountResetPwdFragment extends BaseFragment {
   }
 
   // 前往重置密码
-  private void go2Reset(String newpwd) {
+  private void go2Reset(String oldpwd, final String newpwd) {
     OkGo.<String>post(HttpUrlParams.URL_LIB_CHANGE_PWD).tag(this)
-        .params("old_passwd", AccountPref.getLogonAccoundPwd(mContext))
+        .params("old_passwd", oldpwd)
         .params("new_passwd", newpwd)
         .params("chk_passwd", newpwd)
         .params("submit1", "%E7%A1%AE%E5%AE%9A")
         .execute(new StringCallback() {
           @Override public void onSuccess(Response<String> response) {
-            parseHtml(response.body());
+            parseHtml(response.body(), newpwd);
           }
 
           @Override public void onError(Response<String> response) {
@@ -77,7 +82,7 @@ public class LibAccountResetPwdFragment extends BaseFragment {
 
           @Override public void onStart(Request<String, ? extends Request> request) {
             super.onStart(request);
-            showProgressDialog("正在提交...");
+            showProgressDialog("正在修改...");
           }
 
           @Override public void onFinish() {
@@ -85,39 +90,65 @@ public class LibAccountResetPwdFragment extends BaseFragment {
             dissmissProgressDialog();
           }
         });
-
-    //OkGo.post(HttpUrlParams.URL_LIB_CHANGE_PWD)
-    //    .tag(this)
-    //    .params("old_passwd", AccountPref.getLogonAccoundPwd(mContext))
-    //    .params("new_passwd", newpwd)
-    //    .params("chk_passwd", newpwd)
-    //    .params("submit1", "%E7%A1%AE%E5%AE%9A")
-    //    .execute(new StringCallback() {
-    //      @Override public void onSuccess(String s, Call call, Response response) {
-    //        dissmissProgressDialog();
-    //        // s 即为所需要的结果
-    //        parseHtml(s);
-    //      }
-    //
-    //      @Override public void onError(Call call, Response response, Exception e) {
-    //        super.onError(call, response, e);
-    //        dissmissProgressDialog();
-    //        dealNetError(e);
-    //      }
-    //    });
   }
 
   // 解析网页
-  private void parseHtml(String s) {
+  private void parseHtml(String s, String newpwd) {
     String errorMsg = HtmlParseUtils.getErrMsgOnChangePwd(s);
     if (TextUtils.isEmpty(errorMsg)) {
       // 密码修改成功
       showToast("密码修改成功");
-      AccountPref.saveLoginAccoundPwd(mContext, edtNewPwd.getText().toString().trim());
-      getActivity().finish();
+      // 提交第三方账户
+      submintThirdAccount(newpwd);
     } else {
       // 有错误提示
       showToast(errorMsg);
     }
+  }
+
+  // 提交第三方账户
+  private void submintThirdAccount(String newpwd) {
+    AccountLibManagerActivity activity = (AccountLibManagerActivity) getActivity();
+
+    OkGo.<String>post(HttpUrlParams.THIRD_ACCOUNT_BOUND).tag(this)
+        .params("uid", getUid())
+        .params("platform", "1")// 平台1图书馆
+        .params("school_abbr", activity.school)//学校代码
+        .params("third_account", activity.name)
+        .params("third_pwd", newpwd)
+        .params("third_type", activity.type)
+        .execute(new StringCallback() {
+          @Override public void onSuccess(Response<String> response) {
+            try {
+              JSONObject jsonObject = new JSONObject(response.body());
+              if (jsonObject.optInt("code") == 200) {
+                JSONObject jo = jsonObject.optJSONObject("data");
+
+                showToast("绑定成功");
+                DataSup.setThirdAccountStr2Local(jo.toString());
+                getActivity().finish();
+              } else {
+                showToast(jsonObject.optString("message"));
+              }
+            } catch (JSONException e) {
+              e.printStackTrace();
+            }
+          }
+
+          @Override public void onError(Response<String> response) {
+            super.onError(response);
+            dealNetError(response);
+          }
+
+          @Override public void onStart(Request<String, ? extends Request> request) {
+            super.onStart(request);
+            showProgressDialog("绑定中...");
+          }
+
+          @Override public void onFinish() {
+            super.onFinish();
+            dissmissProgressDialog();
+          }
+        });
   }
 }

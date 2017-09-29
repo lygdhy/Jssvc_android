@@ -49,6 +49,11 @@ public abstract class BaseFragment extends Fragment {
     unbinder.unbind();//解绑
   }
 
+  // 获取会员Id
+  public String getUid() {
+    return mActivity.getUid();
+  }
+
   /**
    * show Toast
    */

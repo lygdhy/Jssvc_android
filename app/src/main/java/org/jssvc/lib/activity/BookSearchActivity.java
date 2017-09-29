@@ -40,8 +40,10 @@ import org.jssvc.lib.adapter.DialogListSelecterAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.BookSearchBean;
 import org.jssvc.lib.bean.ListSelecterBean;
-import org.jssvc.lib.data.AccountPref;
+import org.jssvc.lib.bean.ThirdAccountBean;
 import org.jssvc.lib.data.AppPref;
+import org.jssvc.lib.data.Constants;
+import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
 import org.jssvc.lib.view.DividerItemDecoration;
@@ -231,9 +233,15 @@ public class BookSearchActivity extends BaseActivity
       searchPage++;
     }
 
+    String account = "";
+    ThirdAccountBean libBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_LIB);
+    if (libBean != null) {
+      account = libBean.getAccount();
+    }
+
     // 搜索事件统计
     Map<String, String> map = new HashMap<>();
-    map.put("userName", AccountPref.getLogonAccoundNumber(mContext));
+    map.put("userName", account);
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     map.put("optDate", df.format(new Date()));
     map.put("strSearchType", currentSearchType.getId());
@@ -284,44 +292,6 @@ public class BookSearchActivity extends BaseActivity
             dissmissProgressDialog();
           }
         });
-
-    //OkGo.post(HttpUrlParams.URL_LIB_BOOK_SEARCH)
-    //    .tag(this)
-    //    .params("strSearchType", currentSearchType.getId())
-    //    .params("strText", searchText)
-    //    .params("page", String.valueOf(searchPage))
-    //
-    //    .params("sort", "CATA_DATE")
-    //    .params("orderby", "DESC")
-    //    .params("showmode", "list")
-    //    .params("dept", "ALL")
-    //    .execute(new StringCallback() {
-    //      @Override public void onSuccess(String s, Call call, Response response) {
-    //        dissmissProgressDialog();
-    //        if (mRefreshLayout != null) {
-    //          if (isRefresh) {
-    //            mRefreshLayout.endRefreshing();
-    //          } else {
-    //            mRefreshLayout.endLoadingMore();
-    //          }
-    //          // s 即为所需要的结果
-    //          parseHtml(isRefresh, s);
-    //        }
-    //      }
-    //
-    //      @Override public void onError(Call call, Response response, Exception e) {
-    //        super.onError(call, response, e);
-    //        dissmissProgressDialog();
-    //        if (mRefreshLayout != null) {
-    //          if (isRefresh) {
-    //            mRefreshLayout.endRefreshing();
-    //          } else {
-    //            mRefreshLayout.endLoadingMore();
-    //          }
-    //          dealNetError(e);
-    //        }
-    //      }
-    //    });
   }
 
   // 解析网页

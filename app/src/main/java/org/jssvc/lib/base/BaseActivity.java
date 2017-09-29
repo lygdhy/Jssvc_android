@@ -15,6 +15,7 @@ import com.blankj.utilcode.util.NetworkUtils;
 import com.lzy.okgo.exception.HttpException;
 import com.lzy.okgo.model.Response;
 import com.pgyersdk.crash.PgyCrashManager;
+import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.view.SwipeWindowHelper;
 import org.jssvc.lib.view.pDialog.XProgressDialog;
 
@@ -122,6 +123,15 @@ public abstract class BaseActivity extends AppCompatActivity {
   protected void dissmissProgressDialog() {
     if (mProgressDialog != null) {
       mProgressDialog.dismiss();
+    }
+  }
+
+  // 获取会员Id
+  public String getUid() {
+    if (DataSup.hasLogin()) {
+      return BaseApplication.localMemberBean.getId();
+    } else {
+      return "";
     }
   }
 

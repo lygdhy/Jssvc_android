@@ -1,6 +1,5 @@
 package org.jssvc.lib.activity;
 
-import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,9 +14,10 @@ import com.lzy.okgo.request.base.Request;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.LibraryUser;
-import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
+
+import static org.jssvc.lib.base.BaseApplication.libOnline;
 
 /**
  * 证件信息
@@ -46,10 +46,10 @@ public class CardInfoActivity extends BaseActivity {
   @Override protected void initView() {
     scrollView.setVisibility(View.GONE);
 
-    if (AccountPref.isLogon(mContext)) {
+    if (libOnline) {
       getUserInfoByNet();
     } else {
-      startActivity(new Intent(mContext, LoginActivity.class));
+      showToast("图书服务已离线，需重新连接");
       finish();
     }
   }
@@ -86,27 +86,12 @@ public class CardInfoActivity extends BaseActivity {
         dissmissProgressDialog();
       }
     });
-
-    //OkGo.post(HttpUrlParams.URL_LIB_ACCOUND).tag(this).execute(new StringCallback() {
-    //  @Override public void onSuccess(String s, Call call, Response response) {
-    //    dissmissProgressDialog();
-    //    // s 即为所需要的结果
-    //    parseHtml(s);
-    //  }
-    //
-    //  @Override public void onError(Call call, Response response, Exception e) {
-    //    super.onError(call, response, e);
-    //    dissmissProgressDialog();
-    //    dealNetError(e);
-    //  }
-    //});
   }
 
   // 解析网页
   private void parseHtml(String s) {
     LibraryUser user = HtmlParseUtils.getUserInfo(s);
     if (!TextUtils.isEmpty(user.getUserid())) {
-      AccountPref.saveLogonUser(mContext, user);
 
       scrollView.setVisibility(View.VISIBLE);
       tvName.setText(user.getUsername());

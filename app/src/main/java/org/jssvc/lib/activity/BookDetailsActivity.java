@@ -32,7 +32,6 @@ import org.jssvc.lib.bean.BookAccessBean;
 import org.jssvc.lib.bean.BookDetailsBean;
 import org.jssvc.lib.bean.BookShelfBean;
 import org.jssvc.lib.bean.ListSelecterBean;
-import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.fragment.BookDetailInfoFragment;
 import org.jssvc.lib.fragment.BookDetailQtyFragment;
@@ -40,6 +39,8 @@ import org.jssvc.lib.utils.HtmlParseUtils;
 import org.jssvc.lib.utils.ImageLoader;
 import org.jssvc.lib.view.CustomDialog;
 import org.jssvc.lib.view.DividerItemDecoration;
+
+import static org.jssvc.lib.base.BaseApplication.libOnline;
 
 /**
  * 图书详情
@@ -76,8 +77,6 @@ public class BookDetailsActivity extends BaseActivity {
       marc_no = "";
     }
 
-    showProgressDialog();
-
     OkGo.<String>post(detialUrl).tag(this).execute(new StringCallback() {
       @Override public void onSuccess(Response<String> response) {
         dissmissProgressDialog();
@@ -86,24 +85,19 @@ public class BookDetailsActivity extends BaseActivity {
 
       @Override public void onError(Response<String> response) {
         super.onError(response);
-        dissmissProgressDialog();
         dealNetError(response);
       }
-    });
 
-    //OkGo.post(detialUrl).tag(this).execute(new StringCallback() {
-    //  @Override public void onSuccess(String s, Call call, Response response) {
-    //    dissmissProgressDialog();
-    //    // s 即为所需要的结果
-    //    parseHtml(s);
-    //  }
-    //
-    //  @Override public void onError(Call call, Response response, Exception e) {
-    //    super.onError(call, response, e);
-    //    dissmissProgressDialog();
-    //    dealNetError(response, e);
-    //  }
-    //});
+      @Override public void onStart(Request<String, ? extends Request> request) {
+        super.onStart(request);
+        showProgressDialog();
+      }
+
+      @Override public void onFinish() {
+        super.onFinish();
+        dissmissProgressDialog();
+      }
+    });
   }
 
   @OnClick({ R.id.tv_back, R.id.tv_collect }) public void onClick(View view) {
@@ -112,11 +106,10 @@ public class BookDetailsActivity extends BaseActivity {
         finish();
         break;
       case R.id.tv_collect:
-        if (AccountPref.isLogon(mContext)) {
-          // 添加到书架
-          collectBook();
+        if (libOnline) {
+          collectBook();// 添加到书架
         } else {
-          startActivity(new Intent(mContext, LoginActivity.class));
+          showToast("图书服务已离线，需重新连接");
         }
         break;
     }
@@ -209,24 +202,6 @@ public class BookDetailsActivity extends BaseActivity {
             dissmissProgressDialog();
           }
         });
-
-    //OkGo.get(HttpUrlParams.URL_LIB_BOOK_ADD)
-    //    .params("classid", classid)
-    //    .params("marc_no", marc_no)
-    //    .params("time", System.currentTimeMillis())
-    //    .tag(this)
-    //    .execute(new StringCallback() {
-    //      @Override public void onSuccess(String s, Call call, Response response) {
-    //        dissmissProgressDialog();
-    //        showAlertDialog(s);
-    //      }
-    //
-    //      @Override public void onError(Call call, Response response, Exception e) {
-    //        super.onError(call, response, e);
-    //        dissmissProgressDialog();
-    //        dealNetError(e);
-    //      }
-    //    });
   }
 
   // 获取书架目录
@@ -251,20 +226,6 @@ public class BookDetailsActivity extends BaseActivity {
         dissmissProgressDialog();
       }
     });
-
-    //OkGo.post(HttpUrlParams.URL_LIB_BOOK_SHELF).tag(this).execute(new StringCallback() {
-    //  @Override public void onSuccess(String s, Call call, Response response) {
-    //    dissmissProgressDialog();
-    //    // s 即为所需要的结果
-    //    parseHtml2List(s);
-    //  }
-    //
-    //  @Override public void onError(Call call, Response response, Exception e) {
-    //    super.onError(call, response, e);
-    //    dissmissProgressDialog();
-    //    dealNetError(e);
-    //  }
-    //});
   }
 
   // 解析网页

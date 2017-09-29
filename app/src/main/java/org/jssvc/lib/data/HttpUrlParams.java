@@ -12,6 +12,8 @@ public class HttpUrlParams {
   public static final String URL_ORG_FEEDBACK = BASE_ORG_URL + "svu/feedback.php";// 意见反馈
 
   public static final String URL_USER_LOGIN = BASE_ORG_URL + "app/api/login.php";// 账户登录
+  public static final String GET_THIRD_ACCOUNTS = BASE_ORG_URL + "app/api/get_third_accounts.php";// 账户登录
+  public static final String THIRD_ACCOUNT_BOUND = BASE_ORG_URL + "app/api/bound_third_account.php";// 绑定第三方账户
 
   public static final String GET_ADS_LIST = BASE_ORG_URL + "app/api/get_ads_list.php";// 广告列表
   public static final String GET_CHANNEL_LIST = BASE_ORG_URL + "app/api/get_channel_list.php";// 频道列表

@@ -17,6 +17,7 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import okhttp3.OkHttpClient;
+import org.jssvc.lib.bean.MemberBean;
 import org.jssvc.lib.view.ActivityLifecycleHelper;
 
 /**
@@ -29,6 +30,8 @@ public class BaseApplication extends MultiDexApplication {
   private static final String FILE_NAME = "sp_jssvc_lib";
 
   BaseApplication appContext;
+  public static MemberBean localMemberBean = null;// 全局账户（来自SharedPreferences）
+  public static boolean libOnline = false;//图书馆在线（来自内存）
 
   private ActivityLifecycleHelper mActivityLifecycleHelper;
 

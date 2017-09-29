@@ -30,7 +30,6 @@ import org.jssvc.lib.activity.AboutActivity;
 import org.jssvc.lib.activity.BookSearchActivity;
 import org.jssvc.lib.activity.CurentBorrowActivity;
 import org.jssvc.lib.activity.HelpActivity;
-import org.jssvc.lib.activity.LoginActivity;
 import org.jssvc.lib.activity.MainActivity;
 import org.jssvc.lib.adapter.ArticleAdapter;
 import org.jssvc.lib.adapter.MenuAdapter;
@@ -38,11 +37,12 @@ import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.AdsBean;
 import org.jssvc.lib.bean.ArticleListBean;
 import org.jssvc.lib.bean.MenuBean;
-import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.Constants;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.ImageLoader;
 import org.jssvc.lib.view.DividerItemDecoration;
+
+import static org.jssvc.lib.base.BaseApplication.libOnline;
 
 /**
  * <pre>
@@ -141,10 +141,10 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
           startActivity(new Intent(mContext, HelpActivity.class));
           break;
         case Constants.MENU_LIB_RETURN:// 当前借阅 / 催还续借
-          if (AccountPref.isLogon(mContext)) {
+          if (libOnline) {
             startActivity(new Intent(mContext, CurentBorrowActivity.class));
           } else {
-            startActivity(new Intent(mContext, LoginActivity.class));
+            showToast("图书服务已离线，需重新连接");
           }
           break;
         case Constants.MENU_LIB_SEARCH_BOOK:// 图书搜索

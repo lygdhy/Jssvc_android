@@ -9,14 +9,18 @@ import butterknife.OnClick;
 import org.jssvc.lib.R;
 import org.jssvc.lib.activity.AboutSchoolActivity;
 import org.jssvc.lib.activity.AccountThirdManagerActivity;
+import org.jssvc.lib.activity.BookShelfActivity;
+import org.jssvc.lib.activity.CurentBorrowActivity;
 import org.jssvc.lib.activity.LoginActivity;
 import org.jssvc.lib.activity.SettingActivity;
 import org.jssvc.lib.activity.UserResumeActivity;
 import org.jssvc.lib.base.BaseFragment;
-import org.jssvc.lib.bean.MemberBean;
 import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.utils.ImageLoader;
 import org.jssvc.lib.view.WaveView;
+
+import static org.jssvc.lib.base.BaseApplication.libOnline;
+import static org.jssvc.lib.base.BaseApplication.localMemberBean;
 
 /**
  * <pre>
@@ -55,13 +59,30 @@ public class MineFragment extends BaseFragment {
         }
         break;
       case R.id.rl_borrow:
-        // 我的借阅
+        // 当前借阅 / 催还续借
+        if (libOnline) {
+          startActivity(new Intent(mContext, CurentBorrowActivity.class));
+        } else {
+          showToast("图书服务已离线，需重新连接");
+        }
+        //// 借阅历史
+        //if (libOnline) {
+        //  startActivity(new Intent(mContext, HistoryBorrowActivity.class));
+        //} else {
+        //  showToast("图书服务已离线，需重新连接");
+        //}
         break;
       case R.id.rl_bookrack:
         // 我的书架
+        if (libOnline) {
+          startActivity(new Intent(mContext, BookShelfActivity.class));
+        } else {
+          showToast("图书服务已离线，需重新连接");
+        }
         break;
       case R.id.rl_appraise:
         // 我的书评
+        showToast("暂未开通");
         break;
       case R.id.rl_account:
         // 第三方账户绑定
@@ -81,9 +102,9 @@ public class MineFragment extends BaseFragment {
   @Override public void onResume() {
     super.onResume();
     if (DataSup.hasLogin()) {// 已登录
-      MemberBean bean = DataSup.getLocalMemberBean();
-      ImageLoader.with(mContext, ivAvatar, bean.getAvatar());
-      tvUserName.setText(bean.getNickname());
+      localMemberBean = DataSup.getLocalMemberBean();
+      ImageLoader.with(mContext, ivAvatar, localMemberBean.getAvatar());
+      tvUserName.setText(localMemberBean.getNickname());
     } else {// 未登录
       ImageLoader.with(mContext, ivAvatar, R.drawable.icon_default_avatar_1);
       tvUserName.setText("点击登录");

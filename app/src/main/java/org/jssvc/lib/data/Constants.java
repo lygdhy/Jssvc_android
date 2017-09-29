@@ -23,4 +23,7 @@ public class Constants {
   // sharePreference
   public static final String LOCAL_MEMBER = "local_member";// 当前账户
   public static final String THIRD_ACCOUNT = "third_account";// 第三方账户
+
+  public static final String THIRD_ACCOUNT_CODE_LIB = "1";// 图书馆
+  public static final String THIRD_ACCOUNT_CODE_JW = "2";// 教务
 }
