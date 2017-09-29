@@ -56,12 +56,13 @@
           android:layout_marginTop="10dp"
           android:background="@android:color/white"
           android:orientation="vertical"
-          android:padding="10dp"
+          android:paddingLeft="15dp"
+          android:paddingRight="15dp"
           >
 
         <ImageView
             android:id="@+id/iv_wea"
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
@@ -78,13 +79,13 @@
             >
           <TextView
               android:id="@+id/tv_temp1"
-              android:text="23°"
+              android:text="00°"
               style="@style/style_text_title"
               />
           <TextView
               android:id="@+id/tv_temp2"
-              android:text="20°C~23°C"
-              android:textSize="12sp"
+              android:text="00°C~00°C"
+              android:textSize="10sp"
               style="@style/style_text_body"
               />
         </LinearLayout>
@@ -99,19 +100,21 @@
             >
           <TextView
               android:id="@+id/tv_city"
-              android:text="苏州市"
-              style="@style/style_text_title"
+              android:layout_marginBottom="1dp"
+              android:layout_marginTop="1dp"
+              android:text="XX市"
+              style="@style/style_text_body"
               />
           <TextView
               android:id="@+id/tv_info"
               android:text="小于转中雨"
-              android:textSize="12sp"
+              android:textSize="10sp"
               style="@style/style_text_body"
               />
         </LinearLayout>
         <View
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/wea_layout_4"
             style="@style/item_split_vertical"
             />
@@ -129,12 +132,12 @@
           <TextView
               android:id="@+id/tv_pm"
               android:layout_marginBottom="2dp"
-              android:text="13"
-              style="@style/style_text_title"
+              android:text="00"
+              style="@style/style_text_body"
               />
           <TextView
               android:text="pm2.5"
-              android:textSize="12sp"
+              android:textSize="10sp"
               style="@style/style_text_body"
               />
         </LinearLayout>
@@ -151,11 +154,11 @@
               android:id="@+id/tv_level"
               android:layout_marginBottom="2dp"
               android:text="优"
-              style="@style/style_text_title"
+              style="@style/style_text_body"
               />
           <TextView
               android:text="空气"
-              android:textSize="12sp"
+              android:textSize="10sp"
               style="@style/style_text_body"
               />
         </LinearLayout>

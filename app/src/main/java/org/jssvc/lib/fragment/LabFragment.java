@@ -15,7 +15,7 @@ import org.jssvc.lib.adapter.MenuAdapter;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.MenuBean;
 import org.jssvc.lib.data.Constants;
-import org.jssvc.lib.view.DividerItemDecoration;
+import org.jssvc.lib.view.DividerGridItemDecoration;
 
 /**
  * <pre>
@@ -43,8 +43,7 @@ public class LabFragment extends BaseFragment implements BGAOnRVItemClickListene
 
   private void initRefreshView() {
     mRecycler.setLayoutManager(new GridLayoutManager(mContext, 4));
-    mRecycler.addItemDecoration(
-        new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
+    mRecycler.addItemDecoration(new DividerGridItemDecoration(mContext));
     mAdapter = new MenuAdapter(mRecycler);
     mAdapter.setOnRVItemClickListener(this);
     mRecycler.setAdapter(mAdapter);

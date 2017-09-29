@@ -4,30 +4,23 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
-import com.lzy.okgo.model.Response;
-import com.lzy.okgo.request.base.Request;
 import com.pgyersdk.javabean.AppBean;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.bean.User;
-import org.jssvc.lib.data.AccountPref;
-import org.jssvc.lib.data.HttpUrlParams;
+import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.utils.DataCleanManager;
-import org.jssvc.lib.utils.HtmlParseUtils;
 import org.jssvc.lib.view.CustomDialog;
 
 import static com.pgyersdk.update.UpdateManagerListener.getAppBeanFromString;
 import static com.pgyersdk.update.UpdateManagerListener.startDownloadTask;
+import static org.jssvc.lib.base.BaseApplication.localMemberBean;
 
 /**
  * 设置
@@ -50,22 +43,10 @@ public class SettingActivity extends BaseActivity {
 
   @Override public void onResume() {
     super.onResume();
-    if (AccountPref.isLogon(mContext)) {
-      // 用户名和密码都在
+    if (DataSup.hasLogin()) {// 已登录
       rlExit.setVisibility(View.VISIBLE);
-
-      loadUserInfo();
-    } else {
-      //rlExit.setVisibility(View.GONE);
-    }
-  }
-
-  private void loadUserInfo() {
-    User user = AccountPref.getLogonUser(mContext);
-    if (user == null || TextUtils.isEmpty(user.getUserid())) {
-      getUserInfoByNet();
-    } else {
-      loadUserInfo2UI(user);
+    } else {// 未登录
+      rlExit.setVisibility(View.GONE);
     }
   }
 
@@ -101,14 +82,6 @@ public class SettingActivity extends BaseActivity {
         // 关于我们
         startActivity(new Intent(mContext, AboutActivity.class));
         break;
-      //case R.id.rlMine:
-      //  // 证件信息=============================
-      //  if (AccountPref.isLogon(mContext)) {
-      //    startActivity(new Intent(mContext, CardInfoActivity.class));
-      //  } else {
-      //    startActivity(new Intent(mContext, LoginActivity.class));
-      //  }
-      //  break;
       case R.id.rl_appraise:
         // 给我们点个赞
         break;
@@ -121,77 +94,11 @@ public class SettingActivity extends BaseActivity {
         break;
       case R.id.rl_exit:
         // 注销
-        //if (AccountPref.isLogon(mContext)) {
-        //  AccountPref.removeLogonAccoundPwd(mContext);
-        //  AccountPref.removeLogonUser(mContext);
-        //  rlExit.setVisibility(View.GONE);
-        //
-        //  // 账号统计
-        //  MobclickAgent.onProfileSignOff();
-        //}
-        startActivity(new Intent(mContext, LoginActivity.class));
+        DataSup.setMemberStr2Local("");
+        localMemberBean = null;
+        rlExit.setVisibility(View.GONE);
+        finish();
         break;
-    }
-  }
-
-  // 获取个人信息
-  private void getUserInfoByNet() {
-    OkGo.<String>post(HttpUrlParams.URL_LIB_ACCOUND).tag(this).execute(new StringCallback() {
-      @Override public void onSuccess(Response<String> response) {
-        parseHtml(response.body());
-      }
-
-      @Override public void onError(Response<String> response) {
-        super.onError(response);
-        dealNetError(response);
-      }
-
-      @Override public void onStart(Request<String, ? extends Request> request) {
-        super.onStart(request);
-        showProgressDialog();
-      }
-
-      @Override public void onFinish() {
-        super.onFinish();
-        dissmissProgressDialog();
-      }
-    });
-
-    //OkGo.post(HttpUrlParams.URL_LIB_ACCOUND).tag(this).execute(new StringCallback() {
-    //  @Override public void onSuccess(String s, Call call, Response response) {
-    //    // s 即为所需要的结果
-    //    parseHtml(s);
-    //  }
-    //
-    //  @Override public void onError(Call call, Response response, Exception e) {
-    //    super.onError(call, response, e);
-    //    dealNetError(e);
-    //  }
-    //});
-  }
-
-  // 解析网页
-  private void parseHtml(String s) {
-    User user = HtmlParseUtils.getUserInfo(s);
-    if (user != null && !TextUtils.isEmpty(user.getUserid())) {
-      AccountPref.saveLogonUser(mContext, user);
-      loadUserInfo2UI(user);
-    } else {
-      showToast("解析失败");
-    }
-  }
-
-  // 加载数据到页面
-  private void loadUserInfo2UI(User user) {
-
-    // 解析借阅次数
-    if (!TextUtils.isEmpty(user.getReadTimes())) {
-      String timestr = user.getReadTimes().replaceAll("册次", "");
-      try {
-        int times = Integer.parseInt(timestr);
-        int level = CardInfoActivity.getLevelByTimes(times);
-      } catch (Exception e) {
-      }
     }
   }
 

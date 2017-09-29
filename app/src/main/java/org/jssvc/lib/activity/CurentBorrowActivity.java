@@ -26,10 +26,14 @@ import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.BookReadingAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.BookReadingBean;
-import org.jssvc.lib.data.AccountPref;
+import org.jssvc.lib.bean.ThirdAccountBean;
+import org.jssvc.lib.data.Constants;
+import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
 import org.jssvc.lib.view.CustomDialog;
+
+import static org.jssvc.lib.base.BaseApplication.libOnline;
 
 /**
  * 借阅历史
@@ -49,10 +53,10 @@ public class CurentBorrowActivity extends BaseActivity {
   @Override protected void initView() {
     rlEmpty.setVisibility(View.GONE);
 
-    if (AccountPref.isLogon(mContext)) {
+    if (libOnline) {
       loadBookList();
     } else {
-      startActivity(new Intent(mContext, LoginActivity.class));
+      showToast("图书服务已离线，需重新连接");
       finish();
     }
   }
@@ -87,20 +91,6 @@ public class CurentBorrowActivity extends BaseActivity {
         dissmissProgressDialog();
       }
     });
-
-    //OkGo.post(HttpUrlParams.URL_LIB_CURRENT_BORROW).tag(this).execute(new StringCallback() {
-    //  @Override public void onSuccess(String s, Call call, Response response) {
-    //    dissmissProgressDialog();
-    //    // s 即为所需要的结果
-    //    parseHtml(s);
-    //  }
-    //
-    //  @Override public void onError(Call call, Response response, Exception e) {
-    //    super.onError(call, response, e);
-    //    dissmissProgressDialog();
-    //    dealNetError(e);
-    //  }
-    //});
   }
 
   // 解析网页
@@ -135,9 +125,16 @@ public class CurentBorrowActivity extends BaseActivity {
       }
 
       @Override public void onXujieClick(View view, BookReadingBean item) {
+
+        String account = "";
+        ThirdAccountBean libBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_LIB);
+        if (libBean != null) {
+          account = libBean.getAccount();
+        }
+
         // 续借事件统计
         Map<String, String> map = new HashMap<>();
-        map.put("userName", AccountPref.getLogonAccoundNumber(mContext));
+        map.put("userName", account);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         map.put("optDate", df.format(new Date()));
         map.put("bookBarCode", item.getBarCode());
@@ -167,24 +164,6 @@ public class CurentBorrowActivity extends BaseActivity {
                 dissmissProgressDialog();
               }
             });
-
-        //OkGo.get(HttpUrlParams.URL_LIB_RENEW_BORROW)
-        //    .tag(this)
-        //    .params("bar_code", item.getBarCode())
-        //    .params("time", String.valueOf(new Date().getTime()))
-        //    .execute(new StringCallback() {
-        //      @Override public void onSuccess(String s, Call call, Response response) {
-        //        dissmissProgressDialog();
-        //        // s 即为所需要的结果
-        //        showResultDialog(s);
-        //      }
-        //
-        //      @Override public void onError(Call call, Response response, Exception e) {
-        //        super.onError(call, response, e);
-        //        dissmissProgressDialog();
-        //        dealNetError(e);
-        //      }
-        //    });
       }
     });
   }

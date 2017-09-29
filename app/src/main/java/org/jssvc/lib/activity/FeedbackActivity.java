@@ -15,7 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.data.AccountPref;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.view.CustomDialog;
 
@@ -64,7 +63,7 @@ public class FeedbackActivity extends BaseActivity {
 
     OkGo.<String>post(HttpUrlParams.URL_ORG_FEEDBACK).tag(this)
         .params("time", df.format(new Date()))
-        .params("userid", AccountPref.getLogonAccoundNumber(mContext))
+        .params("userid", getUid())
         .params("advice", feedStr)
         .params("email", trim + "")
         .execute(new StringCallback() {
@@ -87,25 +86,6 @@ public class FeedbackActivity extends BaseActivity {
             dissmissProgressDialog();
           }
         });
-
-    //OkGo.post(HttpUrlParams.URL_ORG_FEEDBACK)
-    //    .tag(this)
-    //    .params("time", df.format(new Date()))
-    //    .params("userid", AccountPref.getLogonAccoundNumber(mContext))
-    //    .params("advice", feedStr)
-    //    .params("email", trim + "")
-    //    .execute(new StringCallback() {
-    //      @Override public void onSuccess(String s, Call call, Response response) {
-    //        dissmissProgressDialog();
-    //        thankDialog();
-    //      }
-    //
-    //      @Override public void onError(Call call, Response response, Exception e) {
-    //        super.onError(call, response, e);
-    //        dissmissProgressDialog();
-    //        dealNetError(e);
-    //      }
-    //    });
   }
 
   // 感谢

@@ -10,8 +10,13 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
+import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.data.HttpUrlParams;
 
 /**
@@ -46,8 +51,6 @@ public class LoginActivity extends BaseActivity {
         if (TextUtils.isEmpty(loginname) || TextUtils.isEmpty(loginpwd)) {
           showToast("登录信息不能为空");
         } else {
-          showProgressDialog("登录中...");
-
           doLogin(loginname, loginpwd);
         }
         break;
@@ -65,10 +68,21 @@ public class LoginActivity extends BaseActivity {
   private void doLogin(String loginname, String loginpwd) {
     OkGo.<String>post(HttpUrlParams.URL_USER_LOGIN).tag(this)
         .params("number", loginname)
-        .params("passwd", loginpwd)
+        .params("passwd", MD5(loginpwd))
         .execute(new StringCallback() {
           @Override public void onSuccess(Response<String> response) {
-            showToast(response.body());
+            try {
+              JSONObject jsonObject = new JSONObject(response.body());
+              if (jsonObject.optInt("code") == 200) {
+                JSONObject jo = jsonObject.optJSONObject("data");
+                DataSup.setMemberStr2Local(jo.toString());
+                finish();
+              } else {
+                showToast(jsonObject.optString("message"));
+              }
+            } catch (JSONException e) {
+              e.printStackTrace();
+            }
           }
 
           @Override public void onError(Response<String> response) {
@@ -78,7 +92,7 @@ public class LoginActivity extends BaseActivity {
 
           @Override public void onStart(Request<String, ? extends Request> request) {
             super.onStart(request);
-            showProgressDialog();
+            showProgressDialog("登录中...");
           }
 
           @Override public void onFinish() {
@@ -86,23 +100,29 @@ public class LoginActivity extends BaseActivity {
             dissmissProgressDialog();
           }
         });
+  }
 
-    //OkGo.post(HttpUrlParams.URL_USER_LOGIN)
-    //    .tag(this)
-    //    .params("number", loginname)
-    //    .params("passwd", loginpwd)
-    //    .execute(new StringCallback() {
-    //      @Override public void onSuccess(String s, Call call, Response response) {
-    //        dissmissProgressDialog();
-    //        // s 即为所需要的结果
-    //        showToast(s);
-    //      }
-    //
-    //      @Override public void onError(Call call, Response response, Exception e) {
-    //        super.onError(call, response, e);
-    //        dissmissProgressDialog();
-    //        dealNetError(e);
-    //      }
-    //    });
+  // MD5加密
+  private static String MD5(String sourceStr) {
+    String result = "";
+    try {
+      MessageDigest md = MessageDigest.getInstance("MD5");
+      md.update(sourceStr.getBytes());
+      byte b[] = md.digest();
+      int i;
+      StringBuffer buf = new StringBuffer("");
+      for (int offset = 0; offset < b.length; offset++) {
+        i = b[offset];
+        if (i < 0) i += 256;
+        if (i < 16) buf.append("0");
+        buf.append(Integer.toHexString(i));
+      }
+      result = buf.toString();
+      System.out.println("MD5(" + sourceStr + ",32) = " + result);
+      System.out.println("MD5(" + sourceStr + ",16) = " + buf.toString().substring(8, 24));
+    } catch (NoSuchAlgorithmException e) {
+      System.out.println(e);
+    }
+    return result;
   }
 }

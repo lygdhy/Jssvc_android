@@ -12,7 +12,7 @@ import org.jssvc.lib.bean.BookReadingBean;
 import org.jssvc.lib.bean.BookSearchBean;
 import org.jssvc.lib.bean.BookShelfBean;
 import org.jssvc.lib.bean.BookShelfListBean;
-import org.jssvc.lib.bean.User;
+import org.jssvc.lib.bean.LibraryUser;
 import org.jssvc.lib.data.HttpUrlParams;
 
 import java.util.ArrayList;
@@ -64,8 +64,8 @@ public class HtmlParseUtils {
     }
 
     // 获取证件信息
-    public static User getUserInfo(String result) {
-        User user = new User();
+    public static LibraryUser getUserInfo(String result) {
+        LibraryUser user = new LibraryUser();
         List<String> stringList = readUserInfo(result);
         if (stringList.size() > 25) {
             user.setUserid("" + stringList.get(0));//学号

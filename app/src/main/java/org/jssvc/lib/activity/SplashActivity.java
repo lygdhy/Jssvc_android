@@ -2,21 +2,24 @@ package org.jssvc.lib.activity;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.widget.ImageView;
-
+import butterknife.BindView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
-import com.umeng.analytics.MobclickAgent;
-
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.data.AccountPref;
+import org.jssvc.lib.bean.ThirdAccountBean;
+import org.jssvc.lib.data.Constants;
+import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.data.HttpUrlParams;
+import org.jssvc.lib.utils.HtmlParseUtils;
 import org.jssvc.lib.utils.ImageLoader;
-
-import butterknife.BindView;
 import qiu.niorgai.StatusBarCompat;
+
+import static org.jssvc.lib.base.BaseApplication.libOnline;
+import static org.jssvc.lib.base.BaseApplication.localMemberBean;
 
 /**
  * APP启动页面
@@ -49,36 +52,35 @@ public class SplashActivity extends BaseActivity {
 
   class splashhandler implements Runnable {
     public void run() {
-      if (AccountPref.isLogon(mContext)) {
-        // 自动登录
-        autoLogin();
-      } else {
-        // 用户名密码不全，不登录直接进入
-        AccountPref.removeLogonAccoundPwd(mContext);
-        startActivity(new Intent(mContext, MainActivity.class));
-        //startActivity(new Intent(mContext, HomeActivity.class));
-        finish();
+
+      // 如果SP有数据，则初始化账户
+      if (DataSup.hasLogin()) localMemberBean = DataSup.getLocalMemberBean();
+
+      // 如果有绑定图书馆，则静默登录图书馆，并libOnline=true
+      ThirdAccountBean libBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_LIB);
+      if (libBean != null) {
+        autoLogin(libBean.getAccount(), libBean.getPwd(), libBean.getPwd());
       }
     }
   }
 
   // 自动登录
-  private void autoLogin() {
+  private void autoLogin(String number, String passwd, String select) {
     // 用户名和密码都在，静默登录
     OkGo.<String>post(HttpUrlParams.URL_LIB_LOGIN).tag(this)
-        .params("number", AccountPref.getLogonAccoundNumber(mContext))
-        .params("passwd", AccountPref.getLogonAccoundPwd(mContext))
-        .params("select", AccountPref.getLogonType(mContext))
+        .params("number", number)
+        .params("passwd", passwd)
+        .params("select", select)
         .execute(new StringCallback() {
           @Override public void onSuccess(Response<String> response) {
-            // 账号统计
-            MobclickAgent.onProfileSignIn(AccountPref.getLogonType(mContext).toUpperCase(),
-                AccountPref.getLogonAccoundNumber(mContext));
+            String errorMsg = HtmlParseUtils.getErrMsgOnLogin(response.body());
+            if (TextUtils.isEmpty(errorMsg)) {
+              libOnline = true;// 登录成功，标识为已登录
+            }
           }
 
           @Override public void onError(Response<String> response) {
             super.onError(response);
-            AccountPref.removeLogonAccoundPwd(mContext);// 登录失败
             dealNetError(response);
           }
 
@@ -86,37 +88,8 @@ public class SplashActivity extends BaseActivity {
             super.onFinish();
             // 完成跳转
             startActivity(new Intent(mContext, MainActivity.class));
-            //startActivity(new Intent(mContext, HomeActivity.class));
             finish();
           }
         });
-
-    //OkGo.post(HttpUrlParams.URL_LIB_LOGIN)
-    //    .tag(this)
-    //    .params("number", AccountPref.getLogonAccoundNumber(mContext))
-    //    .params("passwd", AccountPref.getLogonAccoundPwd(mContext))
-    //    .params("select", AccountPref.getLogonType(mContext))
-    //    .execute(new StringCallback() {
-    //      @Override public void onError(Call call, Response response, Exception e) {
-    //        super.onError(call, response, e);
-    //        dealNetError(e);
-    //        // 登录失败
-    //        AccountPref.removeLogonAccoundPwd(mContext);
-    //      }
-    //
-    //      @Override public void onSuccess(String s, Call call, Response response) {
-    //        // 账号统计
-    //        MobclickAgent.onProfileSignIn(AccountPref.getLogonType(mContext).toUpperCase(),
-    //            AccountPref.getLogonAccoundNumber(mContext));
-    //      }
-    //
-    //      @Override public void onAfter(@Nullable String s, @Nullable Exception e) {
-    //        super.onAfter(s, e);
-    //        // 完成跳转
-    //        startActivity(new Intent(mContext, MainActivity.class));
-    //        //startActivity(new Intent(mContext, HomeActivity.class));
-    //        finish();
-    //      }
-    //    });
   }
 }

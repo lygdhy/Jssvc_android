@@ -16,6 +16,11 @@ import org.jssvc.lib.fragment.LibAccountResetPwdFragment;
  */
 public class AccountLibManagerActivity extends BaseActivity {
 
+  public String school = "";
+  public String name = "";
+  public String oldPwd = "";
+  public String type = "";
+
   @Override protected int getContentViewId() {
     return R.layout.activity_account_lib_manager;
   }

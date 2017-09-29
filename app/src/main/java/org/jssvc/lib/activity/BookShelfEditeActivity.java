@@ -84,20 +84,6 @@ public class BookShelfEditeActivity extends BaseActivity {
         dissmissProgressDialog();
       }
     });
-
-    //OkGo.post(HttpUrlParams.URL_LIB_BOOK_SHELF).tag(this).execute(new StringCallback() {
-    //  @Override public void onSuccess(String s, Call call, Response response) {
-    //    dissmissProgressDialog();
-    //    // s 即为所需要的结果
-    //    parseHtml2List(s);
-    //  }
-    //
-    //  @Override public void onError(Call call, Response response, Exception e) {
-    //    super.onError(call, response, e);
-    //    dissmissProgressDialog();
-    //    dealNetError(e);
-    //  }
-    //});
   }
 
   // 解析网页
@@ -266,26 +252,6 @@ public class BookShelfEditeActivity extends BaseActivity {
             dissmissProgressDialog();
           }
         });
-
-    //OkGo.get(HttpUrlParams.URL_LIB_BOOK_SHELF)
-    //    .params("action", code)
-    //    .params("classid", classid)
-    //    .params("cls_name", cls_name)
-    //    .params("remark", "")
-    //    .tag(this)
-    //    .execute(new StringCallback() {
-    //      @Override public void onSuccess(String s, Call call, Response response) {
-    //        dissmissProgressDialog();
-    //        // s 即为所需要的结果
-    //        parseHtml2List(s);
-    //      }
-    //
-    //      @Override public void onError(Call call, Response response, Exception e) {
-    //        super.onError(call, response, e);
-    //        dissmissProgressDialog();
-    //        dealNetError(e);
-    //      }
-    //    });
   }
 
   @Override public boolean onKeyDown(int keyCode, KeyEvent event) {

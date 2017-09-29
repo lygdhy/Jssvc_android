@@ -186,24 +186,6 @@ public class BookShelfFragment extends BaseFragment {
             dissmissProgressDialog();
           }
         });
-
-    //OkGo.get(HttpUrlParams.URL_LIB_BOOK_DEL)
-    //    .params("classid", classid)
-    //    .params("marc_no", bookcode)
-    //    .params("time", System.currentTimeMillis())
-    //    .tag(this)
-    //    .execute(new StringCallback() {
-    //      @Override public void onSuccess(String s, Call call, Response response) {
-    //        dissmissProgressDialog();
-    //        showAlertDialog(s);
-    //      }
-    //
-    //      @Override public void onError(Call call, Response response, Exception e) {
-    //        super.onError(call, response, e);
-    //        dissmissProgressDialog();
-    //        dealNetError(e);
-    //      }
-    //    });
   }
 
   // 删除结果显示

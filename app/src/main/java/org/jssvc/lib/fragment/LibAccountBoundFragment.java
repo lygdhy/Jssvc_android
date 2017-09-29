@@ -15,15 +15,16 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
-import com.umeng.analytics.MobclickAgent;
 import java.util.ArrayList;
 import java.util.List;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jssvc.lib.R;
 import org.jssvc.lib.activity.AccountLibManagerActivity;
 import org.jssvc.lib.adapter.DialogListSelecterAdapter;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.ListSelecterBean;
-import org.jssvc.lib.data.AccountPref;
+import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
 import org.jssvc.lib.view.DividerItemDecoration;
@@ -69,87 +70,114 @@ public class LibAccountBoundFragment extends BaseFragment {
         break;
       case R.id.btn_submit:// 登录验证
         String loginname = edtAccount.getText().toString().trim();
-        final String loginpwd = edtPwd.getText().toString().trim();
+        String loginpwd = edtPwd.getText().toString().trim();
         if (TextUtils.isEmpty(loginname) || TextUtils.isEmpty(loginpwd)) {
           showToast("登录信息不能为空");
         } else {
-
-          AccountPref.saveLoginAccoundNumber(mContext, loginname);
-          AccountPref.saveLoginType(mContext, currentLoginType.getId());
-
-          OkGo.<String>post(HttpUrlParams.URL_LIB_LOGIN).tag(this)
-              .params("number", loginname)
-              .params("passwd", loginpwd)
-              .params("select", currentLoginType.getId())
-              .execute(new StringCallback() {
-                @Override public void onSuccess(Response<String> response) {
-                  parseHtml(response.body(), loginpwd);
-                }
-
-                @Override public void onError(Response<String> response) {
-                  super.onError(response);
-                  dealNetError(response);
-                }
-
-                @Override public void onStart(Request<String, ? extends Request> request) {
-                  super.onStart(request);
-                  showProgressDialog("绑定中...");
-                }
-
-                @Override public void onFinish() {
-                  super.onFinish();
-                  dissmissProgressDialog();
-                }
-              });
-
-          //OkGo.post(HttpUrlParams.URL_LIB_LOGIN)
-          //    .tag(this)
-          //    .params("number", loginname)
-          //    .params("passwd", loginpwd)
-          //    .params("select", currentLoginType.getId())
-          //    .execute(new StringCallback() {
-          //      @Override public void onSuccess(String s, Call call, Response response) {
-          //        dissmissProgressDialog();
-          //        // s 即为所需要的结果
-          //        parseHtml(s, loginpwd);
-          //      }
-          //
-          //      @Override public void onError(Call call, Response response, Exception e) {
-          //        super.onError(call, response, e);
-          //        dissmissProgressDialog();
-          //        dealNetError(e);
-          //      }
-          //    });
+          doLogin(loginname, loginpwd, currentLoginType.getId());
         }
         break;
     }
   }
 
+  // 登录
+  private void doLogin(final String loginname, final String loginpwd, final String loginType) {
+    OkGo.<String>post(HttpUrlParams.URL_LIB_LOGIN).tag(this)
+        .params("number", loginname)
+        .params("passwd", loginpwd)
+        .params("select", loginType)
+        .execute(new StringCallback() {
+          @Override public void onSuccess(Response<String> response) {
+            parseHtml(response.body(), loginname, loginpwd, loginType);
+          }
+
+          @Override public void onError(Response<String> response) {
+            super.onError(response);
+            dealNetError(response);
+          }
+
+          @Override public void onStart(Request<String, ? extends Request> request) {
+            super.onStart(request);
+            showProgressDialog("身份验证中...");
+          }
+
+          @Override public void onFinish() {
+            super.onFinish();
+            dissmissProgressDialog();
+          }
+        });
+  }
+
   // 解析网页
-  private void parseHtml(String s, String loginpwd) {
+  private void parseHtml(String s, final String loginname, final String loginpwd,
+      final String loginType) {
     String errorMsg = HtmlParseUtils.getErrMsgOnLogin(s);
     if (TextUtils.isEmpty(errorMsg)) {
-      // 保存密码
-      AccountPref.saveLoginAccoundPwd(mContext, loginpwd);
-      // 账号统计
-      MobclickAgent.onProfileSignIn(AccountPref.getLogonType(mContext).toUpperCase(),
-          AccountPref.getLogonAccoundNumber(mContext));
-      // 登录成功
-      showToast("===绑定成功===");
-      getActivity().finish();
+      // 登录成功，提交账户到服务器
+      submintThirdAccount(loginname, loginpwd, loginType);
     } else {
       // 有错误提示
       if (errorMsg.contains("认证失败")) {
-        // “如果认证失败，您将不能使用我的图书馆功能”
         AccountLibManagerActivity activity = (AccountLibManagerActivity) getActivity();
+        // 传参出去
+        activity.school = currentSchool.getTitle();
+        activity.name = loginname;
+        activity.oldPwd = loginpwd;
+        activity.type = loginType;
+
+        // “如果认证失败，您将不能使用我的图书馆功能”
         activity.accountActivateFragment();
       } else {
         showToast(errorMsg);
-        AccountPref.removeLogonAccoundPwd(mContext);
       }
     }
   }
 
+  // 提交第三方账户
+  private void submintThirdAccount(String loginname, String loginpwd, String loginType) {
+    OkGo.<String>post(HttpUrlParams.THIRD_ACCOUNT_BOUND).tag(this)
+        .params("uid", getUid())
+        .params("platform", "1")// 平台1图书馆
+        .params("school_abbr", currentSchool.getTitle())//学校代码
+        .params("third_account", loginname)
+        .params("third_pwd", loginpwd)
+        .params("third_type", loginType)
+        .execute(new StringCallback() {
+          @Override public void onSuccess(Response<String> response) {
+            try {
+              JSONObject jsonObject = new JSONObject(response.body());
+              if (jsonObject.optInt("code") == 200) {
+                JSONObject jo = jsonObject.optJSONObject("data");
+
+                showToast("绑定成功");
+                DataSup.setThirdAccountStr2Local(jo.toString());
+                getActivity().finish();
+              } else {
+                showToast(jsonObject.optString("message"));
+              }
+            } catch (JSONException e) {
+              e.printStackTrace();
+            }
+          }
+
+          @Override public void onError(Response<String> response) {
+            super.onError(response);
+            dealNetError(response);
+          }
+
+          @Override public void onStart(Request<String, ? extends Request> request) {
+            super.onStart(request);
+            showProgressDialog("绑定中...");
+          }
+
+          @Override public void onFinish() {
+            super.onFinish();
+            dissmissProgressDialog();
+          }
+        });
+  }
+
+  // 初始化字典选项
   private void initSelecters() {
     loginTypeList.clear();
     loginTypeList.add(new ListSelecterBean(R.drawable.icon_card, "cert_no", "证件号", ""));
