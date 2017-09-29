@@ -10,6 +10,7 @@ import butterknife.OnClick;
 import org.jssvc.lib.R;
 import org.jssvc.lib.activity.AccountPlatformManagerActivity;
 import org.jssvc.lib.base.BaseFragment;
+import org.jssvc.lib.utils.PhoneFormatCheckUtils;
 
 /**
  * <pre>
@@ -49,15 +50,16 @@ public class PlatformAccountPhoneCheckFragment extends BaseFragment {
         String phone = edtUsername.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
           showToast("请先输入手机号码");
+        } else if (!PhoneFormatCheckUtils.isPhoneLegal(phone)) {
+          showToast("请输入正确的手机号码");
         } else {
           // 验证
-          showToast("===验证号码，假设是新号码===");
           AccountPlatformManagerActivity activity = (AccountPlatformManagerActivity) getActivity();
           activity.resetPwdFragment(phone);
         }
         break;
       case R.id.tv_protocol:// 阅读协议
-        showToast("===阅读协议===");
+        showToast("乖乖滴就好~");
         break;
     }
   }

@@ -8,7 +8,6 @@
   <RelativeLayout style="@style/actionbar_whole_style_base">
     <TextView
         android:id="@+id/tv_back"
-        android:drawableLeft="@drawable/icon_close_theme"
         style="@style/actionbar_left_style_base"
         />
     <TextView

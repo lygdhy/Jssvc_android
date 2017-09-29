@@ -19,6 +19,8 @@ import org.jssvc.lib.activity.AccountPlatformManagerActivity;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.view.TimeCountDown;
 
+import static org.jssvc.lib.R.id.edt_phone;
+
 /**
  * <pre>
  *     author : lygdh
@@ -30,7 +32,7 @@ import org.jssvc.lib.view.TimeCountDown;
 public class PlatformAccountResetPwdFragment extends BaseFragment
     implements TimeCountDown.OnTimerCountDownListener {
 
-  @BindView(R.id.edt_phone) EditText edtPhone;
+  @BindView(edt_phone) EditText edtPhone;
   @BindView(R.id.edt_code) EditText edtCode;
   @BindView(R.id.edt_pwd) EditText edtPwd;
   @BindView(R.id.btn_submit) Button btnSubmit;
@@ -61,7 +63,10 @@ public class PlatformAccountResetPwdFragment extends BaseFragment
     if (opt_code == 0) btnSubmit.setText("立即注册");
     if (opt_code == 1) btnSubmit.setText("重置密码");
     edtPhone.setText(opt_phone);
+    edtPhone.setEnabled(false);
     edtCode.setFocusable(true);
+
+    showToast("先请求服务，判断手机号码是否允许，之后在决定是否发送短信!!");
 
     btnCountDown.setOnTimerCountDownListener(this);// 初始化倒计时
 
