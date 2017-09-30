@@ -25,18 +25,105 @@
       android:orientation="vertical"
       >
 
-    <RelativeLayout style="@style/actionbar_whole_style_base">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/bg_user_center"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        >
 
-      <TextView
-          android:id="@+id/tvBack"
-          style="@style/actionbar_left_style_base"
-          />
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          >
 
-      <TextView
-          android:id="@+id/tvName"
-          android:text="证件信息"
-          style="@style/actionbar_title_style_base"
-          />
+        <ImageView
+            android:id="@+id/ivLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:src="@drawable/level_list"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:padding="10dp"
+            >
+
+          <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="bottom"
+              android:orientation="horizontal"
+              >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="您累计借书达"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                />
+
+            <TextView
+                android:id="@+id/tvLevel1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:text="XX"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="册次"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                />
+          </LinearLayout>
+
+          <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="bottom"
+              android:orientation="horizontal"
+              >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="获得"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                />
+
+            <TextView
+                android:id="@+id/tvLevel2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:text="XXXX"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="称号！"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                />
+          </LinearLayout>
+        </LinearLayout>
+      </LinearLayout>
     </RelativeLayout>
 
     <ScrollView
@@ -51,106 +138,6 @@
           android:layout_height="match_parent"
           android:orientation="vertical"
           >
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:background="@drawable/bg_user_center"
-            android:gravity="center"
-            >
-
-          <LinearLayout
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal"
-              >
-
-            <ImageView
-                android:id="@+id/ivLevel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:src="@drawable/level_list"
-                />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="bottom"
-                android:orientation="vertical"
-                android:padding="10dp"
-                >
-
-              <LinearLayout
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:gravity="bottom"
-                  android:orientation="horizontal"
-                  >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="您累计借书达"
-                    android:textColor="@android:color/white"
-                    android:textSize="12sp"
-                    />
-
-                <TextView
-                    android:id="@+id/tvLevel1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:text="XX"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="册次"
-                    android:textColor="@android:color/white"
-                    android:textSize="12sp"
-                    />
-              </LinearLayout>
-
-              <LinearLayout
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:gravity="bottom"
-                  android:orientation="horizontal"
-                  >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="获得"
-                    android:textColor="@android:color/white"
-                    android:textSize="12sp"
-                    />
-
-                <TextView
-                    android:id="@+id/tvLevel2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:text="XXXX"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="称号！"
-                    android:textColor="@android:color/white"
-                    android:textSize="12sp"
-                    />
-              </LinearLayout>
-            </LinearLayout>
-          </LinearLayout>
-        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -328,4 +315,21 @@
       </LinearLayout>
     </ScrollView>
   </LinearLayout>
+
+  <RelativeLayout
+      android:background="@null"
+      style="@style/actionbar_whole_style_base"
+      >
+
+    <TextView
+        android:id="@+id/tvBack"
+        style="@style/actionbar_left_style_base"
+        />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:text="证件信息"
+        style="@style/actionbar_title_style_base"
+        />
+  </RelativeLayout>
 </FrameLayout>

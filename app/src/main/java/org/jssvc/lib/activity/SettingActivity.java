@@ -20,6 +20,7 @@ import org.jssvc.lib.view.CustomDialog;
 
 import static com.pgyersdk.update.UpdateManagerListener.getAppBeanFromString;
 import static com.pgyersdk.update.UpdateManagerListener.startDownloadTask;
+import static org.jssvc.lib.base.BaseApplication.libOnline;
 import static org.jssvc.lib.base.BaseApplication.localMemberBean;
 
 /**
@@ -96,6 +97,7 @@ public class SettingActivity extends BaseActivity {
         // 注销
         DataSup.setMemberStr2Local("");
         localMemberBean = null;
+        libOnline = false;
         rlExit.setVisibility(View.GONE);
         finish();
         break;

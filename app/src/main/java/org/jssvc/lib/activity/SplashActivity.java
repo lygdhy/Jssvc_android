@@ -59,7 +59,7 @@ public class SplashActivity extends BaseActivity {
       // 如果有绑定图书馆，则静默登录图书馆，并libOnline=true
       ThirdAccountBean libBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_LIB);
       if (libBean != null) {
-        autoLogin(libBean.getAccount(), libBean.getPwd(), libBean.getPwd());
+        autoLogin(libBean.getAccount(), libBean.getPwd(), libBean.getType());
       } else {
         // 完成跳转
         startActivity(new Intent(mContext, MainActivity.class));
