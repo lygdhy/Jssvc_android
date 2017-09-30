@@ -4,18 +4,13 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -28,20 +23,17 @@ import com.lzy.okgo.request.base.Request;
 import com.umeng.analytics.MobclickAgent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.BookSearchAdapter;
-import org.jssvc.lib.adapter.BookSearchHisAdapter;
 import org.jssvc.lib.adapter.DialogListSelecterAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.BookSearchBean;
 import org.jssvc.lib.bean.ListSelecterBean;
 import org.jssvc.lib.bean.ThirdAccountBean;
-import org.jssvc.lib.data.AppPref;
 import org.jssvc.lib.data.Constants;
 import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.data.HttpUrlParams;
@@ -56,19 +48,9 @@ public class BookSearchActivity extends BaseActivity
 
   @BindView(R.id.tv_category) TextView tvCategory;
   @BindView(R.id.edt_input) EditText edtInput;
-  @BindView(R.id.iv_search) ImageView ivSearch;
-  @BindView(R.id.rl_empty) RelativeLayout rlEmpty;
-
-  @BindView(R.id.his_layout) LinearLayout hisLayout;//搜索记录
-  @BindView(R.id.lv_history) RecyclerView lvHistory;
-  @BindView(R.id.tv_delete_his) TextView tvDeleteHis;
 
   @BindView(R.id.refresh_layout) BGARefreshLayout mRefreshLayout;
   @BindView(R.id.recyclerView) RecyclerView recyclerView;//查询数据
-
-  // 搜索记录
-  List<String> hislist = new ArrayList<String>();
-  BookSearchHisAdapter hislistAdapter;
 
   // 搜索结果
   BookSearchAdapter bookSearchAdapter;
@@ -86,12 +68,8 @@ public class BookSearchActivity extends BaseActivity
   }
 
   @Override protected void initView() {
-    ivSearch.setVisibility(View.GONE);
-    hisLayout.setVisibility(View.GONE);//搜索记录
 
     initRefreshLayout();
-
-    rlEmpty.setVisibility(View.GONE);
 
     // 初始化搜索类型
     initSearchType();
@@ -102,7 +80,6 @@ public class BookSearchActivity extends BaseActivity
             && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
           searchText = edtInput.getText().toString().trim();
           if (!TextUtils.isEmpty(searchText)) {
-            saveKey2Local(searchText);
             searchBookEngine(true);
           }
           return true;
@@ -110,49 +87,6 @@ public class BookSearchActivity extends BaseActivity
         return false;
       }
     });
-
-    edtInput.addTextChangedListener(new TextWatcher() {
-      @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-      }
-
-      @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-      }
-
-      @Override public void afterTextChanged(Editable s) {
-        if (TextUtils.isEmpty(s.toString())) {
-          ivSearch.setVisibility(View.GONE);
-
-          // 隐显
-          rlEmpty.setVisibility(View.GONE);
-          recyclerView.setVisibility(View.GONE);
-          hisLayout.setVisibility(View.VISIBLE);
-          reLoadSearchHis();
-        } else {
-          ivSearch.setVisibility(View.VISIBLE);
-        }
-      }
-    });
-
-    // ============================================
-    lvHistory.setLayoutManager(new LinearLayoutManager(mContext));
-    lvHistory.setHasFixedSize(true);
-    hislistAdapter = new BookSearchHisAdapter(mContext, hislist);
-    lvHistory.setAdapter(hislistAdapter);
-
-    hislistAdapter.setOnItemClickListener(
-        new BookSearchHisAdapter.OnRecyclerViewItemClickListener() {
-          @Override public void onItemClick(View view, String item) {
-            if (!TextUtils.isEmpty(item)) {
-              searchText = item;
-              edtInput.setText(item);
-              saveKey2Local(searchText);
-              searchBookEngine(true);
-            }
-          }
-        });
-    reLoadSearchHis();// 加载搜索记录
 
     // ============================================
     //创建默认的线性LayoutManager
@@ -199,8 +133,7 @@ public class BookSearchActivity extends BaseActivity
     mRefreshLayout.setRefreshViewHolder(moocStyleRefreshViewHolder);
   }
 
-  @OnClick({ R.id.tv_cancel, R.id.tv_category, R.id.iv_search, R.id.tv_delete_his })
-  public void onClick(View view) {
+  @OnClick({ R.id.tv_cancel, R.id.tv_category }) public void onClick(View view) {
     switch (view.getId()) {
       case R.id.tv_cancel:
         finish();
@@ -208,19 +141,6 @@ public class BookSearchActivity extends BaseActivity
       case R.id.tv_category:
         // 类型选择
         showTypeDialog();
-        break;
-      case R.id.iv_search:
-        // 搜索
-        searchText = edtInput.getText().toString().trim();
-        if (!TextUtils.isEmpty(searchText)) {
-          saveKey2Local(searchText);
-          searchBookEngine(true);
-        }
-        break;
-      case R.id.tv_delete_his:
-        // 清空历史
-        AppPref.clearSearchKey(mContext);
-        reLoadSearchHis();
         break;
     }
   }
@@ -284,7 +204,6 @@ public class BookSearchActivity extends BaseActivity
           @Override public void onStart(Request<String, ? extends Request> request) {
             super.onStart(request);
             showProgressDialog("检索中...");
-            hisLayout.setVisibility(View.GONE);
           }
 
           @Override public void onFinish() {
@@ -309,14 +228,6 @@ public class BookSearchActivity extends BaseActivity
       bookSearchAdapter.notifyDataSetChanged();
     } else {
       showToast("没有获取到新数据");
-    }
-
-    if (booklists.size() > 0) {
-      rlEmpty.setVisibility(View.GONE);
-      recyclerView.setVisibility(View.VISIBLE);
-    } else {
-      rlEmpty.setVisibility(View.VISIBLE);
-      recyclerView.setVisibility(View.GONE);
     }
 
     // 获取搜索总数
@@ -382,62 +293,5 @@ public class BookSearchActivity extends BaseActivity
       }
     }
     return false;
-  }
-
-  // =================================================
-  // 加载搜索记录
-  private void reLoadSearchHis() {
-    hislist.clear();
-    String allkeys = AppPref.getSearchKey(mContext);
-    String[] hisArrays = allkeys.split(",");
-    for (int i = 0; i < hisArrays.length; i++) {
-      if (!TextUtils.isEmpty(hisArrays[i])) hislist.add(hisArrays[i]);
-    }
-
-    if (hislist.size() > 0) {
-      hisLayout.setVisibility(View.VISIBLE);
-      Collections.reverse(hislist);
-      hislistAdapter.notifyDataSetChanged();
-    } else {
-      hisLayout.setVisibility(View.GONE);
-    }
-  }
-
-  // 保存关键字到本地
-  private void saveKey2Local(String key) {
-    if (!TextUtils.isEmpty(key)) {
-      // 1、读取本地数据
-      String allkeys = AppPref.getSearchKey(mContext);
-      // 2、重复性判断
-      int pos = 0;
-      int maxlong = 5;
-      boolean same = false;
-      String[] hisArrays = allkeys.split(",");
-      List<String> hisArr = new ArrayList<>();
-      for (int i = 0; i < hisArrays.length; i++) {
-        hisArr.add("" + hisArrays[i]);
-      }
-      for (int i = 0; i < hisArr.size(); i++) {
-        if (hisArr.get(i).equals(key)) {
-          pos = i;
-          same = true;
-        }
-      }
-      if (same) {
-        hisArr.remove(pos);
-      }
-      hisArr.add(key);
-      // 3、处理溢出
-      if (hisArr.size() > maxlong) {
-        hisArr.remove(0);
-      }
-
-      // 4、存储
-      StringBuilder sb = new StringBuilder();
-      for (int i = 0; i < hisArr.size(); i++) {
-        sb.append(hisArr.get(i) + ",");
-      }
-      AppPref.saveSearchKey(mContext, sb.toString());
-    }
   }
 }

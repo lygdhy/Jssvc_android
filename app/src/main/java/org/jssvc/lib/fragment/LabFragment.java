@@ -1,6 +1,5 @@
 package org.jssvc.lib.fragment;
 
-import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,7 +9,7 @@ import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import java.util.ArrayList;
 import java.util.List;
 import org.jssvc.lib.R;
-import org.jssvc.lib.activity.DrawingActivity;
+import org.jssvc.lib.activity.MainActivity;
 import org.jssvc.lib.adapter.MenuAdapter;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.MenuBean;
@@ -36,6 +35,7 @@ public class LabFragment extends BaseFragment implements BGAOnRVItemClickListene
   }
 
   @Override protected void initView() {
+
     initRefreshView();
 
     getDiscussList();
@@ -52,23 +52,28 @@ public class LabFragment extends BaseFragment implements BGAOnRVItemClickListene
   private void getDiscussList() {
     List<MenuBean> menuList = new ArrayList<>();
 
-    menuList.add(new MenuBean(Constants.MENU_DRAW, "你画我猜", R.drawable.icon_menu_c));
-    menuList.add(new MenuBean(Constants.MENU_LIB_BOOK_REVIEW, "书评", R.drawable.icon_menu_c));
-    for (int i = 0; i < 8; i++) {
-      menuList.add(new MenuBean(i, "菜单" + i, R.drawable.icon_menu_a));
-    }
+    menuList.add(new MenuBean(Constants.MENU_DRAW, "你画我猜", R.drawable.icon_menu_guess));
+    menuList.add(new MenuBean(Constants.MENU_FEEDBACK, "意见反馈", R.drawable.icon_menu_feedback));
+    menuList.add(new MenuBean(Constants.MENU_WAITER, "客服小二", R.drawable.icon_menu_waiter));
+    menuList.add(new MenuBean(Constants.MENU_NEWS, "新闻资讯", R.drawable.icon_menu_new));
+    menuList.add(new MenuBean(Constants.MENU_ABOUT, "关于我们", R.drawable.icon_menu_about_us));
+
+    menuList.add(new MenuBean(Constants.LIB_ABOUT, "关于图书馆", R.drawable.icon_menu_about_lib));
+    menuList.add(new MenuBean(Constants.LIB_HELP, "帮助指南", R.drawable.icon_menu_help));
+    menuList.add(new MenuBean(Constants.LIB_SEARCH_BOOK, "图书搜索", R.drawable.icon_menu_book_search));
+
+    menuList.add(new MenuBean(Constants.LIB_RESUME, "证件信息", R.drawable.icon_menu_idcard));
+    menuList.add(new MenuBean(Constants.LIB_READ_ING, "当前借阅", R.drawable.icon_menu_borrowed));
+    menuList.add(new MenuBean(Constants.LIB_READ_HIS, "借阅历史", R.drawable.icon_menu_book_his));
+    menuList.add(new MenuBean(Constants.LIB_BOOK_REVIEW, "我的书评", R.drawable.icon_menu_appraise));
+    menuList.add(new MenuBean(Constants.LIB_BOOK_SHELF, "我的书架", R.drawable.icon_menu_bookrack));
+
     mAdapter.setData(menuList);
   }
 
   @Override public void onRVItemClick(ViewGroup parent, View itemView, int position) {
     MenuBean item = mAdapter.getData().get(position);
-    switch (item.getType()) {
-      case Constants.MENU_DRAW://你画我猜
-        startActivity(new Intent(mContext, DrawingActivity.class));
-        break;
-      case Constants.MENU_LIB_BOOK_REVIEW://书评
-        showToast("书评");
-        break;
-    }
+    MainActivity parentActivity = (MainActivity) getActivity();
+    parentActivity.openActivityByMenu(item);
   }
 }

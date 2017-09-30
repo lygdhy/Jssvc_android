@@ -96,8 +96,8 @@ public class SettingActivity extends BaseActivity {
       case R.id.rl_exit:
         // 注销
         DataSup.setMemberStr2Local("");
-        localMemberBean = null;
-        libOnline = false;
+        localMemberBean = null;// 清除账户
+        libOnline = false;// 图书馆下线
         rlExit.setVisibility(View.GONE);
         finish();
         break;

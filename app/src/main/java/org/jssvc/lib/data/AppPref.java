@@ -33,17 +33,4 @@ public class AppPref {
     return getPreference(context).getBoolean(KEY_IS_READ_HELP_TIP, true);
   }
 
-  // 搜索记录start
-  public static String getSearchKey(Context context) {
-    return getPreference(context).getString(KEY_BOOK_SEARCH, "");
-  }
-
-  public static boolean saveSearchKey(Context context, String values) {
-    return getPreference(context).edit().putString(KEY_BOOK_SEARCH, values).commit();
-  }
-
-  public static boolean clearSearchKey(Context context) {
-    return getPreference(context).edit().putString(KEY_BOOK_SEARCH, "").commit();
-  }
-  // 搜索记录end
 }

@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
+import org.jssvc.lib.data.Constants;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.view.CustomDialog;
 
@@ -52,7 +53,7 @@ public class FeedbackActivity extends BaseActivity {
         }
         break;
       case R.id.opt_chat:
-        callQQCell("2906501168");
+        callQQCell(Constants.QQ_WAITER);
         break;
     }
   }
