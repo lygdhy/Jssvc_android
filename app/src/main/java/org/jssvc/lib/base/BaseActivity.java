@@ -159,17 +159,19 @@ public abstract class BaseActivity extends AppCompatActivity {
     // QQ轻聊版 com.tencent.qqlite
     // QQ国际版 com.tencent.mobileqqi
     // QQHD com.tencent.minihd.qq
+    // TIM com.tencent.tim
     // 企业QQ com.tencent.eim
     if (AppUtils.isInstallApp("com.tencent.mqq")
         || AppUtils.isInstallApp("com.tencent.mobileqq")
         || AppUtils.isInstallApp("com.tencent.qqlite")
         || AppUtils.isInstallApp("com.tencent.mobileqqi")
         || AppUtils.isInstallApp("com.tencent.minihd.qq")
+        || AppUtils.isInstallApp("com.tencent.tim")
         || AppUtils.isInstallApp("com.tencent.eim")) {
       String url = "mqqwpa://im/chat?chat_type=wpa&uin=" + qqNum;
       startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     } else {
-      showToast("暂未安装QQ相关软件无法发起聊天");
+      showToast("请先安装QQ");
     }
   }
 }

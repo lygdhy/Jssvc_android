@@ -1,21 +1,27 @@
 package org.jssvc.lib.fragment;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import org.jssvc.lib.R;
-import org.jssvc.lib.activity.AboutSchoolActivity;
 import org.jssvc.lib.activity.AccountThirdManagerActivity;
-import org.jssvc.lib.activity.BookShelfActivity;
-import org.jssvc.lib.activity.CurentBorrowActivity;
 import org.jssvc.lib.activity.LoginActivity;
 import org.jssvc.lib.activity.SettingActivity;
 import org.jssvc.lib.activity.UserResumeActivity;
 import org.jssvc.lib.base.BaseFragment;
+import org.jssvc.lib.bean.ThirdAccountBean;
+import org.jssvc.lib.data.Constants;
 import org.jssvc.lib.data.DataSup;
+import org.jssvc.lib.data.HttpUrlParams;
+import org.jssvc.lib.utils.HtmlParseUtils;
 import org.jssvc.lib.utils.ImageLoader;
 import org.jssvc.lib.view.WaveView;
 
@@ -46,8 +52,7 @@ public class MineFragment extends BaseFragment {
   }
 
   @OnClick({
-      R.id.ll_user, R.id.rl_borrow, R.id.rl_bookrack, R.id.rl_appraise, R.id.rl_account,
-      R.id.rl_about_lib, R.id.rl_setting
+      R.id.ll_user, R.id.rl_account, R.id.rl_setting
   }) public void onViewClicked(View view) {
     switch (view.getId()) {
       case R.id.ll_user:
@@ -58,39 +63,9 @@ public class MineFragment extends BaseFragment {
           startActivity(new Intent(mContext, LoginActivity.class));
         }
         break;
-      case R.id.rl_borrow:
-        // 当前借阅 / 催还续借
-        if (libOnline) {
-          startActivity(new Intent(mContext, CurentBorrowActivity.class));
-        } else {
-          showToast("图书服务已离线，需重新连接");
-        }
-        //// 借阅历史
-        //if (libOnline) {
-        //  startActivity(new Intent(mContext, HistoryBorrowActivity.class));
-        //} else {
-        //  showToast("图书服务已离线，需重新连接");
-        //}
-        break;
-      case R.id.rl_bookrack:
-        // 我的书架
-        if (libOnline) {
-          startActivity(new Intent(mContext, BookShelfActivity.class));
-        } else {
-          showToast("图书服务已离线，需重新连接");
-        }
-        break;
-      case R.id.rl_appraise:
-        // 我的书评
-        showToast("暂未开通");
-        break;
       case R.id.rl_account:
         // 第三方账户绑定
         startActivity(new Intent(mContext, AccountThirdManagerActivity.class));
-        break;
-      case R.id.rl_about_lib:
-        // 关于图书馆
-        startActivity(new Intent(mContext, AboutSchoolActivity.class));
         break;
       case R.id.rl_setting:
         // 设置
@@ -105,9 +80,55 @@ public class MineFragment extends BaseFragment {
       localMemberBean = DataSup.getLocalMemberBean();
       ImageLoader.with(mContext, ivAvatar, localMemberBean.getAvatar());
       tvUserName.setText(localMemberBean.getNickname());
+
+      // 如果绑定且未登录，自动登录到图书馆
+      ThirdAccountBean libBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_LIB);
+      if (libBean != null && !libOnline) {
+        // 有账号但未登录
+        doLogin(libBean.getAccount(), libBean.getPwd(), libBean.getType());
+      }
     } else {// 未登录
       ImageLoader.with(mContext, ivAvatar, R.drawable.icon_default_avatar_1);
       tvUserName.setText("点击登录");
+    }
+  }
+
+  // 登录
+  private void doLogin(final String loginname, final String loginpwd, final String loginType) {
+    OkGo.<String>post(HttpUrlParams.URL_LIB_LOGIN).tag(this)
+        .params("number", loginname)
+        .params("passwd", loginpwd)
+        .params("select", loginType)
+        .execute(new StringCallback() {
+          @Override public void onSuccess(Response<String> response) {
+            parseHtml(response.body());
+          }
+
+          @Override public void onError(Response<String> response) {
+            super.onError(response);
+            dealNetError(response);
+          }
+
+          @Override public void onStart(Request<String, ? extends Request> request) {
+            super.onStart(request);
+            showProgressDialog("帐号读取中...");
+          }
+
+          @Override public void onFinish() {
+            super.onFinish();
+            dissmissProgressDialog();
+          }
+        });
+  }
+
+  // 解析网页
+  private void parseHtml(String s) {
+    String errorMsg = HtmlParseUtils.getErrMsgOnLogin(s);
+    if (TextUtils.isEmpty(errorMsg)) {
+      // 登录成功
+      libOnline = true;
+    } else {
+      libOnline = false;
     }
   }
 }

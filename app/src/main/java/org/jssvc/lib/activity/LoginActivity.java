@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.OnClick;
+import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -16,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
+import org.jssvc.lib.bean.MemberBean;
 import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.data.HttpUrlParams;
 
@@ -76,7 +78,10 @@ public class LoginActivity extends BaseActivity {
               if (jsonObject.optInt("code") == 200) {
                 JSONObject jo = jsonObject.optJSONObject("data");
                 DataSup.setMemberStr2Local(jo.toString());
-                finish();
+
+                // 加载第三方账户
+                MemberBean bean = new Gson().fromJson(jo.toString(), MemberBean.class);
+                getUserAcount(bean.getId());
               } else {
                 showToast(jsonObject.optString("message"));
               }
@@ -98,6 +103,43 @@ public class LoginActivity extends BaseActivity {
           @Override public void onFinish() {
             super.onFinish();
             dissmissProgressDialog();
+          }
+        });
+  }
+
+  // 获取当前用户绑定的第三方账户信息
+  private void getUserAcount(String uid) {
+    OkGo.<String>post(HttpUrlParams.GET_THIRD_ACCOUNTS).tag(this)
+        .params("uid", uid)
+        .execute(new StringCallback() {
+          @Override public void onSuccess(Response<String> response) {
+            try {
+              JSONObject jsonObject = new JSONObject(response.body());
+              if (jsonObject.optInt("code") == 200) {
+                DataSup.setThirdAccountStr2Local(jsonObject.optString("data"));
+              } else {
+                showToast(jsonObject.optString("message"));
+              }
+            } catch (JSONException e) {
+              e.printStackTrace();
+            }
+          }
+
+          @Override public void onError(Response<String> response) {
+            super.onError(response);
+            dealNetError(response);
+          }
+
+          @Override public void onStart(Request<String, ? extends Request> request) {
+            super.onStart(request);
+            showProgressDialog("账户初始化...");
+          }
+
+          @Override public void onFinish() {
+            super.onFinish();
+            dissmissProgressDialog();
+            // 登录后获取第三方账户，不论成功失败均finish
+            finish();
           }
         });
   }

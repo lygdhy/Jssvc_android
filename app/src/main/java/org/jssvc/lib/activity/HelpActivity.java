@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,6 +24,7 @@ import org.jssvc.lib.bean.CategoryBean;
 import org.jssvc.lib.bean.ListSelecterBean;
 import org.jssvc.lib.bean.QuestionBean;
 import org.jssvc.lib.data.AppPref;
+import org.jssvc.lib.data.Constants;
 import org.jssvc.lib.view.DividerItemDecoration;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
@@ -123,14 +123,14 @@ public class HelpActivity extends BaseActivity
       case R.id.opt_chat:
         // 客服弹框
         List<ListSelecterBean> dataList = new ArrayList<>();
-        dataList.add(
-            new ListSelecterBean(R.drawable.icon_chat_qq, "1872237872", "图多多", "QQ 1872237872"));
-        dataList.add(
-            new ListSelecterBean(R.drawable.icon_chat_qq, "897457690", "图小小", "QQ 897457690"));
-        dataList.add(
-            new ListSelecterBean(R.drawable.icon_chat_qq, "893196521", "图妹妹", "QQ 893196521"));
-        dataList.add(
-            new ListSelecterBean(R.drawable.icon_chat_qq, "149553453", "图姐姐", "QQ 149553453"));
+        dataList.add(new ListSelecterBean(R.drawable.icon_chat_qq, Constants.QQ_WAITER_LIB_1, "图多多",
+            "QQ " + Constants.QQ_WAITER_LIB_1));
+        dataList.add(new ListSelecterBean(R.drawable.icon_chat_qq, Constants.QQ_WAITER_LIB_2, "图小小",
+            "QQ " + Constants.QQ_WAITER_LIB_2));
+        dataList.add(new ListSelecterBean(R.drawable.icon_chat_qq, Constants.QQ_WAITER_LIB_3, "图妹妹",
+            "QQ " + Constants.QQ_WAITER_LIB_3));
+        dataList.add(new ListSelecterBean(R.drawable.icon_chat_qq, Constants.QQ_WAITER_LIB_4, "图姐姐",
+            "QQ " + Constants.QQ_WAITER_LIB_4));
         qqCheckDialog("在线服务", "正常工作日9:00~16:30", dataList);
         break;
       case R.id.opt_close:

@@ -26,10 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jssvc.lib.R;
-import org.jssvc.lib.activity.AboutActivity;
 import org.jssvc.lib.activity.BookSearchActivity;
-import org.jssvc.lib.activity.CurentBorrowActivity;
-import org.jssvc.lib.activity.HelpActivity;
 import org.jssvc.lib.activity.MainActivity;
 import org.jssvc.lib.adapter.ArticleAdapter;
 import org.jssvc.lib.adapter.MenuAdapter;
@@ -41,8 +38,6 @@ import org.jssvc.lib.data.Constants;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.ImageLoader;
 import org.jssvc.lib.view.DividerItemDecoration;
-
-import static org.jssvc.lib.base.BaseApplication.libOnline;
 
 /**
  * <pre>
@@ -121,10 +116,10 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
   // 初始化菜单
   private void initMenu() {
     menuList.clear();
-    menuList.add(new MenuBean(Constants.MENU_LIB_HELP, "帮助指南", R.drawable.icon_menu_a));
-    menuList.add(new MenuBean(Constants.MENU_LIB_RETURN, "催还续借", R.drawable.icon_menu_b));
-    menuList.add(new MenuBean(Constants.MENU_NEWS, "新闻资讯", R.drawable.icon_menu_c));
-    menuList.add(new MenuBean(Constants.MENU_ABOUT, "关于我们", R.drawable.icon_menu_d));
+    menuList.add(new MenuBean(Constants.LIB_HELP, "帮助指南", R.drawable.icon_menu_help));
+    menuList.add(new MenuBean(Constants.LIB_READ_ING, "当前借阅", R.drawable.icon_menu_borrowed));
+    menuList.add(new MenuBean(Constants.MENU_NEWS, "新闻资讯", R.drawable.icon_menu_new));
+    menuList.add(new MenuBean(Constants.MENU_ABOUT, "关于我们", R.drawable.icon_menu_about_us));
 
     menuAdapter.setData(menuList);
   }
@@ -135,26 +130,8 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
     }
     if (parent.getId() == R.id.menu_recyclerView) {
       MenuBean item = menuAdapter.getItem(position);
-      // Type 0链接类  !0 其他类别
-      switch (item.getType()) {
-        case Constants.MENU_LIB_HELP:// 帮助指南
-          startActivity(new Intent(mContext, HelpActivity.class));
-          break;
-        case Constants.MENU_LIB_RETURN:// 当前借阅 / 催还续借
-          if (libOnline) {
-            startActivity(new Intent(mContext, CurentBorrowActivity.class));
-          } else {
-            showToast("图书服务已离线，需重新连接");
-          }
-          break;
-        case Constants.MENU_LIB_SEARCH_BOOK:// 图书搜索
-          MainActivity parentActivity = (MainActivity) getActivity();
-          parentActivity.turnPage(1);
-          break;
-        case Constants.MENU_ABOUT:// 关于
-          startActivity(new Intent(mContext, AboutActivity.class));
-          break;
-      }
+      MainActivity parentActivity = (MainActivity) getActivity();
+      parentActivity.openActivityByMenu(item);
     }
   }
 

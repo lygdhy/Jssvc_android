@@ -54,18 +54,26 @@ public class SplashActivity extends BaseActivity {
     public void run() {
 
       // 如果SP有数据，则初始化账户
-      if (DataSup.hasLogin()) localMemberBean = DataSup.getLocalMemberBean();
+      if (DataSup.hasLogin()) {
+        localMemberBean = DataSup.getLocalMemberBean();
 
-      // 如果有绑定图书馆，则静默登录图书馆，并libOnline=true
-      ThirdAccountBean libBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_LIB);
-      if (libBean != null) {
-        autoLogin(libBean.getAccount(), libBean.getPwd(), libBean.getType());
+        // 如果有绑定图书馆，则静默登录图书馆，并libOnline=true
+        ThirdAccountBean libBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_LIB);
+        if (libBean != null) {
+          autoLogin(libBean.getAccount(), libBean.getPwd(), libBean.getType());
+        } else {
+          goNext();
+        }
       } else {
-        // 完成跳转
-        startActivity(new Intent(mContext, MainActivity.class));
-        finish();
+        goNext();
       }
     }
+  }
+
+  // 完成跳转
+  private void goNext() {
+    startActivity(new Intent(mContext, MainActivity.class));
+    finish();
   }
 
   // 自动登录
@@ -90,9 +98,7 @@ public class SplashActivity extends BaseActivity {
 
           @Override public void onFinish() {
             super.onFinish();
-            // 完成跳转
-            startActivity(new Intent(mContext, MainActivity.class));
-            finish();
+            goNext();
           }
         });
   }

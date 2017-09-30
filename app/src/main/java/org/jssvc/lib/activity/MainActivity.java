@@ -1,6 +1,7 @@
 package org.jssvc.lib.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
+import org.jssvc.lib.bean.MenuBean;
+import org.jssvc.lib.data.Constants;
+import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.fragment.HomeFragment;
 import org.jssvc.lib.fragment.LabFragment;
 import org.jssvc.lib.fragment.MineFragment;
@@ -20,6 +24,8 @@ import org.jssvc.lib.fragment.ReadingHubFragment;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
+
+import static org.jssvc.lib.base.BaseApplication.libOnline;
 
 /**
  * 主程序
@@ -49,6 +55,64 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     requestCodeQrcodePermissions();
   }
 
+  public void openActivityByMenu(MenuBean menu) {
+    // Type 0链接类  !0 其他类别
+    switch (menu.getType()) {
+      case Constants.MENU_DRAW://你画我猜
+        startActivity(new Intent(mContext, DrawingActivity.class));
+        break;
+      case Constants.LIB_RESUME://证件信息
+        judge2Activity(CardInfoActivity.class);
+        break;
+      case Constants.LIB_READ_ING://当前借阅
+        judge2Activity(CurentBorrowActivity.class);
+        break;
+      case Constants.LIB_READ_HIS://借阅历史
+        judge2Activity(HistoryBorrowActivity.class);
+        break;
+      case Constants.LIB_BOOK_REVIEW://我的书评
+        showToast("暂未开通");
+        break;
+      case Constants.LIB_BOOK_SHELF://我的书架
+        judge2Activity(BookShelfActivity.class);
+        break;
+      case Constants.LIB_ABOUT://关于图书馆
+        startActivity(new Intent(mContext, AboutSchoolActivity.class));
+        break;
+      case Constants.LIB_HELP://帮助指南
+        startActivity(new Intent(mContext, HelpActivity.class));
+        break;
+      case Constants.LIB_SEARCH_BOOK://图书搜索
+        startActivity(new Intent(mContext, BookSearchActivity.class));
+        break;
+      case Constants.MENU_NEWS://新闻资讯
+        viewPager.setCurrentItem(1);
+        break;
+      case Constants.MENU_ABOUT://关于我们
+        startActivity(new Intent(mContext, AboutActivity.class));
+        break;
+      case Constants.MENU_FEEDBACK://意见反馈
+        startActivity(new Intent(mContext, FeedbackActivity.class));
+        break;
+      case Constants.MENU_WAITER://在线客服
+        callQQCell(Constants.QQ_WAITER);
+        break;
+    }
+  }
+
+  // 含判断跳转
+  private void judge2Activity(Class<?> activity) {
+    if (DataSup.hasLogin()) {
+      if (libOnline) {
+        startActivity(new Intent(mContext, activity));
+      } else {
+        showToast("图书服务已离线，需重新连接");
+      }
+    } else {
+      startActivity(new Intent(mContext, LoginActivity.class));
+    }
+  }
+
   private void initContent() {
     //将fragment装进列表中
     tabFragments = new ArrayList<>();
@@ -75,10 +139,6 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     viewPager.setOffscreenPageLimit(4);
   }
 
-  public void turnPage(int page) {
-    viewPager.setCurrentItem(page);
-  }
-
   private void initTab() {
     tabLayout.setTabMode(TabLayout.MODE_FIXED);
     tabLayout.setupWithViewPager(viewPager);
@@ -94,6 +154,25 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
       }
     }
     tabLayout.getTabAt(0).getCustomView().setSelected(true);
+
+    //viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+    //  @Override
+    //  public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    //
+    //  }
+    //
+    //  @Override public void onPageSelected(int position) {
+    //    if (position == 0) {
+    //      StatusBarCompat.translucentStatusBar(MainActivity.this, true);
+    //    } else {
+    //      StatusBarCompat.translucentStatusBar(MainActivity.this, false);
+    //    }
+    //  }
+    //
+    //  @Override public void onPageScrollStateChanged(int state) {
+    //
+    //  }
+    //});
   }
 
   class ContentPagerAdapter extends FragmentPagerAdapter {
