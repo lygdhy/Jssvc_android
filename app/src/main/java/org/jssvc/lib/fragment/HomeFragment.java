@@ -37,6 +37,7 @@ import org.jssvc.lib.bean.MenuBean;
 import org.jssvc.lib.data.Constants;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.ImageLoader;
+import org.jssvc.lib.utils.PingUtil;
 import org.jssvc.lib.view.DividerItemDecoration;
 
 /**
@@ -136,7 +137,7 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
   }
 
   @OnClick({
-      R.id.tip_layout, R.id.edt_search
+      R.id.tip_layout, R.id.edt_search, R.id.tv_model_title
   }) public void onClick(View view) {
     switch (view.getId()) {
       case R.id.tip_layout:
@@ -144,6 +145,11 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
         break;
       case R.id.edt_search:
         startActivity(new Intent(mContext, BookSearchActivity.class));// 图书搜索
+        break;
+      case R.id.tv_model_title:
+        // ping 测试
+        String result = PingUtil.getIPFromUrl("http://www.baidu.com");
+        showToast(result);
         break;
     }
   }
