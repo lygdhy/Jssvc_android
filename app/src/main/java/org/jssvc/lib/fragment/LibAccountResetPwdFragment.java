@@ -51,7 +51,7 @@ public class LibAccountResetPwdFragment extends BaseFragment {
         String localpwd = activity.oldPwd;
 
         if (TextUtils.isEmpty(oldpwd) || TextUtils.isEmpty(newpwd)) {
-          showToast("就旧密码不能为空！");
+          showToast("新旧密码不能为空！");
         } else {
           if (oldpwd.equals(localpwd)) {
             go2Reset(localpwd, newpwd);

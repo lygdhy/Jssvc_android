@@ -12,6 +12,7 @@ public class HttpUrlParams {
   public static final String URL_ORG_FEEDBACK = BASE_ORG_URL + "svu/feedback.php";// 意见反馈
 
   public static final String URL_USER_LOGIN = BASE_ORG_URL + "app/api/login.php";// 账户登录
+  public static final String CHECK_IF_REG = BASE_ORG_URL + "app/api/checkifreg.php";// 注册检查
   public static final String MODIFY_ACCOUNT = BASE_ORG_URL + "app/api/modify_account.php";// 修改账户信息
   public static final String GET_THIRD_ACCOUNTS = BASE_ORG_URL + "app/api/get_third_accounts.php";// 获取第三方账户
   public static final String THIRD_ACCOUNT_BOUND = BASE_ORG_URL + "app/api/bound_third_account.php";// 绑定第三方账户

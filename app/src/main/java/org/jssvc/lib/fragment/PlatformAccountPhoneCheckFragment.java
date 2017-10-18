@@ -7,9 +7,16 @@ import android.view.View;
 import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.OnClick;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jssvc.lib.R;
 import org.jssvc.lib.activity.AccountPlatformManagerActivity;
 import org.jssvc.lib.base.BaseFragment;
+import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.PhoneFormatCheckUtils;
 
 /**
@@ -53,14 +60,61 @@ public class PlatformAccountPhoneCheckFragment extends BaseFragment {
         } else if (!PhoneFormatCheckUtils.isPhoneLegal(phone)) {
           showToast("请输入正确的手机号码");
         } else {
-          // 验证
-          AccountPlatformManagerActivity activity = (AccountPlatformManagerActivity) getActivity();
-          activity.resetPwdFragment(phone);
+          checkifreg(phone);
         }
         break;
       case R.id.tv_protocol:// 阅读协议
         showToast("乖乖滴就好~");
         break;
     }
+  }
+
+  // 检查是否注册
+  private void checkifreg(final String phone) {
+    OkGo.<String>post(HttpUrlParams.CHECK_IF_REG).tag(this)
+        .params("phone", phone)
+        .execute(new StringCallback() {
+          @Override public void onSuccess(Response<String> response) {
+            try {
+              JSONObject jsonObject = new JSONObject(response.body());
+              if (jsonObject.optInt("code") == 200) {
+                int hasReg = jsonObject.optInt("data");
+                // opt_code //0注册 1找回密码
+                // hasReg //0未注册 1已注册
+                if (hasReg == 1 && opt_code == 0) {
+                  showToast("该手机号已注册，请直接登录");
+                  return;
+                }
+                if (hasReg == 0 && opt_code == 1) {
+                  showToast("该手机号未注册");
+                  return;
+                }
+                // 验证
+                AccountPlatformManagerActivity activity =
+                    (AccountPlatformManagerActivity) getActivity();
+                activity.resetPwdFragment(phone);
+              } else {
+                showToast(jsonObject.optString("message"));
+              }
+            } catch (JSONException e) {
+              e.printStackTrace();
+            }
+          }
+
+          @Override public void onError(Response<String> response) {
+            super.onError(response);
+            dealNetError(response);
+          }
+
+          @Override public void onStart(Request<String, ? extends Request> request) {
+            super.onStart(request);
+            showProgressDialog();
+          }
+
+          @Override public void onFinish() {
+            super.onFinish();
+            dissmissProgressDialog();
+          }
+        });
   }
 }
