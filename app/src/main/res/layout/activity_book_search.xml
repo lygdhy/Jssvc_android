@@ -27,6 +27,7 @@
         android:layout_toRightOf="@+id/tv_category"
         android:editable="true"
         android:hint="请输入"
+        android:imeOptions="actionSearch"
         android:textSize="14sp"
         style="@style/style_search_edit_text"
         />
@@ -43,7 +44,6 @@
         />
   </RelativeLayout>
 
-  <View style="@style/item_split_horizontal"/>
   <View style="@style/item_split_horizontal"/>
 
   <cn.bingoogolapple.refreshlayout.BGARefreshLayout

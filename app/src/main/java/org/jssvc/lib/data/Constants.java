@@ -19,7 +19,6 @@ public class Constants {
   // 平台功能
   public static final int CODE_WEB = 0;//外部链接
 
-  public static final int MENU_DRAW = 9001;//你画我猜
   public static final int MENU_NEWS = 9002;//新闻资讯
   public static final int MENU_ABOUT = 9003;//关于我们
   public static final int MENU_FEEDBACK = 9004;//意见反馈

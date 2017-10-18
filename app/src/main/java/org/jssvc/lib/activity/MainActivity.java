@@ -58,9 +58,6 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
   public void openActivityByMenu(MenuBean menu) {
     // Type 0链接类  !0 其他类别
     switch (menu.getType()) {
-      case Constants.MENU_DRAW://你画我猜
-        startActivity(new Intent(mContext, DrawingActivity.class));
-        break;
       case Constants.LIB_RESUME://证件信息
         judge2Activity(CardInfoActivity.class);
         break;

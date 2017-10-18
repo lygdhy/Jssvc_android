@@ -78,11 +78,16 @@ public class BookSearchActivity extends BaseActivity
       public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEND || (event != null
             && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-          searchText = edtInput.getText().toString().trim();
-          if (!TextUtils.isEmpty(searchText)) {
-            searchBookEngine(true);
+          switch (event.getAction()) {
+            case KeyEvent.ACTION_UP:
+              searchText = edtInput.getText().toString().trim();
+              if (!TextUtils.isEmpty(searchText)) {
+                searchBookEngine(true);
+              }
+              return true;
+            default:
+              return true;
           }
-          return true;
         }
         return false;
       }

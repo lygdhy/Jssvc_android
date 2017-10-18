@@ -66,8 +66,6 @@ public class PlatformAccountResetPwdFragment extends BaseFragment
     edtPhone.setEnabled(false);
     edtCode.setFocusable(true);
 
-    showToast("先请求服务，判断手机号码是否允许，之后在决定是否发送短信!!");
-
     btnCountDown.setOnTimerCountDownListener(this);// 初始化倒计时
 
     initSMSSDK();// 初始化SDK

@@ -174,6 +174,7 @@
           android:orientation="vertical"
           >
         <TextView
+            android:id="@+id/tv_model_title"
             android:layout_margin="10dp"
             android:text="新闻资讯"
             style="@style/style_text_title"

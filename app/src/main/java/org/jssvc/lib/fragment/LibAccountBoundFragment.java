@@ -72,7 +72,7 @@ public class LibAccountBoundFragment extends BaseFragment {
         String loginname = edtAccount.getText().toString().trim();
         String loginpwd = edtPwd.getText().toString().trim();
         if (TextUtils.isEmpty(loginname) || TextUtils.isEmpty(loginpwd)) {
-          showToast("登录信息不能为空");
+          showToast("帐号信息不能为空");
         } else {
           doLogin(loginname, loginpwd, currentLoginType.getId());
         }
