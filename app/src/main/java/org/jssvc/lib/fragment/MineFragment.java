@@ -78,7 +78,7 @@ public class MineFragment extends BaseFragment {
     super.onResume();
     if (DataSup.hasLogin()) {// 已登录
       localMemberBean = DataSup.getLocalMemberBean();
-      ImageLoader.with(mContext, ivAvatar, localMemberBean.getAvatar());
+      ImageLoader.withCircle(mContext, ivAvatar, localMemberBean.getAvatar());
       tvUserName.setText(localMemberBean.getNickname());
 
       // 如果绑定且未登录，自动登录到图书馆

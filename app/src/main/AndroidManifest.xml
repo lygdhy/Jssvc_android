@@ -153,9 +153,6 @@
     <activity
         android:name=".activity.UserResumeActivity"
         android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.DrawingActivity"
-        android:screenOrientation="portrait"/>
   </application>
 
 </manifest>

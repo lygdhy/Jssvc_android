@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import org.jssvc.lib.view.GlideCircleTransform;
 
 /**
  * <pre>
@@ -29,5 +30,9 @@ public class ImageLoader {
 
   public static void with(Context context, ImageView view, Integer resourceId) {
     Glide.with(context).load(resourceId).into(view);
+  }
+
+  public static void withCircle(Context context, ImageView view, String url) {
+    Glide.with(context).load(url).transform(new GlideCircleTransform(context)).into(view);
   }
 }

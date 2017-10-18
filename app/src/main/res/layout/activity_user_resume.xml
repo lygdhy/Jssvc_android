@@ -86,6 +86,28 @@
               style="@style/style_text_value_menu"
               />
         </RelativeLayout>
+        <View
+            android:layout_marginLeft="10dp"
+            style="@style/item_split_horizontal"
+            />
+        <RelativeLayout
+            android:id="@+id/rl_signature"
+            style="@style/style_menu_list"
+            >
+
+          <TextView
+              android:text="个性签名"
+              style="@style/style_text_key_menu"
+              />
+
+          <TextView
+              android:id="@+id/tv_signature"
+              android:drawableRight="@drawable/icon_goto"
+              android:hint="freestyle"
+              android:text=""
+              style="@style/style_text_value_menu"
+              />
+        </RelativeLayout>
         <View style="@style/item_split_horizontal"/>
       </LinearLayout>
 

@@ -148,8 +148,8 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
         break;
       case R.id.tv_model_title:
         // ping 测试
-        String result = PingUtil.getIPFromUrl("http://www.baidu.com");
-        showToast(result);
+        int result = PingUtil.getAvgRTT("http://www.baidu.com", 3, 200);
+        showToast("PING测试：AvgRTT = " + result);
         break;
     }
   }
