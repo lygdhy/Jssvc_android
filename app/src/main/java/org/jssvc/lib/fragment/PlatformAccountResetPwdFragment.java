@@ -1,5 +1,6 @@
 package org.jssvc.lib.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -23,6 +24,7 @@ import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.MD5Utils;
 import org.jssvc.lib.view.TimeCountDown;
 
+import static android.app.Activity.RESULT_OK;
 import static org.jssvc.lib.R.id.edt_phone;
 
 /**
@@ -129,6 +131,10 @@ public class PlatformAccountResetPwdFragment extends BaseFragment
             try {
               JSONObject jsonObject = new JSONObject(response.body());
               if (jsonObject.optInt("code") == 200) {
+                Intent intent = new Intent();
+                intent.putExtra("phone", pActivity.opt_phone);
+                intent.putExtra("pwd", pActivity.str_pwd);
+                getActivity().setResult(RESULT_OK, intent);
                 getActivity().finish();
               }
               showToast(jsonObject.optString("message"));

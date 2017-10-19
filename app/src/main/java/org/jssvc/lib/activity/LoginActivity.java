@@ -58,11 +58,21 @@ public class LoginActivity extends BaseActivity {
     }
   }
 
-  // //0注册1找回密码
+  // 0注册1找回密码
   private void goAccountReset(int code) {
     Intent intent = new Intent(mContext, AccountPlatformManagerActivity.class);
     intent.putExtra(AccountPlatformManagerActivity.ARG_OPT_CODE, code);//0注册1找回密码
-    startActivity(intent);
+    startActivityForResult(intent, 100);
+  }
+
+  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (resultCode == RESULT_OK) {
+      if (data != null && requestCode == 100) {
+        // 注册/改密后自动登录
+        doLogin(data.getStringExtra("phone"), data.getStringExtra("pwd"));
+      }
+    }
   }
 
   // 账户登录
