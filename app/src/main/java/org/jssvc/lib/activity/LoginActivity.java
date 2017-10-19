@@ -11,8 +11,6 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jssvc.lib.R;
@@ -20,6 +18,7 @@ import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.MemberBean;
 import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.data.HttpUrlParams;
+import org.jssvc.lib.utils.MD5Utils;
 
 /**
  * 登录页面
@@ -70,7 +69,7 @@ public class LoginActivity extends BaseActivity {
   private void doLogin(String loginname, String loginpwd) {
     OkGo.<String>post(HttpUrlParams.URL_USER_LOGIN).tag(this)
         .params("number", loginname)
-        .params("passwd", MD5(loginpwd))
+        .params("passwd", MD5Utils.MD5(loginpwd))
         .execute(new StringCallback() {
           @Override public void onSuccess(Response<String> response) {
             try {
@@ -118,7 +117,7 @@ public class LoginActivity extends BaseActivity {
               if (jsonObject.optInt("code") == 200) {
                 DataSup.setThirdAccountStr2Local(jsonObject.optString("data"));
               } else {
-                showToast(jsonObject.optString("message"));
+                // showToast(jsonObject.optString("message"));
               }
             } catch (JSONException e) {
               e.printStackTrace();
@@ -142,29 +141,5 @@ public class LoginActivity extends BaseActivity {
             finish();
           }
         });
-  }
-
-  // MD5加密
-  private static String MD5(String sourceStr) {
-    String result = "";
-    try {
-      MessageDigest md = MessageDigest.getInstance("MD5");
-      md.update(sourceStr.getBytes());
-      byte b[] = md.digest();
-      int i;
-      StringBuffer buf = new StringBuffer("");
-      for (int offset = 0; offset < b.length; offset++) {
-        i = b[offset];
-        if (i < 0) i += 256;
-        if (i < 16) buf.append("0");
-        buf.append(Integer.toHexString(i));
-      }
-      result = buf.toString();
-      System.out.println("MD5(" + sourceStr + ",32) = " + result);
-      System.out.println("MD5(" + sourceStr + ",16) = " + buf.toString().substring(8, 24));
-    } catch (NoSuchAlgorithmException e) {
-      System.out.println(e);
-    }
-    return result;
   }
 }

@@ -78,14 +78,19 @@ public class MineFragment extends BaseFragment {
     super.onResume();
     if (DataSup.hasLogin()) {// 已登录
       localMemberBean = DataSup.getLocalMemberBean();
-      ImageLoader.withCircle(mContext, ivAvatar, localMemberBean.getAvatar());
-      tvUserName.setText(localMemberBean.getNickname());
+      if (TextUtils.isEmpty(localMemberBean.getAvatar())) {
+        ImageLoader.with(mContext, ivAvatar, R.drawable.icon_default_avatar_1);
+      } else {
+        ImageLoader.withCircle(mContext, ivAvatar, localMemberBean.getAvatar());
+      }
+      tvUserName.setText(
+          TextUtils.isEmpty(localMemberBean.getNickname()) ? "路人甲" : localMemberBean.getNickname());
 
       // 如果绑定且未登录，自动登录到图书馆
       ThirdAccountBean libBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_LIB);
       if (libBean != null && !libOnline) {
         // 有账号但未登录
-        doLogin(libBean.getAccount(), libBean.getPwd(), libBean.getType());
+        doLibLogin(libBean.getAccount(), libBean.getPwd(), libBean.getType());
       }
     } else {// 未登录
       ImageLoader.with(mContext, ivAvatar, R.drawable.icon_default_avatar_1);
@@ -94,7 +99,7 @@ public class MineFragment extends BaseFragment {
   }
 
   // 登录
-  private void doLogin(final String loginname, final String loginpwd, final String loginType) {
+  private void doLibLogin(final String loginname, final String loginpwd, final String loginType) {
     OkGo.<String>post(HttpUrlParams.URL_LIB_LOGIN).tag(this)
         .params("number", loginname)
         .params("passwd", loginpwd)

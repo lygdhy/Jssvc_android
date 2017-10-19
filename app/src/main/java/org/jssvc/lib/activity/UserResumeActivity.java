@@ -76,7 +76,7 @@ public class UserResumeActivity extends BaseActivity {
       tvRealName.setText(bean.getRealname());
       tvSex.setText(bean.getSex());
       tvBirth.setText(bean.getBirthday());
-      tvTel.setText(bean.getPhone());
+      tvTel.setText(getCoverPhone(bean.getPhone()));
       tvQq.setText(bean.getQq());
       tvEmail.setText(bean.getEmail());
 
@@ -108,6 +108,15 @@ public class UserResumeActivity extends BaseActivity {
     imagePicker.setFocusHeight(800);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
     imagePicker.setOutPutX(800);//保存文件的宽度。单位像素
     imagePicker.setOutPutY(800);//保存文件的高度。单位像素
+  }
+
+  // 获取部分隐藏的手机号码
+  private String getCoverPhone(String phone) {
+    StringBuffer sb = new StringBuffer();
+    sb.append(phone.substring(0, 3));
+    sb.append("****");
+    sb.append(phone.substring(phone.length() - 5, phone.length() - 1));
+    return sb.toString();
   }
 
   @OnClick({

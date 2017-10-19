@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_ui_content"
+    android:clickable="true"
     android:orientation="vertical"
     >
   <LinearLayout
@@ -36,8 +37,12 @@
           style="@style/style_edit_text"
           />
     </LinearLayout>
-    <View style="@style/item_split_horizontal"/>
+    <View
+        android:id="@+id/code_view"
+        style="@style/item_split_horizontal"
+        />
     <RelativeLayout
+        android:id="@+id/code_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

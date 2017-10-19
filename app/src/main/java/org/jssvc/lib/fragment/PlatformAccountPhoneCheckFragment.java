@@ -28,10 +28,9 @@ import org.jssvc.lib.utils.PhoneFormatCheckUtils;
  * </pre>
  */
 public class PlatformAccountPhoneCheckFragment extends BaseFragment {
-
   @BindView(R.id.edt_username) EditText edtUsername;
 
-  int opt_code = 0;//0注册1找回密码
+  AccountPlatformManagerActivity pActivity;
 
   public PlatformAccountPhoneCheckFragment() {
   }
@@ -42,9 +41,7 @@ public class PlatformAccountPhoneCheckFragment extends BaseFragment {
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    if (getArguments().containsKey(AccountPlatformManagerActivity.ARG_OPT_CODE)) {
-      opt_code = getArguments().getInt(AccountPlatformManagerActivity.ARG_OPT_CODE);
-    }
+    pActivity = (AccountPlatformManagerActivity) getActivity();
   }
 
   @Override protected void initView() {
@@ -81,18 +78,17 @@ public class PlatformAccountPhoneCheckFragment extends BaseFragment {
                 int hasReg = jsonObject.optInt("data");
                 // opt_code //0注册 1找回密码
                 // hasReg //0未注册 1已注册
-                if (hasReg == 1 && opt_code == 0) {
+                if (hasReg == 1 && pActivity.opt_code == 0) {
                   showToast("该手机号已注册，请直接登录");
                   return;
                 }
-                if (hasReg == 0 && opt_code == 1) {
+                if (hasReg == 0 && pActivity.opt_code == 1) {
                   showToast("该手机号未注册");
                   return;
                 }
-                // 验证
-                AccountPlatformManagerActivity activity =
-                    (AccountPlatformManagerActivity) getActivity();
-                activity.resetPwdFragment(phone);
+                // 提交短信SDK验证
+                pActivity.opt_phone = phone;
+                pActivity.sendSMS();
               } else {
                 showToast(jsonObject.optString("message"));
               }
