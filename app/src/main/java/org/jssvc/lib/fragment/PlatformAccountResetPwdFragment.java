@@ -1,5 +1,6 @@
 package org.jssvc.lib.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -7,18 +8,23 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.smssdk.EventHandler;
-import cn.smssdk.OnSendMessageHandler;
-import cn.smssdk.SMSSDK;
-import java.util.HashMap;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.jssvc.lib.R;
 import org.jssvc.lib.activity.AccountPlatformManagerActivity;
 import org.jssvc.lib.base.BaseFragment;
+import org.jssvc.lib.data.HttpUrlParams;
+import org.jssvc.lib.utils.MD5Utils;
 import org.jssvc.lib.view.TimeCountDown;
 
+import static android.app.Activity.RESULT_OK;
 import static org.jssvc.lib.R.id.edt_phone;
 
 /**
@@ -36,13 +42,11 @@ public class PlatformAccountResetPwdFragment extends BaseFragment
   @BindView(R.id.edt_code) EditText edtCode;
   @BindView(R.id.edt_pwd) EditText edtPwd;
   @BindView(R.id.btn_submit) Button btnSubmit;
+  @BindView(R.id.code_view) View codeView;
+  @BindView(R.id.code_layout) RelativeLayout codeLayout;
   @BindView(R.id.btn_count_down) TimeCountDown btnCountDown;
 
-  EventHandler smsHandler;
-
-  int opt_code = 0;//0注册1找回密码
-  String opt_phone = "";// 被操作手机号码
-  String str_pwd = "";// 新密码
+  AccountPlatformManagerActivity pActivity;
 
   public PlatformAccountResetPwdFragment() {
   }
@@ -53,24 +57,26 @@ public class PlatformAccountResetPwdFragment extends BaseFragment
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    if (getArguments().containsKey(AccountPlatformManagerActivity.ARG_OPT_CODE)) {
-      opt_code = getArguments().getInt(AccountPlatformManagerActivity.ARG_OPT_CODE);
-      opt_phone = getArguments().getString(AccountPlatformManagerActivity.ARG_OPT_PHONE);
-    }
+    pActivity = (AccountPlatformManagerActivity) getActivity();
   }
 
   @Override protected void initView() {
-    if (opt_code == 0) btnSubmit.setText("立即注册");
-    if (opt_code == 1) btnSubmit.setText("重置密码");
-    edtPhone.setText(opt_phone);
+    edtPhone.setText(pActivity.opt_phone);
     edtPhone.setEnabled(false);
-    edtCode.setFocusable(true);
 
-    btnCountDown.setOnTimerCountDownListener(this);// 初始化倒计时
-
-    initSMSSDK();// 初始化SDK
-
-    sendSMS();// 发送短信
+    // 智能模式下无需输入验证码
+    if (pActivity.smart) {
+      btnCountDown.setVisibility(View.GONE);
+      codeView.setVisibility(View.GONE);
+      codeLayout.setVisibility(View.GONE);
+      edtPwd.setFocusable(true);
+    } else {
+      btnCountDown.setVisibility(View.VISIBLE);
+      codeView.setVisibility(View.VISIBLE);
+      codeLayout.setVisibility(View.VISIBLE);
+      btnCountDown.setOnTimerCountDownListener(this);// 初始化倒计时
+      btnCountDown.initTimer();
+    }
   }
 
   @OnClick({ R.id.btn_submit }) public void onViewClicked(View view) {
@@ -78,91 +84,85 @@ public class PlatformAccountResetPwdFragment extends BaseFragment
       case R.id.btn_submit:
         String code = edtCode.getText().toString().trim();
         String pwd = edtPwd.getText().toString().trim();
-        if (TextUtils.isEmpty(code) || TextUtils.isEmpty(pwd)) {
-          showToast("验证码和密码不能为空");
+        if (TextUtils.isEmpty(pwd)) {
+          showToast("密码不能为空");
+          break;
+        }
+        pActivity.str_pwd = pwd;
+
+        // 智能模式下无需输入验证码
+        if (pActivity.smart) {
+          doNext();
         } else {
-          // 短信验证
-          str_pwd = pwd;
-          SMSSDK.submitVerificationCode("+86", opt_phone, code);
+          if (TextUtils.isEmpty(code)) {
+            showToast("验证码不能为空");
+          } else {
+            // 短信验证
+            pActivity.checkSMS(code);
+          }
         }
         break;
     }
   }
 
-  // 发送短信
-  private void sendSMS() {
-    SMSSDK.getVerificationCode("+86", opt_phone, new OnSendMessageHandler() {
-      @Override public boolean onSendMessage(String country, String phone) {
-        return false;
-      }
-    });
+  // 通过验证
+  public void passCheck() {
+    btnCountDown.setVisibility(View.GONE);
+    doNext();
   }
 
-  // 初始化短信引擎
-  private void initSMSSDK() {
-    smsHandler = new EventHandler() {
-      @Override public void afterEvent(int event, int result, Object data) {
-        if (result == SMSSDK.RESULT_COMPLETE) {
-          if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
-            //提交验证码成功
-            HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
-            Log.d("DHY", "验证成功！！！！！！！！！！！！！");
-            getActivity().runOnUiThread(new Runnable() {
-              @Override public void run() {
-                saveUserData();
-              }
-            });
-          } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-            //boolean smart = (Boolean) data;
-            //获取验证码成功,true为智能验证，false为普通下发短信
-            getActivity().runOnUiThread(new Runnable() {
-              @Override public void run() {
-                showToast("验证短信已发送，请注意查收！");
-                btnCountDown.initTimer();
-              }
-            });
-          } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
-            //返回支持发送验证码的国家列表
-          }
-          Log.d("DHY", data.toString());
-        } else {
-          try {
-            Throwable throwable = (Throwable) data;
-            throwable.printStackTrace();
-            JSONObject object = new JSONObject(throwable.getMessage());
-            final String des = object.optString("detail");//错误描述
-            int status = object.optInt("status");//错误代码
-            if (status > 0 && !TextUtils.isEmpty(des)) {
+  // 未通过验证
+  public void unPassCheck() {
+    if (btnCountDown != null) {
+      btnCountDown.cancel();
+      btnCountDown.setVisibility(View.GONE);
+    }
+  }
 
-              Log.d("DHY", "des = " + des);
-              getActivity().runOnUiThread(new Runnable() {
-                @Override public void run() {
-                  // 提示错误信息
-                  showToast(des);
-                  if (btnCountDown != null) btnCountDown.cancel();
-                }
-              });
-
-              return;
+  public void doNext() {
+    // 修改或添加用户 15396986298
+    // opt_code //0注册1找回密码
+    OkGo.<String>post(HttpUrlParams.URL_USER_REGISTER).tag(this)
+        .params("phone", pActivity.opt_phone)
+        .params("pwd", MD5Utils.MD5(pActivity.str_pwd))
+        .params("type", (pActivity.opt_code == 0) ? "reg" : "bac")
+        .execute(new StringCallback() {
+          @Override public void onSuccess(Response<String> response) {
+            try {
+              JSONObject jsonObject = new JSONObject(response.body());
+              if (jsonObject.optInt("code") == 200) {
+                Intent intent = new Intent();
+                intent.putExtra("phone", pActivity.opt_phone);
+                intent.putExtra("pwd", pActivity.str_pwd);
+                getActivity().setResult(RESULT_OK, intent);
+                getActivity().finish();
+              }
+              showToast(jsonObject.optString("message"));
+            } catch (JSONException e) {
+              e.printStackTrace();
             }
-          } catch (Exception e) {
-            //do something
           }
-        }
-      }
-    };
-    SMSSDK.registerEventHandler(smsHandler); //注册短信回调
-  }
 
-  private void saveUserData() {
-    showToast("验证成功!!!!保存数据");
-    getActivity().finish();
+          @Override public void onError(Response<String> response) {
+            super.onError(response);
+            dealNetError(response);
+          }
+
+          @Override public void onStart(Request<String, ? extends Request> request) {
+            super.onStart(request);
+            showProgressDialog();
+          }
+
+          @Override public void onFinish() {
+            super.onFinish();
+            dissmissProgressDialog();
+          }
+        });
   }
 
   @Override public void onDestroy() {
     super.onDestroy();
     if (btnCountDown != null) btnCountDown.cancel();
-    if (smsHandler != null) SMSSDK.unregisterEventHandler(smsHandler);
   }
 
   @Override public void onCountDownStart() {

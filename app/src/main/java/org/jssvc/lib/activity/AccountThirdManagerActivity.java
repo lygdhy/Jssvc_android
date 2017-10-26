@@ -41,7 +41,9 @@ public class AccountThirdManagerActivity extends BaseActivity {
 
   private void loadUi() {
     libBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_LIB);
-    if (libBean != null) {
+    if (libBean == null) {
+      tvLibTitle.setText("我的图书馆（未绑定）");
+    } else {
       tvLibTitle.setText("我的图书馆（已绑定" + libBean.getAccount() + "）");
     }
     jwBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_JW);
