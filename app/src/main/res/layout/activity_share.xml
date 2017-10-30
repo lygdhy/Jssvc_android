@@ -16,7 +16,7 @@
         />
 
     <TextView
-        android:text="分享APP"
+        android:text="分享"
         style="@style/actionbar_title_style_base"
         />
 
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="面对面 · 分享知识 · 收获快乐"
+        android:text="建议使用浏览器扫一扫工具扫描"
         android:textColor="@color/color_text_hint"
         android:textSize="14sp"
         />

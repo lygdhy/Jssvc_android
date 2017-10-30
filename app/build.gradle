@@ -1,20 +1,19 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
 
 android {
   compileSdkVersion 24
-  buildToolsVersion '25.0.0'
+  buildToolsVersion '26.0.2'
   defaultConfig {
     applicationId "org.jssvc.lib"
     minSdkVersion 17
     targetSdkVersion 24
-    versionCode 14
-    versionName '2.1.6'
+    versionCode 15
+    versionName '2.1.7'
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     // Enabling multidex support.
     multiDexEnabled true
-    manifestPlaceholders = [UMENG_CHANNEL_VALUE: "jssvcorg"]
+    manifestPlaceholders = [UMENG_CHANNEL_VALUE: "jssvcOrg"]
 
     ndk {
       abiFilters "armeabi", "x86"
@@ -43,18 +42,21 @@ android {
     }
   }
 
+  // http://blog.csdn.net/tiankong1206/article/details/50444232
+  flavorDimensions "dhy"
+
   // 渠道配置
   productFlavors {
-    pugongying {
+    Pgyer {
       manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Pgyer"] //pugongying
       // resValue("string", "app_name", "图书馆蒲公英版")
     }
-    //    qihu360 {
+    //    Qihoo {
     //      manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Qihoo"]//qihu360
     //    }
-    //    yingyongbao {
-    //      manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Tencen"]//yingyongbao
-    //    }
+    Tencen {
+      manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Tencen"] //yingyongbao
+    }
     //    xiaomi {
     //      manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
     //    }
@@ -98,5 +100,5 @@ dependencies {
   compile 'top.zibin:Luban:1.1.3'
   compile 'com.lzy.widget:imagepicker:0.6.1'
   testCompile 'junit:junit:4.12'
-  apt 'com.jakewharton:butterknife-compiler:8.4.0'
+  annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }
