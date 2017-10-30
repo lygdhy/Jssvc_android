@@ -65,7 +65,11 @@ public class MineFragment extends BaseFragment {
         break;
       case R.id.rl_account:
         // 第三方账户绑定
-        startActivity(new Intent(mContext, AccountThirdManagerActivity.class));
+        if (DataSup.hasLogin()) {// 已登录
+          startActivity(new Intent(mContext, AccountThirdManagerActivity.class));
+        } else {// 未登录
+          startActivity(new Intent(mContext, LoginActivity.class));
+        }
         break;
       case R.id.rl_setting:
         // 设置

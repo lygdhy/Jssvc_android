@@ -24,7 +24,6 @@
       android:layout_marginTop="10dp"
       android:background="@android:color/white"
       android:orientation="vertical"
-      android:visibility="gone"
       >
     <View style="@style/item_split_horizontal"/>
     <RelativeLayout
@@ -59,7 +58,6 @@
     <View style="@style/item_split_horizontal"/>
     <RelativeLayout
         android:id="@+id/rl_appraise"
-        android:visibility="gone"
         style="@style/style_menu_list"
         >
 
@@ -75,7 +73,6 @@
     </RelativeLayout>
     <View
         android:layout_marginLeft="10dp"
-        android:visibility="gone"
         style="@style/item_split_horizontal"
         />
     <RelativeLayout
@@ -95,12 +92,10 @@
     </RelativeLayout>
     <View
         android:layout_marginLeft="10dp"
-        android:visibility="gone"
         style="@style/item_split_horizontal"
         />
     <RelativeLayout
         android:id="@+id/rl_app"
-        android:visibility="gone"
         style="@style/style_menu_list"
         >
 
