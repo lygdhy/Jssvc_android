@@ -8,7 +8,7 @@
   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
   <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
 
-  <!--设备-->
+  <!-- 设备 -->
   <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
   <!-- 存储 -->
@@ -152,6 +152,9 @@
         android:screenOrientation="portrait"/>
     <activity
         android:name=".activity.UserResumeActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".activity.ArticleDetailsActivity"
         android:screenOrientation="portrait"/>
   </application>
 

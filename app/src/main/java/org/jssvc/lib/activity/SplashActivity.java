@@ -60,7 +60,10 @@ public class SplashActivity extends BaseActivity {
         // 如果有绑定图书馆，则静默登录图书馆，并libOnline=true
         ThirdAccountBean libBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_LIB);
         if (libBean != null) {
-          autoLogin(libBean.getAccount(), libBean.getPwd(), libBean.getType());
+          showToast("----- doLibLogin -----");
+          goNext();
+
+          //doLibLogin(libBean.getAccount(), libBean.getPwd(), libBean.getType());
         } else {
           goNext();
         }
@@ -77,7 +80,7 @@ public class SplashActivity extends BaseActivity {
   }
 
   // 自动登录
-  private void autoLogin(String number, String passwd, String select) {
+  private void doLibLogin(String number, String passwd, String select) {
     // 用户名和密码都在，静默登录
     OkGo.<String>post(HttpUrlParams.URL_LIB_LOGIN).tag(this)
         .params("number", number)

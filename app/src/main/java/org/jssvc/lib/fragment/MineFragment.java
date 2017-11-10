@@ -94,7 +94,8 @@ public class MineFragment extends BaseFragment {
       ThirdAccountBean libBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_LIB);
       if (libBean != null && !libOnline) {
         // 有账号但未登录
-        doLibLogin(libBean.getAccount(), libBean.getPwd(), libBean.getType());
+        showToast("----- doLibLogin -----");
+        //doLibLogin(libBean.getAccount(), libBean.getPwd(), libBean.getType());
       }
     } else {// 未登录
       ImageLoader.with(mContext, ivAvatar, R.drawable.icon_default_avatar_1);
