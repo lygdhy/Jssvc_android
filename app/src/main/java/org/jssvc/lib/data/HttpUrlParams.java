@@ -21,6 +21,7 @@ public class HttpUrlParams {
   public static final String GET_ADS_LIST = BASE_ORG_URL + "app/api/get_ads_list.php";// 广告列表
   public static final String GET_CHANNEL_LIST = BASE_ORG_URL + "app/api/get_channel_list.php";// 频道列表
   public static final String GET_ARTICLE_LIST = BASE_ORG_URL + "app/api/get_article_list.php";// 文章列表
+  public static final String GET_ARTICLE_DET = BASE_ORG_URL + "app/api/get_article_detail.php";// 文章详情
 
   // 新书推荐
   // http://lib.jssvc.edu.cn/reading/newbooks/new.html

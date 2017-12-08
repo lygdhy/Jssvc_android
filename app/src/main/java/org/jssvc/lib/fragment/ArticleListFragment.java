@@ -1,36 +1,32 @@
 package org.jssvc.lib.fragment;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-
+import butterknife.BindView;
+import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
+import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jssvc.lib.R;
+import org.jssvc.lib.activity.ArticleDetailsActivity;
 import org.jssvc.lib.adapter.ArticleAdapter;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.ArticleListBean;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.view.DividerItemDecoration;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
-import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
-import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 import static org.jssvc.lib.R.id.recyclerView;
 
@@ -124,11 +120,10 @@ public class ArticleListFragment extends BaseFragment
   }
 
   @Override public void onRVItemClick(ViewGroup parent, View itemView, int position) {
-    String originalUrl = mAdapter.getData().get(position).getOriginal();
-    if (!TextUtils.isEmpty(originalUrl)) {
-      Intent intent = new Intent();
-      intent.setAction("android.intent.action.VIEW");
-      intent.setData(Uri.parse(originalUrl));
+    String articleid = mAdapter.getData().get(position).getId();
+    if (!TextUtils.isEmpty(articleid)) {
+      Intent intent = new Intent(mContext, ArticleDetailsActivity.class);
+      intent.putExtra("articleid", articleid);
       startActivity(intent);
     }
   }

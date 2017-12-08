@@ -65,7 +65,11 @@ public class MineFragment extends BaseFragment {
         break;
       case R.id.rl_account:
         // 第三方账户绑定
-        startActivity(new Intent(mContext, AccountThirdManagerActivity.class));
+        if (DataSup.hasLogin()) {// 已登录
+          startActivity(new Intent(mContext, AccountThirdManagerActivity.class));
+        } else {// 未登录
+          startActivity(new Intent(mContext, LoginActivity.class));
+        }
         break;
       case R.id.rl_setting:
         // 设置
@@ -90,7 +94,8 @@ public class MineFragment extends BaseFragment {
       ThirdAccountBean libBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_LIB);
       if (libBean != null && !libOnline) {
         // 有账号但未登录
-        doLibLogin(libBean.getAccount(), libBean.getPwd(), libBean.getType());
+        showToast("----- doLibLogin -----");
+        //doLibLogin(libBean.getAccount(), libBean.getPwd(), libBean.getType());
       }
     } else {// 未登录
       ImageLoader.with(mContext, ivAvatar, R.drawable.icon_default_avatar_1);
