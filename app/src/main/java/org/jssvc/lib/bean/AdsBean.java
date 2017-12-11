@@ -9,8 +9,9 @@ import java.io.Serializable;
 public class AdsBean implements Serializable {
   private String id;
   private String theme;
-  private String category;
+  private String category;// 0无跳转 1网页 2功能
   private String banner;
+  private String refurl;
   private String extra1;
   private String extra2;
 
@@ -60,6 +61,14 @@ public class AdsBean implements Serializable {
 
   public void setExtra2(String extra2) {
     this.extra2 = extra2;
+  }
+
+  public String getRefurl() {
+    return refurl;
+  }
+
+  public void setRefurl(String refurl) {
+    this.refurl = refurl;
   }
 
   public AdsBean(String theme, String category, String banner) {

@@ -50,7 +50,7 @@
 
       <!--提示-->
       <RelativeLayout
-          android:id="@+id/tip_layout"
+          android:id="@+id/weather_layout"
           android:layout_width="match_parent"
           android:layout_height="60dp"
           android:layout_marginTop="10dp"

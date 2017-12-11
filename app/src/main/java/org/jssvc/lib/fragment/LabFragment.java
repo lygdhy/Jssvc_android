@@ -53,7 +53,7 @@ public class LabFragment extends BaseFragment implements BGAOnRVItemClickListene
     List<MenuBean> menuList = new ArrayList<>();
 
     menuList.add(new MenuBean(Constants.MENU_FEEDBACK, "意见反馈", R.drawable.icon_menu_feedback));
-    menuList.add(new MenuBean(Constants.MENU_WAITER, "客服小二", R.drawable.icon_menu_waiter));
+    menuList.add(new MenuBean(Constants.MENU_WAITER, "客服小智", R.drawable.icon_menu_waiter));
     menuList.add(new MenuBean(Constants.MENU_NEWS, "新闻资讯", R.drawable.icon_menu_new));
     menuList.add(new MenuBean(Constants.MENU_ABOUT, "关于我们", R.drawable.icon_menu_about_us));
 

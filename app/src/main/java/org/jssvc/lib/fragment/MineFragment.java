@@ -10,7 +10,6 @@ import butterknife.OnClick;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
-import com.lzy.okgo.request.base.Request;
 import org.jssvc.lib.R;
 import org.jssvc.lib.activity.AccountThirdManagerActivity;
 import org.jssvc.lib.activity.LoginActivity;
@@ -94,8 +93,7 @@ public class MineFragment extends BaseFragment {
       ThirdAccountBean libBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_LIB);
       if (libBean != null && !libOnline) {
         // 有账号但未登录
-        showToast("----- doLibLogin -----");
-        //doLibLogin(libBean.getAccount(), libBean.getPwd(), libBean.getType());
+        doLibLogin(libBean.getAccount(), libBean.getPwd(), libBean.getType());
       }
     } else {// 未登录
       ImageLoader.with(mContext, ivAvatar, R.drawable.icon_default_avatar_1);
@@ -103,7 +101,7 @@ public class MineFragment extends BaseFragment {
     }
   }
 
-  // 登录
+  // 静默登录
   private void doLibLogin(final String loginname, final String loginpwd, final String loginType) {
     OkGo.<String>post(HttpUrlParams.URL_LIB_LOGIN).tag(this)
         .params("number", loginname)
@@ -119,15 +117,15 @@ public class MineFragment extends BaseFragment {
             dealNetError(response);
           }
 
-          @Override public void onStart(Request<String, ? extends Request> request) {
-            super.onStart(request);
-            showProgressDialog("帐号读取中...");
-          }
-
-          @Override public void onFinish() {
-            super.onFinish();
-            dissmissProgressDialog();
-          }
+          //@Override public void onStart(Request<String, ? extends Request> request) {
+          //  super.onStart(request);
+          //  showProgressDialog("帐号读取中...");
+          //}
+          //
+          //@Override public void onFinish() {
+          //  super.onFinish();
+          //  dissmissProgressDialog();
+          //}
         });
   }
 
