@@ -2,7 +2,6 @@ package org.jssvc.lib.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,6 +30,7 @@ import org.jssvc.lib.R;
 import org.jssvc.lib.activity.ArticleDetailsActivity;
 import org.jssvc.lib.activity.BookSearchActivity;
 import org.jssvc.lib.activity.MainActivity;
+import org.jssvc.lib.activity.WebActivity;
 import org.jssvc.lib.adapter.ArticleAdapter;
 import org.jssvc.lib.adapter.MenuAdapter;
 import org.jssvc.lib.base.BaseFragment;
@@ -169,6 +169,7 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
   // 获取文件列表
   private void getArticleList() {
     OkGo.<String>get(HttpUrlParams.GET_ARTICLE_LIST).tag("alist")
+        .params("channel_id", "")
         .params("page", "1")
         .params("pagesize", "10")
         .execute(new StringCallback() {
@@ -270,9 +271,8 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
               break;
             case 1:
               if (!TextUtils.isEmpty(model.getRefurl())) {
-                Intent intent = new Intent();
-                intent.setAction("android.intent.action.VIEW");
-                intent.setData(Uri.parse(model.getRefurl()));
+                Intent intent = new Intent(mContext, WebActivity.class);
+                intent.putExtra("url", model.getRefurl());
                 startActivity(intent);
               }
               break;
