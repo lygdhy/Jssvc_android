@@ -171,7 +171,7 @@ public abstract class BaseActivity extends AppCompatActivity {
       String url = "mqqwpa://im/chat?chat_type=wpa&uin=" + qqNum;
       startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     } else {
-      showToast("请先安装QQ");
+      showToast("设备上未安装QQ");
     }
   }
 }

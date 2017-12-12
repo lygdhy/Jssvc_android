@@ -9,9 +9,9 @@ public class HttpUrlParams {
   // ==========自有服务=============
   public static final String BASE_ORG_URL = "http://www.jssvc.org/";
 
-  public static final String URL_ORG_FEEDBACK = BASE_ORG_URL + "svu/feedback.php";// 意见反馈
+  public static final String URL_ORG_FEEDBACK = BASE_ORG_URL + "app/api/feedback.php";// 意见反馈
 
-  public static final String URL_USER_REGISTER= BASE_ORG_URL + "app/api/userregister.php";// 账户注册或密码找回
+  public static final String URL_USER_REGISTER= BASE_ORG_URL + "app/api/register.php";// 账户注册或密码找回
   public static final String URL_USER_LOGIN = BASE_ORG_URL + "app/api/login.php";// 账户登录
   public static final String CHECK_IF_REG = BASE_ORG_URL + "app/api/checkifreg.php";// 注册检查
   public static final String MODIFY_ACCOUNT = BASE_ORG_URL + "app/api/modify_account.php";// 修改账户信息

@@ -1,7 +1,6 @@
 package org.jssvc.lib.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.WebView;
@@ -42,7 +41,7 @@ public class ArticleDetailsActivity extends BaseActivity {
 
   @Override protected void initView() {
     String articleid = getIntent().getStringExtra("articleid");
-    showToast("--->   article id is " + articleid);
+    //showToast("--->   article id is " + articleid);
     getArticleById(articleid);
   }
 
@@ -54,9 +53,12 @@ public class ArticleDetailsActivity extends BaseActivity {
       case R.id.tv_original:
         // 阅读原文
         if (article != null && !TextUtils.isEmpty(article.getOriginal())) {
-          Intent intent = new Intent();
-          intent.setAction("android.intent.action.VIEW");
-          intent.setData(Uri.parse(article.getOriginal()));
+          //Intent intent = new Intent();
+          //intent.setAction("android.intent.action.VIEW");
+          //intent.setData(Uri.parse(article.getOriginal()));
+          //startActivity(intent);
+          Intent intent = new Intent(mContext, WebActivity.class);
+          intent.putExtra("url", article.getOriginal());
           startActivity(intent);
         }
         break;
@@ -114,7 +116,7 @@ public class ArticleDetailsActivity extends BaseActivity {
     } catch (ParseException e) {
       e.printStackTrace();
     }
-    tvAuthor.setText(article.getAuthor() + "  " + dateStr);
+    tvAuthor.setText(dateStr + "  " + article.getAuthor());
 
     // 加载页面
     String css =

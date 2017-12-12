@@ -6,6 +6,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -26,8 +27,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jssvc.lib.R;
+import org.jssvc.lib.activity.ArticleDetailsActivity;
 import org.jssvc.lib.activity.BookSearchActivity;
 import org.jssvc.lib.activity.MainActivity;
+import org.jssvc.lib.activity.WebActivity;
 import org.jssvc.lib.adapter.ArticleAdapter;
 import org.jssvc.lib.adapter.MenuAdapter;
 import org.jssvc.lib.base.BaseFragment;
@@ -53,6 +56,7 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
   @BindView(R.id.nested_scroll_view) NestedScrollView mNestedScrollView;
   @BindView(R.id.menu_recyclerView) RecyclerView mRecyclerView;
   @BindView(R.id.convenientBanner) ConvenientBanner mBanner;
+  @BindView(R.id.weather_layout) RelativeLayout weatherLayout;
 
   @BindView(R.id.new_recyclerView) RecyclerView articleRecyclerView;
   ArticleAdapter articleAdapter;
@@ -77,6 +81,7 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
 
     // 天气API
     // http://op.juhe.cn/onebox/weather/query?cityname=%E8%8B%8F%E5%B7%9E%E5%B8%82&key=220448b1902d02eea42160d3e06f87ff
+    weatherLayout.setVisibility(View.GONE);
 
     // 滑动监听
     mNestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -126,9 +131,16 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
   }
 
   @Override public void onRVItemClick(ViewGroup parent, View itemView, int position) {
+    // 点击文章
     if (parent.getId() == R.id.new_recyclerView) {
-      showToast(articleAdapter.getData().get(position).getTitle());
+      String articleid = articleAdapter.getData().get(position).getId();
+      if (!TextUtils.isEmpty(articleid)) {
+        Intent intent = new Intent(mContext, ArticleDetailsActivity.class);
+        intent.putExtra("articleid", articleid);
+        startActivity(intent);
+      }
     }
+    // 点击菜单
     if (parent.getId() == R.id.menu_recyclerView) {
       MenuBean item = menuAdapter.getItem(position);
       MainActivity parentActivity = (MainActivity) getActivity();
@@ -137,10 +149,10 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
   }
 
   @OnClick({
-      R.id.tip_layout, R.id.edt_search, R.id.tv_model_title
+      R.id.weather_layout, R.id.edt_search, R.id.tv_model_title
   }) public void onClick(View view) {
     switch (view.getId()) {
-      case R.id.tip_layout:
+      case R.id.weather_layout:
         showToast("天气预报");
         break;
       case R.id.edt_search:
@@ -148,7 +160,7 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
         break;
       case R.id.tv_model_title:
         // ping 测试
-        int result = PingUtil.getAvgRTT("http://www.baidu.com", 3, 200);
+        int result = PingUtil.getAvgRTT("http://lib.jssvc.edu.cn/", 3, 200);
         showToast("PING测试：AvgRTT = " + result);
         break;
     }
@@ -156,7 +168,8 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
 
   // 获取文件列表
   private void getArticleList() {
-    OkGo.<String>get(HttpUrlParams.GET_ARTICLE_LIST).tag(this)
+    OkGo.<String>get(HttpUrlParams.GET_ARTICLE_LIST).tag("alist")
+        .params("channel_id", "")
         .params("page", "1")
         .params("pagesize", "10")
         .execute(new StringCallback() {
@@ -191,7 +204,7 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
 
   // 获取广告Banner
   private void getAdsList() {
-    OkGo.<String>get(HttpUrlParams.GET_ADS_LIST).tag(this).execute(new StringCallback() {
+    OkGo.<String>get(HttpUrlParams.GET_ADS_LIST).tag("ads").execute(new StringCallback() {
       @Override public void onSuccess(Response<String> response) {
         articleList.clear();
         try {
@@ -231,15 +244,10 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
       @Override public LocalImageHolderView createHolder() {
         return new LocalImageHolderView();
       }
-    }, adsList)
-        //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
-        .setPageIndicator(
-            new int[] { R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused })
-        //设置指示器的方向
-        .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
-    //设置翻页的效果，不需要翻页效果可用不设
-    //.setPageTransformer(Transformer.DefaultTransformer);    集成特效之后会有白屏现象，新版已经分离，如果要集成特效的例子可以看Demo的点击响应。
-    // mBanner.setManualPageable(false);//设置不能手动影响
+    }, adsList).setPageIndicator(new int[] {
+        R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused
+    })//设置两个点图片作为翻页指示器
+        .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);//设置指示器的方向
   }
 
   public class LocalImageHolderView implements Holder<AdsBean> {
@@ -255,7 +263,22 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
       ImageLoader.with(context, imageView, model.getBanner());
       imageView.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View view) {
-          showToast(model.getTheme());
+          // Category 0无跳转 1网页 2功能
+          int category = Integer.parseInt(model.getCategory());
+          switch (category) {
+            case 0:
+              // 提示类信息，不予响应
+              break;
+            case 1:
+              if (!TextUtils.isEmpty(model.getRefurl())) {
+                Intent intent = new Intent(mContext, WebActivity.class);
+                intent.putExtra("url", model.getRefurl());
+                startActivity(intent);
+              }
+              break;
+            default:
+              break;
+          }
         }
       });
     }
