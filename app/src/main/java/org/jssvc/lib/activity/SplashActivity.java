@@ -11,15 +11,13 @@ import com.lzy.okgo.model.Response;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.ThirdAccountBean;
-import org.jssvc.lib.data.Constants;
 import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
-import org.jssvc.lib.utils.ImageLoader;
 import qiu.niorgai.StatusBarCompat;
 
 import static org.jssvc.lib.base.BaseApplication.libOnline;
-import static org.jssvc.lib.base.BaseApplication.localMemberBean;
+import static org.jssvc.lib.base.BaseApplication.localUserBean;
 
 /**
  * APP启动页面
@@ -35,12 +33,33 @@ public class SplashActivity extends BaseActivity {
   @Override protected void initView() {
     StatusBarCompat.translucentStatusBar(this, false);
 
-    String picPath =
-        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1505302208889&di=a6c81211133cc6fdbac4b451e699bc15&imgtype=0&src=http%3A%2F%2Fdown1.sucaitianxia.com%2Fpsd02%2Fpsd242%2Fpsds65632.jpg";
-    ImageLoader.with(mContext, mImageView, picPath);
+    // 广告模块
+    //String picPath =
+    //    "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1505302208889&di=a6c81211133cc6fdbac4b451e699bc15&imgtype=0&src=http%3A%2F%2Fdown1.sucaitianxia.com%2Fpsd02%2Fpsd242%2Fpsds65632.jpg";
+    //ImageLoader.with(mContext, mImageView, picPath);
 
+
+    // 如果SP有数据，则初始化账户
+    if (DataSup.hasUserLogin()) {
+      // 加载全局会员
+      localUserBean = DataSup.getLocalUserBean();
+
+      // 如果有绑定图书馆，则静默登录图书馆，并libOnline=true
+      ThirdAccountBean libBean = DataSup.getLibThirdAccount();
+      if (libBean != null) {
+        login2Lib(libBean.getAccount(), libBean.getPwd(), libBean.getType());
+      } else {
+        goNextBeforeWait();
+      }
+    } else {
+      goNextBeforeWait();
+    }
+  }
+
+  // 延迟跳转
+  private void goNextBeforeWait() {
     Handler handler = new Handler();
-    handler.postDelayed(new splashhandler(), 1000);//静态启动页
+    handler.postDelayed(new splashhandler(), 2000);
   }
 
   /**
@@ -52,33 +71,18 @@ public class SplashActivity extends BaseActivity {
 
   class splashhandler implements Runnable {
     public void run() {
-
-      // 如果SP有数据，则初始化账户
-      if (DataSup.hasLogin()) {
-        localMemberBean = DataSup.getLocalMemberBean();
-
-        // 如果有绑定图书馆，则静默登录图书馆，并libOnline=true
-        ThirdAccountBean libBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_LIB);
-        if (libBean != null) {
-          doLibLogin(libBean.getAccount(), libBean.getPwd(), libBean.getType());
-        } else {
-          goNext();
-        }
-      } else {
-        goNext();
-      }
+      goNextImmediately();
     }
   }
 
   // 完成跳转
-  private void goNext() {
+  private void goNextImmediately() {
     startActivity(new Intent(mContext, MainActivity.class));
     finish();
   }
 
-  // 自动登录
-  private void doLibLogin(String number, String passwd, String select) {
-    // 用户名和密码都在，静默登录
+  // 静默登录
+  private void login2Lib(String number, String passwd, String select) {
     OkGo.<String>post(HttpUrlParams.URL_LIB_LOGIN).tag(this)
         .params("number", number)
         .params("passwd", passwd)
@@ -98,7 +102,7 @@ public class SplashActivity extends BaseActivity {
 
           @Override public void onFinish() {
             super.onFinish();
-            goNext();
+            goNextImmediately();
           }
         });
   }

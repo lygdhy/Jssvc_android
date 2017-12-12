@@ -34,7 +34,6 @@ import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.BookSearchBean;
 import org.jssvc.lib.bean.ListSelecterBean;
 import org.jssvc.lib.bean.ThirdAccountBean;
-import org.jssvc.lib.data.Constants;
 import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
@@ -159,7 +158,7 @@ public class BookSearchActivity extends BaseActivity
     }
 
     String account = "";
-    ThirdAccountBean libBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_LIB);
+    ThirdAccountBean libBean = DataSup.getLibThirdAccount();
     if (libBean != null) {
       account = libBean.getAccount();
     }

@@ -13,9 +13,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.bean.MemberBean;
 import org.jssvc.lib.bean.ThirdAccountBean;
-import org.jssvc.lib.data.Constants;
+import org.jssvc.lib.bean.UserBean;
 import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.data.HttpUrlParams;
 
@@ -33,20 +32,20 @@ public class AccountThirdManagerActivity extends BaseActivity {
   }
 
   @Override protected void initView() {
-    MemberBean bean = DataSup.getLocalMemberBean();
+    UserBean bean = DataSup.getLocalUserBean();
     if (bean != null) {
       getUserAcount(bean.getId());// 获取当前用户绑定的信息
     }
   }
 
   private void loadUi() {
-    libBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_LIB);
+    libBean = DataSup.getLibThirdAccount();
     if (libBean == null) {
       tvLibTitle.setText("我的图书馆（未绑定）");
     } else {
       tvLibTitle.setText("我的图书馆（已绑定" + libBean.getAccount() + "）");
     }
-    jwBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_JW);
+    jwBean = DataSup.getJwThirdAccount();
     if (jwBean != null) {
 
     }
@@ -82,7 +81,7 @@ public class AccountThirdManagerActivity extends BaseActivity {
             try {
               JSONObject jsonObject = new JSONObject(response.body());
               if (jsonObject.optInt("code") == 200) {
-                DataSup.setThirdAccountStr2Local(jsonObject.optString("data"));
+                DataSup.saveThirdAccountJson2Local(jsonObject.optString("data"));
                 loadUi();
               } else {
                 showToast(jsonObject.optString("message"));

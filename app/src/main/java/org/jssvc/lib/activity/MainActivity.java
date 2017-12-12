@@ -99,7 +99,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
   // 含判断跳转
   private void judge2Activity(Class<?> activity) {
-    if (DataSup.hasLogin()) {
+    if (DataSup.hasUserLogin()) {
       if (libOnline) {
         startActivity(new Intent(mContext, activity));
       } else {

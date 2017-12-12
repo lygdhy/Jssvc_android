@@ -27,7 +27,6 @@ import org.jssvc.lib.adapter.BookReadingAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.BookReadingBean;
 import org.jssvc.lib.bean.ThirdAccountBean;
-import org.jssvc.lib.data.Constants;
 import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
@@ -127,7 +126,7 @@ public class CurentBorrowActivity extends BaseActivity {
       @Override public void onXujieClick(View view, BookReadingBean item) {
 
         String account = "";
-        ThirdAccountBean libBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_LIB);
+        ThirdAccountBean libBean = DataSup.getLibThirdAccount();
         if (libBean != null) {
           account = libBean.getAccount();
         }

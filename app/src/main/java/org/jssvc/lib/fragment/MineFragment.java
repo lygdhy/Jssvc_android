@@ -17,7 +17,6 @@ import org.jssvc.lib.activity.SettingActivity;
 import org.jssvc.lib.activity.UserResumeActivity;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.ThirdAccountBean;
-import org.jssvc.lib.data.Constants;
 import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
@@ -25,7 +24,7 @@ import org.jssvc.lib.utils.ImageLoader;
 import org.jssvc.lib.view.WaveView;
 
 import static org.jssvc.lib.base.BaseApplication.libOnline;
-import static org.jssvc.lib.base.BaseApplication.localMemberBean;
+import static org.jssvc.lib.base.BaseApplication.localUserBean;
 
 /**
  * <pre>
@@ -56,7 +55,7 @@ public class MineFragment extends BaseFragment {
     switch (view.getId()) {
       case R.id.ll_user:
         // 登录/查看详情
-        if (DataSup.hasLogin()) {// 已登录
+        if (DataSup.hasUserLogin()) {// 已登录
           startActivity(new Intent(mContext, UserResumeActivity.class));
         } else {// 未登录
           startActivity(new Intent(mContext, LoginActivity.class));
@@ -64,7 +63,7 @@ public class MineFragment extends BaseFragment {
         break;
       case R.id.rl_account:
         // 第三方账户绑定
-        if (DataSup.hasLogin()) {// 已登录
+        if (DataSup.hasUserLogin()) {// 已登录
           startActivity(new Intent(mContext, AccountThirdManagerActivity.class));
         } else {// 未登录
           startActivity(new Intent(mContext, LoginActivity.class));
@@ -79,18 +78,18 @@ public class MineFragment extends BaseFragment {
 
   @Override public void onResume() {
     super.onResume();
-    if (DataSup.hasLogin()) {// 已登录
-      localMemberBean = DataSup.getLocalMemberBean();
-      if (TextUtils.isEmpty(localMemberBean.getAvatar())) {
+    if (DataSup.hasUserLogin()) {// 已登录
+      localUserBean = DataSup.getLocalUserBean();
+      if (TextUtils.isEmpty(localUserBean.getAvatar())) {
         ImageLoader.with(mContext, ivAvatar, R.drawable.icon_default_avatar_1);
       } else {
-        ImageLoader.withCircle(mContext, ivAvatar, localMemberBean.getAvatar());
+        ImageLoader.withCircle(mContext, ivAvatar, localUserBean.getAvatar());
       }
       tvUserName.setText(
-          TextUtils.isEmpty(localMemberBean.getNickname()) ? "路人甲" : localMemberBean.getNickname());
+          TextUtils.isEmpty(localUserBean.getNickname()) ? "路人甲" : localUserBean.getNickname());
 
       // 如果绑定且未登录，自动登录到图书馆
-      ThirdAccountBean libBean = DataSup.getThirdAccountBean(Constants.THIRD_ACCOUNT_CODE_LIB);
+      ThirdAccountBean libBean = DataSup.getLibThirdAccount();
       if (libBean != null && !libOnline) {
         // 有账号但未登录
         doLibLogin(libBean.getAccount(), libBean.getPwd(), libBean.getType());

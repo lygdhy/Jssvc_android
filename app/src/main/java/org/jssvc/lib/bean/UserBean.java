@@ -8,7 +8,7 @@ package org.jssvc.lib.bean;
  *     version: 1.0
  * </pre>
  */
-public class MemberBean {
+public class UserBean {
   private String id;
   private String phone;
   private String avatar;
