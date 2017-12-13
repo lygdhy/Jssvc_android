@@ -38,9 +38,9 @@ public class HtmlParseUtils {
 
     // 修改密码===========================================================================
     // 修改密码返回解析
-    public static String getErrMsgOnChangePwd(String result) {
+    public static String getErrMsgOnChangePwd(String html) {
         String errorMsg = "";
-        Document doc = Jsoup.parse(result);
+        Document doc = Jsoup.parse(html);
         Elements links = doc.select("[class=iconerr]");
         for (Element link : links) {
             errorMsg = link.text().toString().trim();

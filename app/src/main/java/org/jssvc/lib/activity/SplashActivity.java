@@ -3,7 +3,10 @@ package org.jssvc.lib.activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import butterknife.BindView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -14,6 +17,7 @@ import org.jssvc.lib.bean.ThirdAccountBean;
 import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.HtmlParseUtils;
+import org.jssvc.lib.utils.ImageLoader;
 import qiu.niorgai.StatusBarCompat;
 
 import static org.jssvc.lib.base.BaseApplication.libOnline;
@@ -25,6 +29,11 @@ import static org.jssvc.lib.base.BaseApplication.localUserBean;
 public class SplashActivity extends BaseActivity {
 
   @BindView(R.id.iv_ad) ImageView mImageView;
+  @BindView(R.id.welcome_layout) RelativeLayout welcomeLayout;
+  @BindView(R.id.iv_avatar) ImageView ivAvatar;
+  @BindView(R.id.tv_user_name) TextView tvUserName;
+
+  public int WAIT_TIME = 3000;// 默认3秒，登录时给5秒等待
 
   @Override protected int getContentViewId() {
     return R.layout.activity_splash;
@@ -33,16 +42,28 @@ public class SplashActivity extends BaseActivity {
   @Override protected void initView() {
     StatusBarCompat.translucentStatusBar(this, false);
 
+    welcomeLayout.setVisibility(View.GONE);
+
     // 广告模块
     //String picPath =
     //    "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1505302208889&di=a6c81211133cc6fdbac4b451e699bc15&imgtype=0&src=http%3A%2F%2Fdown1.sucaitianxia.com%2Fpsd02%2Fpsd242%2Fpsds65632.jpg";
     //ImageLoader.with(mContext, mImageView, picPath);
 
-
     // 如果SP有数据，则初始化账户
     if (DataSup.hasUserLogin()) {
       // 加载全局会员
       localUserBean = DataSup.getLocalUserBean();
+
+      // 添加欢迎信息
+      WAIT_TIME = 5000;
+      welcomeLayout.setVisibility(View.VISIBLE);
+      if (TextUtils.isEmpty(localUserBean.getAvatar())) {
+        ImageLoader.with(mContext, ivAvatar, R.drawable.icon_default_avatar_1);
+      } else {
+        ImageLoader.withCircle(mContext, ivAvatar, localUserBean.getAvatar());
+      }
+      tvUserName.setText(TextUtils.isEmpty(localUserBean.getNickname()) ? "笔芯"
+          : localUserBean.getNickname() + "，欢迎回来！");
 
       // 如果有绑定图书馆，则静默登录图书馆，并libOnline=true
       ThirdAccountBean libBean = DataSup.getLibThirdAccount();
@@ -59,7 +80,7 @@ public class SplashActivity extends BaseActivity {
   // 延迟跳转
   private void goNextBeforeWait() {
     Handler handler = new Handler();
-    handler.postDelayed(new splashhandler(), 2000);
+    handler.postDelayed(new splashhandler(), WAIT_TIME);
   }
 
   /**

@@ -1,6 +1,7 @@
 package org.jssvc.lib.activity;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,17 +11,30 @@ import android.support.v4.view.ViewPager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
+import com.blankj.utilcode.util.AppUtils;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
+import com.pgyersdk.javabean.AppBean;
+import com.pgyersdk.update.PgyUpdateManager;
+import com.pgyersdk.update.UpdateManagerListener;
 import java.util.ArrayList;
 import java.util.List;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.MenuBean;
+import org.jssvc.lib.bean.VersionBean;
 import org.jssvc.lib.data.Constants;
 import org.jssvc.lib.data.DataSup;
+import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.fragment.HomeFragment;
 import org.jssvc.lib.fragment.LabFragment;
 import org.jssvc.lib.fragment.MineFragment;
 import org.jssvc.lib.fragment.ReadingHubFragment;
+import org.jssvc.lib.view.CustomDialog;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -50,6 +64,8 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     initContent();
 
     initTab();
+
+    checkVersion();
 
     // 请求打开摄像头和SD卡
     requestCodeQrcodePermissions();
@@ -196,6 +212,77 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
    */
   protected boolean supportSlideBack() {
     return false;
+  }
+
+  // 1、版本检查
+  private void checkVersion() {
+    OkGo.<String>get(HttpUrlParams.URL_GET_VERSION).tag(this)
+        .params("platform", "android")
+        .params("app_key", AppUtils.getAppPackageName())
+        .execute(new StringCallback() {
+          @Override public void onSuccess(Response<String> response) {
+            try {
+              JSONObject jsonObject = new JSONObject(response.body());
+              if (jsonObject.optInt("code") == 200) {
+                VersionBean item = new Gson().fromJson(jsonObject.optJSONObject("data").toString(),
+                    VersionBean.class);
+                analyzeVersion(item);// 版本判断
+              } else {
+                showToast(jsonObject.optString("message"));
+              }
+            } catch (JSONException e) {
+              e.printStackTrace();
+            }
+          }
+
+          @Override public void onError(Response<String> response) {
+            super.onError(response);
+            dealNetError(response);
+          }
+        });
+  }
+
+  // 2、版本判断
+  private void analyzeVersion(VersionBean item) {
+    int versioncode = AppUtils.getAppVersionCode();
+    // 发现新版本
+    if (versioncode < Integer.parseInt(item.getVersion_code())) {
+      // force_version_code 低于该版本将强制升级
+      boolean isForce = versioncode < Integer.parseInt(item.getForce_version_code());
+      // 弹框提示
+      CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
+      builder.setTitle("发现新版本");
+      builder.setMessage(item.getVersion_log() + "");
+      builder.setPositiveButton("立即升级", new DialogInterface.OnClickListener() {
+        public void onClick(final DialogInterface dialog, int which) {
+          dialog.dismiss();
+          // 立即升级
+          doPgyUpdate();
+        }
+      });
+      if (!isForce) {
+        builder.setNegativeButton("以后再说", new DialogInterface.OnClickListener() {
+          public void onClick(final DialogInterface dialog, int which) {
+            dialog.dismiss();
+          }
+        });
+      }
+      builder.create().show();
+    }
+  }
+
+  // 3、蒲公英升级
+  private void doPgyUpdate() {
+    PgyUpdateManager.register(this, "org.jssvc.lib.provider", new UpdateManagerListener() {
+      @Override public void onUpdateAvailable(String result) {
+        AppBean appBean = getAppBeanFromString(result);
+        startDownloadTask(MainActivity.this, appBean.getDownloadURL());
+      }
+
+      @Override public void onNoUpdateAvailable() {
+        showToast("已经是最新版");
+      }
+    });
   }
 
   // =============================权限 =============================

@@ -172,7 +172,12 @@ public class SettingActivity extends BaseActivity {
       public void onClick(final DialogInterface dialog, int which) {
         dialog.dismiss();
 
-        DataCleanManager.clearAllCache(mContext);
+        try {
+          DataCleanManager.clearAllCache(mContext);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+
         showToast("清理中...");
         Handler x = new Handler();
         x.postDelayed(new splashhandler(), 3000);

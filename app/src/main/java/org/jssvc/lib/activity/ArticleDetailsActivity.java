@@ -119,9 +119,7 @@ public class ArticleDetailsActivity extends BaseActivity {
     tvAuthor.setText(dateStr + "  " + article.getAuthor());
 
     // 加载页面
-    String css =
-        "<style type=\"text/css\">div{ line-height:30px;}img{ width:100%;height:auto;padding-top:10px;padding-bottom:10px;}</style>";
     webView.getSettings().setJavaScriptEnabled(true);
-    webView.loadData(css + article.getContent(), "text/html", "utf-8");
+    webView.loadData(article.getContent(), "text/html", "utf-8");
   }
 }

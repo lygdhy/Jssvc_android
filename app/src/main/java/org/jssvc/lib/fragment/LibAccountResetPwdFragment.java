@@ -72,7 +72,7 @@ public class LibAccountResetPwdFragment extends BaseFragment {
         .params("submit1", "%E7%A1%AE%E5%AE%9A")
         .execute(new StringCallback() {
           @Override public void onSuccess(Response<String> response) {
-            parseHtml(response.body(), newpwd);
+            parseHtml(response.body() + "", newpwd);
           }
 
           @Override public void onError(Response<String> response) {
@@ -93,8 +93,8 @@ public class LibAccountResetPwdFragment extends BaseFragment {
   }
 
   // 解析网页
-  private void parseHtml(String s, String newpwd) {
-    String errorMsg = HtmlParseUtils.getErrMsgOnChangePwd(s);
+  private void parseHtml(String html, String newpwd) {
+    String errorMsg = HtmlParseUtils.getErrMsgOnChangePwd(html);
     if (TextUtils.isEmpty(errorMsg)) {
       // 密码修改成功
       showToast("密码修改成功");

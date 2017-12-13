@@ -74,7 +74,7 @@ public class AccountPlatformManagerActivity extends BaseActivity {
     getSupportFragmentManager().beginTransaction()
         .add(R.id.main_container, checkFragment)
         .addToBackStack(null)
-        .commit();
+        .commitAllowingStateLoss();
   }
 
   // 发送短信

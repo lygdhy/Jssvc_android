@@ -206,7 +206,6 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
   private void getAdsList() {
     OkGo.<String>get(HttpUrlParams.GET_ADS_LIST).tag("ads").execute(new StringCallback() {
       @Override public void onSuccess(Response<String> response) {
-        articleList.clear();
         try {
           JSONObject jsonObject = new JSONObject(response.body());
           if (jsonObject.optInt("code") == 200) {
