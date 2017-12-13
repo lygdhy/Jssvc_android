@@ -36,13 +36,12 @@ import org.jssvc.lib.utils.HtmlParseUtils;
  */
 public class BookShelfActivity extends BaseActivity {
 
-  @BindView(R.id.tvBack) TextView tvBack;
-  @BindView(R.id.ivEdite) ImageView ivEdite;
-  @BindView(R.id.emptyLayout) LinearLayout emptyLayout;
-  @BindView(R.id.dateLayout) LinearLayout dateLayout;
+  @BindView(R.id.iv_edite) ImageView ivEdite;
+  @BindView(R.id.empty_layout) LinearLayout emptyLayout;
+  @BindView(R.id.date_layout) LinearLayout dateLayout;
 
-  @BindView(R.id.tabLayout) TabLayout tabLayout;
-  @BindView(R.id.viewPager) ViewPager viewPager;
+  @BindView(R.id.tab_layout) TabLayout tabLayout;
+  @BindView(R.id.view_pager) ViewPager viewPager;
 
   private List<String> list_title;
   private List<Fragment> list_fragment;
@@ -61,12 +60,12 @@ public class BookShelfActivity extends BaseActivity {
     getBookShelf();
   }
 
-  @OnClick({ R.id.tvBack, R.id.ivEdite }) public void onClick(View view) {
+  @OnClick({ R.id.tv_back, R.id.iv_edite }) public void onClick(View view) {
     switch (view.getId()) {
-      case R.id.tvBack:
+      case R.id.tv_back:
         finish();
         break;
-      case R.id.ivEdite:
+      case R.id.iv_edite:
         if (shelfList.size() == 0) {
           // 添加书架
           showInputAlert("0", "", "");

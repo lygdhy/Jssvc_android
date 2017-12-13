@@ -30,8 +30,8 @@ import org.jssvc.lib.view.CustomDialog;
  */
 public class BookShelfFragment extends BaseFragment {
 
-  @BindView(R.id.recyclerView) RecyclerView recyclerView;
-  @BindView(R.id.emptyLayout) LinearLayout emptyLayout;
+  @BindView(R.id.recycler_view) RecyclerView recyclerView;
+  @BindView(R.id.empty_layout) LinearLayout emptyLayout;
 
   BookShelfListAdapter bookShelfListAdapter;
   List<BookShelfListBean> bookList = new ArrayList<>();
@@ -96,14 +96,16 @@ public class BookShelfFragment extends BaseFragment {
     bookList.clear();
     bookList = HtmlParseUtils.getBookOnShelfList(s);
 
-    if (bookList.size() > 0) {
-      emptyLayout.setVisibility(View.GONE);
-      recyclerView.setVisibility(View.VISIBLE);
-      loadBookList(bookList);
-    } else {
-      // 书架没有图书
-      emptyLayout.setVisibility(View.VISIBLE);
-      recyclerView.setVisibility(View.GONE);
+    if (emptyLayout != null) {
+      if (bookList.size() > 0) {
+        emptyLayout.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+        loadBookList(bookList);
+      } else {
+        // 书架没有图书
+        emptyLayout.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+      }
     }
   }
 

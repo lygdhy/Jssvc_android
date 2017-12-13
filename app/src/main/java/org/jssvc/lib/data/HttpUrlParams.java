@@ -10,6 +10,7 @@ public class HttpUrlParams {
   public static final String BASE_ORG_URL = "http://www.jssvc.org/";
 
   public static final String URL_ORG_FEEDBACK = BASE_ORG_URL + "app/api/feedback.php";// 意见反馈
+  public static final String URL_GET_VERSION = BASE_ORG_URL + "app/api/get_version.php";// 版本检查
 
   public static final String URL_USER_REGISTER= BASE_ORG_URL + "app/api/register.php";// 账户注册或密码找回
   public static final String URL_USER_LOGIN = BASE_ORG_URL + "app/api/login.php";// 账户登录

@@ -1,20 +1,16 @@
 package org.jssvc.lib.fragment;
 
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.view.ViewGroup;
 import butterknife.BindView;
-import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import java.util.ArrayList;
 import java.util.List;
 import org.jssvc.lib.R;
-import org.jssvc.lib.activity.MainActivity;
-import org.jssvc.lib.adapter.MenuAdapter;
+import org.jssvc.lib.adapter.MenuHubAdapter;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.MenuBean;
+import org.jssvc.lib.bean.MenuHubBean;
 import org.jssvc.lib.data.Constants;
-import org.jssvc.lib.view.DividerGridItemDecoration;
 
 /**
  * <pre>
@@ -24,11 +20,11 @@ import org.jssvc.lib.view.DividerGridItemDecoration;
  *     version: 1.0
  * </pre>
  */
-public class LabFragment extends BaseFragment implements BGAOnRVItemClickListener {
+public class LabFragment extends BaseFragment {
 
   @BindView(R.id.recycler) RecyclerView mRecycler;
 
-  MenuAdapter mAdapter;
+  MenuHubAdapter mAdapter;
 
   @Override protected int getContentViewId() {
     return R.layout.fragment_lab;
@@ -42,37 +38,51 @@ public class LabFragment extends BaseFragment implements BGAOnRVItemClickListene
   }
 
   private void initRefreshView() {
-    mRecycler.setLayoutManager(new GridLayoutManager(mContext, 4));
-    mRecycler.addItemDecoration(new DividerGridItemDecoration(mContext));
-    mAdapter = new MenuAdapter(mRecycler);
-    mAdapter.setOnRVItemClickListener(this);
+    mRecycler.setLayoutManager(new LinearLayoutManager(mContext));
+    mAdapter = new MenuHubAdapter(mRecycler);
     mRecycler.setAdapter(mAdapter);
   }
 
   private void getDiscussList() {
-    List<MenuBean> menuList = new ArrayList<>();
+    List<MenuHubBean> hubList = new ArrayList<>();
 
-    menuList.add(new MenuBean(Constants.MENU_FEEDBACK, "意见反馈", R.drawable.icon_menu_feedback));
-    menuList.add(new MenuBean(Constants.MENU_WAITER, "客服小智", R.drawable.icon_menu_waiter));
-    menuList.add(new MenuBean(Constants.MENU_NEWS, "新闻资讯", R.drawable.icon_menu_new));
-    menuList.add(new MenuBean(Constants.MENU_ABOUT, "关于我们", R.drawable.icon_menu_about_us));
+    MenuHubBean hub1 = new MenuHubBean();
+    hub1.setTitle("我的实验室");
+    List<MenuBean> mlist1 = new ArrayList<>();
+    mlist1.add(new MenuBean(Constants.MENU_NEWS, "新闻资讯", R.drawable.icon_menu_new));
+    hub1.setMenulist(mlist1);
+    hubList.add(hub1);
 
-    menuList.add(new MenuBean(Constants.LIB_ABOUT, "关于图书馆", R.drawable.icon_menu_about_lib));
-    menuList.add(new MenuBean(Constants.LIB_HELP, "帮助指南", R.drawable.icon_menu_help));
-    menuList.add(new MenuBean(Constants.LIB_SEARCH_BOOK, "图书搜索", R.drawable.icon_menu_book_search));
+    MenuHubBean hub2 = new MenuHubBean();
+    hub2.setTitle("我的图书馆");
+    List<MenuBean> mlist2 = new ArrayList<>();
+    mlist2.add(new MenuBean(Constants.LIB_RESUME, "我的证件", R.drawable.icon_menu_idcard));
+    mlist2.add(new MenuBean(Constants.LIB_READ_HIS, "借阅历史", R.drawable.icon_menu_book_his));
+    mlist2.add(new MenuBean(Constants.LIB_READ_ING, "图书续借", R.drawable.icon_menu_borrowed));
+    mlist2.add(new MenuBean(Constants.LIB_SEARCH_BOOK, "图书搜索", R.drawable.icon_menu_book_search));
+    mlist2.add(new MenuBean(Constants.LIB_BOOK_SHELF, "我的书架", R.drawable.icon_menu_bookrack));
+    mlist2.add(new MenuBean(Constants.LIB_HELP, "帮助指南", R.drawable.icon_menu_help));
+    hub2.setMenulist(mlist2);
+    hubList.add(hub2);
 
-    menuList.add(new MenuBean(Constants.LIB_RESUME, "证件信息", R.drawable.icon_menu_idcard));
-    menuList.add(new MenuBean(Constants.LIB_READ_ING, "当前借阅", R.drawable.icon_menu_borrowed));
-    menuList.add(new MenuBean(Constants.LIB_READ_HIS, "借阅历史", R.drawable.icon_menu_book_his));
-    menuList.add(new MenuBean(Constants.LIB_BOOK_REVIEW, "我的书评", R.drawable.icon_menu_appraise));
-    menuList.add(new MenuBean(Constants.LIB_BOOK_SHELF, "我的书架", R.drawable.icon_menu_bookrack));
+    MenuHubBean hub3 = new MenuHubBean();
+    hub3.setTitle("关于未来");
+    List<MenuBean> mlist3 = new ArrayList<>();
+    mlist3.add(new MenuBean(Constants.LIB_BOOK_REVIEW, "我的书评", R.drawable.icon_menu_appraise));
+    mlist3.add(new MenuBean(Constants.LIB_BOOK_RECOMMEND, "图书荐购", R.drawable.icon_menu_book_recommend));
+    hub3.setMenulist(mlist3);
+    hubList.add(hub3);
 
-    mAdapter.setData(menuList);
-  }
+    MenuHubBean hub4 = new MenuHubBean();
+    hub4.setTitle("联系我们");
+    List<MenuBean> mlist4 = new ArrayList<>();
+    mlist4.add(new MenuBean(Constants.LIB_ABOUT, "关于Lib", R.drawable.icon_menu_about_lib));
+    mlist4.add(new MenuBean(Constants.MENU_ABOUT, "关于我们", R.drawable.icon_menu_about_us));
+    mlist4.add(new MenuBean(Constants.MENU_FEEDBACK, "意见反馈", R.drawable.icon_menu_feedback));
+    mlist4.add(new MenuBean(Constants.MENU_WAITER, "客服小智", R.drawable.icon_menu_waiter));
+    hub4.setMenulist(mlist4);
+    hubList.add(hub4);
 
-  @Override public void onRVItemClick(ViewGroup parent, View itemView, int position) {
-    MenuBean item = mAdapter.getData().get(position);
-    MainActivity parentActivity = (MainActivity) getActivity();
-    parentActivity.openActivityByMenu(item);
+    mAdapter.setData(hubList);
   }
 }
