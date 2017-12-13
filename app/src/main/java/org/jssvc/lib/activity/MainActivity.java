@@ -84,7 +84,10 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         judge2Activity(HistoryBorrowActivity.class);
         break;
       case Constants.LIB_BOOK_REVIEW://我的书评
-        showToast("暂未开通");
+        showToast("即将上线");
+        break;
+      case Constants.LIB_BOOK_RECOMMEND://图书荐购
+        showToast("即将上线");
         break;
       case Constants.LIB_BOOK_SHELF://我的书架
         judge2Activity(BookShelfActivity.class);

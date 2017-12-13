@@ -34,6 +34,7 @@ public class Constants {
   public static final int LIB_READ_HIS = 1006;//借阅历史
   public static final int LIB_BOOK_REVIEW = 1007;//我的书评
   public static final int LIB_BOOK_SHELF = 1008;//我的书架
+  public static final int LIB_BOOK_RECOMMEND = 1009;//图书荐购
 
   // sharePreference
   public static final String LOCAL_USER = "local_user_json";// 当前账户
