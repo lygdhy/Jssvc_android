@@ -31,7 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.bean.MemberBean;
+import org.jssvc.lib.bean.UserBean;
 import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.GlideImageLoader;
@@ -39,7 +39,7 @@ import org.jssvc.lib.utils.ImageLoader;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
-import static org.jssvc.lib.data.DataSup.getLocalMemberBean;
+import static org.jssvc.lib.data.DataSup.getLocalUserBean;
 
 /**
  * 个人中心
@@ -58,7 +58,7 @@ public class UserResumeActivity extends BaseActivity {
 
   ArrayList<ImageItem> images = null;
   private ImagePicker imagePicker;
-  MemberBean bean;
+  UserBean bean;
   int year = 2000;
   int month = 5;
   int day = 14;
@@ -68,7 +68,7 @@ public class UserResumeActivity extends BaseActivity {
   }
 
   @Override protected void initView() {
-    bean = getLocalMemberBean();
+    bean = getLocalUserBean();
     if (bean != null) {
       ImageLoader.withCircle(mContext, ivAvatar, bean.getAvatar());
       tvNickName.setText(bean.getNickname());
@@ -216,7 +216,7 @@ public class UserResumeActivity extends BaseActivity {
               if (jsonObject.optInt("code") == 200) {
                 // 重置用户信息
                 JSONObject jo = jsonObject.optJSONObject("data");
-                DataSup.setMemberStr2Local(jo.toString());
+                DataSup.saveUserJson2Local(jo.toString());
               } else {
                 showToast(jsonObject.optString("message"));
               }

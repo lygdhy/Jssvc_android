@@ -21,7 +21,7 @@ import org.jssvc.lib.view.CustomDialog;
 import static com.pgyersdk.update.UpdateManagerListener.getAppBeanFromString;
 import static com.pgyersdk.update.UpdateManagerListener.startDownloadTask;
 import static org.jssvc.lib.base.BaseApplication.libOnline;
-import static org.jssvc.lib.base.BaseApplication.localMemberBean;
+import static org.jssvc.lib.base.BaseApplication.localUserBean;
 
 /**
  * 设置
@@ -44,7 +44,7 @@ public class SettingActivity extends BaseActivity {
 
   @Override public void onResume() {
     super.onResume();
-    if (DataSup.hasLogin()) {// 已登录
+    if (DataSup.hasUserLogin()) {// 已登录
       rlExit.setVisibility(View.VISIBLE);
     } else {// 未登录
       rlExit.setVisibility(View.GONE);
@@ -95,8 +95,8 @@ public class SettingActivity extends BaseActivity {
         break;
       case R.id.rl_exit:
         // 注销
-        DataSup.setMemberStr2Local("");
-        localMemberBean = null;// 清除账户
+        DataSup.saveUserJson2Local("");
+        localUserBean = null;// 清除账户
         libOnline = false;// 图书馆下线
         rlExit.setVisibility(View.GONE);
         finish();

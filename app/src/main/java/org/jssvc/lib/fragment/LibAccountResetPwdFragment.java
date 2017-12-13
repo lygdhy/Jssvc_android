@@ -125,7 +125,7 @@ public class LibAccountResetPwdFragment extends BaseFragment {
                 JSONObject jo = jsonObject.optJSONObject("data");
 
                 showToast("绑定成功");
-                DataSup.setThirdAccountStr2Local(jo.toString());
+                DataSup.saveThirdAccountJson2Local(jo.toString());
                 getActivity().finish();
               } else {
                 showToast(jsonObject.optString("message"));

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.jssvc.lib.bean.MemberBean;
+import org.jssvc.lib.bean.UserBean;
 import org.jssvc.lib.bean.ThirdAccountBean;
 
 import static org.jssvc.lib.base.BaseApplication.spUtils;
@@ -21,42 +21,42 @@ import static org.jssvc.lib.base.BaseApplication.spUtils;
  */
 public class DataSup {
 
-  // 保存本地会员信息
-  public static void setMemberStr2Local(String json) {
-    spUtils.put(Constants.LOCAL_MEMBER, json);
+  // 保存用户Json
+  public static void saveUserJson2Local(String json) {
+    spUtils.put(Constants.LOCAL_USER, json);
   }
 
-  // 获取本地会员信息
-  public static String getLocalMemberStr() {
-    return spUtils.getString(Constants.LOCAL_MEMBER, "");
+  // 获取用户Json
+  public static String getLocalUserJson() {
+    return spUtils.getString(Constants.LOCAL_USER, "");
   }
 
   // 判断是否有账户登录
-  public static boolean hasLogin() {
-    return !TextUtils.isEmpty(getLocalMemberStr());
+  public static boolean hasUserLogin() {
+    return !TextUtils.isEmpty(getLocalUserJson());
   }
 
   // 获取本地账户信息
-  public static MemberBean getLocalMemberBean() {
-    return TextUtils.isEmpty(getLocalMemberStr()) ? null
-        : new Gson().fromJson(getLocalMemberStr(), MemberBean.class);
+  public static UserBean getLocalUserBean() {
+    return TextUtils.isEmpty(getLocalUserJson()) ? null
+        : new Gson().fromJson(getLocalUserJson(), UserBean.class);
   }
 
   // 保存第三方账户信息
-  public static void setThirdAccountStr2Local(String json) {
+  public static void saveThirdAccountJson2Local(String json) {
     spUtils.put(Constants.THIRD_ACCOUNT, json);
   }
 
   // 获取第三方账户信息
-  public static String getLocalThirdAccountStr() {
+  public static String getLocalThirdAccountJson() {
     return spUtils.getString(Constants.THIRD_ACCOUNT, "");
   }
 
   // 获取第三方账户信息
-  public static List<ThirdAccountBean> getThirdAccountArr() {
+  public static List<ThirdAccountBean> getThirdAccountBeans() {
     List<ThirdAccountBean> list = new ArrayList<>();
     try {
-      JSONArray jsonArr = new JSONArray(getLocalThirdAccountStr());
+      JSONArray jsonArr = new JSONArray(getLocalThirdAccountJson());
       for (int i = 0; i < jsonArr.length(); i++) {
         ThirdAccountBean item =
             new Gson().fromJson(jsonArr.get(i).toString(), ThirdAccountBean.class);
@@ -70,13 +70,23 @@ public class DataSup {
   }
 
   // 获取单项第三方账户数据
-  public static ThirdAccountBean getThirdAccountBean(String code) {
-    List<ThirdAccountBean> list = DataSup.getThirdAccountArr();
+  public static ThirdAccountBean getThirdAccountBeanByCode(String code) {
+    List<ThirdAccountBean> list = DataSup.getThirdAccountBeans();
     for (int i = 0; i < list.size(); i++) {
       if (list.get(i).getPlatform().equals(code)) {
         return list.get(i);
       }
     }
     return null;
+  }
+
+  // 获取图书馆账号
+  public static ThirdAccountBean getLibThirdAccount(){
+    return getThirdAccountBeanByCode(Constants.THIRD_ACCOUNT_CODE_LIB);
+  }
+
+  // 获取教务账号
+  public static ThirdAccountBean getJwThirdAccount(){
+    return getThirdAccountBeanByCode(Constants.THIRD_ACCOUNT_CODE_JW);
   }
 }

@@ -128,8 +128,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
   // 获取会员Id
   public String getUid() {
-    if (DataSup.hasLogin()) {
-      return BaseApplication.localMemberBean.getId();
+    if (DataSup.hasUserLogin()) {
+      return BaseApplication.localUserBean.getId();
     } else {
       return "";
     }

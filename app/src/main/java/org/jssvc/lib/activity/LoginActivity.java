@@ -15,7 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.bean.MemberBean;
+import org.jssvc.lib.bean.UserBean;
 import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.MD5Utils;
@@ -86,10 +86,10 @@ public class LoginActivity extends BaseActivity {
               JSONObject jsonObject = new JSONObject(response.body());
               if (jsonObject.optInt("code") == 200) {
                 JSONObject jo = jsonObject.optJSONObject("data");
-                DataSup.setMemberStr2Local(jo.toString());
+                DataSup.saveUserJson2Local(jo.toString());
 
                 // 加载第三方账户
-                MemberBean bean = new Gson().fromJson(jo.toString(), MemberBean.class);
+                UserBean bean = new Gson().fromJson(jo.toString(), UserBean.class);
                 getUserAcount(bean.getId());
               } else {
                 showToast(jsonObject.optString("message"));
@@ -125,7 +125,7 @@ public class LoginActivity extends BaseActivity {
             try {
               JSONObject jsonObject = new JSONObject(response.body());
               if (jsonObject.optInt("code") == 200) {
-                DataSup.setThirdAccountStr2Local(jsonObject.optString("data"));
+                DataSup.saveThirdAccountJson2Local(jsonObject.optString("data"));
               } else {
                 // showToast(jsonObject.optString("message"));
               }

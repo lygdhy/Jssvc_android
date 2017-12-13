@@ -12,7 +12,7 @@
           android:src="@drawable/bg_splash_screen_logo" />
   </item>-->
   <!-- 底部图表 -->
-  <item android:bottom="25dp">
+  <item android:bottom="30dp">
     <bitmap
         android:gravity="bottom"
         android:src="@drawable/icon_brand"/>
