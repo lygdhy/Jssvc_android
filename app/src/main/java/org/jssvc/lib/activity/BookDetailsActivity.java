@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -246,7 +247,7 @@ public class BookDetailsActivity extends BaseActivity {
   private void parseHtml(String s) {
     // 解析图片
     String coverUrl = HtmlParseUtils.getBookCoverUrl(s);
-    ImageLoader.with(mContext, ivBookCover, coverUrl);
+    if (!TextUtils.isEmpty(coverUrl)) ImageLoader.with(mContext, ivBookCover, coverUrl);
 
     // 解析详情
     List<BookDetailsBean> detailList = new ArrayList<>();

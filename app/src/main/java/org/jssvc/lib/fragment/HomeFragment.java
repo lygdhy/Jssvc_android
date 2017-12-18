@@ -125,7 +125,7 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
     menuList.add(new MenuBean(Constants.LIB_HELP, "帮助指南", R.drawable.icon_menu_help));
     menuList.add(new MenuBean(Constants.LIB_READ_ING, "当前借阅", R.drawable.icon_menu_borrowed));
     menuList.add(new MenuBean(Constants.MENU_NEWS, "新闻资讯", R.drawable.icon_menu_new));
-    menuList.add(new MenuBean(Constants.MENU_ABOUT, "关于我们", R.drawable.icon_menu_about_us));
+    menuList.add(new MenuBean(Constants.MENU_WAITER, "客服小智", R.drawable.icon_menu_waiter));
 
     menuAdapter.setData(menuList);
   }
