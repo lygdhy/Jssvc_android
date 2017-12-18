@@ -123,14 +123,14 @@ public class HelpActivity extends BaseActivity
       case R.id.opt_chat:
         // 客服弹框
         List<ListSelecterBean> dataList = new ArrayList<>();
-        dataList.add(new ListSelecterBean(R.drawable.icon_chat_qq, Constants.QQ_WAITER_LIB_1, "图多多",
-            "QQ " + Constants.QQ_WAITER_LIB_1));
-        dataList.add(new ListSelecterBean(R.drawable.icon_chat_qq, Constants.QQ_WAITER_LIB_2, "图小小",
-            "QQ " + Constants.QQ_WAITER_LIB_2));
-        dataList.add(new ListSelecterBean(R.drawable.icon_chat_qq, Constants.QQ_WAITER_LIB_3, "图妹妹",
-            "QQ " + Constants.QQ_WAITER_LIB_3));
-        dataList.add(new ListSelecterBean(R.drawable.icon_chat_qq, Constants.QQ_WAITER_LIB_4, "图姐姐",
-            "QQ " + Constants.QQ_WAITER_LIB_4));
+        dataList.add(new ListSelecterBean(R.drawable.icon_chat_qq, Constants.QQ_WAITER_LIB_1,
+            Constants.QQ_WAITER_LIB_NAME_1, "QQ " + Constants.QQ_WAITER_LIB_1));
+        dataList.add(new ListSelecterBean(R.drawable.icon_chat_qq, Constants.QQ_WAITER_LIB_2,
+            Constants.QQ_WAITER_LIB_NAME_2, "QQ " + Constants.QQ_WAITER_LIB_2));
+        dataList.add(new ListSelecterBean(R.drawable.icon_chat_qq, Constants.QQ_WAITER_LIB_3,
+            Constants.QQ_WAITER_LIB_NAME_3, "QQ " + Constants.QQ_WAITER_LIB_3));
+        dataList.add(new ListSelecterBean(R.drawable.icon_chat_qq, Constants.QQ_WAITER_LIB_4,
+            Constants.QQ_WAITER_LIB_NAME_4, "QQ " + Constants.QQ_WAITER_LIB_4));
         qqCheckDialog("在线服务", "正常工作日9:00~16:30", dataList);
         break;
       case R.id.opt_close:
