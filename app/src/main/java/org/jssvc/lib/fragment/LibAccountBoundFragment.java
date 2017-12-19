@@ -147,10 +147,9 @@ public class LibAccountBoundFragment extends BaseFragment {
             try {
               JSONObject jsonObject = new JSONObject(response.body());
               if (jsonObject.optInt("code") == 200) {
-                JSONObject jo = jsonObject.optJSONObject("data");
 
                 showToast("绑定成功");
-                DataSup.saveThirdAccountJson2Local(jo.toString());
+                DataSup.saveThirdAccountJson2Local(jsonObject.optString("data"));
                 getActivity().finish();
               } else {
                 showToast(jsonObject.optString("message"));
