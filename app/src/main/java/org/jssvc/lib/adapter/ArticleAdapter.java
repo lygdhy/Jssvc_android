@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 import java.text.ParseException;
@@ -26,23 +27,38 @@ public class ArticleAdapter extends BGARecyclerViewAdapter<ArticleListBean> {
 
   @Override
   protected void fillData(BGAViewHolderHelper helper, int position, ArticleListBean model) {
-    ImageView banner = helper.getImageView(R.id.msgCover);
-    if (TextUtils.isEmpty(model.getBanner())) {
-      banner.setVisibility(View.GONE);
-    } else {
-      banner.setVisibility(View.VISIBLE);
+    LinearLayout imageLayout = helper.getView(R.id.image_layout);
+    ImageView cover0 = helper.getImageView(R.id.cover_0);
+    ImageView cover1 = helper.getImageView(R.id.cover_1);
+    ImageView cover2 = helper.getImageView(R.id.cover_2);
+    ImageView cover3 = helper.getImageView(R.id.cover_3);
 
+    imageLayout.setVisibility(View.GONE);
+
+    if (TextUtils.isEmpty(model.getBanner())) {
+      imageLayout.setVisibility(View.GONE);
+      cover0.setVisibility(View.GONE);
+    } else {
       String[] imgArr = model.getBanner().split("\\|");
-      if (imgArr.length > 0) {
-        ImageLoader.with(mContext, banner, imgArr[0]);
+      if (imgArr.length >= 3) {
+        imageLayout.setVisibility(View.VISIBLE);
+        cover0.setVisibility(View.GONE);
+        cover1.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        cover2.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        cover3.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        ImageLoader.with(mContext, cover1, imgArr[0]);
+        ImageLoader.with(mContext, cover2, imgArr[1]);
+        ImageLoader.with(mContext, cover3, imgArr[2]);
       } else {
-        banner.setVisibility(View.GONE);
+        imageLayout.setVisibility(View.GONE);
+        cover0.setVisibility(View.VISIBLE);
+        cover0.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        ImageLoader.with(mContext, cover0, imgArr[0]);
       }
     }
 
-    helper.getTextView(R.id.tvTitle).setText(model.getTitle() + "");
+    helper.getTextView(R.id.tv_title).setText(model.getTitle() + "");
     helper.getTextView(R.id.tvAuthor).setText(model.getAuthor() + "");
-
     try {
       Date date = df.parse(model.getAddtime() + "");
       SimpleDateFormat newf = new SimpleDateFormat("yyyy-MM-dd");
