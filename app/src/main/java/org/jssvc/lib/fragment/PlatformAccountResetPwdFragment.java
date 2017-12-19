@@ -15,11 +15,12 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jssvc.lib.R;
-import org.jssvc.lib.activity.AccountPlatformManagerActivity;
 import org.jssvc.lib.base.BaseFragment;
+import org.jssvc.lib.bean.EventSms;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.MD5Utils;
 import org.jssvc.lib.view.TimeCountDown;
@@ -46,7 +47,10 @@ public class PlatformAccountResetPwdFragment extends BaseFragment
   @BindView(R.id.code_layout) RelativeLayout codeLayout;
   @BindView(R.id.btn_count_down) TimeCountDown btnCountDown;
 
-  AccountPlatformManagerActivity pActivity;
+  int opt_code = 0;
+  String opt_phone = "";
+  String str_pwd = "";
+  boolean is_smart = false;
 
   public PlatformAccountResetPwdFragment() {
   }
@@ -57,15 +61,17 @@ public class PlatformAccountResetPwdFragment extends BaseFragment
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    pActivity = (AccountPlatformManagerActivity) getActivity();
+    opt_code = getArguments().getInt("opt_code");
+    opt_phone = getArguments().getString("opt_phone");
+    is_smart = getArguments().getBoolean("is_smart");
   }
 
   @Override protected void initView() {
-    edtPhone.setText(pActivity.opt_phone);
+    edtPhone.setText(opt_phone);
     edtPhone.setEnabled(false);
 
     // 智能模式下无需输入验证码
-    if (pActivity.smart) {
+    if (is_smart) {
       btnCountDown.setVisibility(View.GONE);
       codeView.setVisibility(View.GONE);
       codeLayout.setVisibility(View.GONE);
@@ -88,17 +94,17 @@ public class PlatformAccountResetPwdFragment extends BaseFragment
           showToast("密码不能为空");
           break;
         }
-        pActivity.str_pwd = pwd;
+        str_pwd = pwd;
 
         // 智能模式下无需输入验证码
-        if (pActivity.smart) {
+        if (is_smart) {
           doNext();
         } else {
           if (TextUtils.isEmpty(code)) {
             showToast("验证码不能为空");
           } else {
             // 短信验证
-            pActivity.checkSMS(code);
+            EventBus.getDefault().post(new EventSms("check", code));
           }
         }
         break;
@@ -123,17 +129,17 @@ public class PlatformAccountResetPwdFragment extends BaseFragment
     // 修改或添加用户 15396986298
     // opt_code //0注册1找回密码
     OkGo.<String>post(HttpUrlParams.URL_USER_REGISTER).tag(this)
-        .params("phone", pActivity.opt_phone)
-        .params("pwd", MD5Utils.MD5(pActivity.str_pwd))
-        .params("type", (pActivity.opt_code == 0) ? "reg" : "bac")
+        .params("phone", opt_phone)
+        .params("pwd", MD5Utils.MD5(str_pwd))
+        .params("type", (opt_code == 0) ? "reg" : "bac")
         .execute(new StringCallback() {
           @Override public void onSuccess(Response<String> response) {
             try {
               JSONObject jsonObject = new JSONObject(response.body());
               if (jsonObject.optInt("code") == 200) {
                 Intent intent = new Intent();
-                intent.putExtra("phone", pActivity.opt_phone);
-                intent.putExtra("pwd", pActivity.str_pwd);
+                intent.putExtra("phone", opt_phone);
+                intent.putExtra("pwd", str_pwd);
                 getActivity().setResult(RESULT_OK, intent);
                 getActivity().finish();
               }

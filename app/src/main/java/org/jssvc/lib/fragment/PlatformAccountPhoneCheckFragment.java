@@ -11,11 +11,12 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jssvc.lib.R;
-import org.jssvc.lib.activity.AccountPlatformManagerActivity;
 import org.jssvc.lib.base.BaseFragment;
+import org.jssvc.lib.bean.EventSms;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.PhoneFormatCheckUtils;
 
@@ -30,7 +31,7 @@ import org.jssvc.lib.utils.PhoneFormatCheckUtils;
 public class PlatformAccountPhoneCheckFragment extends BaseFragment {
   @BindView(R.id.edt_username) EditText edtUsername;
 
-  AccountPlatformManagerActivity pActivity;
+  int opt_code = 0;
 
   public PlatformAccountPhoneCheckFragment() {
   }
@@ -41,7 +42,7 @@ public class PlatformAccountPhoneCheckFragment extends BaseFragment {
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    pActivity = (AccountPlatformManagerActivity) getActivity();
+    opt_code = getArguments().getInt("opt_code");
   }
 
   @Override protected void initView() {
@@ -78,17 +79,16 @@ public class PlatformAccountPhoneCheckFragment extends BaseFragment {
                 int hasReg = jsonObject.optInt("data");
                 // opt_code //0注册 1找回密码
                 // hasReg //0未注册 1已注册
-                if (hasReg == 1 && pActivity.opt_code == 0) {
+                if (hasReg == 1 && opt_code == 0) {
                   showToast("该手机号已注册，请直接登录");
                   return;
                 }
-                if (hasReg == 0 && pActivity.opt_code == 1) {
+                if (hasReg == 0 && opt_code == 1) {
                   showToast("该手机号未注册");
                   return;
                 }
                 // 提交短信SDK验证
-                pActivity.opt_phone = phone;
-                pActivity.sendSMS();
+                EventBus.getDefault().post(new EventSms("send", phone));
               } else {
                 showToast(jsonObject.optString("message"));
               }

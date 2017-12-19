@@ -49,7 +49,7 @@ public class CardInfoActivity extends BaseActivity {
     if (libOnline) {
       getUserInfoByNet();
     } else {
-      showToast("图书服务已离线，需重新连接");
+      showToast("暂时无法使用");
       finish();
     }
   }

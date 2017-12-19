@@ -281,8 +281,7 @@ public class UserResumeActivity extends BaseActivity {
     new AlertDialog.Builder(this).setItems(arr, new DialogInterface.OnClickListener() {
       @Override public void onClick(DialogInterface dialog, int which) {
         tvSex.setText(arr[which]);
-        // 0'未知'  1 '男'  2'女'  3'保密'
-        modifyAccountInfo("sex", String.valueOf(which + 1));
+        modifyAccountInfo("sex", arr[which]);
       }
     }).show();
   }

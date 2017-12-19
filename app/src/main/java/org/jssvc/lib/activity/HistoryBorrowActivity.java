@@ -45,7 +45,7 @@ public class HistoryBorrowActivity extends BaseActivity {
     if (libOnline) {
       loadBookList();
     } else {
-      showToast("图书服务已离线，需重新连接");
+      showToast("暂时无法使用");
       finish();
     }
   }
