@@ -1,5 +1,6 @@
 package org.jssvc.lib.activity;
 
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,7 +15,9 @@ import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.LibraryUser;
 import org.jssvc.lib.data.HttpUrlParams;
+import org.jssvc.lib.utils.DensityUtil;
 import org.jssvc.lib.utils.HtmlParseUtils;
+import org.jssvc.lib.utils.QRCodeUtil;
 
 import static org.jssvc.lib.base.BaseApplication.libOnline;
 
@@ -114,8 +117,10 @@ public class CardInfoActivity extends BaseActivity {
       }
 
       // 生成条形码
-      //ivBarcode
-
+      Bitmap bitmap = QRCodeUtil.creatBarcode(getApplicationContext(), user.getUserid(),
+          DensityUtil.dip2px(getApplicationContext(), 180),
+          DensityUtil.dip2px(getApplicationContext(), 50), true);
+      if (bitmap != null) ivBarcode.setImageBitmap(bitmap);
     } else {
       showToast("解析失败");
     }
