@@ -61,7 +61,7 @@ public class SettingActivity extends BaseActivity {
         break;
       case R.id.rl_update:
         // 版本检查
-        PgyUpdateManager.register(this, "org.jssvc.lib.provider", new UpdateManagerListener() {
+        PgyUpdateManager.register(this, new UpdateManagerListener() {
           @Override public void onUpdateAvailable(String result) {
             findNewVer(result);
           }
@@ -127,7 +127,7 @@ public class SettingActivity extends BaseActivity {
 
   // 版本自动检查
   private void autoUpdateCheck() {
-    PgyUpdateManager.register(this, "org.jssvc.lib.provider", new UpdateManagerListener() {
+    PgyUpdateManager.register(this, new UpdateManagerListener() {
       @Override public void onUpdateAvailable(String result) {
         if (tvVersion != null) {
           tvVersion.setText("发现新版本");

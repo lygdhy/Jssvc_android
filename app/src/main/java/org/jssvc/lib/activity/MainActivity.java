@@ -276,7 +276,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
   // 3、蒲公英升级
   private void doPgyUpdate() {
-    PgyUpdateManager.register(this, "org.jssvc.lib.provider", new UpdateManagerListener() {
+    PgyUpdateManager.register(this, new UpdateManagerListener() {
       @Override public void onUpdateAvailable(String result) {
         AppBean appBean = getAppBeanFromString(result);
         startDownloadTask(MainActivity.this, appBean.getDownloadURL());

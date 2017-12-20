@@ -7,8 +7,8 @@ android {
     applicationId "org.jssvc.lib"
     minSdkVersion 17
     targetSdkVersion 24
-    versionCode 16
-    versionName '2.1.8'
+    versionCode 17
+    versionName '2.1.9'
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     // Enabling multidex support.
@@ -51,15 +51,15 @@ android {
       manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Pgyer"] //pugongying
       // resValue("string", "app_name", "图书馆蒲公英版")
     }
-    //    Qihoo {
-    //      manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Qihoo"]//qihu360
-    //    }
+    Qihoo {
+      manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Qihoo"] //qihu360
+    }
     Tencen {
       manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Tencen"] //yingyongbao
     }
-    //    xiaomi {
-    //      manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
-    //    }
+    xiaomi {
+      manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
+    }
   }
 
   dexOptions {
@@ -88,14 +88,13 @@ dependencies {
   compile 'com.google.code.gson:gson:2.7'
   compile 'org.jsoup:jsoup:1.10.1'
   compile 'com.bigkoo:convenientbanner:2.0.5'
-  compile 'com.pgyersdk:sdk:2.7.6'
+  compile 'com.pgyersdk:sdk:2.8.1'
   compile 'se.emilsjolander:stickylistheaders:2.7.0'
   compile 'pub.devrel:easypermissions:1.0.1'
   compile 'cn.bingoogolapple:bga-adapter:1.2.0@aar'
   compile 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar'
   compile 'cn.bingoogolapple:bga-indicator:1.0.1@aar'
   compile 'com.umeng.analytics:analytics:6.1.2'
-  compile 'com.github.lzyzsd:jsbridge:1.0.4'
   compile 'com.blankj:utilcode:1.9.10'
   compile 'com.github.bumptech.glide:glide:3.7.0'
   compile 'top.zibin:Luban:1.1.3'
