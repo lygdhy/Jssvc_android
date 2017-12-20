@@ -3,7 +3,6 @@ package org.jssvc.lib.activity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -24,7 +23,7 @@ import static org.jssvc.lib.base.BaseApplication.libOnline;
  */
 public class CardInfoActivity extends BaseActivity {
 
-  @BindView(R.id.tvBack) TextView tvBack;
+  @BindView(R.id.iv_barcode) ImageView ivBarcode;
   @BindView(R.id.ivLevel) ImageView ivLevel;
   @BindView(R.id.tvName) TextView tvName;
   @BindView(R.id.tvLevel1) TextView tvLevel1;
@@ -37,14 +36,12 @@ public class CardInfoActivity extends BaseActivity {
   @BindView(R.id.tvCardEnd) TextView tvCardEnd;
   @BindView(R.id.tvRules) TextView tvRules;
   @BindView(R.id.tvArrearage) TextView tvArrearage;
-  @BindView(R.id.scrollView) ScrollView scrollView;
 
   @Override protected int getContentViewId() {
     return R.layout.activity_card_info;
   }
 
   @Override protected void initView() {
-    scrollView.setVisibility(View.GONE);
 
     if (libOnline) {
       getUserInfoByNet();
@@ -54,9 +51,9 @@ public class CardInfoActivity extends BaseActivity {
     }
   }
 
-  @OnClick({ R.id.tvBack, R.id.ivLevel }) public void onClick(View view) {
+  @OnClick({ R.id.tv_back, R.id.ivLevel }) public void onClick(View view) {
     switch (view.getId()) {
-      case R.id.tvBack:
+      case R.id.tv_back:
         finish();
         break;
       case R.id.ivLevel:
@@ -93,17 +90,14 @@ public class CardInfoActivity extends BaseActivity {
     LibraryUser user = HtmlParseUtils.getUserInfo(s);
     if (!TextUtils.isEmpty(user.getUserid())) {
 
-      scrollView.setVisibility(View.VISIBLE);
-      tvName.setText(user.getUsername());
+      tvUserNum.setText("卡号：" + user.getUserid());
+      tvName.setText("姓名：" + user.getUsername());
+      tvUserDepart.setText("单位：" + user.getDepartment());
+      tvUserType.setText("类型：" + user.getType());
 
-      tvUserDepart.setText(user.getDepartment());
-
-      tvUserNum.setText(user.getUserid());
-      tvUserType.setText(user.getType());
       tvUserLevel.setText(user.getReadType());
       tvCardStart.setText(user.getCardStartDate());
       tvCardEnd.setText(user.getCardEndDate());
-
       tvRules.setText(user.getViolation());
       tvArrearage.setText(user.getDebt());
 
@@ -118,6 +112,10 @@ public class CardInfoActivity extends BaseActivity {
           tvLevel2.setText("null");
         }
       }
+
+      // 生成条形码
+      //ivBarcode
+
     } else {
       showToast("解析失败");
     }
