@@ -11,10 +11,18 @@ package org.jssvc.lib.data;
 public class Constants {
   // 客服QQ
   public static final String QQ_WAITER = "2906501168";//平台客服
-  public static final String QQ_WAITER_LIB_1 = "1872237872";//图书馆客服1
-  public static final String QQ_WAITER_LIB_2 = "897457690";//图书馆客服2
-  public static final String QQ_WAITER_LIB_3 = "893196521";//图书馆客服3
-  public static final String QQ_WAITER_LIB_4 = "149553453";//图书馆客服4
+  
+  public static final String QQ_WAITER_LIB_NAME_1 = "图妹妹";//图书馆客服1
+  public static final String QQ_WAITER_LIB_1 = "1456832555";//图书馆客服1
+
+  public static final String QQ_WAITER_LIB_NAME_2 = "图姐姐";//图书馆客服2
+  public static final String QQ_WAITER_LIB_2 = "149553453";//图书馆客服2
+
+  public static final String QQ_WAITER_LIB_NAME_3 = "图小小";//图书馆客服3
+  public static final String QQ_WAITER_LIB_3 = "897457690";//图书馆客服3
+
+  public static final String QQ_WAITER_LIB_NAME_4 = "图多多";//图书馆客服4
+  public static final String QQ_WAITER_LIB_4 = "1872237872";//图书馆客服4
 
   // 平台功能
   public static final int CODE_WEB = 0;//外部链接

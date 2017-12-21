@@ -122,7 +122,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
       if (libOnline) {
         startActivity(new Intent(mContext, activity));
       } else {
-        showToast("图书服务已离线，需重新连接");
+        showToast("暂时无法使用");
       }
     } else {
       startActivity(new Intent(mContext, LoginActivity.class));
@@ -140,7 +140,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     //将名称加载tab名字列表
     tabIndicators = new ArrayList<>();
     tabIndicators.add("首页");
-    tabIndicators.add("资讯");
+    tabIndicators.add("阅读");
     tabIndicators.add("发现");
     tabIndicators.add("我的");
 
@@ -276,7 +276,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
   // 3、蒲公英升级
   private void doPgyUpdate() {
-    PgyUpdateManager.register(this, "org.jssvc.lib.provider", new UpdateManagerListener() {
+    PgyUpdateManager.register(this, new UpdateManagerListener() {
       @Override public void onUpdateAvailable(String result) {
         AppBean appBean = getAppBeanFromString(result);
         startDownloadTask(MainActivity.this, appBean.getDownloadURL());

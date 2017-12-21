@@ -1,5 +1,6 @@
 package org.jssvc.lib.activity;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -10,9 +11,12 @@ import cn.smssdk.EventHandler;
 import cn.smssdk.OnSendMessageHandler;
 import cn.smssdk.SMSSDK;
 import java.util.HashMap;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONObject;
 import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseActivity;
+import org.jssvc.lib.bean.EventSms;
 import org.jssvc.lib.fragment.PlatformAccountPhoneCheckFragment;
 import org.jssvc.lib.fragment.PlatformAccountResetPwdFragment;
 
@@ -48,6 +52,8 @@ public class AccountPlatformManagerActivity extends BaseActivity {
     initSMSSDK();// 初始化SDK
 
     initPhoneCheckFragment();
+
+    EventBus.getDefault().register(this);
   }
 
   @OnClick({ R.id.tv_back }) public void onViewClicked(View view) {
@@ -58,12 +64,23 @@ public class AccountPlatformManagerActivity extends BaseActivity {
     }
   }
 
+  @Override protected void onDestroy() {
+    super.onDestroy();
+    EventBus.getDefault().unregister(this);
+  }
+
   /**
    * 输入手机号码页面
    */
   public void initPhoneCheckFragment() {
     phoneFragment = new PlatformAccountPhoneCheckFragment();
-    getSupportFragmentManager().beginTransaction().add(R.id.main_container, phoneFragment).commit();
+    Bundle arguments = new Bundle();
+    arguments.putInt("opt_code", opt_code);
+    phoneFragment.setArguments(arguments);
+    getSupportFragmentManager().beginTransaction()
+        .add(R.id.main_container, phoneFragment)
+        .addToBackStack(null)
+        .commit();
   }
 
   /**
@@ -71,10 +88,27 @@ public class AccountPlatformManagerActivity extends BaseActivity {
    */
   public void resetPwdFragment() {
     checkFragment = new PlatformAccountResetPwdFragment();
+    Bundle arguments = new Bundle();
+    arguments.putInt("opt_code", opt_code);
+    arguments.putString("opt_phone", opt_phone);
+    arguments.putBoolean("is_smart", smart);
+    checkFragment.setArguments(arguments);
     getSupportFragmentManager().beginTransaction()
         .add(R.id.main_container, checkFragment)
         .addToBackStack(null)
-        .commitAllowingStateLoss();
+        .commit();
+  }
+
+  @Subscribe public void onEvent(EventSms event) {
+    if (event.getOpt().equals("send")) {
+      // 提交短信SDK验证
+      opt_phone = event.getOpt_value();
+      sendSMS();
+    }
+    if (event.getOpt().equals("check")) {
+      // 短信验证
+      checkSMS(event.getOpt_value());
+    }
   }
 
   // 发送短信
@@ -101,29 +135,27 @@ public class AccountPlatformManagerActivity extends BaseActivity {
               if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                 // 提交验证码成功
                 HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
-                runOnUiThread(new Runnable() {
-                  @Override public void run() {
+                //runOnUiThread(new Runnable() {
+                //  @Override public void run() {
                     checkFragment.passCheck();
-                  }
-                });
+                //  }
+                //});
               } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                 //获取验证码成功,true为智能验证，false为普通下发短信
                 smart = (Boolean) data;
-                if (smart) {
-                  // SDK不发送短信，无须填写验证码
-                  runOnUiThread(new Runnable() {
-                    @Override public void run() {
+
+                //runOnUiThread(new Runnable() {
+                //  @Override public void run() {
+                    if (smart) {
+                      // SDK不发送短信，无须填写验证码
                       showToast("验证成功！！");
-                    }
-                  });
-                } else {
-                  // SDK下发短信，需填写验证码
-                  runOnUiThread(new Runnable() {
-                    @Override public void run() {
+                    } else {
+                      // SDK下发短信，需填写验证码
                       showToast("验证短信已发送，请注意查收！");
                     }
-                  });
-                }
+                //  }
+                //});
+
                 // 页面跳转
                 resetPwdFragment();
               } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
@@ -140,13 +172,13 @@ public class AccountPlatformManagerActivity extends BaseActivity {
                 if (status > 0 && !TextUtils.isEmpty(des)) {
 
                   Log.d("DHY", "des = " + des);
-                  runOnUiThread(new Runnable() {
-                    @Override public void run() {
+                  //runOnUiThread(new Runnable() {
+                  //  @Override public void run() {
                       // 提示错误信息
                       showToast(des);
                       if (checkFragment != null) checkFragment.unPassCheck();
-                    }
-                  });
+                  //  }
+                  //});
 
                   return;
                 }

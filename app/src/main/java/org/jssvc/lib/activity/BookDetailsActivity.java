@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -32,6 +33,7 @@ import org.jssvc.lib.bean.BookAccessBean;
 import org.jssvc.lib.bean.BookDetailsBean;
 import org.jssvc.lib.bean.BookShelfBean;
 import org.jssvc.lib.bean.ListSelecterBean;
+import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.fragment.BookDetailInfoFragment;
 import org.jssvc.lib.fragment.BookDetailQtyFragment;
@@ -106,10 +108,14 @@ public class BookDetailsActivity extends BaseActivity {
         finish();
         break;
       case R.id.tv_collect:
-        if (libOnline) {
-          collectBook();// 添加到书架
+        if (DataSup.hasUserLogin()) {
+          if (libOnline) {
+            collectBook();// 添加到书架
+          } else {
+            showToast("暂时无法使用");
+          }
         } else {
-          showToast("图书服务已离线，需重新连接");
+          startActivity(new Intent(mContext, LoginActivity.class));
         }
         break;
     }
@@ -246,7 +252,7 @@ public class BookDetailsActivity extends BaseActivity {
   private void parseHtml(String s) {
     // 解析图片
     String coverUrl = HtmlParseUtils.getBookCoverUrl(s);
-    ImageLoader.with(mContext, ivBookCover, coverUrl);
+    if (!TextUtils.isEmpty(coverUrl)) ImageLoader.with(mContext, ivBookCover, coverUrl);
 
     // 解析详情
     List<BookDetailsBean> detailList = new ArrayList<>();

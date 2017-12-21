@@ -66,7 +66,7 @@
         android:orientation="vertical"
         >
       <TextView
-          android:text="教务系统（暂未开放）"
+          android:text="教务系统（即将上线）"
           style="@style/style_text_key_menu"
           />
       <TextView

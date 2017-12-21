@@ -148,9 +148,6 @@
         android:name=".activity.BookShelfEditeActivity"
         android:screenOrientation="portrait"/>
     <activity
-        android:name=".activity.MsgBrowseActivity"
-        android:screenOrientation="portrait"/>
-    <activity
         android:name=".activity.UserResumeActivity"
         android:screenOrientation="portrait"/>
     <activity
