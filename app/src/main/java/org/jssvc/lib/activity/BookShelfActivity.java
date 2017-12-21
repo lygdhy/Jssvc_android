@@ -70,7 +70,7 @@ public class BookShelfActivity extends BaseActivity {
           // 添加书架
           showInputAlert("0", "", "");
         } else {
-          // 编辑书架
+          // 书架管理
           startActivityForResult(new Intent(mContext, BookShelfEditeActivity.class), 10086);
         }
         break;

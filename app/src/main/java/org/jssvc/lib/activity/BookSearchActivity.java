@@ -23,6 +23,7 @@ import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemLongClickListener;
 import cn.bingoogolapple.refreshlayout.BGAMoocStyleRefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -191,6 +192,7 @@ public class BookSearchActivity extends BaseActivity
   @OnClick({ R.id.tv_cancel, R.id.tv_category }) public void onClick(View view) {
     switch (view.getId()) {
       case R.id.tv_cancel:
+        KeyboardUtils.hideSoftInput(this);
         finish();
         break;
       case R.id.tv_category:
