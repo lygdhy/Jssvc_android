@@ -3,7 +3,6 @@ package org.jssvc.lib.activity;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -12,6 +11,8 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,6 +32,7 @@ public class ArticleDetailsActivity extends BaseActivity {
   @BindView(R.id.tv_category) TextView tvCategory;
   @BindView(R.id.tv_title) TextView tvTitle;
   @BindView(R.id.tv_author) TextView tvAuthor;
+  @BindView(R.id.tv_original) TextView tvOriginal;
   @BindView(R.id.webView) WebView webView;
 
   ArticleDetailBean article;
@@ -40,6 +42,10 @@ public class ArticleDetailsActivity extends BaseActivity {
   }
 
   @Override protected void initView() {
+    tvTitle.setVisibility(View.INVISIBLE);
+    tvAuthor.setVisibility(View.INVISIBLE);
+    tvOriginal.setVisibility(View.INVISIBLE);
+
     String articleid = getIntent().getStringExtra("articleid");
     //showToast("--->   article id is " + articleid);
     getArticleById(articleid);
@@ -105,6 +111,10 @@ public class ArticleDetailsActivity extends BaseActivity {
 
   // 加载页面
   private void loadArticle() {
+    tvTitle.setVisibility(View.VISIBLE);
+    tvAuthor.setVisibility(View.VISIBLE);
+    if (!TextUtils.isEmpty(article.getOriginal())) tvOriginal.setVisibility(View.VISIBLE);
+
     tvTitle.setText(article.getTitle());
     tvCategory.setText(article.getPlatform());
 
@@ -119,7 +129,10 @@ public class ArticleDetailsActivity extends BaseActivity {
     tvAuthor.setText(dateStr + "  " + article.getAuthor());
 
     // 加载页面
-    webView.getSettings().setJavaScriptEnabled(true);
+    WebSettings webSettings = webView.getSettings();
+    webSettings.setJavaScriptEnabled(true);
+
+    //webView.getSettings().setJavaScriptEnabled(true);
     webView.loadData(article.getContent(), "text/html", "utf-8");
   }
 }
