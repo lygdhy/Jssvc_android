@@ -4,12 +4,11 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     >
-  <View style="@style/item_split_horizontal"/>
 
   <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:background="@android:color/white"
+      android:background="@color/color_ui_content"
       android:orientation="vertical"
       android:padding="10dp"
       >
@@ -129,7 +128,6 @@
     </RelativeLayout>
 
   </FrameLayout>
-  <View style="@style/item_split_horizontal"/>
   <View
       android:layout_width="match_parent"
       android:layout_height="10dp"

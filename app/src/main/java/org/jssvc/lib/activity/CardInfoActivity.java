@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -39,12 +40,16 @@ public class CardInfoActivity extends BaseActivity {
   @BindView(R.id.tvCardEnd) TextView tvCardEnd;
   @BindView(R.id.tvRules) TextView tvRules;
   @BindView(R.id.tvArrearage) TextView tvArrearage;
+  @BindView(R.id.body1) LinearLayout body1;
+  @BindView(R.id.body2) LinearLayout body2;
 
   @Override protected int getContentViewId() {
     return R.layout.activity_card_info;
   }
 
   @Override protected void initView() {
+    body1.setVisibility(View.GONE);
+    body2.setVisibility(View.GONE);
 
     if (libOnline) {
       getUserInfoByNet();
@@ -92,6 +97,8 @@ public class CardInfoActivity extends BaseActivity {
   private void parseHtml(String s) {
     LibraryUser user = HtmlParseUtils.getUserInfo(s);
     if (!TextUtils.isEmpty(user.getUserid())) {
+      body1.setVisibility(View.VISIBLE);
+      body2.setVisibility(View.VISIBLE);
 
       tvUserNum.setText("卡号：" + user.getUserid());
       tvName.setText("姓名：" + user.getUsername());

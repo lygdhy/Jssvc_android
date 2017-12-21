@@ -2,11 +2,16 @@ package org.jssvc.lib.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -14,6 +19,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
+import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemLongClickListener;
 import cn.bingoogolapple.refreshlayout.BGAMoocStyleRefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import com.lzy.okgo.OkGo;
@@ -30,8 +37,10 @@ import java.util.Map;
 import org.jssvc.lib.R;
 import org.jssvc.lib.adapter.BookSearchAdapter;
 import org.jssvc.lib.adapter.DialogListSelecterAdapter;
+import org.jssvc.lib.adapter.KeyHisAdapter;
 import org.jssvc.lib.base.BaseActivity;
 import org.jssvc.lib.bean.BookSearchBean;
+import org.jssvc.lib.bean.KVBean;
 import org.jssvc.lib.bean.ListSelecterBean;
 import org.jssvc.lib.bean.ThirdAccountBean;
 import org.jssvc.lib.data.DataSup;
@@ -43,7 +52,8 @@ import org.jssvc.lib.view.DividerItemDecoration;
  * 图书搜索
  */
 public class BookSearchActivity extends BaseActivity
-    implements BGARefreshLayout.BGARefreshLayoutDelegate {
+    implements BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnRVItemClickListener,
+    BGAOnRVItemLongClickListener {
 
   @BindView(R.id.tv_category) TextView tvCategory;
   @BindView(R.id.edt_input) EditText edtInput;
@@ -51,9 +61,14 @@ public class BookSearchActivity extends BaseActivity
   @BindView(R.id.refresh_layout) BGARefreshLayout mRefreshLayout;
   @BindView(R.id.recyclerView) RecyclerView recyclerView;//查询数据
 
+  @BindView(R.id.his_recycler) RecyclerView hisRecycler;//搜索历史
+
   // 搜索结果
   BookSearchAdapter bookSearchAdapter;
   List<BookSearchBean> booklists = new ArrayList<>();
+
+  // 搜索历史
+  KeyHisAdapter hisAdapter;
 
   List<ListSelecterBean> searchTypeList = new ArrayList<>();
   ListSelecterBean currentSearchType;
@@ -83,12 +98,34 @@ public class BookSearchActivity extends BaseActivity
               if (!TextUtils.isEmpty(searchText)) {
                 searchBookEngine(true);
               }
+
+              // 保存搜索记录
+              DataSup.insertSearchHis(currentSearchType.getId(), searchText);
               return true;
             default:
               return true;
           }
         }
         return false;
+      }
+    });
+
+    edtInput.addTextChangedListener(new TextWatcher() {
+      @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+      }
+
+      @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+      }
+
+      @Override public void afterTextChanged(Editable s) {
+        if (TextUtils.isEmpty(s.toString())) {
+          mRefreshLayout.setVisibility(View.GONE);
+          hisRecycler.setVisibility(View.VISIBLE);
+
+          hisAdapter.setData(DataSup.getSearchHisList());
+        }
       }
     });
 
@@ -110,6 +147,20 @@ public class BookSearchActivity extends BaseActivity
             }
           }
         });
+
+    // =================================================
+    // 加载历史
+    hisRecycler.setLayoutManager(
+        new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.HORIZONTAL));
+    hisRecycler.setItemAnimator(new DefaultItemAnimator());
+    hisAdapter = new KeyHisAdapter(hisRecycler);
+    hisAdapter.setOnRVItemClickListener(this);
+    hisAdapter.setOnRVItemLongClickListener(this);
+    hisRecycler.setAdapter(hisAdapter);
+    hisAdapter.setData(DataSup.getSearchHisList());
+
+    mRefreshLayout.setVisibility(View.GONE);
+    hisRecycler.setVisibility(View.VISIBLE);
   }
 
   // 初始化搜索类型
@@ -219,6 +270,9 @@ public class BookSearchActivity extends BaseActivity
 
   // 解析网页
   private void parseHtml(boolean isRefresh, String s) {
+    mRefreshLayout.setVisibility(View.VISIBLE);
+    hisRecycler.setVisibility(View.GONE);
+
     if (isRefresh) {
       booklists.clear();
     }
@@ -296,6 +350,38 @@ public class BookSearchActivity extends BaseActivity
         showToast("木有更多数据了");
       }
     }
+    return false;
+  }
+
+  // 点击搜索
+  @Override public void onRVItemClick(ViewGroup parent, View itemView, int position) {
+    if (parent.getId() == R.id.his_recycler) {
+      KVBean item = hisAdapter.getData().get(position);
+
+      for (int i = 0; i < searchTypeList.size(); i++) {
+        if (searchTypeList.get(i).getId().equals(item.getKey())) {
+          currentSearchType = searchTypeList.get(i);
+          tvCategory.setText(currentSearchType.getTitle());
+          edtInput.setHint("请输入" + currentSearchType.getTitle());
+          break;
+        }
+      }
+
+      searchText = item.getValue();
+      edtInput.setText(searchText);
+      if (!TextUtils.isEmpty(searchText)) {
+        searchBookEngine(true);
+      }
+    }
+  }
+
+  // 长按删除
+  @Override public boolean onRVItemLongClick(ViewGroup parent, View itemView, int position) {
+    KVBean item = hisAdapter.getData().get(position);
+    DataSup.deleteSearchHis(item.getValue());
+    // 删除后刷新页面
+    showToast("[" + item.getValue() + "] 删除成功！");
+    hisAdapter.setData(DataSup.getSearchHisList());
     return false;
   }
 }
