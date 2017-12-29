@@ -42,6 +42,7 @@
 
     <!--卡区域-->
     <LinearLayout
+        android:id="@+id/body1"
         android:layout_width="match_parent"
         android:layout_height="230dp"
         android:layout_margin="10dp"
@@ -148,6 +149,7 @@
 
     <!--数据区域-->
     <LinearLayout
+        android:id="@+id/body2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"

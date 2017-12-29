@@ -11,7 +11,7 @@ package org.jssvc.lib.data;
 public class Constants {
   // 客服QQ
   public static final String QQ_WAITER = "2906501168";//平台客服
-  
+
   public static final String QQ_WAITER_LIB_NAME_1 = "图妹妹";//图书馆客服1
   public static final String QQ_WAITER_LIB_1 = "1456832555";//图书馆客服1
 
@@ -45,6 +45,8 @@ public class Constants {
   public static final int LIB_BOOK_RECOMMEND = 1009;//图书荐购
 
   // sharePreference
+  public static final String BOOK_SEARCH_HIS = "book_search_his";// 搜索记录
+
   public static final String LOCAL_USER = "local_user_json";// 当前账户
   public static final String THIRD_ACCOUNT = "third_account_json";// 第三方账户
 

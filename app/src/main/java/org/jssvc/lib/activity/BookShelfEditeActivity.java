@@ -112,7 +112,7 @@ public class BookShelfEditeActivity extends BaseActivity {
       }
 
       @Override public void onEditClick(View view, BookShelfBean item) {
-        // 编辑书架
+        // 书架管理
         showInputAlert("2", item.getId() + "", item.getName() + "");
       }
 

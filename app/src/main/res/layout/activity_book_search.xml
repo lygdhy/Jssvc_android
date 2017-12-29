@@ -1,12 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_ui_content"
+    android:background="@android:color/white"
     android:orientation="vertical"
     >
 
   <RelativeLayout
-      android:background="@color/color_ui_content"
       style="@style/actionbar_whole_style_base"
       >
 
@@ -18,6 +17,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="主题"
+        android:textColor="@android:color/white"
         style="@style/style_text_body"
         />
 
@@ -40,23 +40,36 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="取消"
+        android:textColor="@android:color/white"
         style="@style/style_text_body"
         />
   </RelativeLayout>
 
   <View style="@style/item_split_horizontal"/>
 
-  <cn.bingoogolapple.refreshlayout.BGARefreshLayout
-      android:id="@+id/refresh_layout"
+  <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       >
-
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/his_recycler"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
         />
-  </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/recyclerView"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="1"
+          />
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+  </FrameLayout>
 </LinearLayout>

@@ -19,7 +19,7 @@
         android:id="@+id/tv_category"
         android:layout_centerHorizontal="false"
         android:layout_toRightOf="@+id/tv_back"
-        android:text="正文"
+        android:text="加载中..."
         style="@style/actionbar_title_style_base"
         />
   </RelativeLayout>
@@ -55,7 +55,7 @@
           style="@style/style_text_theme"
           />
 
-      <com.tencent.smtt.sdk.WebView
+      <WebView
           android:id="@+id/webView"
           android:layout_width="match_parent"
           android:layout_height="match_parent"

@@ -3,6 +3,7 @@ package org.jssvc.lib.activity;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -11,8 +12,6 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -129,10 +128,10 @@ public class ArticleDetailsActivity extends BaseActivity {
     tvAuthor.setText(dateStr + "  " + article.getAuthor());
 
     // 加载页面
-    WebSettings webSettings = webView.getSettings();
-    webSettings.setJavaScriptEnabled(true);
+    //WebSettings webSettings = webView.getSettings();
+    //webSettings.setJavaScriptEnabled(true);
 
-    //webView.getSettings().setJavaScriptEnabled(true);
+    webView.getSettings().setJavaScriptEnabled(true);
     webView.loadData(article.getContent(), "text/html", "utf-8");
   }
 }

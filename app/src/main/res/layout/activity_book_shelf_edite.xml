@@ -13,7 +13,7 @@
 
         <TextView
             style="@style/actionbar_title_style_base"
-            android:text="编辑书架" />
+            android:text="书架管理" />
 
         <ImageView
             android:id="@+id/ivAdd"
