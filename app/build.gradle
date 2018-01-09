@@ -7,8 +7,8 @@ android {
     applicationId "org.jssvc.lib"
     minSdkVersion 17
     targetSdkVersion 24
-    versionCode 17
-    versionName '2.1.9'
+    versionCode 18
+    versionName '2.1.10'
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     // Enabling multidex support.
