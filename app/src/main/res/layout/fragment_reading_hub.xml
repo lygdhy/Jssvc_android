@@ -6,26 +6,26 @@
     android:orientation="vertical"
     >
 
-  <RelativeLayout style="@style/actionbar_whole_style_base">
+  <!--<RelativeLayout style="@style/actionbar_whole_style_base">
     <TextView
         android:text="阅读"
         style="@style/actionbar_title_style_base"
         />
-  </RelativeLayout>
+  </RelativeLayout>-->
 
   <android.support.design.widget.TabLayout
       android:id="@+id/tab_layout"
       android:layout_width="match_parent"
-      android:layout_height="45dp"
-      android:background="@android:color/white"
-      app:tabBackground="@android:color/white"
-      app:tabIndicatorColor="@color/colorAccent"
+      android:layout_height="50dp"
+      android:background="@color/color_ui_head"
+      app:tabBackground="@color/color_ui_head"
+      app:tabIndicatorColor="@android:color/white"
       app:tabIndicatorHeight="2dp"
       app:tabMode="scrollable"
       app:tabPaddingEnd="12dp"
       app:tabPaddingStart="12dp"
-      app:tabSelectedTextColor="@color/colorAccent"
-      app:tabTextColor="@color/color_text_title"
+      app:tabSelectedTextColor="@android:color/white"
+      app:tabTextColor="@color/color_info"
       />
 
   <View style="@style/item_split_horizontal"/>
