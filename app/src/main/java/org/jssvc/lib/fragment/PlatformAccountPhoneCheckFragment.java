@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.OnClick;
+import com.blankj.utilcode.util.RegexUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -18,7 +19,6 @@ import org.jssvc.lib.R;
 import org.jssvc.lib.base.BaseFragment;
 import org.jssvc.lib.bean.EventSms;
 import org.jssvc.lib.data.HttpUrlParams;
-import org.jssvc.lib.utils.PhoneFormatCheckUtils;
 
 /**
  * <pre>
@@ -55,14 +55,14 @@ public class PlatformAccountPhoneCheckFragment extends BaseFragment {
         String phone = edtUsername.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
           showToast("请先输入手机号码");
-        } else if (!PhoneFormatCheckUtils.isPhoneLegal(phone)) {
+        } else if (!RegexUtils.isMobileExact(phone)) {
           showToast("请输入正确的手机号码");
         } else {
           checkifreg(phone);
         }
         break;
       case R.id.tv_protocol:// 阅读协议
-        showToast("乖乖滴就好~");
+        showToast("好好学习，天天向上！");
         break;
     }
   }
