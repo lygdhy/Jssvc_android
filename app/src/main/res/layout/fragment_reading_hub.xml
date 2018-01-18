@@ -25,6 +25,7 @@
       app:tabPaddingEnd="12dp"
       app:tabPaddingStart="12dp"
       app:tabSelectedTextColor="@android:color/white"
+      app:tabTextAppearance="@style/TabLayoutTextStyle"
       app:tabTextColor="@color/color_info"
       />
 
