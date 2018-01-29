@@ -29,4 +29,6 @@ public interface IBaseFragment {
     void dissmissProgressDialog();
 
     void showToast(String msg);
+
+    boolean setEventBus();
 }

@@ -25,12 +25,12 @@ public abstract class BaseFragment extends Fragment implements IBaseFragment {
 
     @Override
     public void startAnimActivity(Class<?> cla) {
-        this.startActivity(new Intent(mActivity, cla));
+        mActivity.startAnimActivity(cla);
     }
 
     @Override
     public void startAnimActivity(Intent intent) {
-        this.startActivity(intent);
+        mActivity.startAnimActivity(intent);
     }
 
     @Override
@@ -51,5 +51,15 @@ public abstract class BaseFragment extends Fragment implements IBaseFragment {
     @Override
     public void showToast(String msg) {
         mActivity.showToast(msg);
+    }
+
+    /**
+     * 是否开启EventBus
+     *
+     * @return
+     */
+    @Override
+    public boolean setEventBus() {
+        return false;
     }
 }
