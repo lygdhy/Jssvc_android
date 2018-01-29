@@ -13,6 +13,7 @@ import com.lzy.okgo.cookie.store.DBCookieStore;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.mob.MobSDK;
 import com.pgyersdk.crash.PgyCrashManager;
+import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.analytics.MobclickAgent;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -56,6 +57,9 @@ public class BaseApplication extends MultiDexApplication {
     // Mob SDK
     //SMSSDK.initSDK(this, "1e85bf08b2f08", "7d2ed9146830fca64601549ca9f87c93");
     MobSDK.init(this, null, null);
+
+    // X5浏览服务
+    QbSdk.initX5Environment(appContext, null);
 
     // 注册滑动返回
     registerActivityLifecycleCallbacks(mActivityLifecycleHelper = new ActivityLifecycleHelper());

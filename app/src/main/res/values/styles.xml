@@ -21,6 +21,10 @@
     <item name="android:windowBackground">@drawable/layout_list_start_pic</item>
   </style>
 
+  <style name="TabLayoutTextStyle">
+    <item name="android:textSize">@dimen/actionbar_textsize_left</item>
+  </style>
+
   <style name="activity_animation" parent="@android:style/Animation">
     <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
     <item name="android:activityOpenExitAnimation">@anim/slide_left_out</item>
