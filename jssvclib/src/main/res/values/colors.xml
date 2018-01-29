@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+  <color name="colorPrimary">#507aa3</color>
+  <color name="colorPrimaryDark">#3f6c98</color>
+  <color name="colorAccent">#236fd6</color>
+
+  <!-- 主题色-->
+  <color name="color_ui_theme">#507aa3</color>
+  <!--ActionBar背景色-->
+  <color name="color_ui_head">#507aa3</color>
+  <!-- 页面底色(背景色) -->
+  <color name="color_ui_content">#f7f7f7</color>
+  <!--ActionBar 按钮图片颜色-->
+  <color name="color_drawable_tint">#fff</color>
+
+  <!-- 文本颜色 -->
+  <!--标题-->
+  <color name="color_text_title">#010101</color>
+  <!--子标题-->
+  <color name="color_text_title_sub">#313131</color>
+  <!--正文（标准）-->
+  <color name="color_text_content">#010101</color>
+  <!--正文（偏浅）-->
+  <color name="color_text_content_light">#9a9a9a</color>
+  <!--提示-->
+  <color name="color_text_hint">#aaaaaa</color>
+  <!--Error文本-->
+  <color name="color_text_warn">#e86643</color>
+
+  <!-- 分割线 -->
+  <color name="color_divider">#eeeeee</color>
+
+  <!--按钮-->
+  <color name="color_primary">#00aaff</color>
+  <color name="color_primary_pressed">#00a0f0</color>
+
+  <color name="color_info">#5bc0de</color>
+  <color name="color_info_pressed">#31b0d5</color>
+
+  <color name="color_success">#41b314</color>
+  <color name="color_success_pressed">#3ca512</color>
+
+  <color name="color_warning">#e4ce10</color>
+  <color name="color_warning_pressed">#deb60f</color>
+
+  <color name="color_danger">#d9534f</color>
+  <color name="color_danger_pressed">#c9302c</color>
+
 </resources>

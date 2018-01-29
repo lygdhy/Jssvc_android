@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    >
+
+  <RelativeLayout
+      android:id="@+id/rl_top"
+      style="@style/actionbar_whole_style_base"
+      >
+    <TextView
+        android:id="@+id/tv_back"
+        android:drawableLeft="@drawable/icon_close"
+        style="@style/actionbar_left_style_base"
+        />
+    <TextView
+        android:id="@+id/tv_category"
+        android:layout_centerHorizontal="false"
+        android:layout_toRightOf="@+id/tv_back"
+        android:text="加载中..."
+        style="@style/actionbar_title_style_base"
+        />
+  </RelativeLayout>
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_above="@+id/rl_bottom"
+      android:layout_below="@+id/rl_top"
+      android:scrollbars="none"
+      >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:padding="5dp"
+        >
+      <TextView
+          android:id="@+id/tv_title"
+          android:lineSpacingExtra="5dp"
+          android:padding="5dp"
+          android:text="标题"
+          android:textSize="24sp"
+          style="@style/style_text_title"
+          />
+      <TextView
+          android:id="@+id/tv_author"
+          android:padding="5dp"
+          android:text="日期/作者"
+          android:textSize="16sp"
+          style="@style/style_text_theme"
+          />
+
+      <com.tencent.smtt.sdk.WebView
+          android:id="@+id/webView"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scrollbars="none"
+          />
+
+      <TextView
+          android:id="@+id/tv_original"
+          android:padding="5dp"
+          android:text="阅读原文"
+          android:textSize="16sp"
+          style="@style/style_text_theme"
+          />
+    </LinearLayout>
+  </ScrollView>
+
+</RelativeLayout>

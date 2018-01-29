@@ -1,0 +1,22 @@
+<level-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:maxLevel="0" android:drawable="@drawable/boy_0" />
+    <item android:maxLevel="1" android:drawable="@drawable/boy_1" />
+    <item android:maxLevel="2" android:drawable="@drawable/boy_2" />
+    <item android:maxLevel="3" android:drawable="@drawable/boy_3" />
+    <item android:maxLevel="4" android:drawable="@drawable/boy_4" />
+    <item android:maxLevel="5" android:drawable="@drawable/boy_5" />
+    <item android:maxLevel="6" android:drawable="@drawable/boy_6" />
+    <item android:maxLevel="7" android:drawable="@drawable/boy_7" />
+    <item android:maxLevel="8" android:drawable="@drawable/boy_8" />
+    <item android:maxLevel="9" android:drawable="@drawable/boy_9" />
+
+    <item android:maxLevel="11" android:drawable="@drawable/girl_1" />
+    <item android:maxLevel="12" android:drawable="@drawable/girl_2" />
+    <item android:maxLevel="13" android:drawable="@drawable/girl_3" />
+    <item android:maxLevel="14" android:drawable="@drawable/girl_4" />
+    <item android:maxLevel="15" android:drawable="@drawable/girl_5" />
+    <item android:maxLevel="16" android:drawable="@drawable/girl_6" />
+    <item android:maxLevel="17" android:drawable="@drawable/girl_7" />
+    <item android:maxLevel="18" android:drawable="@drawable/girl_8" />
+    <item android:maxLevel="19" android:drawable="@drawable/girl_9" />
+</level-list>

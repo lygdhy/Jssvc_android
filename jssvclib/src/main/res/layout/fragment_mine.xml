@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ui_content"
+    android:orientation="vertical"
+    >
+  <RelativeLayout
+      android:visibility="gone"
+      style="@style/actionbar_whole_style_base"
+      >
+    <TextView
+        android:text="我的"
+        style="@style/actionbar_title_style_base"
+        />
+  </RelativeLayout>
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:scrollbars="none"
+      >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+      <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          >
+        <org.jssvc.lib.view.WaveView
+            android:id="@+id/waveView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+        <LinearLayout
+            android:id="@+id/ll_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="40dp"
+            android:paddingTop="20dp"
+            >
+          <ImageView
+              android:id="@+id/iv_avatar"
+              android:layout_width="80dp"
+              android:layout_height="80dp"
+              android:layout_margin="10dp"
+              android:src="@drawable/icon_default_avatar_1"
+              />
+          <TextView
+              android:id="@+id/tv_user_name"
+              android:text="笔芯"
+              android:textColor="@android:color/white"
+              android:textSize="18sp"
+              style="@style/style_text_title"
+              />
+        </LinearLayout>
+      </FrameLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:background="@android:color/white"
+          android:orientation="vertical"
+          >
+        <RelativeLayout
+            android:id="@+id/rl_account"
+            style="@style/style_menu_list"
+            >
+
+          <TextView
+              android:drawableLeft="@drawable/icon_menu_bound"
+              android:text="帐号绑定"
+              style="@style/style_text_key_menu"
+              />
+
+          <TextView
+              android:drawableRight="@drawable/icon_goto"
+              style="@style/style_text_value_menu"
+              />
+        </RelativeLayout>
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:background="@android:color/white"
+          android:orientation="vertical"
+          >
+        <RelativeLayout
+            android:id="@+id/rl_setting"
+            style="@style/style_menu_list"
+            >
+
+          <TextView
+              android:drawableLeft="@drawable/icon_menu_setting"
+              android:text="设置"
+              style="@style/style_text_key_menu"
+              />
+
+          <TextView
+              android:drawableRight="@drawable/icon_goto"
+              style="@style/style_text_value_menu"
+              />
+        </RelativeLayout>
+      </LinearLayout>
+
+    </LinearLayout>
+  </ScrollView>
+</LinearLayout>

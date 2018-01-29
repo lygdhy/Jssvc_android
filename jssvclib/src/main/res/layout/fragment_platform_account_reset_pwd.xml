@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ui_content"
+    android:clickable="true"
+    android:orientation="vertical"
+    >
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:background="@android:color/white"
+      android:orientation="vertical"
+      >
+    <View style="@style/item_split_horizontal"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+      <TextView
+          android:layout_width="80dp"
+          android:gravity="right"
+          android:text="手机号"
+          style="@style/style_text_body"
+          />
+
+      <EditText
+          android:id="@+id/edt_phone"
+          android:layout_marginLeft="10dp"
+          android:editable="false"
+          android:hint="请输入手机号码"
+          android:inputType="number"
+          android:text=""
+          style="@style/style_edit_text"
+          />
+    </LinearLayout>
+    <View
+        android:id="@+id/code_view"
+        style="@style/item_split_horizontal"
+        />
+    <RelativeLayout
+        android:id="@+id/code_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+      <TextView
+          android:id="@+id/text_view"
+          android:layout_width="80dp"
+          android:gravity="right"
+          android:text="验证码"
+          style="@style/style_text_body"
+          />
+
+      <EditText
+          android:id="@+id/edt_code"
+          android:layout_marginLeft="10dp"
+          android:layout_toLeftOf="@+id/btn_count_down"
+          android:layout_toRightOf="@+id/text_view"
+          android:hint="输入验证码"
+          android:inputType="number"
+          android:text=""
+          style="@style/style_edit_text"
+          />
+      <org.jssvc.lib.view.TimeCountDown
+          android:id="@+id/btn_count_down"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginRight="20dp"
+          android:paddingBottom="5dp"
+          android:paddingLeft="15dp"
+          android:paddingRight="15dp"
+          android:paddingTop="5dp"
+          android:text="60秒"
+          android:textSize="12sp"
+          style="@style/style_button_primary"
+          />
+    </RelativeLayout>
+    <View style="@style/item_split_horizontal"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+      <TextView
+          android:layout_width="80dp"
+          android:gravity="right"
+          android:text="新密码"
+          style="@style/style_text_body"
+          />
+
+      <EditText
+          android:id="@+id/edt_pwd"
+          android:layout_marginLeft="10dp"
+          android:hint="创建新密码"
+          android:inputType="textPassword"
+          android:text=""
+          style="@style/style_edit_text"
+          />
+    </LinearLayout>
+    <View style="@style/item_split_horizontal"/>
+  </LinearLayout>
+
+  <Button
+      android:id="@+id/btn_submit"
+      android:layout_margin="20dp"
+      android:text="提交"
+      style="@style/style_button_primary"
+      />
+</LinearLayout>

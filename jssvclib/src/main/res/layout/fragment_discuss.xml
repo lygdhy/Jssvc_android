@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ui_content"
+    android:orientation="vertical"
+    >
+  <RelativeLayout
+      style="@style/actionbar_whole_style_base"
+      >
+
+    <TextView
+        android:text="图书交流"
+        style="@style/actionbar_title_style_base"
+        />
+    <TextView
+        android:id="@+id/opt_add"
+        android:text="Add"
+        style="@style/actionbar_right_style_base"
+        />
+  </RelativeLayout>
+  <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+      android:id="@+id/refresh_layout"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/discuss_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+  </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+</LinearLayout>

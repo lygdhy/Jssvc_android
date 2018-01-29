@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ui_content"
+    android:orientation="vertical">
+
+    <RelativeLayout style="@style/actionbar_whole_style_base">
+
+        <TextView
+            android:id="@+id/tvBack"
+            style="@style/actionbar_left_style_base" />
+
+        <TextView
+            style="@style/actionbar_title_style_base"
+            android:text="催还续借" />
+        <View style="@style/item_split_horizontal"/>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rlEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/icon_404_start"
+                android:paddingBottom="100dp"
+                android:text="你没有在借的书"
+                android:textColor="#cdcdcd"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" />
+    </FrameLayout>
+</LinearLayout>

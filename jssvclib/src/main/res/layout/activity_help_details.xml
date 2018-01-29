@@ -1,0 +1,75 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ui_content"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout style="@style/actionbar_whole_style_base">
+
+    <TextView
+        android:id="@+id/tvBack"
+        style="@style/actionbar_left_style_base"
+        />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:text="有问必答"
+        style="@style/actionbar_title_style_base"
+        />
+    <View style="@style/item_split_horizontal"/>
+  </RelativeLayout>
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:scrollbars="none"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:id="@+id/textView1"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@android:color/white"
+          android:drawableLeft="@drawable/icon_question_48"
+          android:drawablePadding="10dp"
+          android:gravity="center_vertical"
+          android:lineSpacingExtra="5dp"
+          android:padding="20dp"
+          android:text="干洗真是干着洗吗？"
+          android:textColor="#01a359"
+          android:textSize="16sp"
+          />
+
+      <TextView
+          android:id="@+id/textView2"
+          android:lineSpacingExtra="5dp"
+          android:padding="10dp"
+          android:text="\u3000\u3000之所以称为“干洗”，是因为在整个洗涤过程中都不用水，这样感觉上就是“干的”。但实际上，干洗所采用的清洁剂与水的性质很相近，能够在去除污垢的同时不损伤衣料；而且，还会迅速蒸发，只留下干燥的衣物。\n\u3000\u3000干洗的过程，就是将泡在溶剂中的衣服轻轻地搅动，直到污垢和一些油性污迹被清除为止。而除了一般清洗之外，所谓的干洗还包括用溶剂溶解污迹、去除污点；在衣物中注入润滑油，以消除色斑；通过特定的化学反应将污渍转化为可溶性物质或是不可见的物质；以及在酶的参与下发生生化反应，将污渍转化为可溶性糖类。"
+          android:textIsSelectable="true"
+          style="@style/style_text_body"
+          />
+
+      <TextView
+          android:id="@+id/textView3"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="10dp"
+          android:background="@drawable/bg_question_tip"
+          android:lineSpacingExtra="5dp"
+          android:padding="10dp"
+          android:text="\u3000\u3000一般来说，干洗所用的溶剂中95%是全氯乙烯。该化合物中14.48%是碳，剩下的85.52%是氯。全氯乙烯也可以被用于脱除金属表面的油污。由于它极易挥发，所以只能用于封闭式洗衣机中，如此一来，洗衣过程中所挥发的容剂就不会散失了。"
+          android:textColor="@color/color_text_hint"
+          android:textIsSelectable="true"
+          android:textSize="14sp"
+          />
+
+    </LinearLayout>
+  </ScrollView>
+</LinearLayout>

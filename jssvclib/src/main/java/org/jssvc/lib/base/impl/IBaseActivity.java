@@ -1,6 +1,9 @@
 package org.jssvc.lib.base.impl;
 
 import android.content.Intent;
+import android.os.Bundle;
+
+import org.jssvc.lib.view.TitleView;
 
 /**
  * Created by jjj on 2018/1/26.
@@ -9,7 +12,16 @@ import android.content.Intent;
  */
 
 public interface IBaseActivity {
-    int getViewByXml();
+
+    void beforeOnCreate(Bundle savedInstanceState);
+
+    void afterOnCreate(Bundle savedInstanceState);
+
+    int getContentViewId();
+
+    int setTransBarId();
+
+    void initTitle(TitleView titleView);
 
     void initView();
 
@@ -26,4 +38,6 @@ public interface IBaseActivity {
     void dissmissProgressDialog();
 
     void showToast(String msg);
+
+    boolean setEventBus();
 }

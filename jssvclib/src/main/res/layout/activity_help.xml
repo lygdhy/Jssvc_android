@@ -1,0 +1,117 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ui_content"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout style="@style/actionbar_whole_style_base">
+
+    <TextView
+        android:id="@+id/opt_back"
+        style="@style/actionbar_left_style_base"
+        />
+
+    <TextView
+        android:drawableTint="@color/color_drawable_tint"
+        android:text="帮助指南"
+        android:tint="@color/color_drawable_tint"
+        style="@style/actionbar_title_style_base"
+        />
+
+    <ImageView
+        android:id="@+id/opt_chat"
+        android:src="@drawable/icon_menu_chat"
+        style="@style/actionbar_right_icon"
+        />
+    <View style="@style/item_split_horizontal"/>
+  </RelativeLayout>
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+      <RelativeLayout
+          android:id="@+id/rlTip"
+          android:layout_width="match_parent"
+          android:layout_height="35dp"
+          android:background="#fefcec"
+          >
+
+        <TextView
+            android:id="@+id/tvTip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/opt_close"
+            android:drawableLeft="@drawable/icon_worning"
+            android:drawablePadding="5dp"
+            android:ellipsize="end"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:paddingLeft="10dp"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="@string/help_tip"
+            android:textColor="#f76a24"
+            android:textSize="14sp"
+            />
+
+        <ImageView
+            android:id="@+id/opt_close"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/icon_close_org"
+            />
+      </RelativeLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal"
+          >
+
+        <ListView
+            android:id="@+id/lv_left"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:cacheColorHint="#00000000"
+            />
+
+        <se.emilsjolander.stickylistheaders.StickyListHeadersListView
+            android:id="@+id/lv_right"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="#00000000"
+            android:clipToPadding="false"
+            android:drawSelectorOnTop="true"
+            android:fastScrollEnabled="true"
+            android:footerDividersEnabled="false"
+            android:scrollbarStyle="outsideOverlay"
+            />
+      </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="empty"
+        android:textSize="30sp"
+        android:visibility="gone"
+        />
+  </FrameLayout>
+</LinearLayout>

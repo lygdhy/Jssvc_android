@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ui_content"
+    android:orientation="vertical"
+    >
+
+  <TextView
+      android:layout_margin="20dp"
+      android:lineSpacingExtra="5dp"
+      android:text="为了您的账号安全，请修改登录密码。"
+      style="@style/style_text_body_light"
+      />
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@android:color/white"
+      android:orientation="vertical"
+      >
+
+    <View style="@style/item_split_horizontal"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+      <TextView
+          android:layout_width="80dp"
+          android:gravity="right"
+          android:text="旧密码"
+          style="@style/style_text_body"
+          />
+
+      <EditText
+          android:id="@+id/edt_old_pwd"
+          android:layout_marginLeft="10dp"
+          android:hint="请输入帐号旧密码"
+          android:inputType="textPassword"
+          android:text=""
+          style="@style/style_edit_text"
+          />
+    </LinearLayout>
+    <View style="@style/item_split_horizontal"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+      <TextView
+          android:layout_width="80dp"
+          android:gravity="right"
+          android:text="新密码"
+          style="@style/style_text_body"
+          />
+
+      <EditText
+          android:id="@+id/edt_new_pwd"
+          android:layout_marginLeft="10dp"
+          android:hint="请创建帐号新密码"
+          android:inputType="textPassword"
+          android:text=""
+          style="@style/style_edit_text"
+          />
+    </LinearLayout>
+    <View style="@style/item_split_horizontal"/>
+  </LinearLayout>
+
+  <Button
+      android:id="@+id/btn_submit"
+      android:layout_margin="20dp"
+      android:text="保存修改"
+      style="@style/style_button_primary"
+      />
+</LinearLayout>
