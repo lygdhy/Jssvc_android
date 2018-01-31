@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cl_title_view"
@@ -18,6 +17,12 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="关于我们" />
+
+    <TextView
+        android:id="@+id/tv_right"
+        style="@style/actionbar_right_style_base"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="注册" />
 
     <View
         style="@style/item_split_horizontal"

@@ -6,11 +6,13 @@
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:name=".base.app.BaseApplication"
         android:theme="@style/AppTheme">
+
+        <!--android:theme="@style/StartAppTheme"-->
         <activity
-            android:name=".module.splash.EmptySplashActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/StartAppTheme">
+            android:name=".module.login.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

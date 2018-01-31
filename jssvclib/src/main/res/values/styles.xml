@@ -68,7 +68,6 @@
   <style name="actionbar_right_style_base">
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">@dimen/actionbar_height_right</item>
-    <item name="android:layout_alignParentRight">true</item>
     <item name="android:layout_centerVertical">true</item>
     <item name="android:gravity">center_vertical</item>
     <item name="android:padding">10dp</item>

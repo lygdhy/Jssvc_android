@@ -2,101 +2,79 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_ui_content"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
-  <RelativeLayout style="@style/actionbar_whole_style_base">
-    <TextView
-        android:id="@+id/tv_back"
-        style="@style/actionbar_left_style_base"
-        />
-    <TextView
-        android:text="登录"
-        style="@style/actionbar_title_style_base"
-        />
-    <TextView
-        android:id="@+id/tv_register"
-        android:text="注册"
-        style="@style/actionbar_right_style_base"
-        />
-    <View style="@style/item_split_horizontal"/>
-  </RelativeLayout>
-
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="20dp"
-      android:background="@android:color/white"
-      android:orientation="vertical"
-      >
-    <View style="@style/item_split_horizontal"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:layout_marginTop="20dp"
+        android:background="@android:color/white"
+        android:orientation="vertical">
 
-      <TextView
-          android:layout_width="80dp"
-          android:gravity="right"
-          android:text="帐号"
-          style="@style/style_text_body"
-          />
+        <View style="@style/item_split_horizontal" />
 
-      <EditText
-          android:id="@+id/edt_username"
-          android:layout_marginLeft="10dp"
-          android:hint="请输入手机号码"
-          android:inputType="number"
-          android:text=""
-          style="@style/style_edit_text"
-          />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/style_text_body"
+                android:layout_width="80dp"
+                android:gravity="right"
+                android:text="帐号" />
+
+            <EditText
+                android:id="@+id/edt_username"
+                style="@style/style_edit_text"
+                android:layout_marginLeft="10dp"
+                android:hint="请输入手机号码"
+                android:inputType="number"
+                android:text="" />
+        </LinearLayout>
+
+        <View style="@style/item_split_horizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/style_text_body"
+                android:layout_width="80dp"
+                android:gravity="right"
+                android:text="密码" />
+
+            <EditText
+                android:id="@+id/edt_pwd"
+                style="@style/style_edit_text"
+                android:layout_marginLeft="10dp"
+                android:hint="请输入密码"
+                android:inputType="textPassword"
+                android:text="" />
+        </LinearLayout>
+
+        <View style="@style/item_split_horizontal" />
     </LinearLayout>
-    <View style="@style/item_split_horizontal"/>
+
+    <Button
+        android:id="@+id/btn_login"
+        style="@style/style_button_primary"
+        android:layout_margin="20dp"
+        android:text="登录" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:gravity="center"
+        android:orientation="horizontal">
 
-      <TextView
-          android:layout_width="80dp"
-          android:gravity="right"
-          android:text="密码"
-          style="@style/style_text_body"
-          />
-
-      <EditText
-          android:id="@+id/edt_pwd"
-          android:layout_marginLeft="10dp"
-          android:hint="请输入密码"
-          android:inputType="textPassword"
-          android:text=""
-          style="@style/style_edit_text"
-          />
+        <TextView
+            android:id="@+id/tv_forget"
+            style="@style/style_text_body_light"
+            android:layout_gravity="center"
+            android:text="忘记密码了？"
+            android:textSize="12sp" />
     </LinearLayout>
-    <View style="@style/item_split_horizontal"/>
-  </LinearLayout>
-
-  <Button
-      android:id="@+id/btn_login"
-      android:layout_margin="20dp"
-      android:text="登录"
-      style="@style/style_button_primary"
-      />
-
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center"
-      android:orientation="horizontal"
-      >
-    <TextView
-        android:id="@+id/tv_forget"
-        android:layout_gravity="center"
-        android:text="忘记密码了？"
-        android:textSize="12sp"
-        style="@style/style_text_body_light"
-        />
-  </LinearLayout>
 </LinearLayout>

@@ -18,6 +18,7 @@ public class TitleView extends ConstraintLayout {
 
     private ConstraintLayout parentView;
     private TextView leftTextView;
+    private TextView rightTextView;
     private TextView titleView;
 
     public TitleView(Context context) {
@@ -40,6 +41,7 @@ public class TitleView extends ConstraintLayout {
         inflater.inflate(R.layout.base_title_view, this);
         parentView = findViewById(R.id.cl_title_view);
         leftTextView = findViewById(R.id.tv_back);
+        rightTextView = findViewById(R.id.tv_right);
         titleView = findViewById(R.id.tv_title);
     }
 
@@ -51,11 +53,23 @@ public class TitleView extends ConstraintLayout {
         titleView.setText(title);
     }
 
+    public void setRightTextView(String title) {
+        rightTextView.setText(title);
+    }
+
+    public void setLeftTextView(String title) {
+        leftTextView.setText(title);
+    }
+
     public TextView getTitleView() {
         return titleView;
     }
 
     public TextView getLeftTextView() {
         return leftTextView;
+    }
+
+    public TextView getRightTextView() {
+        return rightTextView;
     }
 }
