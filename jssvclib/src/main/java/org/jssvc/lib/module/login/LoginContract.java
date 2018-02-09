@@ -7,8 +7,9 @@ package org.jssvc.lib.module.login;
  */
 
 public class LoginContract {
-    interface View{
-        void onLoginSuccess(String msg);
-        void onLoginComplete();
-    }
+  interface View {
+    void onLoginSuccess(String msg);
+
+    void onLoginComplete();
+  }
 }

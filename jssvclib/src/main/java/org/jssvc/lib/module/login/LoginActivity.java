@@ -1,5 +1,6 @@
 package org.jssvc.lib.module.login;
 
+import android.os.Bundle;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
@@ -11,6 +12,7 @@ import org.jssvc.lib.view.TitleView;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import dagger.android.AndroidInjection;
 
 /**
  * Created by jjj on 2018/1/31.
@@ -26,6 +28,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     TextView tvForget;
 
     @Override
+    public void beforeOnCreate(Bundle savedInstanceState) {
+        super.beforeOnCreate(savedInstanceState);
+        AndroidInjection.inject(this);
+    }
+
+    @Override
     public int getContentViewId() {
         return R.layout.activity_login;
     }
@@ -39,7 +47,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Override
     public void initView() {
         DaggerLoginComponent.builder()
-                .loginModule(new LoginModule(this))
+                .loginModule(new LoginModule( this))
                 .build()
                 .inject(this);
         presenter.login();

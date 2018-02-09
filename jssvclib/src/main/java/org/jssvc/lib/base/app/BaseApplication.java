@@ -1,12 +1,14 @@
 package org.jssvc.lib.base.app;
 
 import android.support.multidex.MultiDex;
-import android.support.multidex.MultiDexApplication;
 
 import com.blankj.utilcode.util.Utils;
 
 import org.jssvc.lib.utils.AppUtils;
 import org.jssvc.lib.utils.BaseConfiguration;
+
+import dagger.android.AndroidInjector;
+import dagger.android.support.DaggerApplication;
 
 
 /**
@@ -15,7 +17,7 @@ import org.jssvc.lib.utils.BaseConfiguration;
  * @description:
  */
 
-public class BaseApplication extends MultiDexApplication {
+public class BaseApplication extends DaggerApplication {
 
     @Override
     public void onCreate() {
@@ -29,5 +31,10 @@ public class BaseApplication extends MultiDexApplication {
                 .build();
         AppUtils.getInstance().init(configuration);
         Utils.init(this);
+    }
+
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        return null;
     }
 }
