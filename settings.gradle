@@ -1,1 +1,1 @@
-include ':app', ':jssvclib'
+include ':app'

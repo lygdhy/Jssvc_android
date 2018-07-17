@@ -132,6 +132,6 @@ public class ArticleDetailsActivity extends BaseActivity {
     WebSettings webSettings = webView.getSettings();
     webSettings.setJavaScriptEnabled(true);
 
-    webView.loadDataWithBaseURL(null, article.getContent(), "text/html", "utf-8", null);
+    webView.loadDataWithBaseURL("http://www.jssvc.edu.cn/", article.getContent(), "text/html", "utf-8", null);
   }
 }
