@@ -33,6 +33,10 @@ public class ReadingHubFragment extends BaseFragment {
   @BindView(R.id.tab_layout) TabLayout tabLayout;
   @BindView(R.id.view_pager) ViewPager viewPager;
 
+  public static ReadingHubFragment newInstance() {
+    return new ReadingHubFragment();
+  }
+
   @Override protected int getContentViewId() {
     return R.layout.fragment_reading_hub;
   }

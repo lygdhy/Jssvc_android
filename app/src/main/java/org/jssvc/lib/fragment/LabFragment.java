@@ -26,6 +26,10 @@ public class LabFragment extends BaseFragment {
 
   MenuHubAdapter mAdapter;
 
+  public static LabFragment newInstance() {
+    return new LabFragment();
+  }
+
   @Override protected int getContentViewId() {
     return R.layout.fragment_lab;
   }

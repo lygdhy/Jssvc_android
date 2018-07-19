@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">职大后院</string>
+
+    <!--首页-->
+    <string name="main_menu_1">首页</string>
+    <string name="main_menu_2">阅读</string>
+    <string name="main_menu_3">发现</string>
+    <string name="main_menu_4">账户</string>
+
+    <!--关于-->
     <string name="app_copyright">Jssvc开发者中心  ©2016-2018 Jssvc.org</string>
 
     <string name="help_tip">以下信息摘自苏州市职业大学图书馆官网，仅供参考，如有变化请以官网公布的更新为准。(2017.1摘取)</string>

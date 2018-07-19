@@ -40,6 +40,10 @@ public class MineFragment extends BaseFragment {
   @BindView(R.id.tv_user_name) TextView tvUserName;
   @BindView(R.id.waveView) WaveView waveView;
 
+  public static MineFragment newInstance() {
+    return new MineFragment();
+  }
+
   @Override protected int getContentViewId() {
     return R.layout.fragment_mine;
   }

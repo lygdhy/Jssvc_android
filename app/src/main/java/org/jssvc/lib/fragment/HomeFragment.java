@@ -65,6 +65,10 @@ public class HomeFragment extends BaseFragment implements BGAOnRVItemClickListen
   MenuAdapter menuAdapter;
   List<MenuBean> menuList = new ArrayList<>();
 
+  public static HomeFragment newInstance() {
+    return new HomeFragment();
+  }
+
   @Override protected int getContentViewId() {
     return R.layout.fragment_home;
   }
