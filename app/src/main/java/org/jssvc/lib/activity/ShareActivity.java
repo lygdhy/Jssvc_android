@@ -1,6 +1,7 @@
 package org.jssvc.lib.activity;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import butterknife.OnClick;
 import org.jssvc.lib.R;
@@ -11,15 +12,21 @@ import org.jssvc.lib.base.BaseActivity;
  */
 public class ShareActivity extends BaseActivity {
 
+  //    private IWXAPI wApi;
+
   @Override protected int getContentViewId() {
     return R.layout.activity_share;
   }
 
   @Override protected void initView() {
 
+//        wApi = WXAPIFactory.createWXAPI(this, AppConstants.WECHAT_APP_ID);
+//        wApi.registerApp(AppConstants.WECHAT_APP_ID);
+
+
   }
 
-  @OnClick({ R.id.opt_back, R.id.opt_share }) public void onClick(View view) {
+  @OnClick({ R.id.opt_back, R.id.opt_share,R.id.iv_share_moments }) public void onClick(View view) {
     switch (view.getId()) {
       case R.id.opt_back:
           finish();
@@ -33,6 +40,23 @@ public class ShareActivity extends BaseActivity {
             + "下载地址 http://www.jssvc.org/download/libapp.html");//添加分享内容
         share_intent = Intent.createChooser(share_intent, "分享");
         startActivity(share_intent);
+        break;
+      case R.id.iv_share_moments:
+        // 分享至朋友圈
+//        WXWebpageObject webpage = new WXWebpageObject();
+//        webpage.webpageUrl = "http://www.jssvc.org/";
+//
+//        WXMediaMessage msg = new WXMediaMessage(webpage);
+//        msg.title = getString(R.string.app_name);
+//        msg.description = getString(R.string.app_slogan);
+//        msg.setThumbImage(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
+//
+//        SendMessageToWX.Req req = new SendMessageToWX.Req();
+//        req.transaction = "app_share";
+//        req.message = msg;
+//        req.scene = SendMessageToWX.Req.WXSceneTimeline;
+//
+//        wApi.sendReq(req);
         break;
     }
   }

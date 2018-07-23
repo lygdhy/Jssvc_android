@@ -9,6 +9,8 @@ package org.jssvc.lib.data;
  * </pre>
  */
 public class Constants {
+    public static final String WECHAT_APP_ID = "wxe91e1af75e585c30";//微信APP_ID
+
     // 客服QQ
     public static final String QQ_WAITER = "2906501168";//平台客服
 

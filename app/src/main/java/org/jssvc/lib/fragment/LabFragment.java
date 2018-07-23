@@ -57,7 +57,7 @@ public class LabFragment extends BaseFragment {
         List<MenuHubBean> hubList = new ArrayList<>();
 
         MenuHubBean hub1 = new MenuHubBean();
-        hub1.setTitle("我的实验室");
+        hub1.setTitle("我的校园");
         List<MenuBean> mlist1 = new ArrayList<>();
         mlist1.add(new MenuBean(Constants.MENU_NEWS, "新闻资讯", R.drawable.icon_menu_new));
         hub1.setMenulist(mlist1);
@@ -86,7 +86,7 @@ public class LabFragment extends BaseFragment {
         MenuHubBean hub4 = new MenuHubBean();
         hub4.setTitle("联系我们");
         List<MenuBean> mlist4 = new ArrayList<>();
-        mlist4.add(new MenuBean(Constants.LIB_ABOUT, "关于Lib", R.drawable.icon_menu_about_lib));
+        mlist4.add(new MenuBean(Constants.LIB_ABOUT, "@图书馆", R.drawable.icon_menu_about_lib));
         mlist4.add(new MenuBean(Constants.MENU_ABOUT, "关于我们", R.drawable.icon_menu_about_us));
         mlist4.add(new MenuBean(Constants.MENU_FEEDBACK, "意见反馈", R.drawable.icon_menu_feedback));
         mlist4.add(new MenuBean(Constants.MENU_WAITER, "客服小智", R.drawable.icon_menu_waiter));

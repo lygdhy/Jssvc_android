@@ -173,4 +173,9 @@ public class AccountPlatformManagerActivity extends BaseActivity {
         };
         SMSSDK.registerEventHandler(smsHandler); //注册短信回调
     }
+
+    protected void onStop() {
+        super.onStop();
+        SMSSDK.unregisterEventHandler(smsHandler);
+    }
 }

@@ -1,64 +1,66 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical"
-    >
+    android:background="@android:color/white">
 
-  <RelativeLayout
-      android:id="@+id/rLayout"
-      style="@style/actionbar_whole_style_base"
-      >
+    <RelativeLayout
+        android:id="@+id/rLayout"
+        style="@style/actionbar_whole_style_base">
 
-    <TextView
-        android:id="@+id/opt_back"
-        style="@style/actionbar_left_style_base"
-        />
+        <TextView
+            android:id="@+id/opt_back"
+            style="@style/actionbar_left_style_base" />
 
-    <TextView
-        android:text="分享"
-        style="@style/actionbar_title_style_base"
-        />
+        <TextView
+            style="@style/actionbar_title_style_base"
+            android:text="分享" />
 
-    <ImageView
-        android:id="@+id/opt_share"
-        android:src="@drawable/icon_share"
-        style="@style/actionbar_right_icon"
-        />
-    <View style="@style/item_split_horizontal"/>
-  </RelativeLayout>
+        <ImageView
+            android:id="@+id/opt_share"
+            style="@style/actionbar_right_icon"
+            android:src="@drawable/icon_share" />
 
-  <LinearLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_centerInParent="true"
-      android:orientation="vertical"
-      >
+        <View style="@style/item_split_horizontal" />
+    </RelativeLayout>
 
-    <ImageView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"
-        android:src="@drawable/app_qr"
-        />
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:paddingBottom="40dp">
 
-    <TextView
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:src="@drawable/app_qr" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="建议使用浏览器扫一扫工具扫描"
+            android:textColor="@color/color_text_hint"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_share_moments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:padding="10dp"
+        android:src="@drawable/icon_res_moments" />
+
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="建议使用浏览器扫一扫工具扫描"
-        android:textColor="@color/color_text_hint"
-        android:textSize="14sp"
-        />
-  </LinearLayout>
-
-  <ImageView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_alignParentBottom="true"
-      android:background="@drawable/content_bottom"
-      android:scaleType="fitXY"
-      />
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/content_bottom"
+        android:scaleType="fitXY" />
 
 </RelativeLayout>
