@@ -3,19 +3,10 @@ package org.jssvc.lib.activity;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import butterknife.BindView;
 
@@ -28,7 +19,6 @@ import com.pgyersdk.javabean.AppBean;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONException;
@@ -110,6 +100,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                 return false;
             }
         });
+        mNavigation.setItemIconTintList(null);
 
         setupViewPager(mViewPager);
         mViewPager.setOffscreenPageLimit(4);

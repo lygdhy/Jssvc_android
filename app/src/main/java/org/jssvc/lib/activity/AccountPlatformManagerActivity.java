@@ -51,14 +51,21 @@ public class AccountPlatformManagerActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        EventBus.getDefault().register(this);
+
         opt_code = getIntent().getIntExtra(ARG_OPT_CODE, 0);
         if (opt_code == 0) tvTitle.setText("注册");
         if (opt_code == 1) tvTitle.setText("重置密码");
 
         initSMSSDK();// 初始化SDK
 
-        initPhoneCheckFragment();
-        EventBus.getDefault().register(this);
+        checkFragment = PlatformAccountResetPwdFragment.newInstance(opt_code);
+        phoneFragment = PlatformAccountPhoneCheckFragment.newInstance(opt_code);// 输入手机号码页面
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.main_container, checkFragment)
+                .add(R.id.main_container, phoneFragment)
+                .hide(checkFragment).show(phoneFragment).commit();
     }
 
     @OnClick({R.id.tv_back})
@@ -77,34 +84,11 @@ public class AccountPlatformManagerActivity extends BaseActivity {
     }
 
     /**
-     * 输入手机号码页面
-     */
-    public void initPhoneCheckFragment() {
-        phoneFragment = new PlatformAccountPhoneCheckFragment();
-        Bundle arguments = new Bundle();
-        arguments.putInt("opt_code", opt_code);
-        phoneFragment.setArguments(arguments);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.main_container, phoneFragment)
-                .addToBackStack(null)
-                .commitAllowingStateLoss();
-    }
-
-    /**
      * 重置密码页面
      */
     public void resetPwdFragment() {
-        checkFragment = new PlatformAccountResetPwdFragment();
-        Bundle arguments = new Bundle();
-        arguments.putInt("opt_code", opt_code);
-        arguments.putString("opt_phone", opt_phone);
-        arguments.putBoolean("is_smart", smart);
-        checkFragment.setArguments(arguments);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.main_container, checkFragment)
-                .addToBackStack(null)
-                .commit();
-
+        getSupportFragmentManager().beginTransaction().hide(phoneFragment).show(checkFragment).commit();
+        checkFragment.postKeyValue(opt_phone, smart);
     }
 
     @Subscribe
@@ -145,18 +129,11 @@ public class AccountPlatformManagerActivity extends BaseActivity {
                         if (result == SMSSDK.RESULT_COMPLETE) {
                             if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                                 // 提交验证码成功
-                                HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
-                                //runOnUiThread(new Runnable() {
-                                //  @Override public void run() {
                                 checkFragment.passCheck();
-                                //  }
-                                //});
+
                             } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                                 //获取验证码成功,true为智能验证，false为普通下发短信
                                 smart = (Boolean) data;
-
-                                //runOnUiThread(new Runnable() {
-                                //  @Override public void run() {
                                 if (smart) {
                                     // SDK不发送短信，无须填写验证码
                                     showToast("验证成功！！");
@@ -164,11 +141,10 @@ public class AccountPlatformManagerActivity extends BaseActivity {
                                     // SDK下发短信，需填写验证码
                                     showToast("验证短信已发送，请注意查收！");
                                 }
-                                //  }
-                                //});
 
                                 // 页面跳转
                                 resetPwdFragment();
+
                             } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
                                 // 返回支持发送验证码的国家列表
                             }
@@ -182,16 +158,9 @@ public class AccountPlatformManagerActivity extends BaseActivity {
                                 int status = object.optInt("status");//错误代码
                                 if (status > 0 && !TextUtils.isEmpty(des)) {
 
-                                    Log.d("DHY", "des = " + des);
-                                    //runOnUiThread(new Runnable() {
-                                    //  @Override public void run() {
                                     // 提示错误信息
+                                    Log.d("DHY", "des = " + des);
                                     showToast(des);
-                                    resetPwdFragment();
-                                    if (checkFragment != null) checkFragment.unPassCheck();
-                                    //  }
-                                    //});
-
                                     return;
                                 }
                             } catch (Exception e) {
