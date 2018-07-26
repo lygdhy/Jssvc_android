@@ -22,7 +22,7 @@ import org.jssvc.lib.view.DividerItemDecoration;
  */
 
 public class BookDetailInfoFragment extends BaseFragment {
-  @BindView(R.id.detailsRecyclerView) RecyclerView detailsRecyclerView;
+  @BindView(R.id.detailsRecyclerView) RecyclerView mRecyclerView;
 
   BookDetailsAdapter bookDetailsAdapter;
 
@@ -42,23 +42,14 @@ public class BookDetailInfoFragment extends BaseFragment {
 
   // 加载详情
   private void loadDetailsList(List<BookDetailsBean> detailsList) {
-    //创建默认的线性LayoutManager
-    detailsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-    //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
-    detailsRecyclerView.setHasFixedSize(true);
-    //添加分割线divider
-    detailsRecyclerView.addItemDecoration(
+    mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+    mRecyclerView.setHasFixedSize(true);
+    mRecyclerView.addItemDecoration(
         new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
-    //解决滑动冲突
-    detailsRecyclerView.setNestedScrollingEnabled(false);
+    mRecyclerView.setNestedScrollingEnabled(false);
     //创建并设置Adapter
-    bookDetailsAdapter = new BookDetailsAdapter(mContext, detailsList);
-    detailsRecyclerView.setAdapter(bookDetailsAdapter);
-
-    bookDetailsAdapter.setOnItemClickListener(
-        new BookDetailsAdapter.OnRecyclerViewItemClickListener() {
-          @Override public void onItemClick(View view, BookDetailsBean item) {
-          }
-        });
+    bookDetailsAdapter = new BookDetailsAdapter(mRecyclerView);
+    mRecyclerView.setAdapter(bookDetailsAdapter);
+    bookDetailsAdapter.setData(detailsList);
   }
 }

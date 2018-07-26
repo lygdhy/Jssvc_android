@@ -9,7 +9,8 @@
     <RelativeLayout
         android:id="@+id/smallLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tvKey1"
@@ -44,22 +45,17 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvKey2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/tv_key"
+            style="@style/style_text_title"
             android:text="KEY"
-            android:textColor="@color/color_ui_theme"
-            android:textSize="14sp" />
+            android:textColor="@color/color_ui_theme" />
 
         <TextView
-            android:id="@+id/tvValue2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/tv_value"
+            style="@style/style_text_body"
             android:layout_marginTop="3dp"
             android:lineSpacingExtra="2dp"
             android:text="VALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUEVALUE"
-            android:textColor="@color/color_text_content"
-            android:textIsSelectable="true"
-            android:textSize="14sp" />
+            android:textIsSelectable="true" />
     </LinearLayout>
 </LinearLayout>

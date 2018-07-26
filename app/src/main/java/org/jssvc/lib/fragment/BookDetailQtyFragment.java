@@ -22,40 +22,32 @@ import org.jssvc.lib.bean.BookAccessBean;
  */
 
 public class BookDetailQtyFragment extends BaseFragment {
-  @BindView(R.id.inLibRecyclerView) RecyclerView inLibRecyclerView;
+    @BindView(R.id.inLibRecyclerView)
+    RecyclerView mRecyclerView;
 
-  BookAccessAdapter bookAccessAdapter;
-
-  @Override protected int getContentViewId() {
-    return R.layout.fragment_book_detail_qty;
-  }
-
-  @Override protected void initView() {
-    Bundle bundle = getArguments();//从activity传过来的Bundle
-    if (bundle != null) {
-      List<BookAccessBean> accessList = new ArrayList<>();
-      accessList.addAll(
-          (Collection<? extends BookAccessBean>) bundle.getSerializable("accessList"));
-      loadAccessList(accessList);
+    @Override
+    protected int getContentViewId() {
+        return R.layout.fragment_book_detail_qty;
     }
-  }
 
-  // 加载藏书列表
-  private void loadAccessList(List<BookAccessBean> accessList) {
-    //创建默认的线性LayoutManager
-    inLibRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-    //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
-    inLibRecyclerView.setHasFixedSize(true);
-    //解决滑动冲突
-    inLibRecyclerView.setNestedScrollingEnabled(false);
-    //创建并设置Adapter
-    bookAccessAdapter = new BookAccessAdapter(mContext, accessList);
-    inLibRecyclerView.setAdapter(bookAccessAdapter);
+    @Override
+    protected void initView() {
+        Bundle bundle = getArguments();//从activity传过来的Bundle
+        if (bundle != null) {
+            List<BookAccessBean> accessList = new ArrayList<>();
+            accessList.addAll(
+                    (Collection<? extends BookAccessBean>) bundle.getSerializable("accessList"));
+            loadAccessList(accessList);
+        }
+    }
 
-    bookAccessAdapter.setOnItemClickListener(
-        new BookAccessAdapter.OnRecyclerViewItemClickListener() {
-          @Override public void onItemClick(View view, BookAccessBean item) {
-          }
-        });
-  }
+    // 加载藏书列表
+    private void loadAccessList(List<BookAccessBean> accessList) {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setNestedScrollingEnabled(false);
+        BookAccessAdapter bookAccessAdapter = new BookAccessAdapter(mRecyclerView);
+        mRecyclerView.setAdapter(bookAccessAdapter);
+        bookAccessAdapter.setData(accessList);
+    }
 }
