@@ -7,8 +7,8 @@ android {
         applicationId "org.jssvc.lib"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 18
-        versionName '2.1.10'
+        versionCode 20
+        versionName '2.1.12'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         // Enabling multidex support.
@@ -93,6 +93,7 @@ dependencies {
     implementation 'cn.bingoogolapple:bga-adapter:1.2.0@aar'
     implementation 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar'
     implementation 'cn.bingoogolapple:bga-indicator:1.0.1@aar'
+    implementation 'com.umeng.sdk:common:1.5.3'
     implementation 'com.umeng.analytics:analytics:6.1.2'
     implementation 'com.blankj:utilcode:1.10.0'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
