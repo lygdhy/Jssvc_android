@@ -1,6 +1,5 @@
 package org.jssvc.lib.activity;
 
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,8 +14,6 @@ import org.jssvc.lib.bean.EventSms;
 import org.jssvc.lib.fragment.PlatformAccountPhoneCheckFragment;
 import org.jssvc.lib.fragment.PlatformAccountResetPwdFragment;
 
-import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.smssdk.EventHandler;
@@ -24,11 +21,11 @@ import cn.smssdk.OnSendMessageHandler;
 import cn.smssdk.SMSSDK;
 
 /**
- * 平台账户管理AccountPlatformManagerActivity
+ * 平台账户管理RegisterActivity
  * 1、PlatformAccountPhoneCheckFragment	手机号码验证
  * 2、PlatformAccountResetPwdFragment	账户找回/注册
  */
-public class AccountPlatformManagerActivity extends BaseActivity {
+public class RegisterActivity extends BaseActivity {
     public static final String ARG_OPT_CODE = "opt_code";
 
     PlatformAccountResetPwdFragment checkFragment;
@@ -46,7 +43,7 @@ public class AccountPlatformManagerActivity extends BaseActivity {
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_account_platform_manager;
+        return R.layout.activity_register;
     }
 
     @Override
@@ -62,10 +59,13 @@ public class AccountPlatformManagerActivity extends BaseActivity {
         checkFragment = PlatformAccountResetPwdFragment.newInstance(opt_code);
         phoneFragment = PlatformAccountPhoneCheckFragment.newInstance(opt_code);// 输入手机号码页面
 
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.main_container, checkFragment)
-                .add(R.id.main_container, phoneFragment)
-                .hide(checkFragment).show(phoneFragment).commit();
+        if (!checkFragment.isAdded()) {
+            getSupportFragmentManager().beginTransaction().add(R.id.main_container, checkFragment).commit();
+        }
+        if (!phoneFragment.isAdded()) {
+            getSupportFragmentManager().beginTransaction().add(R.id.main_container, phoneFragment).commit();
+        }
+        getSupportFragmentManager().beginTransaction().hide(checkFragment).show(phoneFragment).commit();
     }
 
     @OnClick({R.id.tv_back})
@@ -77,17 +77,13 @@ public class AccountPlatformManagerActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
     /**
      * 重置密码页面
      */
     public void resetPwdFragment() {
-        getSupportFragmentManager().beginTransaction().hide(phoneFragment).show(checkFragment).commit();
+        if (checkFragment.isHidden()) {
+            getSupportFragmentManager().beginTransaction().hide(phoneFragment).show(checkFragment).commit();
+        }
         checkFragment.postKeyValue(opt_phone, smart);
     }
 
@@ -177,5 +173,11 @@ public class AccountPlatformManagerActivity extends BaseActivity {
     protected void onStop() {
         super.onStop();
         SMSSDK.unregisterEventHandler(smsHandler);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

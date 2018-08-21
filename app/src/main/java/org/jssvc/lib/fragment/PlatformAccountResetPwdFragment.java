@@ -10,9 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -27,6 +24,9 @@ import org.jssvc.lib.bean.EventSms;
 import org.jssvc.lib.data.HttpUrlParams;
 import org.jssvc.lib.utils.MD5Utils;
 import org.jssvc.lib.view.TimeCountDown;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 import static android.app.Activity.RESULT_OK;
 import static org.jssvc.lib.R.id.edt_phone;

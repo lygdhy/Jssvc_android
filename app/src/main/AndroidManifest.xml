@@ -2,162 +2,117 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.jssvc.lib">
 
-  <!-- 网络 -->
-  <uses-permission android:name="android.permission.INTERNET"/>
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-  <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <!-- 网络 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
-  <!-- 设备 -->
-  <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <!-- 设备 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-  <!-- 存储 -->
-  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-  <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <!-- 存储 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
-  <!-- 可选 -->
-  <uses-permission android:name="android.permission.READ_LOGS"/>
+    <!-- 可选 -->
+    <uses-permission android:name="android.permission.READ_LOGS" />
 
-  <!-- 扫码 -->
-  <uses-permission android:name="android.permission.CAMERA"/>
-  <uses-permission android:name="android.permission.VIBRATE"/>
-  <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <!-- 扫码 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
 
-  <!-- Mob SDK -->
-  <uses-permission android:name="android.permission.READ_CONTACTS"/>
-  <uses-permission android:name="android.permission.RECEIVE_SMS"/>
-  <uses-permission android:name="android.permission.READ_SMS"/>
-  <uses-permission android:name="android.permission.GET_TASKS"/>
-  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- Mob SDK -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-  <application
-      android:name=".base.BaseApplication"
-      android:allowBackup="true"
-      android:icon="@drawable/ic_launcher"
-      android:label="@string/app_name"
-      android:supportsRtl="true"
-      android:theme="@style/AppTheme">
+    <application
+        android:name=".base.BaseApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
 
-    <!-- 蒲公英SDK -->
-    <meta-data
-        android:name="PGYER_APPID"
-        android:value="703a49492ada1b8ea72302563dd85bbe"/>
+        <!-- 蒲公英SDK -->
+        <meta-data
+            android:name="PGYER_APPID"
+            android:value="703a49492ada1b8ea72302563dd85bbe" />
 
-    <!-- 友盟统计 -->
-    <meta-data
-        android:name="UMENG_APPKEY"
-        android:value="56cfc6bd67e58e91c1000cd0"/>
-    <!-- 友盟渠道 -->
-    <meta-data
-        android:name="UMENG_CHANNEL"
-        android:value="${UMENG_CHANNEL_VALUE}"/>
-    <meta-data
-        android:name="Mob-AppKey"
-        android:value="1e85bf08b2f08"/>
-    <meta-data
-        android:name="Mob-AppSecret"
-        android:value="7d2ed9146830fca64601549ca9f87c93"/>
+        <!-- 友盟统计 -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="56cfc6bd67e58e91c1000cd0" />
+        <!-- 友盟渠道 -->
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" />
+        <meta-data
+            android:name="Mob-AppKey"
+            android:value="1e85bf08b2f08" />
+        <meta-data
+            android:name="Mob-AppSecret"
+            android:value="7d2ed9146830fca64601549ca9f87c93" />
 
-    <provider
-        android:name="android.support.v4.content.FileProvider"
-        android:authorities="org.jssvc.lib.provider"
-        android:exported="false"
-        android:grantUriPermissions="true">
-      <meta-data
-          android:name="android.support.FILE_PROVIDER_PATHS"
-          android:resource="@xml/provider_paths"/>
-    </provider>
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="org.jssvc.lib.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
 
-    <activity
-        android:name="com.mob.tools.MobUIShell"
-        android:configChanges="keyboardHidden|orientation|screenSize"
-        android:theme="@android:style/Theme.Translucent.NoTitleBar"
-        android:windowSoftInputMode="stateHidden|adjustResize"/>
-    <activity
-        android:name=".activity.SplashActivity"
-        android:screenOrientation="portrait"
-        android:theme="@style/StartAppTheme"/>
-    <activity
-        android:name=".activity.EmptySplashActivity"
-        android:screenOrientation="portrait"
-        android:theme="@style/StartAppTheme">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.SplashActivity"
+            android:theme="@style/StartAppTheme" />
+        <activity
+            android:name=".activity.EmptySplashActivity"
+            android:theme="@style/StartAppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
-    </activity>
-    <activity
-        android:name=".activity.LoginActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.MainActivity"
-        android:screenOrientation="portrait"
-        android:windowSoftInputMode="adjustPan|stateHidden">
-    </activity>
-    <activity
-        android:name=".activity.AccountLibManagerActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.AccountThirdManagerActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.AccountPlatformManagerActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.CardInfoActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.CurentBorrowActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.HistoryBorrowActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.BookSearchActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.SettingActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.HelpActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.FeedbackActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.AboutActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.BookDetailsActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.AboutSchoolActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.HelpDetailsActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.ShareActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.BookShelfActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.BookShelfEditeActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.UserResumeActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.ArticleDetailsActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".activity.WebActivity"
-        android:configChanges="orientation|screenSize|keyboardHidden"
-        android:screenOrientation="portrait"
-        android:windowSoftInputMode="stateHidden|adjustResize"/>
-  </application>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.LoginActivity" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".activity.AccountLibManagerActivity" />
+        <activity android:name=".activity.AccountThirdManagerActivity" />
+        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.CardInfoActivity" />
+        <activity android:name=".activity.CurentBorrowActivity" />
+        <activity android:name=".activity.HistoryBorrowActivity" />
+        <activity android:name=".activity.BookSearchActivity" />
+        <activity android:name=".activity.SettingActivity" />
+        <activity android:name=".activity.HelpActivity" />
+        <activity android:name=".activity.FeedbackActivity" />
+        <activity android:name=".activity.AboutActivity" />
+        <activity android:name=".activity.BookDetailsActivity" />
+        <activity android:name=".activity.AboutSchoolActivity" />
+        <activity android:name=".activity.HelpDetailsActivity" />
+        <activity android:name=".activity.ShareActivity" />
+        <activity android:name=".activity.BookShelfActivity" />
+        <activity android:name=".activity.BookShelfEditeActivity" />
+        <activity android:name=".activity.UserResumeActivity" />
+        <activity android:name=".activity.ArticleDetailsActivity" />
+        <activity
+            android:name=".activity.WebActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+    </application>
 
 </manifest>
