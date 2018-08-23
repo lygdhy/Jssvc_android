@@ -52,12 +52,13 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}" />
-        <meta-data
+
+        <!--<meta-data
             android:name="Mob-AppKey"
             android:value="1e85bf08b2f08" />
         <meta-data
             android:name="Mob-AppSecret"
-            android:value="7d2ed9146830fca64601549ca9f87c93" />
+            android:value="7d2ed9146830fca64601549ca9f87c93" />-->
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -75,10 +76,10 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".ui.home.SplashActivity"
             android:theme="@style/StartAppTheme" />
         <activity
-            android:name=".activity.EmptySplashActivity"
+            android:name=".ui.home.EmptySplashActivity"
             android:theme="@style/StartAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -86,31 +87,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".ui.login.LoginActivity" />
+        <activity android:name=".ui.login.RegisterActivity" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".ui.home.MainActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".activity.AccountLibManagerActivity" />
-        <activity android:name=".activity.AccountThirdManagerActivity" />
-        <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.CardInfoActivity" />
-        <activity android:name=".activity.CurentBorrowActivity" />
-        <activity android:name=".activity.HistoryBorrowActivity" />
-        <activity android:name=".activity.BookSearchActivity" />
-        <activity android:name=".activity.SettingActivity" />
-        <activity android:name=".activity.HelpActivity" />
-        <activity android:name=".activity.FeedbackActivity" />
-        <activity android:name=".activity.AboutActivity" />
-        <activity android:name=".activity.BookDetailsActivity" />
-        <activity android:name=".activity.AboutSchoolActivity" />
-        <activity android:name=".activity.HelpDetailsActivity" />
-        <activity android:name=".activity.ShareActivity" />
-        <activity android:name=".activity.BookShelfActivity" />
-        <activity android:name=".activity.BookShelfEditeActivity" />
-        <activity android:name=".activity.UserResumeActivity" />
-        <activity android:name=".activity.ArticleDetailsActivity" />
+        <activity android:name=".ui.account.AccountLibManagerActivity" />
+        <activity android:name=".ui.account.AccountThirdManagerActivity" />
+        <activity android:name=".ui.book.CardInfoActivity" />
+        <activity android:name=".ui.book.CurentBorrowActivity" />
+        <activity android:name=".ui.book.HistoryBorrowActivity" />
+        <activity android:name=".ui.book.BookSearchActivity" />
+        <activity android:name=".ui.book.BookDetailsActivity" />
+        <activity android:name=".ui.about.SettingActivity" />
+        <activity android:name=".ui.about.FeedbackActivity" />
+        <activity android:name=".ui.about.AboutActivity" />
+        <activity android:name=".ui.about.AboutSchoolActivity" />
+        <activity android:name=".ui.help.HelpActivity" />
+        <activity android:name=".ui.help.HelpDetailsActivity" />
+        <activity android:name=".ui.about.ShareActivity" />
+        <activity android:name=".ui.book.BookShelfActivity" />
+        <activity android:name=".ui.book.BookShelfEditeActivity" />
+        <activity android:name=".ui.book.UserResumeActivity" />
+        <activity android:name=".ui.article.ArticleDetailsActivity" />
         <activity
-            android:name=".activity.WebActivity"
+            android:name=".ui.general.WebActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>

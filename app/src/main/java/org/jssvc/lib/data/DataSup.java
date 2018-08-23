@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.jssvc.lib.bean.KVBean;
-import org.jssvc.lib.bean.ThirdAccountBean;
-import org.jssvc.lib.bean.UserBean;
+import org.jssvc.lib.ui.general.bean.KVBean;
+import org.jssvc.lib.ui.account.bean.ThirdAccountBean;
+import org.jssvc.lib.ui.account.bean.UserBean;
 
 import static org.jssvc.lib.base.BaseApplication.spUtils;
 

@@ -17,7 +17,7 @@ import com.pgyersdk.crash.PgyCrashManager;
 import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.analytics.MobclickAgent;
 
-import org.jssvc.lib.bean.UserBean;
+import org.jssvc.lib.ui.account.bean.UserBean;
 import org.jssvc.lib.view.ActivityLifecycleHelper;
 
 import java.util.concurrent.TimeUnit;
@@ -60,8 +60,7 @@ public class BaseApplication extends MultiDexApplication {
         initOkGo();
 
         // Mob SDK
-        //SMSSDK.initSDK(this, "1e85bf08b2f08", "7d2ed9146830fca64601549ca9f87c93");
-        MobSDK.init(this, null, null);
+        MobSDK.init(this);
 
         // X5浏览服务
         QbSdk.initX5Environment(appContext, null);
