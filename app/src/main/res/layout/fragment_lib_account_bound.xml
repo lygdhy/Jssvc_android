@@ -1,113 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_ui_content"
-    android:orientation="vertical"
-    >
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="20dp"
-      android:background="@android:color/white"
-      android:orientation="vertical"
-      >
-    <View style="@style/item_split_horizontal"/>
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="vertical">
 
-      <TextView
-          android:layout_width="80dp"
-          android:gravity="right"
-          android:text="院校"
-          style="@style/style_text_body"
-          />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/white"
+            android:orientation="vertical">
 
-      <TextView
-          android:id="@+id/tv_school"
-          android:layout_marginLeft="10dp"
-          android:drawableRight="@drawable/icon_goto"
-          android:text="苏州市职业大学"
-          style="@style/style_edit_text"
-          />
+            <View style="@style/item_split_horizontal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/style_text_body"
+                    android:layout_width="80dp"
+                    android:gravity="right"
+                    android:text="院校" />
+
+                <TextView
+                    android:id="@+id/tv_school"
+                    style="@style/style_edit_text"
+                    android:layout_marginLeft="10dp"
+                    android:drawableRight="@drawable/icon_goto"
+                    android:text="苏州市职业大学" />
+            </LinearLayout>
+
+            <View style="@style/item_split_horizontal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/style_text_body"
+                    android:layout_width="80dp"
+                    android:gravity="right"
+                    android:text="类型" />
+
+                <TextView
+                    android:id="@+id/tv_type"
+                    style="@style/style_edit_text"
+                    android:layout_marginLeft="10dp"
+                    android:drawableRight="@drawable/icon_goto"
+                    android:text="证件号" />
+            </LinearLayout>
+
+            <View style="@style/item_split_horizontal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/style_text_body"
+                    android:layout_width="80dp"
+                    android:gravity="right"
+                    android:text="账号" />
+
+                <EditText
+                    android:id="@+id/edt_account"
+                    style="@style/style_edit_text"
+                    android:layout_marginLeft="10dp"
+                    android:hint="请输入证件号（即学号）"
+                    android:text="" />
+            </LinearLayout>
+
+            <View style="@style/item_split_horizontal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/style_text_body"
+                    android:layout_width="80dp"
+                    android:gravity="right"
+                    android:text="密码" />
+
+                <EditText
+                    android:id="@+id/edt_pwd"
+                    style="@style/style_edit_text"
+                    android:layout_marginLeft="10dp"
+                    android:hint="请输入密码"
+                    android:inputType="textPassword"
+                    android:text="" />
+            </LinearLayout>
+
+            <View style="@style/item_split_horizontal" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_submit"
+            style="@style/style_button_primary"
+            android:layout_margin="20dp"
+            android:text="立即绑定" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/bg_question_tip"
+            android:lineSpacingExtra="5dp"
+            android:padding="10dp"
+            android:text="提示：\n1、账号：借书证上的号码，即学生的学号、教职工的工号。\n2、密码：默认密码为000000，部分读者的初始密码为借书证上的条码号，即学号。\n3、首次登录将修改默认密码，新密码将应用于图书馆书目检索系统(http://opac.jssvc.edu.cn)网页版的登录，请妥善保管。\n4、如仍忘记证件密码，可到图书馆一楼大厅“咨询台”查询。"
+            android:textColor="@color/color_text_hint"
+            android:textIsSelectable="true"
+            android:textSize="14sp" />
     </LinearLayout>
-    <View style="@style/item_split_horizontal"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-
-      <TextView
-          android:layout_width="80dp"
-          android:gravity="right"
-          android:text="类型"
-          style="@style/style_text_body"
-          />
-
-      <TextView
-          android:id="@+id/tv_type"
-          android:layout_marginLeft="10dp"
-          android:drawableRight="@drawable/icon_goto"
-          android:text="证件号"
-          style="@style/style_edit_text"
-          />
-    </LinearLayout>
-    <View style="@style/item_split_horizontal"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-
-      <TextView
-          android:layout_width="80dp"
-          android:gravity="right"
-          android:text="账号"
-          style="@style/style_text_body"
-          />
-
-      <EditText
-          android:id="@+id/edt_account"
-          android:layout_marginLeft="10dp"
-          android:hint="请输入证件号"
-          android:text=""
-          style="@style/style_edit_text"
-          />
-    </LinearLayout>
-    <View style="@style/item_split_horizontal"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-
-      <TextView
-          android:layout_width="80dp"
-          android:gravity="right"
-          android:text="密码"
-          style="@style/style_text_body"
-          />
-
-      <EditText
-          android:id="@+id/edt_pwd"
-          android:layout_marginLeft="10dp"
-          android:hint="请输入密码"
-          android:inputType="textPassword"
-          android:text=""
-          style="@style/style_edit_text"
-          />
-    </LinearLayout>
-    <View style="@style/item_split_horizontal"/>
-  </LinearLayout>
-
-  <Button
-      android:id="@+id/btn_submit"
-      android:layout_margin="20dp"
-      android:text="立即绑定"
-      style="@style/style_button_primary"
-      />
-</LinearLayout>
+</ScrollView>

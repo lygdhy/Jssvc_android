@@ -62,4 +62,11 @@ public class MenuBean implements Serializable {
         this.title = title;
         this.resourceId = resourceId;
     }
+
+    public MenuBean(int type, String title, int resourceId, String web_url) {
+        this.type = type;
+        this.title = title;
+        this.resourceId = resourceId;
+        this.web_url = web_url;
+    }
 }

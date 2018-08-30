@@ -20,9 +20,7 @@ import com.pgyersdk.update.UpdateManagerListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jssvc.lib.R;
-import org.jssvc.lib.ui.home.adapter.BottomAdapter;
 import org.jssvc.lib.base.BaseActivity;
-import org.jssvc.lib.ui.general.bean.VersionBean;
 import org.jssvc.lib.data.Constants;
 import org.jssvc.lib.data.DataSup;
 import org.jssvc.lib.data.HttpUrlParams;
@@ -34,7 +32,10 @@ import org.jssvc.lib.ui.book.BookShelfActivity;
 import org.jssvc.lib.ui.book.CardInfoActivity;
 import org.jssvc.lib.ui.book.CurentBorrowActivity;
 import org.jssvc.lib.ui.book.HistoryBorrowActivity;
+import org.jssvc.lib.ui.general.WebActivity;
+import org.jssvc.lib.ui.general.bean.VersionBean;
 import org.jssvc.lib.ui.help.HelpActivity;
+import org.jssvc.lib.ui.home.adapter.BottomAdapter;
 import org.jssvc.lib.ui.home.bean.MenuBean;
 import org.jssvc.lib.ui.home.fragment.HomeFragment;
 import org.jssvc.lib.ui.home.fragment.LabFragment;
@@ -174,6 +175,9 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                 break;
             case Constants.MENU_WAITER://在线客服
                 callQQCell(Constants.QQ_WAITER);
+                break;
+            case Constants.CODE_WEB:// 外部地址
+                WebActivity.start(mContext, "公众号", menu.getWeb_url());
                 break;
         }
     }

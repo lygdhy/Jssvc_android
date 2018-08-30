@@ -5,20 +5,19 @@
     android:background="@android:color/white"
     android:orientation="vertical"
     android:paddingBottom="5dp"
-    android:paddingTop="5dp"
-    >
+    android:paddingTop="5dp">
 
-  <TextView
-      android:id="@+id/title"
-      android:layout_margin="10dp"
-      android:text="菜单"
-      style="@style/style_text_body_light"
-      />
+    <TextView
+        android:id="@+id/title"
+        style="@style/style_text_body_light"
+        android:layout_margin="10dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="菜单" />
 
-  <android.support.v7.widget.RecyclerView
-      android:id="@+id/recycler"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

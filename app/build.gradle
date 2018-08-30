@@ -18,7 +18,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 26
         versionCode 20
-        versionName '2.1.12'
+        versionName '2.1.14'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         // Enabling multidex support.

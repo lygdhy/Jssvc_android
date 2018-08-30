@@ -4,24 +4,23 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="10dp"
-    >
+    android:padding="10dp">
 
-  <ImageView
-      android:id="@+id/icon"
-      android:layout_width="30dp"
-      android:layout_height="30dp"
-      android:src="@drawable/icon_menu_idcard"
-      />
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/icon_menu_idcard" />
 
-  <TextView
-      android:id="@+id/title"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="10dp"
-      android:text="菜单"
-      android:textColor="@color/color_text_content"
-      android:textSize="14sp"
-      />
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="菜单"
+        android:textColor="@color/color_text_content"
+        android:textSize="14sp" />
 
 </LinearLayout>
